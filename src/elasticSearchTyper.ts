@@ -1,4 +1,4 @@
-import Stilling from './Stilling';
+import Stilling, { EsStilling } from './Stilling';
 
 export type Query = {
     query: {
@@ -26,5 +26,5 @@ export type Hit = {
     _type: string;
     _id: string;
     _score: number;
-    _source: Stilling;
+    _source: EsStilling;
 };

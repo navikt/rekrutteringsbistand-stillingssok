@@ -25,8 +25,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor }) => {
             rekbis-stillingssok
             {stillinger ? (
                 <ul>
-                    {stillinger.map((stilling) => (
-                        <li>{stilling._source.title}</li>
+                    {stillinger.map((hit) => (
+                        <li>{hit._source.stilling.title}</li>
                     ))}
                 </ul>
             ) : (

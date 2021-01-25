@@ -1,3 +1,8 @@
+export type EsStilling = {
+    stilling: Stilling;
+    stillingsinfo: any;
+};
+
 export type Stilling = {
     title: string;
     uuid: string;
