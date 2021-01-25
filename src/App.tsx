@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Respons } from './elasticSearchTyper';
-import { hentAlleStillinger } from './api';
+import { hentAlleStillinger } from './api/api';
 import './App.less';
 
 export type AppProps = {
@@ -26,7 +26,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor }) => {
             {stillinger ? (
                 <ul>
                     {stillinger.map((hit) => (
-                        <li>{hit._source.stilling.title}</li>
+                        <li key={hit._id}>{hit._source.stilling.title}</li>
                     ))}
                 </ul>
             ) : (

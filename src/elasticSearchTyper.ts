@@ -1,4 +1,4 @@
-import Stilling, { EsStilling } from './Stilling';
+import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
     query: {
@@ -11,6 +11,12 @@ export type Query = {
 export type Respons = {
     took: number;
     timed_out: boolean;
+    _shards: {
+        total: number;
+        successful: number;
+        skipped: number;
+        failed: number;
+    };
     hits: {
         total: {
             value: number;
@@ -26,5 +32,5 @@ export type Hit = {
     _type: string;
     _id: string;
     _score: number;
-    _source: EsStilling;
+    _source: Rekrutteringsbistandstilling;
 };

@@ -1,6 +1,10 @@
-import { Respons, Query } from './elasticSearchTyper';
+import { Respons, Query } from '../elasticSearchTyper';
 
-const stillingsøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
+export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
+
+if (process.env.REACT_APP_MOCK) {
+    require('./mock-api.ts');
+}
 
 export const hentAlleStillinger = async (): Promise<Respons> => {
     const query: Query = {
@@ -13,7 +17,7 @@ export const hentAlleStillinger = async (): Promise<Respons> => {
 };
 
 const søk = async (query: Query): Promise<Respons> => {
-    const respons = await post(`${stillingsøkProxy}/_search`, query);
+    const respons = await post(`${stillingssøkProxy}/_search`, query);
 
     if (respons.status !== 200) {
         throw Error('Klarte ikke å gjøre et søk');

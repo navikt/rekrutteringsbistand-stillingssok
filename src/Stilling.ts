@@ -1,6 +1,6 @@
-export type EsStilling = {
+export type Rekrutteringsbistandstilling = {
     stilling: Stilling;
-    stillingsinfo: any;
+    stillingsinfo: Stillingsinfo | null;
 };
 
 export type Stilling = {
@@ -20,7 +20,15 @@ export type Stilling = {
     locations: Location[];
     reference: string;
     administration: Administration | null;
-    properties: Properties;
+    properties: Properties & Record<string, any>;
+};
+
+export type Stillingsinfo = {
+    eierNavident: string | null;
+    eierNavn: string | null;
+    notat: string | null;
+    stillingsid: string;
+    stillingsinfoid: string;
 };
 
 export type Employer = {
@@ -60,7 +68,7 @@ export type Properties = Partial<{
     jobtitle: string;
     location: string;
     starttime: string;
-    applicationdue: Søknadsfrist;
+    applicationdue: Søknadsfrist | string;
     extent: Omfang;
     engagementtype: Ansettelsesform;
     positioncount: number;
