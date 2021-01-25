@@ -1,6 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Respons } from './elasticSearchTyper';
-import { hentAlleStillinger } from './api/api';
+import React, { FunctionComponent } from 'react';
+
+import { alleStillingerQuery, useSøk } from './api/api';
+import { Undertittel } from 'nav-frontend-typografi';
 import './App.less';
 
 export type AppProps = {
@@ -8,21 +9,15 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor }) => {
-    const [respons, setRespons] = useState<Respons | null>(null);
+    const { data, error } = useSøk(alleStillingerQuery());
 
-    useEffect(() => {
-        const hent = async () => {
-            setRespons(await hentAlleStillinger());
-        };
-
-        hent();
-    }, []);
-
-    const stillinger = respons?.hits.hits;
+    const stillinger = data?.hits.hits;
 
     return (
         <div className="app">
-            rekbis-stillingssok
+            <Undertittel tag="h1">Nytt stillingssøk</Undertittel>
+            {error && <span>Det skjedde en feil</span>}
+            {!data && !error && <span>Laster inn stillinger...</span>}
             {stillinger ? (
                 <ul>
                     {stillinger.map((hit) => (

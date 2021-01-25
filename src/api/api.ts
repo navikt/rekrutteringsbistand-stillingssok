@@ -1,4 +1,5 @@
-import { Respons, Query } from '../elasticSearchTyper';
+import useSWR from 'swr';
+import { Query, Respons } from '../elasticSearchTyper';
 
 export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
 
@@ -6,17 +7,17 @@ if (process.env.REACT_APP_MOCK) {
     require('./mock-api.ts');
 }
 
-export const hentAlleStillinger = async (): Promise<Respons> => {
-    const query: Query = {
-        query: {
-            match_all: {},
-        },
-    };
-
-    return await søk(query);
+export const useSøk = (query: Query) => {
+    return useSWR(JSON.stringify(query), søk);
 };
 
-const søk = async (query: Query): Promise<Respons> => {
+export const alleStillingerQuery = (): Query => ({
+    query: {
+        match_all: {},
+    },
+});
+
+export const søk = async (query: string): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/_search`, query);
 
     if (respons.status !== 200) {
@@ -26,9 +27,9 @@ const søk = async (query: Query): Promise<Respons> => {
     return respons.json();
 };
 
-const post = (url: string, body: object) => {
+const post = (url: string, body: string) => {
     return fetch(url, {
-        body: JSON.stringify(body),
+        body,
         method: 'POST',
         credentials: 'include',
         headers: {
