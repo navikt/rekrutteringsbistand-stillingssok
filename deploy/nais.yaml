@@ -1,0 +1,22 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+    name: rekrutteringsbistand-stillingssok
+    namespace: arbeidsgiver
+    labels:
+        team: arbeidsgiver
+spec:
+    # prettier-ignore
+    image: {{ image }}
+    port: 3000
+    ingresses:
+        - {{ ingress }}
+    liveness:
+        initialDelay: 5
+        path: /rekrutteringsbistand-stillingssok/internal/isAlive
+    readiness:
+        initialDelay: 5
+        path: /rekrutteringsbistand-stillingssok/internal/isReady
+    env:
+        - name: NODE_EXTRA_CA_CERTS
+          value: /etc/ssl/ca-bundle.pem
