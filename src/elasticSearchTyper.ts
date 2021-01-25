@@ -1,6 +1,14 @@
 import Stilling from './Stilling';
 
-export type Resultat = {
+export type Query = {
+    query: {
+        match?: object;
+        bool?: object;
+        match_all?: object;
+    };
+};
+
+export type Respons = {
     took: number;
     timed_out: boolean;
     hits: {

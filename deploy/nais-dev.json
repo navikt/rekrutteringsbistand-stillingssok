@@ -1,3 +1,4 @@
 {
-  "ingress": "https://rekrutteringsbistand.nais.preprod.local/rekrutteringsbistand-stillingssok"
+    "ingress": "https://rekrutteringsbistand.nais.preprod.local/rekrutteringsbistand-stillingssok",
+    "stillingssok-proxy-url": "https://rekrutteringsbistand-stillingssok-proxy.dev.intern.nav.no"
 }
