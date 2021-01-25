@@ -21,7 +21,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-node-
             - name: Installer avhengigheter
-              run: npm install
+              run: npm ci
             - name: Bygg applikasjon
               run: npm run build
             - name: Bygg og publiser Docker-image
