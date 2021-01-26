@@ -31,7 +31,7 @@ const Utviklingsapp: FunctionComponent = () => {
                     </Systemtittel>
                 </header>
                 <main>
-                    <App navKontor={navKontor} />
+                    <App navKontor={navKontor} history={history} />
                 </main>
             </Router>
         </div>
