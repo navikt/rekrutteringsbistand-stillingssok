@@ -11,10 +11,6 @@ const logg = (url: string, options: MockOptionsMethodPost, response: any) => {
 };
 
 fetchMock.config.fallbackToNetwork = true;
-fetchMock.post(
-    adsUrl,
-    (url: string, options: MockOptionsMethodPost) => logg(url, options, resultat),
-    {
-        delay: 1000,
-    }
+fetchMock.post(adsUrl, (url: string, options: MockOptionsMethodPost) =>
+    logg(url, options, resultat)
 );
