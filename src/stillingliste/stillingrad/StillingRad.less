@@ -1,33 +1,40 @@
+@import '../../index';
+
 .stillingrad {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+
+  &:nth-child(even) {
+    background: #f7f7f7;
+    border-top: 1px solid @navGra40;
+    border-bottom: 1px solid @navGra40;
+  }
+
+  &__info {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    padding: 1rem;
-    border: 2px solid black;
+  }
 
-    &__info {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+  &__opprettet.typo-undertekst {
+    margin-bottom: 0.75rem;
+  }
+
+  &__lenke {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__etikett-og-knapp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    > * {
+      flex-grow: 1;
     }
-
-    &__opprettet.typo-undertekst {
-        margin-bottom: 0.75rem;
-    }
-
-    &__lenke {
-        font-size: 1.1rem;
-        margin-bottom: 0.75rem;
-    }
-
-    &__etikett-og-knapp {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-
-        > * {
-            flex-grow: 1;
-        }
-    }
+  }
 
 }

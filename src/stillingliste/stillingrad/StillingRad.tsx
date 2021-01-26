@@ -1,11 +1,11 @@
-import React from 'react';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import Stilling from '../../Stilling';
 import { Link } from 'react-router-dom';
 import './StillingRad.less';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import { konverterTilPresenterbarDato } from './datoUtils';
 
 type Props = {
     stilling: Stilling;
@@ -13,9 +13,11 @@ type Props = {
 
 const StillingRad: FunctionComponent<Props> = ({ stilling }) => {
     return (
-        <div className="stillingrad">
+        <li className="stillingrad">
             <div className="stillingrad__info">
-                <Undertekst className="stillingrad__opprettet">{stilling.created}</Undertekst>
+                <Undertekst className="stillingrad__opprettet">
+                    {konverterTilPresenterbarDato(stilling.created)}
+                </Undertekst>
                 <Normaltekst>{stilling.employer?.name}</Normaltekst>
                 <Link
                     className="stillingrad__lenke lenke"
@@ -41,7 +43,7 @@ const StillingRad: FunctionComponent<Props> = ({ stilling }) => {
                 </Link>
                 <div />
             </div>
-        </div>
+        </li>
     );
 };
 

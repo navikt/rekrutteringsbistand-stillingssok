@@ -1,7 +1,7 @@
-import React from 'react';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Respons } from '../elasticSearchTyper';
 import StillingRad from './stillingrad/StillingRad';
+import './StillingListe.less';
 
 type Props = {
     esRespons: Respons;
@@ -10,7 +10,7 @@ type Props = {
 const StillingListe: FunctionComponent<Props> = ({ esRespons }) => {
     const hits = esRespons.hits.hits;
     return (
-        <ul>
+        <ul className="stillingliste">
             {hits.map((hit) => (
                 <StillingRad stilling={hit._source.stilling} />
             ))}
