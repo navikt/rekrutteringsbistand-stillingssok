@@ -2,10 +2,18 @@ import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
     query: {
-        match?: object;
+        match?: Record<string, MatchQuery>;
         bool?: object;
         match_all?: object;
+        multi_match?: {
+            query: string;
+            fields: string[];
+        };
     };
+};
+
+type MatchQuery = {
+    query: string;
 };
 
 export type Respons = {

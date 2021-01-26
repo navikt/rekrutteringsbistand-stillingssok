@@ -11,12 +11,6 @@ export const useSøk = (query: Query) => {
     return useSWR(JSON.stringify(query), søk);
 };
 
-export const alleStillingerQuery = (): Query => ({
-    query: {
-        match_all: {},
-    },
-});
-
 export const søk = async (query: string): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/_search`, query);
 

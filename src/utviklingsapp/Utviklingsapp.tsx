@@ -1,8 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 import { cssScopeForApp } from '../index';
 import App from '../App';
 import './Utviklingsapp.less';
+
+const history = createBrowserHistory();
 
 const Utviklingsapp: FunctionComponent = () => {
     const [navKontor, setNavKontor] = useState<string | null>(null);
@@ -19,14 +24,16 @@ const Utviklingsapp: FunctionComponent = () => {
 
     return (
         <div className={cssScopeForApp}>
-            <header>
-                <Systemtittel className="utviklingsapp">
-                    Utviklingsapp for rekrutteringsbistand-stillingssok
-                </Systemtittel>
-            </header>
-            <main>
-                <App navKontor={navKontor} />
-            </main>
+            <Router history={history}>
+                <header>
+                    <Systemtittel className="utviklingsapp">
+                        Utviklingsapp for rekrutteringsbistand-stillingssok
+                    </Systemtittel>
+                </header>
+                <main>
+                    <App navKontor={navKontor} />
+                </main>
+            </Router>
         </div>
     );
 };
