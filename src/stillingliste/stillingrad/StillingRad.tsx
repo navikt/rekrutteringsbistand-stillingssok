@@ -1,11 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
-import './StillingRad.less';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import { konverterTilPresenterbarDato } from './datoUtils';
+import {
+    lagUrlTilKandidatliste,
+    lagUrlTilStilling,
+    skalViseLenkeTilKandidatliste,
+} from '../../stillingsUtils';
+import './StillingRad.less';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -13,7 +18,6 @@ type Props = {
 
 const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
-    const stillingsinfo = rekrutteringsbistandstilling.stillingsinfo;
 
     return (
         <li className="stillingrad">
@@ -22,10 +26,7 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
                     {konverterTilPresenterbarDato(stilling.created)}
                 </Undertekst>
                 <Normaltekst>{stilling.employer?.name}</Normaltekst>
-                <Link
-                    className="stillingrad__lenke lenke"
-                    to={`/stillinger/stilling/${stilling.uuid}`}
-                >
+                <Link className="stillingrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
                     {stilling.title}
                 </Link>
                 <span>
@@ -41,12 +42,11 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
                         <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
                     )}
                 </span>
-                {stilling.source === 'DIR' ||
-                    (stillingsinfo && (
-                        <Link to={`/kandidater/lister/stilling/${stilling.uuid}/detaljer`}>
-                            <Hamburgerknapp />
-                        </Link>
-                    ))}
+                {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
+                    <Link to={lagUrlTilKandidatliste(stilling)}>
+                        <Hamburgerknapp />
+                    </Link>
+                )}
                 <div />
             </div>
         </li>
