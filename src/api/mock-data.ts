@@ -88,7 +88,13 @@ export const resultat: Respons = {
                             location: 'Vøyenenga',
                         },
                     },
-                    stillingsinfo: null,
+                    stillingsinfo: {
+                        eierNavident: 'E137876',
+                        eierNavn: 'Vetlesen, Veileder',
+                        notat: 'Dette er en stilling som bør passe for de fleste blide mennesker',
+                        stillingsid: 'aa8e80a1-1d09-42af-b50f-10dd0c176e9e',
+                        stillingsinfoid: 'ea4a791a-59e5-4fad-9fc2-ee3508f07842',
+                    },
                 },
             },
             {

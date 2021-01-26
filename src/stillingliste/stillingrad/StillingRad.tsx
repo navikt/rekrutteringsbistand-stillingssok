@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import Stilling from '../../Stilling';
+import { Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import './StillingRad.less';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -8,10 +8,13 @@ import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import { konverterTilPresenterbarDato } from './datoUtils';
 
 type Props = {
-    stilling: Stilling;
+    rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
-const StillingRad: FunctionComponent<Props> = ({ stilling }) => {
+const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
+    const stilling = rekrutteringsbistandstilling.stilling;
+    const stillingsinfo = rekrutteringsbistandstilling.stillingsinfo;
+
     return (
         <li className="stillingrad">
             <div className="stillingrad__info">
@@ -38,9 +41,12 @@ const StillingRad: FunctionComponent<Props> = ({ stilling }) => {
                         <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
                     )}
                 </span>
-                <Link to={`/kandidater/lister/stilling/${stilling.uuid}/detaljer`}>
-                    <Hamburgerknapp />
-                </Link>
+                {stilling.source === 'DIR' ||
+                    (stillingsinfo && (
+                        <Link to={`/kandidater/lister/stilling/${stilling.uuid}/detaljer`}>
+                            <Hamburgerknapp />
+                        </Link>
+                    ))}
                 <div />
             </div>
         </li>

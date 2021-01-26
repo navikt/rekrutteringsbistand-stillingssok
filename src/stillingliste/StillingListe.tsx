@@ -12,7 +12,7 @@ const StillingListe: FunctionComponent<Props> = ({ esRespons }) => {
     return (
         <ul className="stillingliste">
             {hits.map((hit) => (
-                <StillingRad stilling={hit._source.stilling} />
+                <StillingRad rekrutteringsbistandstilling={hit._source} />
             ))}
         </ul>
     );
