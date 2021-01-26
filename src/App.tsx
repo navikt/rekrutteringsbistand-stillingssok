@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Link, Router } from 'react-router-dom';
 import { History } from 'history';
 
-import { useSøk } from './api/api';
+import { søk } from './api/api';
 import { alleStillingerQuery, generellQuery } from './api/queries';
-import { Query } from './elasticSearchTyper';
+import { Query, Respons } from './elasticSearchTyper';
 import Søkefelt from './søkefelt/Søkefelt';
 import './App.less';
 
@@ -15,20 +15,26 @@ export type AppProps = {
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const [query, setQuery] = useState<Query>(alleStillingerQuery);
-    const { data, error } = useSøk(query);
+    const [respons, setRespons] = useState<Respons | null>(null);
 
-    const stillinger = data?.hits.hits;
+    useEffect(() => {
+        const brukQuery = async () => {
+            setRespons(await søk(query));
+        };
+
+        brukQuery();
+    }, [query]);
 
     const onSøk = (tekst: string) => {
         setQuery(generellQuery(tekst));
     };
 
+    const stillinger = respons?.hits.hits;
+
     return (
         <Router history={history}>
             <div className="app">
                 <Søkefelt onSøk={onSøk} />
-                {error && <span>Det skjedde en feil</span>}
-                {!data && !error && <span>Laster inn stillinger...</span>}
                 {stillinger ? (
                     <ul>
                         {stillinger.map((hit) => {
