@@ -5,7 +5,7 @@ import { resultat } from './mock-data';
 const adsUrl = `${stillingssøkProxy}/_search`;
 
 const logg = (url: string, options: MockOptionsMethodPost, response: any) => {
-    console.warn(`Mock ${options.method} mot ${url}:`, response);
+    console.info(`Mock ${options.method} mot ${url}:`, response);
 
     return response;
 };
