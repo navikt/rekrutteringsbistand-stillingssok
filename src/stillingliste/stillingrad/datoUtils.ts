@@ -1,5 +1,12 @@
-export const konverterTilPresenterbarDato = (datoString: string): string => {
-    const dato = new Date(datoString);
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return dato.toLocaleDateString('nb-NO', options);
+import { Søknadsfrist } from '../../Stilling';
+
+export const konverterTilPresenterbarDato = (datoString: string | undefined): string => {
+    if (!datoString) return '';
+    if (datoString === Søknadsfrist.Snarest) return datoString;
+
+    return new Date(datoString as string).toLocaleDateString('nb-NO', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
 };

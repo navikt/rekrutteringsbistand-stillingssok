@@ -243,7 +243,7 @@ export const resultat: Respons = {
                             sourceupdated: '2019-12-11T13:41:00.000Z',
                             applicationurl:
                                 'https://kiwi.no/Informasjon/Ledigestillinger1/Apply/?rmpage=job&rmjob=5156&ref=https://www.finn.no',
-                            applicationdue: '11.01.2020',
+                            applicationdue: '2020-05-30T10:00:00.000Z',
                             extent: Omfang.Heltid,
                             occupation: 'Butikksjef',
                             logomain:
@@ -325,7 +325,7 @@ export const resultat: Respons = {
                             sourceupdated: '2019-12-19T08:12:14.740',
                             applicationurl:
                                 'https://www.finn.no/job/fulltime/ad.html?finnkode=165663619',
-                            applicationdue: '2020-01-10T00:00',
+                            applicationdue: '',
                             extent: Omfang.Heltid,
                             logomain:
                                 'media.webassistenten.no/api/image/get/jobs/75706C6F6164735C336131323131623065613135633138612E6A7067',
