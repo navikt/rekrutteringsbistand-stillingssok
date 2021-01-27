@@ -8,6 +8,7 @@ import { Query, Respons } from './elasticSearchTyper';
 import Søkefelt from './søkefelt/Søkefelt';
 import './App.less';
 import StillingListe from './stillingliste/StillingListe';
+import { hentInputFraUrl } from './søkefelt/urlUtils';
 
 export type AppProps = {
     navKontor: string | null;
@@ -20,7 +21,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     useEffect(() => {
         const brukQuery = async () => {
-            setRespons(await søk(query));
+            const inputFraUrl = hentInputFraUrl();
+            if (inputFraUrl) {
+                const queryForInputFraUrl = generellQuery(inputFraUrl);
+                setRespons(await søk(queryForInputFraUrl));
+            } else {
+                setRespons(await søk(query));
+            }
         };
 
         brukQuery();
