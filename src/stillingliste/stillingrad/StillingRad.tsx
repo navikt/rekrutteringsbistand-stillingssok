@@ -31,7 +31,7 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
                 </Link>
                 <span>
                     {stilling.locations[0].municipal} | Søknadsfrist:{' '}
-                    {stilling.properties.applicationdue}
+                    {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
                 </span>
             </div>
             <div className="stillingrad__etikett-og-knapp">
