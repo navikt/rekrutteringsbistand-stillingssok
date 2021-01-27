@@ -4,9 +4,11 @@ export const konverterTilPresenterbarDato = (datoString: string | undefined): st
     if (!datoString) return '';
     if (datoString === Søknadsfrist.Snarest) return datoString;
 
-    return new Date(datoString as string).toLocaleDateString('nb-NO', {
+    const presentarbarDatoString = new Date(datoString as string).toLocaleDateString('nb-NO', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     });
+
+    return presentarbarDatoString === 'Invalid Date' ? datoString : presentarbarDatoString;
 };

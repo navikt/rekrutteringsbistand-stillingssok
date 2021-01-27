@@ -325,7 +325,7 @@ export const resultat: Respons = {
                             sourceupdated: '2019-12-19T08:12:14.740',
                             applicationurl:
                                 'https://www.finn.no/job/fulltime/ad.html?finnkode=165663619',
-                            applicationdue: '',
+                            applicationdue: '28.02.2020',
                             extent: Omfang.Heltid,
                             logomain:
                                 'media.webassistenten.no/api/image/get/jobs/75706C6F6164735C336131323131623065613135633138612E6A7067',
