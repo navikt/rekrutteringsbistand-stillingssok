@@ -11,6 +11,7 @@ import {
     skalViseLenkeTilKandidatliste,
 } from '../../stillingsUtils';
 import './StillingRad.less';
+import formatterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -25,7 +26,9 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
                 <Undertekst className="stillingrad__opprettet">
                     {konverterTilPresenterbarDato(stilling.created)}
                 </Undertekst>
-                <Normaltekst>{stilling.employer?.name}</Normaltekst>
+                <Normaltekst>
+                    {formatterMedStoreOgSmåBokstaver(stilling.employer?.name)}
+                </Normaltekst>
                 <Link className="stillingrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
                     {stilling.title}
                 </Link>
