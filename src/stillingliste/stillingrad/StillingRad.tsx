@@ -12,7 +12,7 @@ import {
     skalViseLenkeTilKandidatliste,
 } from '../../stillingsUtils';
 import './StillingRad.less';
-import formatterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
+import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -21,21 +21,30 @@ type Props = {
 const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
 
+    const antallStillinger = stilling.properties.positioncount;
+    const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
+
     return (
         <li className="stillingrad">
             <div className="stillingrad__info">
                 <Undertekst className="stillingrad__opprettet">
                     {konverterTilPresenterbarDato(stilling.created)}
                 </Undertekst>
-                <Normaltekst>
-                    {formatterMedStoreOgSmåBokstaver(stilling.employer?.name)}
-                </Normaltekst>
+                <Normaltekst>{formaterMedStoreOgSmåBokstaver(stilling.employer?.name)}</Normaltekst>
                 <Link className="stillingrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
                     {stilling.title}
                 </Link>
-                <span>
-                    {stilling.locations[0].municipal} | Søknadsfrist:{' '}
-                    {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                <span className="stillingrad__stillingsinfo">
+                    <span>{formaterMedStoreOgSmåBokstaver(stilling.locations[0].municipal)}</span>
+                    <span>
+                        Søknadsfrist:{' '}
+                        {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                    </span>
+                    {antallStillinger && (
+                        <span>
+                            {antallStillinger} {antallStillingerSuffix}
+                        </span>
+                    )}
                 </span>
             </div>
             <div className="stillingrad__etikett-og-knapp">

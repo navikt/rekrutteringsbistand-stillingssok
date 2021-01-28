@@ -1,7 +1,7 @@
 const skalVæreMedSmåBokstaver = ['i', 'og', 'for', 'på', 'avd', 'av'];
 const skalVæreMedStoreBokstaver = ['as', 'ab', 'asa', 'ba', 'sa'];
 
-export default function formatterMedStoreOgSmåBokstaver(tekst?: string): string | undefined {
+export default function formaterMedStoreOgSmåBokstaver(tekst?: string | null): string | undefined {
     if (!tekst) return undefined;
 
     let formattert = tekst.toLowerCase();
