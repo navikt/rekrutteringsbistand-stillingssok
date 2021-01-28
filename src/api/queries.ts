@@ -55,6 +55,6 @@ const ikkeHaMedUpublisertStilling = {
 const søkITittelOgStillingstekst = (tekst: string) => ({
     multi_match: {
         query: tekst,
-        fields: ['stilling.adtext_no', 'stilling.title'],
+        fields: ['stilling.adtext_no', 'stilling.title', 'stilling.annonsenr'],
     },
 });
