@@ -6,6 +6,7 @@ import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
+    erDirektemeldtStilling,
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
@@ -39,7 +40,7 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
             </div>
             <div className="stillingrad__etikett-og-knapp">
                 <span>
-                    {stilling.source === 'DIR' ? (
+                    {erDirektemeldtStilling(stilling) ? (
                         <EtikettSuksess mini>Intern</EtikettSuksess>
                     ) : (
                         <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
