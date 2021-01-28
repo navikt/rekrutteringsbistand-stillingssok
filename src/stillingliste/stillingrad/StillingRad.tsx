@@ -46,7 +46,7 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
                     )}
                 </span>
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                    <Link to={lagUrlTilKandidatliste(stilling)}>
+                    <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
                         <Hamburgerknapp />
                     </Link>
                 )}
