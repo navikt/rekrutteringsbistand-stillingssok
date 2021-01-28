@@ -8,7 +8,7 @@ export type Stilling = {
     uuid: string;
     annonsenr: string | null;
     status: string;
-    privacy: string;
+    privacy: Privacy | string;
     published: string | null;
     expires: string | null;
     created: string;
@@ -23,6 +23,11 @@ export type Stilling = {
     administration: Administration | null;
     properties: Properties & Record<string, any>;
 };
+
+export enum Privacy {
+    Intern = 'INTERNAL_NOT_SHOWN',
+    Arbeidsplassen = 'SHOW_ALL',
+}
 
 export enum Kilde {
     Intern = 'DIR',

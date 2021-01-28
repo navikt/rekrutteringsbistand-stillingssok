@@ -1,8 +1,9 @@
 import { Søkekriterier } from '../../App';
+import { Publisert } from '../HvorErAnnonsenPublisert';
 
 export enum QueryParam {
     Tekst = 'q',
-    KunInterne = 'kunInterne',
+    Publisert = 'publisert',
 }
 
 export const hentSøkekriterier = (search: string): Søkekriterier => {
@@ -10,14 +11,15 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
 
     return {
         tekst: searchParams.get(QueryParam.Tekst) || '',
-        kunInterne: searchParams.get(QueryParam.KunInterne) === 'true',
+        publisert: (searchParams.get(QueryParam.Publisert) as Publisert) || Publisert.Alle,
     };
 };
 
-export const byggUrlMedParam = (param: QueryParam, value: string | boolean) => {
+export const byggUrlMedParam = (param: QueryParam, value: string | boolean | null) => {
     const url = new URL(window.location.href);
 
     if (
+        value === null ||
         (typeof value === 'string' && value.length === 0) ||
         (typeof value === 'boolean' && value === false)
     ) {

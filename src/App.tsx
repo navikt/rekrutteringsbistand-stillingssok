@@ -2,17 +2,18 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Router, useLocation } from 'react-router-dom';
 import { History } from 'history';
 
-import { alleStillingerQuery, generellQuery } from './api/queries';
+import { lagQuery } from './api/queries';
 import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
 import { Respons } from './elasticSearchTyper';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingliste/Stillingsliste';
 import './App.less';
+import { Publisert } from './søk/HvorErAnnonsenPublisert';
 
 export type Søkekriterier = {
     tekst: string;
-    kunInterne: boolean;
+    publisert: Publisert;
 };
 
 export type AppProps = {
@@ -27,13 +28,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     useEffect(() => {
         const brukQuery = async () => {
             const søkekriterier = hentSøkekriterier(location.search);
-            const query = generellQuery(søkekriterier);
-
-            if (query) {
-                setRespons(await søk(query));
-            } else {
-                setRespons(await søk(alleStillingerQuery));
-            }
+            const query = lagQuery(søkekriterier);
+            setRespons(await søk(query));
         };
 
         brukQuery();
