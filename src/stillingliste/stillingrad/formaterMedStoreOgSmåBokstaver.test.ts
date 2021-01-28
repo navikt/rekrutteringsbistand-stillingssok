@@ -32,4 +32,12 @@ describe('formaterMedStoreOgSmåBokstaver skal formatere arbeidsgiver riktig', (
         const forventetFormatering = 'Kiwi/Oslo';
         expect(formatertArbeidsgiver).toEqual(forventetFormatering);
     });
+
+    test('Skal ikke formatere hvis undefined', () => {
+        const arbeidsgiver = undefined;
+        const formatertArbeidsgiver = formatterMedStoreOgSmåBokstaver(arbeidsgiver);
+
+        const forventetFormatering = undefined;
+        expect(formatertArbeidsgiver).toEqual(forventetFormatering);
+    });
 });
