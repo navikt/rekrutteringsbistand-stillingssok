@@ -9,8 +9,8 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
     const searchParams = new URLSearchParams(search);
 
     return {
-        tekst: searchParams.get('q') || '',
-        kunInterne: searchParams.get('kunInterne') === 'true',
+        tekst: searchParams.get(QueryParam.Tekst) || '',
+        kunInterne: searchParams.get(QueryParam.KunInterne) === 'true',
     };
 };
 

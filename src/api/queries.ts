@@ -1,9 +1,11 @@
 import { Query } from '../elasticSearchTyper';
 import { Kilde } from '../Stilling';
+import { Søkekriterier } from '../App';
 
-export const generellQuery = (tekst: string, kunInterne: boolean): Query => {
-    if (tekst.length > 0) {
-        return søkITekstfelterQuery(tekst, kunInterne);
+export const generellQuery = (søkekriterier: Søkekriterier): Query => {
+    // TODO: Vil ikke fungere hvis kunInterne er satt uten at vi har tekst
+    if (søkekriterier.tekst.length > 0) {
+        return søkITekstfelterQuery(søkekriterier.tekst, søkekriterier.kunInterne);
     }
 
     return alleStillingerQuery;
@@ -15,7 +17,7 @@ export const alleStillingerQuery: Query = {
     },
 };
 
-const søkITekstfelterQuery = (tekst: string, kunInterne?: boolean): Query => ({
+const søkITekstfelterQuery = (tekst: string, kunInterne: boolean): Query => ({
     query: {
         bool: {
             must_not: slettetStilling,

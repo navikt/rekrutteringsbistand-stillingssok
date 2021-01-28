@@ -26,12 +26,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     useEffect(() => {
         const brukQuery = async () => {
-            const { tekst, kunInterne } = hentSøkekriterier(location.search);
-            const query = generellQuery(tekst, kunInterne);
+            const søkekriterier = hentSøkekriterier(location.search);
+            const query = generellQuery(søkekriterier);
 
             if (query) {
-                const queryForInputFraUrl = query;
-                setRespons(await søk(queryForInputFraUrl));
+                setRespons(await søk(query));
             } else {
                 setRespons(await søk(alleStillingerQuery));
             }
