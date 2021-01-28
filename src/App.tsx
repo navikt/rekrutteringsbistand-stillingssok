@@ -1,10 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Router, useLocation } from 'react-router-dom';
 import { History } from 'history';
-
-import { lagQuery } from './api/queries';
-import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
 import { Respons } from './elasticSearchTyper';
+import { useLocation } from 'react-router-dom';
+import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
+import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingliste/Stillingsliste';
@@ -36,12 +35,10 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     }, [location.search]);
 
     return (
-        <Router history={history}>
-            <div className="app">
-                <Søk />
-                {respons && <Stillingsliste esRespons={respons} />}
-            </div>
-        </Router>
+        <div className="app">
+            <Søk />
+            {respons && <Stillingsliste esRespons={respons} />}
+        </div>
     );
 };
 
