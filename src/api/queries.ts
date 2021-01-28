@@ -1,9 +1,9 @@
 import { Query } from '../elasticSearchTyper';
 import { Kilde } from '../Stilling';
 
-export const generellQuery = (tekst: string): Query => {
+export const generellQuery = (tekst: string, kunInterne: boolean): Query => {
     if (tekst.length > 0) {
-        return søkITekstfelterQuery(tekst);
+        return søkITekstfelterQuery(tekst, kunInterne);
     }
 
     return alleStillingerQuery;

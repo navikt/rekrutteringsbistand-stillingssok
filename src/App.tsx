@@ -1,14 +1,19 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Router } from 'react-router-dom';
+import { Router, useLocation } from 'react-router-dom';
 import { History } from 'history';
 
-import { søk } from './api/api';
 import { alleStillingerQuery, generellQuery } from './api/queries';
-import { Query, Respons } from './elasticSearchTyper';
-import Søkefelt from './søkefelt/Søkefelt';
-import './App.less';
+import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
+import { Respons } from './elasticSearchTyper';
+import { søk } from './api/api';
+import Søk from './søk/Søk';
 import Stillingsliste from './stillingliste/Stillingsliste';
-import { hentInputFraUrl } from './søkefelt/urlUtils';
+import './App.less';
+
+export type Søkekriterier = {
+    tekst: string;
+    kunInterne: boolean;
+};
 
 export type AppProps = {
     navKontor: string | null;
@@ -16,31 +21,29 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
-    const [query, setQuery] = useState<Query>(alleStillingerQuery);
+    const location = useLocation();
     const [respons, setRespons] = useState<Respons | null>(null);
 
     useEffect(() => {
         const brukQuery = async () => {
-            const inputFraUrl = hentInputFraUrl();
-            if (inputFraUrl) {
-                const queryForInputFraUrl = generellQuery(inputFraUrl);
+            const { tekst, kunInterne } = hentSøkekriterier(location.search);
+            const query = generellQuery(tekst, kunInterne);
+
+            if (query) {
+                const queryForInputFraUrl = query;
                 setRespons(await søk(queryForInputFraUrl));
             } else {
-                setRespons(await søk(query));
+                setRespons(await søk(alleStillingerQuery));
             }
         };
 
         brukQuery();
-    }, [query]);
-
-    const onSøk = (tekst: string) => {
-        setQuery(generellQuery(tekst));
-    };
+    }, [location.search]);
 
     return (
         <Router history={history}>
             <div className="app">
-                <Søkefelt onSøk={onSøk} />
+                <Søk />
                 {respons && <Stillingsliste esRespons={respons} />}
             </div>
         </Router>
