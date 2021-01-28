@@ -1,4 +1,5 @@
 import { Query } from '../elasticSearchTyper';
+import { Kilde } from '../Stilling';
 
 export const generellQuery = (tekst: string): Query => {
     if (tekst.length > 0) {
@@ -14,12 +15,13 @@ export const alleStillingerQuery: Query = {
     },
 };
 
-const søkITekstfelterQuery = (tekst: string): Query => ({
+const søkITekstfelterQuery = (tekst: string, kunInterne?: boolean): Query => ({
     query: {
         bool: {
             must_not: slettetStilling,
             must: [ikkeHaMedUpublisertStilling, søkITittelOgStillingstekst(tekst)],
         },
+        ...(kunInterne && kunInterneStillinger),
     },
 });
 
@@ -49,6 +51,14 @@ const ikkeHaMedUpublisertStilling = {
                 },
             },
         ],
+    },
+};
+
+const kunInterneStillinger = {
+    filter: {
+        term: {
+            'stilling.source': Kilde.Intern,
+        },
     },
 };
 

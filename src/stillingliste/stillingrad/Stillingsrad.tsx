@@ -1,12 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { Rekrutteringsbistandstilling } from '../../Stilling';
+import { Kilde, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
-    erDirektemeldtStilling,
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
@@ -48,7 +47,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 </span>
             </div>
             <div className="stillingsrad__etikett">
-                {erDirektemeldtStilling(stilling) ? (
+                {stilling.source === Kilde.Intern ? (
                     <EtikettSuksess mini>Intern</EtikettSuksess>
                 ) : (
                     <EtikettInfo mini>Arbeidsplassen</EtikettInfo>

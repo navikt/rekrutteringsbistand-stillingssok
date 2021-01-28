@@ -18,6 +18,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Ordrebehandler - teknisk innesalg - sentralbord',
                         uuid: 'b7f2e4ef-7d1a-45b9-b286-889de658f128',
+                        annonsenr: '123456',
                         status: 'STOPPED',
                         privacy: 'SHOW_ALL',
                         published: '2020-01-04T07:04:28.718064',
@@ -106,6 +107,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Snart gjennomført førstegangstjenesten og klar for jobb?',
                         uuid: '82a23984-e5fa-4cb6-b711-d4bedb91c885',
+                        annonsenr: '123456',
                         status: 'STOPPED',
                         privacy: 'SHOW_ALL',
                         published: '2020-01-07T07:05:18.243009',
@@ -194,6 +196,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'KIWI Råbekken søker etter butikksjef',
                         uuid: 'ac6d7a0d-6715-4f00-9da1-c9af608ac977',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-12-12T07:03:48.487786',
@@ -277,6 +280,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Produksjonsmedarbeidere',
                         uuid: 'bf724aa1-0459-4514-ae6d-6411688223d6',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-12-20T05:30:02.278972',
@@ -354,6 +358,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Autorisert regnskapsfører eller regnskapsfører med erfaring søkes',
                         uuid: '260b0cd7-d7d0-4a90-a8ea-57e9ced586b1',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-11-30T07:04:00.878136',
@@ -437,6 +442,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Talent for økonomi og hjerte for mennesker?',
                         uuid: '754a1dd7-71d7-4521-bc69-34d8ed94cd20',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-11-30T07:04:01.341778',
@@ -523,6 +529,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Elektriker',
                         uuid: 'ce20cc95-4c09-48cd-82cf-84a4e4a51008',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-11-30T07:04:01.344606',
@@ -607,6 +614,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Platearbeider i stålindustri',
                         uuid: 'dd88443c-4610-4cdf-ac35-55e456aced02',
+                        annonsenr: '123456',
                         status: 'STOPPED',
                         privacy: 'SHOW_ALL',
                         published: '2019-12-07T07:04:13.918246',
@@ -694,6 +702,7 @@ export const resultat: Respons = {
                         title:
                             'Vil du være med å bidra til vekst & lønnsomhet i en moderne bedrift som krever konstant fokus på trender og evne til omstilling ?',
                         uuid: '1af6a869-cc8d-46d3-85eb-d816625c473b',
+                        annonsenr: '123456',
                         status: 'INACTIVE',
                         privacy: 'SHOW_ALL',
                         published: '2019-12-03T07:04:22.275608',
@@ -781,6 +790,7 @@ export const resultat: Respons = {
                     stilling: {
                         title: 'Erfaring fra sosiale medier annonsering?',
                         uuid: '4cf84244-2ef5-4975-8c0a-50ce6944d610',
+                        annonsenr: '123456',
                         status: 'STOPPED',
                         privacy: 'SHOW_ALL',
                         published: '2019-12-10T07:04:05.775902',

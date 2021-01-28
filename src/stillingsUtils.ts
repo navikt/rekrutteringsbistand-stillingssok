@@ -1,11 +1,9 @@
-import Stilling, { Rekrutteringsbistandstilling } from './Stilling';
-
-export const erDirektemeldtStilling = (stilling: Stilling) => stilling.source === 'DIR';
+import Stilling, { Kilde, Rekrutteringsbistandstilling } from './Stilling';
 
 export const skalViseLenkeTilKandidatliste = (
     rekrutteringsbistandStilling: Rekrutteringsbistandstilling
 ) =>
-    erDirektemeldtStilling(rekrutteringsbistandStilling.stilling) ||
+    rekrutteringsbistandStilling.stilling.source === Kilde.Intern ||
     rekrutteringsbistandStilling.stillingsinfo !== null;
 
 export const lagUrlTilStilling = (stilling: Stilling) => `/stillinger/stilling/${stilling.uuid}`;

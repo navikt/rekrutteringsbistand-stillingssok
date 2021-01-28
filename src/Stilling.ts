@@ -6,6 +6,7 @@ export type Rekrutteringsbistandstilling = {
 export type Stilling = {
     title: string;
     uuid: string;
+    annonsenr: string | null;
     status: string;
     privacy: string;
     published: string | null;
@@ -14,7 +15,7 @@ export type Stilling = {
     updated: string;
     employer: Employer | null;
     categories: StyrkCategory[];
-    source: string;
+    source: Kilde | string;
     medium: string;
     businessName: string | null;
     locations: Location[];
@@ -22,6 +23,10 @@ export type Stilling = {
     administration: Administration | null;
     properties: Properties & Record<string, any>;
 };
+
+export enum Kilde {
+    Intern = 'DIR',
+}
 
 export type Stillingsinfo = {
     eierNavident: string | null;
