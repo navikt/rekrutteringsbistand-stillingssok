@@ -7,7 +7,7 @@ import { alleStillingerQuery, generellQuery } from './api/queries';
 import { Query, Respons } from './elasticSearchTyper';
 import Søkefelt from './søkefelt/Søkefelt';
 import './App.less';
-import StillingListe from './stillingliste/StillingListe';
+import Stillingsliste from './stillingliste/Stillingsliste';
 import { hentInputFraUrl } from './søkefelt/urlUtils';
 
 export type AppProps = {
@@ -41,7 +41,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         <Router history={history}>
             <div className="app">
                 <Søkefelt onSøk={onSøk} />
-                {respons && <StillingListe esRespons={respons} />}
+                {respons && <Stillingsliste esRespons={respons} />}
             </div>
         </Router>
     );

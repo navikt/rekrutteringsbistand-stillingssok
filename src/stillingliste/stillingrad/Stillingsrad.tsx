@@ -11,14 +11,14 @@ import {
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
 } from '../../stillingsUtils';
-import './StillingRad.less';
 import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
+import './Stillingsrad.less';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
-const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
+const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
 
     const antallStillinger = stilling.properties.positioncount;
@@ -66,4 +66,4 @@ const StillingRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling })
     );
 };
 
-export default StillingRad;
+export default Stillingsrad;

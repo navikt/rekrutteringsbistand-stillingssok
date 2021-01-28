@@ -1,21 +1,21 @@
 import React, { FunctionComponent } from 'react';
 import { Respons } from '../elasticSearchTyper';
-import StillingRad from './stillingrad/StillingRad';
-import './StillingListe.less';
+import Stillingsrad from './stillingrad/Stillingsrad';
+import './Stillingsliste.less';
 
 type Props = {
     esRespons: Respons;
 };
 
-const StillingListe: FunctionComponent<Props> = ({ esRespons }) => {
+const Stillingsliste: FunctionComponent<Props> = ({ esRespons }) => {
     const hits = esRespons.hits.hits;
     return (
         <ul className="stillingliste">
             {hits.map((hit) => (
-                <StillingRad rekrutteringsbistandstilling={hit._source} />
+                <Stillingsrad rekrutteringsbistandstilling={hit._source} />
             ))}
         </ul>
     );
 };
 
-export default StillingListe;
+export default Stillingsliste;
