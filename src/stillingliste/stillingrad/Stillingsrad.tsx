@@ -25,16 +25,16 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
 
     return (
-        <li className="stillingrad">
-            <div className="stillingrad__info">
-                <Undertekst className="stillingrad__opprettet">
+        <li className="stillingsrad">
+            <div className="stillingsrad__info">
+                <Undertekst className="stillingsrad__opprettet">
                     {konverterTilPresenterbarDato(stilling.created)}
                 </Undertekst>
                 <Normaltekst>{formaterMedStoreOgSmåBokstaver(stilling.employer?.name)}</Normaltekst>
-                <Link className="stillingrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
+                <Link className="stillingsrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
                     {stilling.title}
                 </Link>
-                <span className="stillingrad__stillingsinfo">
+                <span className="stillingsrad__stillingsinfo">
                     <span>{formaterMedStoreOgSmåBokstaver(stilling.locations[0].municipal)}</span>
                     <span>
                         Søknadsfrist:{' '}
@@ -47,14 +47,14 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     )}
                 </span>
             </div>
-            <div className="stillingrad__etikett-og-knapp">
-                <span>
-                    {erDirektemeldtStilling(stilling) ? (
-                        <EtikettSuksess mini>Intern</EtikettSuksess>
-                    ) : (
-                        <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
-                    )}
-                </span>
+            <div className="stillingsrad__etikett">
+                {erDirektemeldtStilling(stilling) ? (
+                    <EtikettSuksess mini>Intern</EtikettSuksess>
+                ) : (
+                    <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
+                )}
+            </div>
+            <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
                         <Hamburgerknapp />

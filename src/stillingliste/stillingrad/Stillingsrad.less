@@ -1,9 +1,11 @@
 @import '../../variabler.less';
 
-.stillingrad {
+.stillingsrad {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    flex-direction: column;
+    position: relative;
+    padding: 1.2rem 1rem 1rem;
 
     &:nth-child(even) {
         background: #f7f7f7;
@@ -27,15 +29,10 @@
         margin-bottom: 0.75rem;
     }
 
-    &__etikett-og-knapp {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-
-        > * {
-            flex-grow: 1;
-        }
+    &__etikett {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 
     &__stillingsinfo > span {
@@ -43,5 +40,10 @@
             content: '|';
             margin: 0 0.5rem;
         }
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+        align-items: center;
     }
 }

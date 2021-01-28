@@ -12,7 +12,7 @@ const Stillingsliste: FunctionComponent<Props> = ({ esRespons }) => {
     return (
         <ul className="stillingliste">
             {hits.map((hit) => (
-                <Stillingsrad rekrutteringsbistandstilling={hit._source} />
+                <Stillingsrad key={hit._id} rekrutteringsbistandstilling={hit._source} />
             ))}
         </ul>
     );
