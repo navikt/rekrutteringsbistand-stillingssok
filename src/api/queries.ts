@@ -55,7 +55,7 @@ const ikkeHaMedUpublisertStilling = {
             {
                 range: {
                     'stilling.expires': {
-                        lt: 'now',
+                        lt: 'now/d',
                     },
                 },
             },
