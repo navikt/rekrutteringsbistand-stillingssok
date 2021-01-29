@@ -20,7 +20,7 @@ export const resultat: Respons = {
                         uuid: 'b7f2e4ef-7d1a-45b9-b286-889de658f128',
                         annonsenr: '123456',
                         status: 'STOPPED',
-                        privacy: 'SHOW_ALL',
+                        privacy: 'INTERNAL_NOT_SHOWN',
                         published: '2020-01-04T07:04:28.718064',
                         expires: '2020-02-14T09:57:00',
                         created: '2020-01-04T07:07:50.292658',
@@ -33,8 +33,8 @@ export const resultat: Respons = {
                             orgform: 'BEDR',
                         },
                         categories: [{ styrkCode: '4110.23', name: 'Ordremedarbeider' }],
-                        source: 'FINN',
-                        medium: 'FINN',
+                        source: 'DIR',
+                        medium: 'DIR',
                         businessName: 'Norsecraft Tec AS',
                         locations: [
                             {

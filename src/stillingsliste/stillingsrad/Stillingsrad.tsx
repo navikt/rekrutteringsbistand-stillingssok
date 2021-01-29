@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Kilde, Location, Rekrutteringsbistandstilling } from '../../Stilling';
+import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
@@ -69,7 +69,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 </span>
             </div>
             <div className="stillingsrad__etikett">
-                {stilling.source === Kilde.Intern ? (
+                {stilling.privacy === Privacy.Intern ? (
                     <EtikettSuksess mini>Intern</EtikettSuksess>
                 ) : (
                     <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
