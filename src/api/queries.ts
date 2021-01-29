@@ -9,6 +9,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
+        ...sorterPåPublisertDatoHvisTekstErTom(søkekriterier.tekst),
         query: {
             bool: {
                 must_not: slettetStilling,
@@ -18,6 +19,16 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 ],
                 ...filtrerPåPublisert(søkekriterier.publisert),
             },
+        },
+    };
+};
+
+const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
+    if (tekst) return [];
+
+    return {
+        sort: {
+            'stilling.published': { order: 'desc' },
         },
     };
 };
