@@ -57,7 +57,8 @@ const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
 const filtrerPåPublisert = (publisert: Publisert) => {
     if (publisert === Publisert.Alle) return {};
 
-    const privacy = Publisert.Intern ? Privacy.Intern : Privacy.Arbeidsplassen;
+    const privacy = publisert === Publisert.Intern ? Privacy.Intern : Privacy.Arbeidsplassen;
+
     return {
         filter: {
             term: {
