@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
-import { useLocation } from 'react-router-dom';
-import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
+import { useHistory, useLocation } from 'react-router-dom';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
@@ -23,18 +23,30 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
-    const location = useLocation();
     const [respons, setRespons] = useState<Respons | null>(null);
+    const [side, setSide] = useState<number>(hentSøkekriterier(history.location.search).side); // Hent fra URL
 
     useEffect(() => {
-        const brukQuery = async () => {
-            const søkekriterier = hentSøkekriterier(location.search);
+        const blaTilValgtSide = async () => {
             const query = lagQuery(søkekriterier);
             setRespons(await søk(query));
         };
 
-        brukQuery();
-    }, [location.search]);
+        const søkekriterier = hentSøkekriterier(history.location.search);
+
+        const harEndretSide = søkekriterier.side !== side;
+        if (harEndretSide) {
+            blaTilValgtSide();
+        } else {
+            console.log('Jalla');
+            const url = byggUrlMedParam(QueryParam.Side, null);
+            history.replace({ search: url.search });
+        }
+    }, [history, side]);
+
+    const onSideChange = (side: number) => {
+        setSide(side);
+    };
 
     return (
         <div className="app">
@@ -42,7 +54,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             {respons && (
                 <>
                     <Stillingsliste esRespons={respons} />
-                    <Paginering totaltAntallTreff={respons.hits.total.value} />
+                    <Paginering
+                        side={side}
+                        totaltAntallTreff={respons.hits.total.value}
+                        onSideChange={onSideChange}
+                    />
                 </>
             )}
         </div>

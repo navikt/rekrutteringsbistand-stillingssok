@@ -1,35 +1,24 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
-import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { maksAntallTreffPerSøk } from '../api/queries';
 import './Paginering.less';
 
 type Props = {
+    side: number;
+    onSideChange: (side: number) => void;
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
-    const history = useHistory();
-    const { search } = history.location;
-    const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
-
-    const onPageChange = (valgtSide: number) => {
-        setSide(valgtSide);
-
-        const url = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
-        history.replace({ search: url.search });
-    };
-
+const Paginering: FunctionComponent<Props> = ({ side, onSideChange, totaltAntallTreff }) => {
     return (
         <ReactPaginate
             forcePage={side - 1}
             pageCount={regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk)}
             pageRangeDisplayed={5}
             marginPagesDisplayed={1}
-            onPageChange={({ selected }) => onPageChange(selected + 1)}
+            onPageChange={({ selected }) => onSideChange(selected + 1)}
             containerClassName="paginering typo-element"
             pageClassName="paginering__side"
             breakClassName="paginering__side"
