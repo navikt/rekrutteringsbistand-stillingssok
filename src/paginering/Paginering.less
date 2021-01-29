@@ -1,5 +1,39 @@
+@import '../variabler.less';
+
 .paginering {
-    &__aktiv-side {
-        background-color: pink;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+
+    &__side {
+        margin: 0 0.25rem;
+        border-radius: 0.25rem;
+
+        &--aktiv {
+            background-color: @navDypBla;
+        }
+    }
+
+    &__side-lenke {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @navBla;
+        height: 2rem;
+        width: 2rem;
+
+        &--aktiv {
+            color: white;
+        }
+
+        &--focus {
+            outline: none;
+            box-shadow: 0 0 0 3px @fokusFarge;
+        }
+    }
+
+    .nav-frontend-chevron {
+        color: @navBla;
+        transform: translateY(-2px) rotate(270deg);
     }
 }
