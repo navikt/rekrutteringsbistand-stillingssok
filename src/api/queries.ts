@@ -15,6 +15,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 must_not: slettetStilling,
                 must: [
                     ikkeHaMedUpublisertStilling,
+                    ikkeHaMedAvvistStilling,
                     ...søkITittelOgStillingstekst(søkekriterier.tekst),
                 ],
                 ...filtrerPåPublisert(søkekriterier.publisert),
@@ -59,6 +60,16 @@ const ikkeHaMedUpublisertStilling = {
                 },
             },
         ],
+    },
+};
+
+const ikkeHaMedAvvistStilling = {
+    bool: {
+        must_not: {
+            term: {
+                'stilling.status': 'REJECTED',
+            },
+        },
     },
 };
 
