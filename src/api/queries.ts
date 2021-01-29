@@ -10,7 +10,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 must_not: slettetStilling,
                 must: [
                     ikkeHaMedUpublisertStilling,
-                    søkekriterier.tekst && søkITittelOgStillingstekst(søkekriterier.tekst),
+                    ...søkITittelOgStillingstekst(søkekriterier.tekst),
                 ],
                 ...filtrerPåPublisert(søkekriterier.publisert),
             },
@@ -60,9 +60,15 @@ const filtrerPåPublisert = (publisert: Publisert) => {
     };
 };
 
-const søkITittelOgStillingstekst = (tekst: string) => ({
-    multi_match: {
-        query: tekst,
-        fields: ['stilling.adtext_no', 'stilling.title', 'stilling.annonsenr'],
-    },
-});
+const søkITittelOgStillingstekst = (tekst: string) => {
+    if (!tekst) return [];
+
+    return [
+        {
+            multi_match: {
+                query: tekst,
+                fields: ['stilling.adtext_no', 'stilling.title', 'stilling.annonsenr'],
+            },
+        },
+    ];
+};
