@@ -5,6 +5,7 @@ import Navspa from '@navikt/navspa';
 import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
 import './index.less';
+import { Router } from 'react-router-dom';
 
 const skalEksporteres = process.env.REACT_APP_EXPORT || process.env.NODE_ENV === 'production';
 
@@ -14,7 +15,9 @@ export const cssScopeForApp = 'rekbis-stillingssok';
 
 const AppMedCssScope: FunctionComponent = (props: any) => (
     <div className={cssScopeForApp}>
-        <App {...props} />
+        <Router history={props.history}>
+            <App {...props} />
+        </Router>
     </div>
 );
 
