@@ -1,8 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
-import ReactPaginate from 'react-paginate';
+import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import { useHistory } from 'react-router-dom';
-import { maksAntallTreffPerSøk } from '../api/queries';
+import ReactPaginate from 'react-paginate';
+
 import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { maksAntallTreffPerSøk } from '../api/queries';
 import './Paginering.less';
 
 type Props = {
@@ -28,7 +30,17 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
             pageRangeDisplayed={5}
             marginPagesDisplayed={1}
             onPageChange={({ selected }) => onPageChange(selected + 1)}
-            activeClassName="paginering__aktiv-side"
+            containerClassName="paginering typo-element"
+            pageClassName="paginering__side"
+            breakClassName="paginering__side"
+            breakLinkClassName="paginering__side-lenke paginering__side-lenke--break"
+            activeClassName="paginering__side--aktiv"
+            pageLinkClassName="paginering__side-lenke"
+            activeLinkClassName="paginering__side-lenke--aktiv"
+            nextLabel={<HoyreChevron />}
+            previousLabel={<VenstreChevron />}
+            nextLinkClassName="paginering__side-lenke"
+            previousLinkClassName="paginering__side-lenke"
         />
     );
 };
