@@ -9,15 +9,27 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
+        ...sorterPåPublisertDatoHvisTekstErTom(søkekriterier.tekst),
         query: {
             bool: {
                 must_not: slettetStilling,
                 must: [
                     ikkeHaMedUpublisertStilling,
+                    ikkeHaMedAvvistStilling,
                     ...søkITittelOgStillingstekst(søkekriterier.tekst),
                 ],
                 ...filtrerPåPublisert(søkekriterier.publisert),
             },
+        },
+    };
+};
+
+const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
+    if (tekst) return [];
+
+    return {
+        sort: {
+            'stilling.published': { order: 'desc' },
         },
     };
 };
@@ -43,11 +55,21 @@ const ikkeHaMedUpublisertStilling = {
             {
                 range: {
                     'stilling.expires': {
-                        lt: 'now',
+                        lt: 'now/d',
                     },
                 },
             },
         ],
+    },
+};
+
+const ikkeHaMedAvvistStilling = {
+    bool: {
+        must_not: {
+            term: {
+                'stilling.status': 'REJECTED',
+            },
+        },
     },
 };
 
