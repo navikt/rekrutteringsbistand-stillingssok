@@ -12,8 +12,8 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                     ikkeHaMedUpublisertStilling,
                     søkekriterier.tekst && søkITittelOgStillingstekst(søkekriterier.tekst),
                 ],
+                ...filtrerPåPublisert(søkekriterier.publisert),
             },
-            ...filtrerPåPublisert(søkekriterier.publisert),
         },
     };
 };
