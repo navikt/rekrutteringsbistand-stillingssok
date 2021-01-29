@@ -6,7 +6,7 @@ import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
-import Stillingsliste from './stillingliste/Stillingsliste';
+import Stillingsliste from './stillingsliste/Stillingsliste';
 import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
 

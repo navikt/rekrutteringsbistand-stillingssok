@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Respons } from '../elasticSearchTyper';
-import Stillingsrad from './stillingrad/Stillingsrad';
+import Stillingsrad from './stillingsrad/Stillingsrad';
 import './Stillingsliste.less';
 
 type Props = {
