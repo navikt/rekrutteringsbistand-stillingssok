@@ -1,6 +1,8 @@
 import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
+    size: number;
+    from: number;
     query: {
         match?: Record<string, MatchQuery>;
         bool?: object;

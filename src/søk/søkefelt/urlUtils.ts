@@ -4,12 +4,14 @@ import { Publisert } from '../HvorErAnnonsenPublisert';
 export enum QueryParam {
     Tekst = 'q',
     Publisert = 'publisert',
+    Side = 'side',
 }
 
 export const hentSøkekriterier = (search: string): Søkekriterier => {
     const searchParams = new URLSearchParams(search);
 
     return {
+        side: parseInt(searchParams.get(QueryParam.Side) || '1'),
         tekst: searchParams.get(QueryParam.Tekst) || '',
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) || Publisert.Alle,
     };

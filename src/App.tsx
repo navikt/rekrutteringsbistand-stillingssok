@@ -11,6 +11,7 @@ import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
 
 export type Søkekriterier = {
+    side: number;
     tekst: string;
     publisert: Publisert;
 };
