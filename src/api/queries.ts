@@ -3,7 +3,7 @@ import { Søkekriterier } from '../App';
 import { Publisert } from '../søk/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
 
-const maksAntallTreffPerSøk = 10;
+export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {

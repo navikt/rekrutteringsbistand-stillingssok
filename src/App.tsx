@@ -9,6 +9,7 @@ import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
+import Paginering from './paginering/Paginering';
 
 export type Søkekriterier = {
     side: number;
@@ -38,7 +39,12 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     return (
         <div className="app">
             <Søk />
-            {respons && <Stillingsliste esRespons={respons} />}
+            {respons && (
+                <>
+                    <Stillingsliste esRespons={respons} />
+                    <Paginering totaltAntallTreff={respons.hits.total.value} />
+                </>
+            )}
         </div>
     );
 };
