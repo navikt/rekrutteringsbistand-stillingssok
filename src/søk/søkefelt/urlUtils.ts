@@ -17,7 +17,7 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
     };
 };
 
-export const byggUrlMedParam = (param: QueryParam, value: string | boolean | null) => {
+export const byggUrlMedParam = (param: QueryParam, value: string | boolean | null | number) => {
     const url = new URL(window.location.href);
 
     if (
