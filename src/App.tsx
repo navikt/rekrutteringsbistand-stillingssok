@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
-import { useLocation } from 'react-router-dom';
-import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
@@ -23,26 +22,36 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
-    const location = useLocation();
     const [respons, setRespons] = useState<Respons | null>(null);
 
-    useEffect(() => {
-        const brukQuery = async () => {
-            const søkekriterier = hentSøkekriterier(location.search);
+    const søkBasertPåUrl = useCallback(
+        async (beholdSidetall?: boolean) => {
+            if (!beholdSidetall) {
+                const url = byggUrlMedParam(QueryParam.Side, null);
+                history.replace({ search: url.search });
+            }
+
+            const søkekriterier = hentSøkekriterier(history.location.search);
             const query = lagQuery(søkekriterier);
             setRespons(await søk(query));
-        };
+        },
+        [history]
+    );
 
-        brukQuery();
-    }, [location.search]);
+    useEffect(() => {
+        søkBasertPåUrl(true);
+    }, [søkBasertPåUrl]);
 
     return (
         <div className="app">
-            <Søk />
+            <Søk søkBasertPåUrl={søkBasertPåUrl} />
             {respons && (
                 <>
                     <Stillingsliste esRespons={respons} />
-                    <Paginering totaltAntallTreff={respons.hits.total.value} />
+                    <Paginering
+                        søkBasertPåUrl={søkBasertPåUrl}
+                        totaltAntallTreff={respons.hits.total.value}
+                    />
                 </>
             )}
         </div>

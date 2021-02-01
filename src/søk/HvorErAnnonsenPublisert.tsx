@@ -2,6 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'reac
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useHistory } from 'react-router-dom';
 import { byggUrlMedParam, QueryParam } from './søkefelt/urlUtils';
+import { SøkProps } from './Søk';
 
 export enum Publisert {
     Intern = 'intern',
@@ -9,7 +10,7 @@ export enum Publisert {
     Alle = 'alle',
 }
 
-const HvorErAnnonsenPublisert: FunctionComponent = () => {
+const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
     const history = useHistory();
 
     const [interntINav, setInterntINav] = useState<boolean>(false);
@@ -30,22 +31,29 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
         history.replace({ search: url.search });
     }, [interntINav, påArbeidsplassen, history]);
 
-    // TODO Slå sammen til én med value
-    const onInterntINavChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInterntINav(event.target.checked);
-    };
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        søkBasertPåUrl();
 
-    const onPåArbeidsplassenChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setPåArbeidsplassen(event.target.checked);
+        if (event.target.value === Publisert.Intern) {
+            setInterntINav(event.target.checked);
+        } else if (event.target.value === Publisert.Arbeidsplassen) {
+            setPåArbeidsplassen(event.target.checked);
+        }
     };
 
     return (
         <SkjemaGruppe legend="Hvor er annonsen publisert?">
-            <Checkbox label="Internt i NAV" checked={interntINav} onChange={onInterntINavChange} />
+            <Checkbox
+                label="Internt i NAV"
+                value={Publisert.Intern}
+                checked={interntINav}
+                onChange={onChange}
+            />
             <Checkbox
                 label="På Arbeidsplassen"
+                value={Publisert.Arbeidsplassen}
                 checked={påArbeidsplassen}
-                onChange={onPåArbeidsplassenChange}
+                onChange={onChange}
             />
         </SkjemaGruppe>
     );

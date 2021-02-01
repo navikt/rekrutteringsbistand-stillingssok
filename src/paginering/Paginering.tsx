@@ -1,26 +1,34 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
-import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { maksAntallTreffPerSøk } from '../api/queries';
 import './Paginering.less';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { useHistory } from 'react-router-dom';
+import { SøkProps } from '../søk/Søk';
 
-type Props = {
+type Props = SøkProps & {
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
+const Paginering: FunctionComponent<Props> = ({ søkBasertPåUrl, totaltAntallTreff }) => {
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+
+    useEffect(() => {
+        const sidetall = hentSøkekriterier(search).side;
+        setSide(sidetall);
+    }, [search]);
 
     const onPageChange = (valgtSide: number) => {
         setSide(valgtSide);
 
         const url = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
         history.replace({ search: url.search });
+
+        søkBasertPåUrl(true);
     };
 
     return (

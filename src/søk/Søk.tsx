@@ -3,11 +3,15 @@ import Søkefelt from './søkefelt/Søkefelt';
 import './Søk.less';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 
-const Søk: FunctionComponent = () => {
+export type SøkProps = {
+    søkBasertPåUrl: (beholdSidetall?: boolean) => void;
+};
+
+const Søk: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
     return (
         <div className="søk">
-            <Søkefelt />
-            <HvorErAnnonsenPublisert />
+            <Søkefelt søkBasertPåUrl={søkBasertPåUrl} />
+            <HvorErAnnonsenPublisert søkBasertPåUrl={søkBasertPåUrl} />
         </div>
     );
 };
