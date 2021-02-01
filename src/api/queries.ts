@@ -12,13 +12,8 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         ...sorterPåPublisertDatoHvisTekstErTom(søkekriterier.tekst),
         query: {
             bool: {
-                must_not: slettetStilling,
-                must: [
-                    ikkeHaMedUpublisertStilling,
-                    ikkeHaMedAvvistStilling,
-                    ...søkITittelOgStillingstekst(søkekriterier.tekst),
-                ],
-                ...filtrerPåPublisert(søkekriterier.publisert),
+                must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
+                filter: [...publisert(søkekriterier.publisert), aktivStilling],
             },
         },
     };
@@ -34,60 +29,21 @@ const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
     };
 };
 
-const slettetStilling = {
-    term: {
-        'stilling.status': 'DELETED',
-    },
-};
-
-const ikkeHaMedUpublisertStilling = {
-    bool: {
-        should: [
-            {
-                bool: {
-                    must_not: {
-                        term: {
-                            'stilling.status': 'INACTIVE',
-                        },
-                    },
-                },
-            },
-            {
-                range: {
-                    'stilling.expires': {
-                        lt: 'now/d',
-                    },
-                },
-            },
-        ],
-    },
-};
-
-const ikkeHaMedAvvistStilling = {
-    bool: {
-        must_not: {
-            term: {
-                'stilling.status': 'REJECTED',
-            },
-        },
-    },
-};
-
 const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
     side * antallTreffPerSide - antallTreffPerSide;
 
-const filtrerPåPublisert = (publisert: Publisert) => {
-    if (publisert === Publisert.Alle) return {};
+const publisert = (publisert: Publisert) => {
+    if (publisert === Publisert.Alle) return [];
 
     const privacy = publisert === Publisert.Intern ? Privacy.Intern : Privacy.Arbeidsplassen;
 
-    return {
-        filter: {
+    return [
+        {
             term: {
                 'stilling.privacy': privacy,
             },
         },
-    };
+    ];
 };
 
 const søkITittelOgStillingstekst = (tekst: string) => {
@@ -101,4 +57,10 @@ const søkITittelOgStillingstekst = (tekst: string) => {
             },
         },
     ];
+};
+
+const aktivStilling = {
+    term: {
+        'stilling.status': 'ACTIVE',
+    },
 };
