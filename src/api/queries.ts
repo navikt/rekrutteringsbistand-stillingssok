@@ -53,7 +53,13 @@ const søkITittelOgStillingstekst = (tekst: string) => {
         {
             multi_match: {
                 query: tekst,
-                fields: ['stilling.adtext_no', 'stilling.title', 'stilling.annonsenr'],
+                fields: [
+                    'stilling.adtext_no',
+                    'stilling.title',
+                    'stilling.annonsenr',
+                    'stilling.employer.name',
+                    'stilling.employer.orgnr',
+                ],
             },
         },
     ];
