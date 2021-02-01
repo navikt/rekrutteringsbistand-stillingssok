@@ -469,6 +469,14 @@ export const resultat: Respons = {
                                 latitue: '60.195377349853516',
                                 longitude: '11.070162773132324',
                             },
+                            {
+                                address: 'Dikeveien 6',
+                                postalCode: '1661',
+                                county: 'VIKEN',
+                                municipal: 'FREDRIKSTAD',
+                                latitue: '59.24449920654297',
+                                longitude: '10.98370361328125',
+                            },
                         ],
                         reference: '164437229',
                         administration: {

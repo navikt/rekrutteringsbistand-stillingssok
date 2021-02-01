@@ -14,22 +14,17 @@ import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
 import './Stillingsrad.less';
 
 const hentArbeidssted = (locations: Location[]): string | null => {
-    let arbeidssted = null;
-
-    if (locations.length > 0) {
-        const location = locations[0];
-
-        if (location.municipal) {
-            arbeidssted = location.municipal;
-        } else if (location.county) {
-            arbeidssted = location.county;
-        }
-
-        if (locations.length > 1) {
-            arbeidssted += '...';
-        }
-    }
-    return arbeidssted;
+    return locations
+        .map((location) => {
+            if (location.municipal) {
+                return location.municipal;
+            } else if (location.county) {
+                return location.county;
+            } else {
+                return null;
+            }
+        })
+        .join(', ');
 };
 
 type Props = {
