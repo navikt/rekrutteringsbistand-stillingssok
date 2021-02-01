@@ -1,4 +1,13 @@
+@import '../variabler.less';
+
 .søk {
     width: 100%;
-    max-width: 30rem;
+
+    &__filtre {
+        margin-top: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        max-width: 18rem;
+    }
 }

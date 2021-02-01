@@ -3,6 +3,7 @@ import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useHistory } from 'react-router-dom';
 import { byggUrlMedParam, QueryParam } from './søkefelt/urlUtils';
 import { SøkProps } from './Søk';
+import { Element } from 'nav-frontend-typografi';
 
 export enum Publisert {
     Intern = 'intern',
@@ -42,7 +43,7 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUr
     };
 
     return (
-        <SkjemaGruppe legend="Hvor er annonsen publisert?">
+        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
             <Checkbox
                 label="Internt i NAV"
                 value={Publisert.Intern}

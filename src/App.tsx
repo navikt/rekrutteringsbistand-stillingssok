@@ -45,14 +45,15 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     return (
         <div className="app">
             <Søk søkBasertPåUrl={søkBasertPåUrl} />
+
             {respons && (
-                <>
+                <div className="app__søkeresultat">
                     <Stillingsliste esRespons={respons} />
                     <Paginering
                         søkBasertPåUrl={søkBasertPåUrl}
                         totaltAntallTreff={respons.hits.total.value}
                     />
-                </>
+                </div>
             )}
         </div>
     );
