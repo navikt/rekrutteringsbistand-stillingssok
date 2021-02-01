@@ -31,24 +31,29 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ triggSøkBasert
         history.replace({ search: url.search });
     }, [interntINav, påArbeidsplassen, history]);
 
-    // TODO Slå sammen til én med value
-    const onInterntINavChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         triggSøkBasertPåUrl(true);
-        setInterntINav(event.target.checked);
-    };
 
-    const onPåArbeidsplassenChange = (event: ChangeEvent<HTMLInputElement>) => {
-        triggSøkBasertPåUrl(true);
-        setPåArbeidsplassen(event.target.checked);
+        if (event.target.value === Publisert.Intern) {
+            setInterntINav(event.target.checked);
+        } else if (event.target.value === Publisert.Arbeidsplassen) {
+            setPåArbeidsplassen(event.target.checked);
+        }
     };
 
     return (
         <SkjemaGruppe legend="Hvor er annonsen publisert?">
-            <Checkbox label="Internt i NAV" checked={interntINav} onChange={onInterntINavChange} />
+            <Checkbox
+                label="Internt i NAV"
+                value={Publisert.Intern}
+                checked={interntINav}
+                onChange={onChange}
+            />
             <Checkbox
                 label="På Arbeidsplassen"
+                value={Publisert.Arbeidsplassen}
                 checked={påArbeidsplassen}
-                onChange={onPåArbeidsplassenChange}
+                onChange={onChange}
             />
         </SkjemaGruppe>
     );
