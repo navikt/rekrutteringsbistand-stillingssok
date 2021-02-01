@@ -3,11 +3,15 @@ import Søkefelt from './søkefelt/Søkefelt';
 import './Søk.less';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 
-const Søk: FunctionComponent = () => {
+export type SøkProps = {
+    triggSøkBasertPåUrl: (skalResetteSidetall: boolean) => void;
+};
+
+const Søk: FunctionComponent<SøkProps> = ({ triggSøkBasertPåUrl }) => {
     return (
         <div className="søk">
-            <Søkefelt />
-            <HvorErAnnonsenPublisert />
+            <Søkefelt triggSøkBasertPåUrl={triggSøkBasertPåUrl} />
+            <HvorErAnnonsenPublisert triggSøkBasertPåUrl={triggSøkBasertPåUrl} />
         </div>
     );
 };

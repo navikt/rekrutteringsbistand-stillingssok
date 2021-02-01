@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
-import { useHistory, useLocation } from 'react-router-dom';
 import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
@@ -24,40 +23,38 @@ export type AppProps = {
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const [respons, setRespons] = useState<Respons | null>(null);
-    const [side, setSide] = useState<number>(hentSøkekriterier(history.location.search).side); // Hent fra URL
+
+    const triggSøkBasertPåUrl = useCallback(
+        (skalResetteSidetall: boolean) => {
+            if (skalResetteSidetall) {
+                const url = byggUrlMedParam(QueryParam.Side, null);
+                history.replace({ search: url.search });
+            }
+
+            const søkekriterier = hentSøkekriterier(history.location.search);
+
+            const gjørSøk = async () => {
+                const query = lagQuery(søkekriterier);
+                setRespons(await søk(query));
+            };
+            gjørSøk();
+        },
+        [history]
+    );
 
     useEffect(() => {
-        const blaTilValgtSide = async () => {
-            const query = lagQuery(søkekriterier);
-            setRespons(await søk(query));
-        };
-
-        const søkekriterier = hentSøkekriterier(history.location.search);
-
-        const harEndretSide = søkekriterier.side !== side;
-        if (harEndretSide) {
-            blaTilValgtSide();
-        } else {
-            console.log('Jalla');
-            const url = byggUrlMedParam(QueryParam.Side, null);
-            history.replace({ search: url.search });
-        }
-    }, [history, side]);
-
-    const onSideChange = (side: number) => {
-        setSide(side);
-    };
+        triggSøkBasertPåUrl(false);
+    }, [triggSøkBasertPåUrl]);
 
     return (
         <div className="app">
-            <Søk />
+            <Søk triggSøkBasertPåUrl={triggSøkBasertPåUrl} />
             {respons && (
                 <>
                     <Stillingsliste esRespons={respons} />
                     <Paginering
-                        side={side}
+                        triggSøkBasertPåUrl={triggSøkBasertPåUrl}
                         totaltAntallTreff={respons.hits.total.value}
-                        onSideChange={onSideChange}
                     />
                 </>
             )}

@@ -1,24 +1,43 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import ReactPaginate from 'react-paginate';
 
 import { maksAntallTreffPerSøk } from '../api/queries';
 import './Paginering.less';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { useHistory } from 'react-router-dom';
+import { SøkProps } from '../søk/Søk';
 
-type Props = {
-    side: number;
-    onSideChange: (side: number) => void;
+type Props = SøkProps & {
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ side, onSideChange, totaltAntallTreff }) => {
+const Paginering: FunctionComponent<Props> = ({ triggSøkBasertPåUrl, totaltAntallTreff }) => {
+    const history = useHistory();
+    const { search } = history.location;
+    const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+
+    useEffect(() => {
+        const sidetall = hentSøkekriterier(search).side;
+        setSide(sidetall);
+    }, [search]);
+
+    const onPageChange = (valgtSide: number) => {
+        setSide(valgtSide);
+
+        const url = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
+        history.replace({ search: url.search });
+
+        triggSøkBasertPåUrl(false);
+    };
+
     return (
         <ReactPaginate
             forcePage={side - 1}
             pageCount={regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk)}
             pageRangeDisplayed={5}
             marginPagesDisplayed={1}
-            onPageChange={({ selected }) => onSideChange(selected + 1)}
+            onPageChange={({ selected }) => onPageChange(selected + 1)}
             containerClassName="paginering typo-element"
             pageClassName="paginering__side"
             breakClassName="paginering__side"

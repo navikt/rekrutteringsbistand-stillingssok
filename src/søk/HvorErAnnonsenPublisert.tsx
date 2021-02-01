@@ -2,6 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'reac
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useHistory } from 'react-router-dom';
 import { byggUrlMedParam, QueryParam } from './søkefelt/urlUtils';
+import { SøkProps } from './Søk';
 
 export enum Publisert {
     Intern = 'intern',
@@ -9,7 +10,7 @@ export enum Publisert {
     Alle = 'alle',
 }
 
-const HvorErAnnonsenPublisert: FunctionComponent = () => {
+const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ triggSøkBasertPåUrl }) => {
     const history = useHistory();
 
     const [interntINav, setInterntINav] = useState<boolean>(false);
@@ -32,10 +33,12 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
 
     // TODO Slå sammen til én med value
     const onInterntINavChange = (event: ChangeEvent<HTMLInputElement>) => {
+        triggSøkBasertPåUrl(true);
         setInterntINav(event.target.checked);
     };
 
     const onPåArbeidsplassenChange = (event: ChangeEvent<HTMLInputElement>) => {
+        triggSøkBasertPåUrl(true);
         setPåArbeidsplassen(event.target.checked);
     };
 
