@@ -46,7 +46,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
         <li className="stillingsrad">
             <div className="stillingsrad__info">
                 <Undertekst className="stillingsrad__opprettet">
-                    {konverterTilPresenterbarDato(stilling.created)}
+                    {konverterTilPresenterbarDato(stilling.published)}
                 </Undertekst>
                 <Normaltekst>{formaterMedStoreOgSmåBokstaver(stilling.employer?.name)}</Normaltekst>
                 <Link className="stillingsrad__tittel lenke" to={lagUrlTilStilling(stilling)}>
