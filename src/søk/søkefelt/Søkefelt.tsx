@@ -6,7 +6,7 @@ import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './urlUtils';
 import './Søkefelt.less';
 import { SøkProps } from '../Søk';
 
-const Søkefelt: FunctionComponent<SøkProps> = ({ triggSøkBasertPåUrl }) => {
+const Søkefelt: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
     const { search } = useLocation();
     const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
 
@@ -22,7 +22,7 @@ const Søkefelt: FunctionComponent<SøkProps> = ({ triggSøkBasertPåUrl }) => {
         const url = byggUrlMedParam(QueryParam.Tekst, input);
         history.replace({ search: url.search });
 
-        triggSøkBasertPåUrl(true);
+        søkBasertPåUrl();
     };
 
     return (

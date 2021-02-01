@@ -10,7 +10,7 @@ export enum Publisert {
     Alle = 'alle',
 }
 
-const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ triggSøkBasertPåUrl }) => {
+const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
     const history = useHistory();
 
     const [interntINav, setInterntINav] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ triggSøkBasert
     }, [interntINav, påArbeidsplassen, history]);
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        triggSøkBasertPåUrl(true);
+        søkBasertPåUrl();
 
         if (event.target.value === Publisert.Intern) {
             setInterntINav(event.target.checked);

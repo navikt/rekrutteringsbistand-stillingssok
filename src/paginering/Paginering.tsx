@@ -12,7 +12,7 @@ type Props = SøkProps & {
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ triggSøkBasertPåUrl, totaltAntallTreff }) => {
+const Paginering: FunctionComponent<Props> = ({ søkBasertPåUrl, totaltAntallTreff }) => {
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
@@ -28,7 +28,7 @@ const Paginering: FunctionComponent<Props> = ({ triggSøkBasertPåUrl, totaltAnt
         const url = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
         history.replace({ search: url.search });
 
-        triggSøkBasertPåUrl(false);
+        søkBasertPåUrl(true);
     };
 
     return (

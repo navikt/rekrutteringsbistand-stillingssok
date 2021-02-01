@@ -24,36 +24,32 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const [respons, setRespons] = useState<Respons | null>(null);
 
-    const triggSøkBasertPåUrl = useCallback(
-        (skalResetteSidetall: boolean) => {
-            if (skalResetteSidetall) {
+    const søkBasertPåUrl = useCallback(
+        async (beholdSidetall?: boolean) => {
+            if (!beholdSidetall) {
                 const url = byggUrlMedParam(QueryParam.Side, null);
                 history.replace({ search: url.search });
             }
 
             const søkekriterier = hentSøkekriterier(history.location.search);
-
-            const gjørSøk = async () => {
-                const query = lagQuery(søkekriterier);
-                setRespons(await søk(query));
-            };
-            gjørSøk();
+            const query = lagQuery(søkekriterier);
+            setRespons(await søk(query));
         },
         [history]
     );
 
     useEffect(() => {
-        triggSøkBasertPåUrl(false);
-    }, [triggSøkBasertPåUrl]);
+        søkBasertPåUrl(true);
+    }, [søkBasertPåUrl]);
 
     return (
         <div className="app">
-            <Søk triggSøkBasertPåUrl={triggSøkBasertPåUrl} />
+            <Søk søkBasertPåUrl={søkBasertPåUrl} />
             {respons && (
                 <>
                     <Stillingsliste esRespons={respons} />
                     <Paginering
-                        triggSøkBasertPåUrl={triggSøkBasertPåUrl}
+                        søkBasertPåUrl={søkBasertPåUrl}
                         totaltAntallTreff={respons.hits.total.value}
                     />
                 </>
