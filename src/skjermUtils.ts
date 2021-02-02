@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export enum Enhetstype {
     Mobil = 0,
     Tablet = 400,
-    Desktop = 768,
+    Desktop = 992,
 }
 
 const getWindowDimensions = () => {
@@ -29,10 +29,20 @@ const useWindowDimensions = () => {
     return windowDimensions;
 };
 
+const beregnEnhetstype = (vindusbredde: number) => {
+    if (vindusbredde < Enhetstype.Tablet) return Enhetstype.Mobil;
+    else if (vindusbredde < Enhetstype.Desktop) return Enhetstype.Tablet;
+    return Enhetstype.Desktop;
+};
+
+export const hentEnhetstype = (): Enhetstype => {
+    const { width } = getWindowDimensions();
+
+    return beregnEnhetstype(width);
+};
+
 export const useEnhetstype = (): Enhetstype => {
     const { width } = useWindowDimensions();
 
-    if (width < Enhetstype.Tablet) return Enhetstype.Mobil;
-    else if (width < Enhetstype.Desktop) return Enhetstype.Tablet;
-    return Enhetstype.Desktop;
+    return beregnEnhetstype(width);
 };
