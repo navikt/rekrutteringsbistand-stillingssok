@@ -1,7 +1,12 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './søk/søkefelt/urlUtils';
+import {
+    byggUrlMedParam,
+    hentSøkekriterier,
+    QueryParam,
+    QueryParamValue,
+} from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
@@ -26,25 +31,42 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
+    const search = history.location.search;
+
     const [respons, setRespons] = useState<Respons | null>(null);
+    const [førsteSøkErGjort, setFørsteSøkErGjort] = useState<boolean>(false);
 
-    const søkBasertPåUrl = useCallback(
-        async (beholdSidetall?: boolean) => {
-            if (!beholdSidetall) {
-                const url = byggUrlMedParam(QueryParam.Side, null);
-                history.replace({ search: url.search });
-            }
+    const oppdaterSøk = async (queryParam: QueryParam, verdi: QueryParamValue) => {
+        const resetSidetall = queryParam !== QueryParam.Side;
 
-            const søkekriterier = hentSøkekriterier(history.location.search);
-            const query = lagQuery(søkekriterier);
-            setRespons(await søk(query));
-        },
-        [history]
-    );
+        if (resetSidetall) {
+            const url = byggUrlMedParam(QueryParam.Side, null);
+            oppdaterSearchParams(url.search);
+        }
+
+        const url = byggUrlMedParam(queryParam, verdi);
+        oppdaterSearchParams(url.search);
+
+        søkBasertPåUrl();
+    };
+
+    const oppdaterSearchParams = (search: string) => {
+        history.replace({ search });
+    };
+
+    const søkBasertPåUrl = useCallback(async () => {
+        const søkekriterier = hentSøkekriterier(search);
+        const query = lagQuery(søkekriterier);
+
+        setRespons(await søk(query));
+    }, [search]);
 
     useEffect(() => {
-        søkBasertPåUrl(true);
-    }, [søkBasertPåUrl]);
+        if (!førsteSøkErGjort) {
+            setFørsteSøkErGjort(true);
+            søkBasertPåUrl();
+        }
+    }, [søkBasertPåUrl, førsteSøkErGjort]);
 
     return (
         <div className="app">
@@ -58,7 +80,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <Introduksjon />
 
             <aside className="app__sidepanel">
-                <Søk søkBasertPåUrl={søkBasertPåUrl} />
+                <Søk oppdaterSøk={oppdaterSøk} />
             </aside>
 
             <main className="app__søkeresultat">
@@ -66,7 +88,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                     <>
                         <Stillingsliste esRespons={respons} />
                         <Paginering
-                            søkBasertPåUrl={søkBasertPåUrl}
+                            oppdaterSøk={oppdaterSøk}
                             totaltAntallTreff={respons.hits.total.value}
                         />
                     </>

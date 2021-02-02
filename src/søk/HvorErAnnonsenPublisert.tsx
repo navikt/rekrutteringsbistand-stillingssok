@@ -2,7 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
+import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
 import { SøkProps } from './Søk';
 
 export enum Publisert {
@@ -14,7 +14,7 @@ export enum Publisert {
 const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
     hentSøkekriterier(searchParams).publisert === publisert;
 
-const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
+const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     const history = useHistory();
     const search = history.location.search;
 
@@ -38,20 +38,13 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUr
     };
 
     const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
-        let publisertTilQuery;
-
         if (interntINav === påArbeidsplassen) {
-            publisertTilQuery = null;
+            oppdaterSøk(QueryParam.Publisert, null);
         } else if (interntINav) {
-            publisertTilQuery = Publisert.Intern;
+            oppdaterSøk(QueryParam.Publisert, Publisert.Intern);
         } else {
-            publisertTilQuery = Publisert.Arbeidsplassen;
+            oppdaterSøk(QueryParam.Publisert, Publisert.Arbeidsplassen);
         }
-
-        const url = byggUrlMedParam(QueryParam.Publisert, publisertTilQuery);
-        history.replace({ search: url.search });
-
-        søkBasertPåUrl();
     };
 
     return (

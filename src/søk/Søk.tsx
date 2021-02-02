@@ -4,23 +4,24 @@ import './Søk.less';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 import { Enhetstype, hentEnhetstype } from '../skjermUtils';
+import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
 
 export type SøkProps = {
-    søkBasertPåUrl: (beholdSidetall?: boolean) => void;
+    oppdaterSøk: (queryParam: QueryParam, verdi: QueryParamValue) => void;
 };
 
 const enhetstype = hentEnhetstype();
 
-const Søk: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
+const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     return (
         <div className="søk">
-            <Søkefelt søkBasertPåUrl={søkBasertPåUrl} />
+            <Søkefelt oppdaterSøk={oppdaterSøk} />
             <Ekspanderbartpanel
                 apen={enhetstype === Enhetstype.Desktop}
                 tittel="Vis filter"
                 className="søk__filtre"
             >
-                <HvorErAnnonsenPublisert søkBasertPåUrl={søkBasertPåUrl} />
+                <HvorErAnnonsenPublisert oppdaterSøk={oppdaterSøk} />
             </Ekspanderbartpanel>
         </div>
     );

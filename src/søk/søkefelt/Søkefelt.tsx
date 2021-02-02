@@ -1,16 +1,14 @@
 import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { Input } from 'nav-frontend-skjema';
-import { useHistory, useLocation } from 'react-router-dom';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './urlUtils';
-import './Søkefelt.less';
+import { useLocation } from 'react-router-dom';
+import { hentSøkekriterier, QueryParam } from './urlUtils';
 import { SøkProps } from '../Søk';
+import './Søkefelt.less';
 
-const Søkefelt: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
+const Søkefelt: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     const { search } = useLocation();
     const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
-
-    const history = useHistory();
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value);
@@ -18,11 +16,7 @@ const Søkefelt: FunctionComponent<SøkProps> = ({ søkBasertPåUrl }) => {
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
-
-        const url = byggUrlMedParam(QueryParam.Tekst, input);
-        history.replace({ search: url.search });
-
-        søkBasertPåUrl();
+        oppdaterSøk(QueryParam.Tekst, input);
     };
 
     return (
