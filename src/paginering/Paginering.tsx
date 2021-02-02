@@ -7,6 +7,7 @@ import './Paginering.less';
 import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { useHistory } from 'react-router-dom';
 import { SøkProps } from '../søk/Søk';
+import { Enhetstype, useEnhetstype } from '../skjermUtils';
 
 type Props = SøkProps & {
     totaltAntallTreff: number;
@@ -16,6 +17,7 @@ const Paginering: FunctionComponent<Props> = ({ søkBasertPåUrl, totaltAntallTr
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+    const enhetstype = useEnhetstype();
 
     useEffect(() => {
         const sidetall = hentSøkekriterier(search).side;
@@ -41,7 +43,9 @@ const Paginering: FunctionComponent<Props> = ({ søkBasertPåUrl, totaltAntallTr
         <ReactPaginate
             forcePage={side - 1}
             pageCount={antallSider}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={
+                enhetstype === Enhetstype.Mobil ? 1 : enhetstype === Enhetstype.Tablet ? 3 : 5
+            }
             marginPagesDisplayed={1}
             onPageChange={({ selected }) => onPageChange(selected + 1)}
             containerClassName="paginering typo-element"
