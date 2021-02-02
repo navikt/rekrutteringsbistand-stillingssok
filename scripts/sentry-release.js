@@ -4,6 +4,8 @@ async function opprettReleaseTilSentry() {
     const release = process.env.SENTRY_RELEASE;
     const authToken = process.env.SENTRY_AUTH_TOKEN;
 
+    throw new Error('SENTRY_AUTH_TOKEN=[' + authToken + ']');
+
     if (!release) {
         throw new Error('"REACT_APP_SENTRY_RELEASE" er ikke satt');
     }
