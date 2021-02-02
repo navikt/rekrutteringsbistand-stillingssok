@@ -9,6 +9,7 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
 import Paginering from './paginering/Paginering';
+import Introduksjon from './introduksjon/Introduksjon';
 
 export type Søkekriterier = {
     side: number;
@@ -46,15 +47,18 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         <div className="app">
             <Søk søkBasertPåUrl={søkBasertPåUrl} />
 
-            {respons && (
-                <div className="app__søkeresultat">
-                    <Stillingsliste esRespons={respons} />
-                    <Paginering
-                        søkBasertPåUrl={søkBasertPåUrl}
-                        totaltAntallTreff={respons.hits.total.value}
-                    />
-                </div>
-            )}
+            <main className="app__søkeresultat">
+                <Introduksjon />
+                {respons && (
+                    <>
+                        <Stillingsliste esRespons={respons} />
+                        <Paginering
+                            søkBasertPåUrl={søkBasertPåUrl}
+                            totaltAntallTreff={respons.hits.total.value}
+                        />
+                    </>
+                )}
+            </main>
         </div>
     );
 };

@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 
+export enum Enhetstype {
+    Mobil = 0,
+    Tablet = 400,
+    Desktop = 768,
+}
+
 const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -30,9 +36,3 @@ export const useEnhetstype = (): Enhetstype => {
     else if (width < Enhetstype.Desktop) return Enhetstype.Tablet;
     return Enhetstype.Desktop;
 };
-
-export enum Enhetstype {
-    Mobil = 0,
-    Tablet = 400,
-    Desktop = 768,
-}
