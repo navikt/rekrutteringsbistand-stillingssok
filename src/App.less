@@ -1,12 +1,19 @@
 @import './variabler.less';
 
 .app {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    row-gap: 2rem;
+
     margin: 3rem auto;
     padding: 0 1rem;
     max-width: 51rem;
+
+    &__tilbakelenke {
+        .nav-frontend-chevron {
+            transform: translateY(-2px) rotate(270deg);
+            margin-right: 0.5rem;
+        }
+    }
 
     &__sidepanel {
         flex-grow: 0;
@@ -18,18 +25,20 @@
         flex-direction: column;
         align-items: center;
         align-self: center;
-
-        @media (min-width: @screen-lg-min) {
-            margin-left: 5rem;
-        }
     }
 
     @media (min-width: @screen-sm-min) {
         padding: 0 2rem;
     }
 
-    @media (min-width: @screen-lg-min) {
+    @media (min-width: @screen-md-min) {
+        display: grid;
+        grid-template-columns: 19rem 1fr;
+        column-gap: 3rem;
         max-width: 76rem;
-        flex-direction: row;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        column-gap: 6rem;
     }
 }

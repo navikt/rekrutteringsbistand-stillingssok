@@ -10,6 +10,8 @@ import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
 import Paginering from './paginering/Paginering';
 import Introduksjon from './introduksjon/Introduksjon';
+import { Link } from 'react-router-dom';
+import NavFrontendChevron from 'nav-frontend-chevron';
 
 export type Søkekriterier = {
     side: number;
@@ -45,12 +47,20 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     return (
         <div className="app">
+            <nav className="app__tilbakelenke">
+                <Link className="lenke" to="/stillinger">
+                    <NavFrontendChevron type="venstre" />
+                    Tilbake til gammelt søk
+                </Link>
+            </nav>
+
+            <Introduksjon />
+
             <aside className="app__sidepanel">
                 <Søk søkBasertPåUrl={søkBasertPåUrl} />
             </aside>
 
             <main className="app__søkeresultat">
-                <Introduksjon />
                 {respons && (
                     <>
                         <Stillingsliste esRespons={respons} />
