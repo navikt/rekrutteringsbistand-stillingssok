@@ -13,7 +13,11 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         query: {
             bool: {
                 must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
-                filter: [...publisert(søkekriterier.publisert), aktivStilling],
+                filter: [
+                    ...publisert(søkekriterier.publisert),
+                    aktivStilling,
+                    ...fylker(['ROGALAND']),
+                ],
             },
         },
     };
@@ -41,6 +45,32 @@ const publisert = (publisert: Publisert) => {
         {
             term: {
                 'stilling.privacy': privacy,
+            },
+        },
+    ];
+};
+
+const fylker = (fylker: string[]) => {
+    if (fylker.length === 0) return [];
+
+    const should = fylker.map((fylke) => ({
+        match: {
+            'stilling.locations.county': {
+                query: fylke,
+                operator: 'and',
+            },
+        },
+    }));
+
+    return [
+        {
+            nested: {
+                path: 'stilling.locations',
+                query: {
+                    bool: {
+                        should,
+                    },
+                },
             },
         },
     ];
