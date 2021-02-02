@@ -28,7 +28,6 @@ jobs:
         run: npm run sentry-release
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_LOG_LEVEL: debug
       - name: Bygg og publiser Docker-image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,7 +39,7 @@ jobs:
   deploy-til-dev:
     name: Deploy til dev
     needs: bygg-og-push-docker-image
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/uselocation-bug'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/legg-til-sentry'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
