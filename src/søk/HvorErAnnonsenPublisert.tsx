@@ -33,13 +33,12 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ søkBasertPåUr
     }, [interntINav, påArbeidsplassen, history]);
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        søkBasertPåUrl();
-
         if (event.target.value === Publisert.Intern) {
             setInterntINav(event.target.checked);
         } else if (event.target.value === Publisert.Arbeidsplassen) {
             setPåArbeidsplassen(event.target.checked);
         }
+        søkBasertPåUrl();
     };
 
     return (
