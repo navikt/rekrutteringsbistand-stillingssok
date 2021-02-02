@@ -1,65 +1,66 @@
 name: Bygg og deploy
 
-on: [push]
+on: [ push ]
 
 env:
-    IMAGE: docker.pkg.github.com/${{ github.repository }}/rekrutteringsbistand-stillingssok:${{ github.sha }}
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/rekrutteringsbistand-stillingssok:${{ github.sha }}
 
 jobs:
-    bygg-og-push-docker-image:
-        name: Bygg applikasjon
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-node@v1
-              with:
-                  node-version: 15
-            - uses: actions/cache@v1
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-            - name: Installer avhengigheter
-              run: npm ci
-            - name: Bygg applikasjon
-              run: npm run build
-            - name: Opprett release med Sentry
-              run: npm run sentry-release --log-level=debug
-              env:
-                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-            - name: Bygg og publiser Docker-image
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  docker build --tag ${IMAGE} .
-                  echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
-                  docker push ${IMAGE}
+  bygg-og-push-docker-image:
+    name: Bygg applikasjon
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 15
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Installer avhengigheter
+        run: npm ci
+      - name: Bygg applikasjon
+        run: npm run build
+      - name: Opprett release med Sentry
+        run: npm run sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_LOG_LEVEL: debug
+      - name: Bygg og publiser Docker-image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build --tag ${IMAGE} .
+          echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
+          docker push ${IMAGE}
 
-    deploy-til-dev:
-        name: Deploy til dev
-        needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/uselocation-bug'
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v1
-            - uses: nais/deploy/actions/deploy@v1
-              env:
-                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: dev-fss
-                  RESOURCE: deploy/nais.yaml
-                  VARS: deploy/nais-dev.json
+  deploy-til-dev:
+    name: Deploy til dev
+    needs: bygg-og-push-docker-image
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/uselocation-bug'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-fss
+          RESOURCE: deploy/nais.yaml
+          VARS: deploy/nais-dev.json
 
-    deploy-to-prod:
-        name: Deploy til prod
-        needs: deploy-til-dev
-        if: github.ref == 'refs/heads/main'
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v1
-            - uses: nais/deploy/actions/deploy@v1
-              env:
-                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-fss
-                  RESOURCE: deploy/nais.yaml
-                  VARS: deploy/nais-prod.json
+  deploy-to-prod:
+    name: Deploy til prod
+    needs: deploy-til-dev
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-fss
+          RESOURCE: deploy/nais.yaml
+          VARS: deploy/nais-prod.json
