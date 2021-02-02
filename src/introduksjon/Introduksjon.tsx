@@ -1,11 +1,14 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { FunctionComponent } from 'react';
+import Forstørrelsesglass from './Forstørrelsesglass';
 import './Introduksjon.less';
 
 const Introduksjon: FunctionComponent = () => {
     return (
         <article className="introduksjon">
-            <span className="introduksjon__ikon">IKON</span>
+            <div aria-hidden="true" className="introduksjon__ikon">
+                <Forstørrelsesglass />
+            </div>
             <div className="introduksjon__tekst">
                 <Undertittel className="blokk-xxs">Nytt stillingssøk</Undertittel>
                 <Normaltekst className="blokk-xs">
