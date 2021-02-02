@@ -31,8 +31,6 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
-    const search = history.location.search;
-
     const [respons, setRespons] = useState<Respons | null>(null);
     const [førsteSøkErGjort, setFørsteSøkErGjort] = useState<boolean>(false);
 
@@ -55,11 +53,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     };
 
     const søkBasertPåUrl = useCallback(async () => {
-        const søkekriterier = hentSøkekriterier(search);
+        const søkekriterier = hentSøkekriterier(history.location.search);
         const query = lagQuery(søkekriterier);
 
         setRespons(await søk(query));
-    }, [search]);
+    }, [history.location.search]);
 
     useEffect(() => {
         if (!førsteSøkErGjort) {
