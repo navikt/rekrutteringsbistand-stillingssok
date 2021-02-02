@@ -18,6 +18,7 @@ import Introduksjon from './introduksjon/Introduksjon';
 import { Link } from 'react-router-dom';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 export type Søkekriterier = {
     side: number;
@@ -84,6 +85,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <main className="app__søkeresultat">
                 {respons ? (
                     <>
+                        <Systemtittel className="app__antall-stillinger" tag="output">
+                            {respons.hits.total.value} annonser
+                        </Systemtittel>
                         <Stillingsliste esRespons={respons} />
                         <Paginering
                             oppdaterSøk={oppdaterSøk}

@@ -24,6 +24,12 @@ const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff 
         setSide(sidetall);
     }, [search]);
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+        });
+    }, [side]);
+
     const onPageChange = (valgtSide: number) => {
         setSide(valgtSide);
         oppdaterSøk(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
