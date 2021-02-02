@@ -31,7 +31,7 @@ const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff 
 
     const antallSider = regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk);
 
-    if (antallSider === 1) {
+    if (antallSider <= 1) {
         return null;
     }
 
