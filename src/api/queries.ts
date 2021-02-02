@@ -9,63 +9,71 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
+        ...sorterPåPublisertDatoHvisTekstErTom(søkekriterier.tekst),
         query: {
             bool: {
-                must_not: slettetStilling,
-                must: [
-                    ikkeHaMedUpublisertStilling,
-                    ...søkITittelOgStillingstekst(søkekriterier.tekst),
+                must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
+                filter: [
+                    ...publisert(søkekriterier.publisert),
+                    aktivStilling,
+                    ...fylker(['ROGALAND']),
                 ],
-                ...filtrerPåPublisert(søkekriterier.publisert),
             },
         },
     };
 };
 
-const slettetStilling = {
-    term: {
-        'stilling.status': 'DELETED',
-    },
-};
+const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
+    if (tekst) return [];
 
-const ikkeHaMedUpublisertStilling = {
-    bool: {
-        should: [
-            {
-                bool: {
-                    must_not: {
-                        term: {
-                            'stilling.status': 'INACTIVE',
-                        },
-                    },
-                },
-            },
-            {
-                range: {
-                    'stilling.expires': {
-                        lt: 'now',
-                    },
-                },
-            },
-        ],
-    },
+    return {
+        sort: {
+            'stilling.published': { order: 'desc' },
+        },
+    };
 };
 
 const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
     side * antallTreffPerSide - antallTreffPerSide;
 
-const filtrerPåPublisert = (publisert: Publisert) => {
-    if (publisert === Publisert.Alle) return {};
+const publisert = (publisert: Publisert) => {
+    if (publisert === Publisert.Alle) return [];
 
     const privacy = publisert === Publisert.Intern ? Privacy.Intern : Privacy.Arbeidsplassen;
 
-    return {
-        filter: {
+    return [
+        {
             term: {
                 'stilling.privacy': privacy,
             },
         },
-    };
+    ];
+};
+
+const fylker = (fylker: string[]) => {
+    if (fylker.length === 0) return [];
+
+    const should = fylker.map((fylke) => ({
+        match: {
+            'stilling.locations.county': {
+                query: fylke,
+                operator: 'and',
+            },
+        },
+    }));
+
+    return [
+        {
+            nested: {
+                path: 'stilling.locations',
+                query: {
+                    bool: {
+                        should,
+                    },
+                },
+            },
+        },
+    ];
 };
 
 const søkITittelOgStillingstekst = (tekst: string) => {
@@ -75,8 +83,20 @@ const søkITittelOgStillingstekst = (tekst: string) => {
         {
             multi_match: {
                 query: tekst,
-                fields: ['stilling.adtext_no', 'stilling.title', 'stilling.annonsenr'],
+                fields: [
+                    'stilling.adtext_no',
+                    'stilling.title',
+                    'stilling.annonsenr',
+                    'stilling.employer.name',
+                    'stilling.employer.orgnr',
+                ],
             },
         },
     ];
+};
+
+const aktivStilling = {
+    term: {
+        'stilling.status': 'ACTIVE',
+    },
 };

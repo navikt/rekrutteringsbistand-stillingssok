@@ -1,8 +1,12 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
-import { useLocation } from 'react-router-dom';
-import { hentSøkekriterier } from './søk/søkefelt/urlUtils';
+import {
+    byggUrlMedParam,
+    hentSøkekriterier,
+    QueryParam,
+    QueryParamValue,
+} from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
@@ -10,6 +14,11 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import './App.less';
 import { Publisert } from './søk/HvorErAnnonsenPublisert';
 import Paginering from './paginering/Paginering';
+import Introduksjon from './introduksjon/Introduksjon';
+import { Link } from 'react-router-dom';
+import NavFrontendChevron from 'nav-frontend-chevron';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 export type Søkekriterier = {
     side: number;
@@ -23,28 +32,72 @@ export type AppProps = {
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
-    const location = useLocation();
     const [respons, setRespons] = useState<Respons | null>(null);
+    const [førsteSøkErGjort, setFørsteSøkErGjort] = useState<boolean>(false);
+
+    const oppdaterSøk = async (queryParam: QueryParam, verdi: QueryParamValue) => {
+        const resetSidetall = queryParam !== QueryParam.Side;
+
+        if (resetSidetall) {
+            const url = byggUrlMedParam(QueryParam.Side, null);
+            oppdaterSearchParams(url.search);
+        }
+
+        const url = byggUrlMedParam(queryParam, verdi);
+        oppdaterSearchParams(url.search);
+
+        søkBasertPåUrl();
+    };
+
+    const oppdaterSearchParams = (search: string) => {
+        history.replace({ search });
+    };
+
+    const søkBasertPåUrl = useCallback(async () => {
+        const søkekriterier = hentSøkekriterier(history.location.search);
+        const query = lagQuery(søkekriterier);
+
+        setRespons(await søk(query));
+    }, [history.location.search]);
 
     useEffect(() => {
-        const brukQuery = async () => {
-            const søkekriterier = hentSøkekriterier(location.search);
-            const query = lagQuery(søkekriterier);
-            setRespons(await søk(query));
-        };
-
-        brukQuery();
-    }, [location.search]);
+        if (!førsteSøkErGjort) {
+            setFørsteSøkErGjort(true);
+            søkBasertPåUrl();
+        }
+    }, [søkBasertPåUrl, førsteSøkErGjort]);
 
     return (
         <div className="app">
-            <Søk />
-            {respons && (
-                <>
-                    <Stillingsliste esRespons={respons} />
-                    <Paginering totaltAntallTreff={respons.hits.total.value} />
-                </>
-            )}
+            <nav className="app__tilbakelenke">
+                <Link className="lenke" to="/stillinger">
+                    <NavFrontendChevron type="venstre" />
+                    Tilbake til gammelt søk
+                </Link>
+            </nav>
+
+            <Introduksjon />
+
+            <aside className="app__sidepanel">
+                <Søk oppdaterSøk={oppdaterSøk} />
+            </aside>
+
+            <main className="app__søkeresultat">
+                {respons ? (
+                    <>
+                        <Systemtittel className="app__antall-stillinger" tag="output">
+                            {respons.hits.total.value} annonser
+                        </Systemtittel>
+                        <Stillingsliste esRespons={respons} />
+                        <Paginering
+                            oppdaterSøk={oppdaterSøk}
+                            totaltAntallTreff={respons.hits.total.value}
+                        />
+                    </>
+                ) : (
+                    <NavFrontendSpinner type="L" />
+                )}
+            </main>
         </div>
     );
 };

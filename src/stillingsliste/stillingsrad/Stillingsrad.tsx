@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
     lagUrlTilKandidatliste,
@@ -14,22 +14,17 @@ import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
 import './Stillingsrad.less';
 
 const hentArbeidssted = (locations: Location[]): string | null => {
-    let arbeidssted = null;
-
-    if (locations.length > 0) {
-        const location = locations[0];
-
-        if (location.municipal) {
-            arbeidssted = location.municipal;
-        } else if (location.county) {
-            arbeidssted = location.county;
-        }
-
-        if (locations.length > 1) {
-            arbeidssted += '...';
-        }
-    }
-    return arbeidssted;
+    return locations
+        .map((location) => {
+            if (location.municipal) {
+                return location.municipal;
+            } else if (location.county) {
+                return location.county;
+            } else {
+                return null;
+            }
+        })
+        .join(', ');
 };
 
 type Props = {
@@ -46,12 +41,14 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
         <li className="stillingsrad">
             <div className="stillingsrad__info">
                 <Undertekst className="stillingsrad__opprettet">
-                    {konverterTilPresenterbarDato(stilling.created)}
+                    {konverterTilPresenterbarDato(stilling.published)}
                 </Undertekst>
                 <Normaltekst>{formaterMedStoreOgSmåBokstaver(stilling.employer?.name)}</Normaltekst>
-                <Link className="stillingsrad__lenke lenke" to={lagUrlTilStilling(stilling)}>
-                    {stilling.title}
-                </Link>
+                <div className="stillingsrad__tittel">
+                    <Link className="lenke" to={lagUrlTilStilling(stilling)}>
+                        {stilling.title}
+                    </Link>
+                </div>
                 <span className="stillingsrad__stillingsinfo">
                     <span>
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
@@ -78,7 +75,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
             <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <Hamburgerknapp />
+                        <List className="lenke" />
                     </Link>
                 )}
                 <div />

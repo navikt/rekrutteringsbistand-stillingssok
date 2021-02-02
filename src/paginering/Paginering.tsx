@@ -1,33 +1,53 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
-import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { maksAntallTreffPerSøk } from '../api/queries';
+import { hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { useHistory } from 'react-router-dom';
+import { SøkProps } from '../søk/Søk';
+import { Enhetstype, useEnhetstype } from '../skjermUtils';
 import './Paginering.less';
 
-type Props = {
+type Props = SøkProps & {
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
+const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff }) => {
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+    const enhetstype = useEnhetstype();
+
+    useEffect(() => {
+        const sidetall = hentSøkekriterier(search).side;
+        setSide(sidetall);
+    }, [search]);
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+        });
+    }, [side]);
 
     const onPageChange = (valgtSide: number) => {
         setSide(valgtSide);
-
-        const url = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
-        history.replace({ search: url.search });
+        oppdaterSøk(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
     };
+
+    const antallSider = regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk);
+
+    if (antallSider <= 1) {
+        return null;
+    }
 
     return (
         <ReactPaginate
             forcePage={side - 1}
-            pageCount={regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk)}
-            pageRangeDisplayed={5}
+            pageCount={antallSider}
+            pageRangeDisplayed={
+                enhetstype === Enhetstype.Mobil ? 1 : enhetstype === Enhetstype.Tablet ? 3 : 5
+            }
             marginPagesDisplayed={1}
             onPageChange={({ selected }) => onPageChange(selected + 1)}
             containerClassName="paginering typo-element"

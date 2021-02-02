@@ -1,6 +1,6 @@
 import { Søknadsfrist } from '../../Stilling';
 
-export const konverterTilPresenterbarDato = (datoString: string | undefined): string => {
+export const konverterTilPresenterbarDato = (datoString?: string | null): string => {
     if (!datoString) return '';
     if (datoString === Søknadsfrist.Snarest) return datoString;
 

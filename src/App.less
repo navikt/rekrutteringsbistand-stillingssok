@@ -1,8 +1,48 @@
+@import './variabler.less';
+
 .app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    row-gap: 2rem;
+
     margin: 3rem auto;
-    max-width: 82rem;
     padding: 0 1rem;
+    max-width: 51rem;
+
+    &__tilbakelenke {
+        .nav-frontend-chevron {
+            transform: translateY(-2px) rotate(270deg);
+            margin-right: 0.5rem;
+        }
+    }
+
+    &__sidepanel {
+        flex-grow: 0;
+        min-width: 18rem;
+    }
+
+    &__søkeresultat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__antall-stillinger {
+        align-self: flex-start;
+        padding-bottom: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        padding: 0 2rem;
+    }
+
+    @media (min-width: @screen-md-min) {
+        display: grid;
+        grid-template-columns: 19rem 1fr;
+        column-gap: 3rem;
+        max-width: 74.125rem;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        column-gap: 5rem;
+    }
 }

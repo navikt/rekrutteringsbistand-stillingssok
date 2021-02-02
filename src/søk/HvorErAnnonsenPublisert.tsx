@@ -1,7 +1,9 @@
-import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
-import { byggUrlMedParam, QueryParam } from './søkefelt/urlUtils';
+import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
+import { SøkProps } from './Søk';
 
 export enum Publisert {
     Intern = 'intern',
@@ -9,43 +11,55 @@ export enum Publisert {
     Alle = 'alle',
 }
 
-const HvorErAnnonsenPublisert: FunctionComponent = () => {
+const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
+    hentSøkekriterier(searchParams).publisert === publisert;
+
+const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     const history = useHistory();
+    const search = history.location.search;
 
-    const [interntINav, setInterntINav] = useState<boolean>(false);
-    const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(false);
+    const [interntINav, setInterntINav] = useState<boolean>(
+        matcherPublisertIUrl(Publisert.Intern, search)
+    );
+    const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
+        matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
+    );
 
-    useEffect(() => {
-        let publisert;
-        const publisertHvorSomHelst = interntINav === påArbeidsplassen;
-        if (publisertHvorSomHelst) {
-            publisert = null;
-        } else if (interntINav) {
-            publisert = Publisert.Intern;
+    const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { checked } = event.target;
+
+        if (event.target.value === Publisert.Intern) {
+            setInterntINav(checked);
+            settIUrlOgSøk(checked, påArbeidsplassen);
         } else {
-            publisert = Publisert.Arbeidsplassen;
+            setPåArbeidsplassen(checked);
+            settIUrlOgSøk(interntINav, checked);
         }
-
-        const url = byggUrlMedParam(QueryParam.Publisert, publisert);
-        history.replace({ search: url.search });
-    }, [interntINav, påArbeidsplassen, history]);
-
-    // TODO Slå sammen til én med value
-    const onInterntINavChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInterntINav(event.target.checked);
     };
 
-    const onPåArbeidsplassenChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setPåArbeidsplassen(event.target.checked);
+    const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
+        if (interntINav === påArbeidsplassen) {
+            oppdaterSøk(QueryParam.Publisert, null);
+        } else if (interntINav) {
+            oppdaterSøk(QueryParam.Publisert, Publisert.Intern);
+        } else {
+            oppdaterSøk(QueryParam.Publisert, Publisert.Arbeidsplassen);
+        }
     };
 
     return (
-        <SkjemaGruppe legend="Hvor er annonsen publisert?">
-            <Checkbox label="Internt i NAV" checked={interntINav} onChange={onInterntINavChange} />
+        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
+            <Checkbox
+                label="Internt i NAV"
+                value={Publisert.Intern}
+                checked={interntINav}
+                onChange={onPublisertChange}
+            />
             <Checkbox
                 label="På Arbeidsplassen"
+                value={Publisert.Arbeidsplassen}
                 checked={påArbeidsplassen}
-                onChange={onPåArbeidsplassenChange}
+                onChange={onPublisertChange}
             />
         </SkjemaGruppe>
     );
