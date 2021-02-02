@@ -6,18 +6,30 @@
     justify-content: center;
     margin: 3rem auto;
     padding: 0 1rem;
+    max-width: 51rem;
+
+    &__sidepanel {
+        flex-grow: 0;
+        min-width: 18rem;
+    }
 
     &__søkeresultat {
         display: flex;
         flex-direction: column;
         align-items: center;
+        align-self: center;
 
-        @media (min-width: @screen-sm-min) {
+        @media (min-width: @screen-lg-min) {
             margin-left: 5rem;
         }
     }
 
     @media (min-width: @screen-sm-min) {
+        padding: 0 2rem;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        max-width: 76rem;
         flex-direction: row;
     }
 }

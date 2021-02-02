@@ -45,7 +45,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     return (
         <div className="app">
-            <Søk søkBasertPåUrl={søkBasertPåUrl} />
+            <aside className="app__sidepanel">
+                <Søk søkBasertPåUrl={søkBasertPåUrl} />
+            </aside>
 
             <main className="app__søkeresultat">
                 <Introduksjon />
