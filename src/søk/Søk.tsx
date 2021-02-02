@@ -18,7 +18,7 @@ const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             <Søkefelt oppdaterSøk={oppdaterSøk} />
             <Ekspanderbartpanel
                 apen={enhetstype === Enhetstype.Desktop}
-                tittel="Vis filter"
+                tittel="Om annonsen"
                 className="søk__filtre"
             >
                 <HvorErAnnonsenPublisert oppdaterSøk={oppdaterSøk} />

@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Hamburgerknapp } from 'nav-frontend-ikonknapper';
 import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
     lagUrlTilKandidatliste,
@@ -75,7 +75,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
             <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <Hamburgerknapp />
+                        <List className="lenke" />
                     </Link>
                 )}
                 <div />
