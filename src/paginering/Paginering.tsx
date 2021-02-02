@@ -31,10 +31,16 @@ const Paginering: FunctionComponent<Props> = ({ søkBasertPåUrl, totaltAntallTr
         søkBasertPåUrl(true);
     };
 
+    const antallSider = regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk);
+
+    if (antallSider === 1) {
+        return null;
+    }
+
     return (
         <ReactPaginate
             forcePage={side - 1}
-            pageCount={regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk)}
+            pageCount={antallSider}
             pageRangeDisplayed={5}
             marginPagesDisplayed={1}
             onPageChange={({ selected }) => onPageChange(selected + 1)}
