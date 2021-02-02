@@ -26,6 +26,7 @@
         "nav-frontend-paneler-style": "^0.3.33",
         "nav-frontend-skjema": "^3.0.45",
         "nav-frontend-skjema-style": "^2.0.27",
+        "nav-frontend-spinner": "^2.0.15",
         "nav-frontend-typografi": "^2.0.39",
         "nav-frontend-typografi-style": "^1.0.32",
         "npm": "^6.14.11",

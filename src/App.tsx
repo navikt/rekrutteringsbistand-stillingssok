@@ -12,6 +12,7 @@ import Paginering from './paginering/Paginering';
 import Introduksjon from './introduksjon/Introduksjon';
 import { Link } from 'react-router-dom';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 export type Søkekriterier = {
     side: number;
@@ -61,7 +62,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             </aside>
 
             <main className="app__søkeresultat">
-                {respons && (
+                {respons ? (
                     <>
                         <Stillingsliste esRespons={respons} />
                         <Paginering
@@ -69,6 +70,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                             totaltAntallTreff={respons.hits.total.value}
                         />
                     </>
+                ) : (
+                    <NavFrontendSpinner type="L" />
                 )}
             </main>
         </div>
