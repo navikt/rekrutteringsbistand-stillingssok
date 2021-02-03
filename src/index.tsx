@@ -1,11 +1,21 @@
 import React, { FunctionComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Navspa from '@navikt/navspa';
+import * as Sentry from '@sentry/react';
 
 import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
+import { fjernPersonopplysninger, getMiljø } from './sentryUtils';
 import './index.less';
 import { Router } from 'react-router-dom';
+
+Sentry.init({
+    dsn: 'https://766bf43f7bd849e4aadc3528a9e94c60@sentry.gc.nav.no/64',
+    environment: getMiljø(),
+    release: process.env.REACT_APP_SENTRY_RELEASE || 'unknown',
+    enabled: getMiljø() === 'dev-fss' || getMiljø() === 'prod-fss',
+    beforeSend: fjernPersonopplysninger,
+});
 
 const skalEksporteres = process.env.REACT_APP_EXPORT || process.env.NODE_ENV === 'production';
 
@@ -15,9 +25,11 @@ export const cssScopeForApp = 'rekbis-stillingssok';
 
 const AppMedCssScope: FunctionComponent = (props: any) => (
     <div className={cssScopeForApp}>
-        <Router history={props.history}>
-            <App {...props} />
-        </Router>
+        <Sentry.ErrorBoundary>
+            <Router history={props.history}>
+                <App {...props} />
+            </Router>
+        </Sentry.ErrorBoundary>
     </div>
 );
 
