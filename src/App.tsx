@@ -24,6 +24,7 @@ export type Søkekriterier = {
     side: number;
     tekst: string;
     publisert: Publisert;
+    fylker: Set<string>;
 };
 
 export type AppProps = {

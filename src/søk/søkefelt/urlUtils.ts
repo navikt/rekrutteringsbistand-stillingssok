@@ -5,19 +5,26 @@ export enum QueryParam {
     Tekst = 'q',
     Publisert = 'publisert',
     Side = 'side',
+    Fylker = 'fylker',
 }
+
+export type QueryParamValue = string | boolean | null | number | string[];
 
 export const hentSøkekriterier = (search: string): Søkekriterier => {
     const searchParams = new URLSearchParams(search);
 
+    const fylkerQueryParam = searchParams.get(QueryParam.Fylker);
+    const fylker = fylkerQueryParam
+        ? new Set<string>(fylkerQueryParam.split(','))
+        : new Set<string>();
+
     return {
-        side: parseInt(searchParams.get(QueryParam.Side) || '1'),
-        tekst: searchParams.get(QueryParam.Tekst) || '',
-        publisert: (searchParams.get(QueryParam.Publisert) as Publisert) || Publisert.Alle,
+        side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
+        tekst: searchParams.get(QueryParam.Tekst) ?? '',
+        publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
+        fylker,
     };
 };
-
-export type QueryParamValue = string | boolean | null | number;
 
 export const byggUrlMedParam = (param: QueryParam, value: QueryParamValue) => {
     const url = new URL(window.location.href);
@@ -25,7 +32,8 @@ export const byggUrlMedParam = (param: QueryParam, value: QueryParamValue) => {
     if (
         value === null ||
         (typeof value === 'string' && value.length === 0) ||
-        (typeof value === 'boolean' && value === false)
+        (typeof value === 'boolean' && value === false) ||
+        (value instanceof Array && value.length === 0)
     ) {
         url.searchParams.delete(param);
     } else {

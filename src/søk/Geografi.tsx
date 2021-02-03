@@ -4,31 +4,35 @@ import { Enhetstype, hentEnhetstype } from '../skjermUtils';
 import { SøkProps } from './Søk';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
+import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
+import { useLocation } from 'react-router-dom';
 
 const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
-    const [valgteOmråder, setValgteOmråder] = useState<Set<string>>(new Set());
+    const { search } = useLocation();
+    const [valgteFylker, setValgteFylker] = useState<Set<string>>(hentSøkekriterier(search).fylker);
 
     const onOmrådeChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const område = event.target.value;
-        const områder = new Set<string>(valgteOmråder.values());
+        const fylke = event.target.value;
+        const fylker = new Set<string>(valgteFylker.values());
 
         if (event.target.checked) {
-            områder.add(område);
+            fylker.add(fylke);
         } else {
-            områder.delete(område);
+            fylker.delete(fylke);
         }
 
-        // TODO: Legg i URL
-        setValgteOmråder(områder);
+        setValgteFylker(fylker);
+        oppdaterSøk(QueryParam.Fylker, fylker.size !== 0 ? Array.from(fylker) : null);
     };
 
     return (
         <Ekspanderbartpanel apen={enhetstype === Enhetstype.Desktop} tittel="Geografi" className="">
             <SkjemaGruppe legend={<Element>Fylke</Element>}>
-                {områder.map((område) => (
+                {alleFylker.map((område) => (
                     <Checkbox
                         label={område}
                         value={område}
+                        checked={valgteFylker.has(område)}
                         onChange={onOmrådeChange}
                         key={område}
                     />
@@ -40,7 +44,7 @@ const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
 
 const enhetstype = hentEnhetstype();
 
-const områder = [
+const alleFylker = [
     'Agder',
     'Innlandet',
     'Møre og Romsdal',
