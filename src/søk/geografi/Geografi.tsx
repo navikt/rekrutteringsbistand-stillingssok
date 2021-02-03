@@ -6,6 +6,7 @@ import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
 import { useLocation } from 'react-router-dom';
+import fylkerOgKommuner from './fylkerOgKommuner.json';
 
 const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     const { search } = useLocation();
@@ -45,20 +46,6 @@ const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
 
 const enhetstype = hentEnhetstype();
 
-const alleFylker = [
-    'Agder',
-    'Innlandet',
-    'Møre og Romsdal',
-    'Nordland',
-    'Oslo',
-    'Rogaland',
-    'Svalbard',
-    'Troms og Finnmark',
-    'Trøndelag',
-    'Vestfold og Telemark',
-    'Vestland',
-    'Viken',
-    'Utland',
-];
+const alleFylker = [...fylkerOgKommuner.map((fylke) => fylke.fylkesnavn), 'Svalbard'].sort();
 
 export default Geografi;
