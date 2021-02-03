@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Enhetstype, hentEnhetstype } from '../skjermUtils';
-import { SøkProps } from './Søk';
+import { Enhetstype, hentEnhetstype } from '../../skjermUtils';
+import { SøkProps } from '../Søk';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
+import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
 import { useLocation } from 'react-router-dom';
 
 const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {

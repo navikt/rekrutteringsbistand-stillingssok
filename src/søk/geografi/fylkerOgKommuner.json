@@ -1,0 +1,1125 @@
+[
+  {
+    "fylkesnavn": "Oslo",
+    "kommuner": [
+      {
+        "kommunenavn": "Oslo"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Rogaland",
+    "kommuner": [
+      {
+        "kommunenavn": "Haugesund"
+      },
+      {
+        "kommunenavn": "Suldal"
+      },
+      {
+        "kommunenavn": "Sauda"
+      },
+      {
+        "kommunenavn": "Vindafjord"
+      },
+      {
+        "kommunenavn": "Tysvær"
+      },
+      {
+        "kommunenavn": "Eigersund"
+      },
+      {
+        "kommunenavn": "Stavanger"
+      },
+      {
+        "kommunenavn": "Sandnes"
+      },
+      {
+        "kommunenavn": "Sokndal"
+      },
+      {
+        "kommunenavn": "Lund"
+      },
+      {
+        "kommunenavn": "Bjerkreim"
+      },
+      {
+        "kommunenavn": "Hå"
+      },
+      {
+        "kommunenavn": "Klepp"
+      },
+      {
+        "kommunenavn": "Time"
+      },
+      {
+        "kommunenavn": "Gjesdal"
+      },
+      {
+        "kommunenavn": "Sola"
+      },
+      {
+        "kommunenavn": "Randaberg"
+      },
+      {
+        "kommunenavn": "Strand"
+      },
+      {
+        "kommunenavn": "Hjelmeland"
+      },
+      {
+        "kommunenavn": "Kvitsøy"
+      },
+      {
+        "kommunenavn": "Bokn"
+      },
+      {
+        "kommunenavn": "Karmøy"
+      },
+      {
+        "kommunenavn": "Utsira"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Møre og Romsdal",
+    "kommuner": [
+      {
+        "kommunenavn": "Kristiansund"
+      },
+      {
+        "kommunenavn": "Molde"
+      },
+      {
+        "kommunenavn": "Ålesund"
+      },
+      {
+        "kommunenavn": "Vanylven"
+      },
+      {
+        "kommunenavn": "Sande"
+      },
+      {
+        "kommunenavn": "Herøy"
+      },
+      {
+        "kommunenavn": "Ulstein"
+      },
+      {
+        "kommunenavn": "Hareid"
+      },
+      {
+        "kommunenavn": "Ørsta"
+      },
+      {
+        "kommunenavn": "Stranda"
+      },
+      {
+        "kommunenavn": "Sykkylven"
+      },
+      {
+        "kommunenavn": "Sula"
+      },
+      {
+        "kommunenavn": "Giske"
+      },
+      {
+        "kommunenavn": "Vestnes"
+      },
+      {
+        "kommunenavn": "Rauma"
+      },
+      {
+        "kommunenavn": "Aukra"
+      },
+      {
+        "kommunenavn": "Averøy"
+      },
+      {
+        "kommunenavn": "Gjemnes"
+      },
+      {
+        "kommunenavn": "Tingvoll"
+      },
+      {
+        "kommunenavn": "Sunndal"
+      },
+      {
+        "kommunenavn": "Surnadal"
+      },
+      {
+        "kommunenavn": "Smøla"
+      },
+      {
+        "kommunenavn": "Aure"
+      },
+      {
+        "kommunenavn": "Volda"
+      },
+      {
+        "kommunenavn": "Fjord"
+      },
+      {
+        "kommunenavn": "Hustadvika"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Nordland",
+    "kommuner": [
+      {
+        "kommunenavn": "Bodø"
+      },
+      {
+        "kommunenavn": "Narvik"
+      },
+      {
+        "kommunenavn": "Bindal"
+      },
+      {
+        "kommunenavn": "Sømna"
+      },
+      {
+        "kommunenavn": "Brønnøy"
+      },
+      {
+        "kommunenavn": "Vega"
+      },
+      {
+        "kommunenavn": "Vevelstad"
+      },
+      {
+        "kommunenavn": "Herøy"
+      },
+      {
+        "kommunenavn": "Alstahaug"
+      },
+      {
+        "kommunenavn": "Leirfjord"
+      },
+      {
+        "kommunenavn": "Vefsn"
+      },
+      {
+        "kommunenavn": "Grane"
+      },
+      {
+        "kommunenavn": "Aarborte"
+      },
+      {
+        "kommunenavn": "Dønna"
+      },
+      {
+        "kommunenavn": "Nesna"
+      },
+      {
+        "kommunenavn": "Hemnes"
+      },
+      {
+        "kommunenavn": "Rana"
+      },
+      {
+        "kommunenavn": "Lurøy"
+      },
+      {
+        "kommunenavn": "Træna"
+      },
+      {
+        "kommunenavn": "Rødøy"
+      },
+      {
+        "kommunenavn": "Meløy"
+      },
+      {
+        "kommunenavn": "Gildeskål"
+      },
+      {
+        "kommunenavn": "Beiarn"
+      },
+      {
+        "kommunenavn": "Saltdal"
+      },
+      {
+        "kommunenavn": "Fauske"
+      },
+      {
+        "kommunenavn": "Sørfold"
+      },
+      {
+        "kommunenavn": "Steigen"
+      },
+      {
+        "kommunenavn": "Lødingen"
+      },
+      {
+        "kommunenavn": "Evenes"
+      },
+      {
+        "kommunenavn": "Røst"
+      },
+      {
+        "kommunenavn": "Værøy"
+      },
+      {
+        "kommunenavn": "Flakstad"
+      },
+      {
+        "kommunenavn": "Vestvågøy"
+      },
+      {
+        "kommunenavn": "Vågan"
+      },
+      {
+        "kommunenavn": "Hadsel"
+      },
+      {
+        "kommunenavn": "Bø"
+      },
+      {
+        "kommunenavn": "Øksnes"
+      },
+      {
+        "kommunenavn": "Sortland"
+      },
+      {
+        "kommunenavn": "Andøy"
+      },
+      {
+        "kommunenavn": "Moskenes"
+      },
+      {
+        "kommunenavn": "Hábmer"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Viken",
+    "kommuner": [
+      {
+        "kommunenavn": "Moss"
+      },
+      {
+        "kommunenavn": "Drammen"
+      },
+      {
+        "kommunenavn": "Kongsberg"
+      },
+      {
+        "kommunenavn": "Ringerike"
+      },
+      {
+        "kommunenavn": "Marker"
+      },
+      {
+        "kommunenavn": "Indre Østfold"
+      },
+      {
+        "kommunenavn": "Skiptvet"
+      },
+      {
+        "kommunenavn": "Våler"
+      },
+      {
+        "kommunenavn": "Vestby"
+      },
+      {
+        "kommunenavn": "Nordre Follo"
+      },
+      {
+        "kommunenavn": "Ås"
+      },
+      {
+        "kommunenavn": "Frogn"
+      },
+      {
+        "kommunenavn": "Nesodden"
+      },
+      {
+        "kommunenavn": "Bærum"
+      },
+      {
+        "kommunenavn": "Asker"
+      },
+      {
+        "kommunenavn": "Aurskog-Høland"
+      },
+      {
+        "kommunenavn": "Rælingen"
+      },
+      {
+        "kommunenavn": "Enebakk"
+      },
+      {
+        "kommunenavn": "Lørenskog"
+      },
+      {
+        "kommunenavn": "Lillestrøm"
+      },
+      {
+        "kommunenavn": "Nittedal"
+      },
+      {
+        "kommunenavn": "Gjerdrum"
+      },
+      {
+        "kommunenavn": "Ullensaker"
+      },
+      {
+        "kommunenavn": "Nes"
+      },
+      {
+        "kommunenavn": "Eidsvoll"
+      },
+      {
+        "kommunenavn": "Nannestad"
+      },
+      {
+        "kommunenavn": "Hurdal"
+      },
+      {
+        "kommunenavn": "Hole"
+      },
+      {
+        "kommunenavn": "Flå"
+      },
+      {
+        "kommunenavn": "Nesbyen"
+      },
+      {
+        "kommunenavn": "Gol"
+      },
+      {
+        "kommunenavn": "Hemsedal"
+      },
+      {
+        "kommunenavn": "Ål"
+      },
+      {
+        "kommunenavn": "Hol"
+      },
+      {
+        "kommunenavn": "Sigdal"
+      },
+      {
+        "kommunenavn": "Krødsherad"
+      },
+      {
+        "kommunenavn": "Modum"
+      },
+      {
+        "kommunenavn": "Øvre Eiker"
+      },
+      {
+        "kommunenavn": "Lier"
+      },
+      {
+        "kommunenavn": "Flesberg"
+      },
+      {
+        "kommunenavn": "Rollag"
+      },
+      {
+        "kommunenavn": "Nore og Uvdal"
+      },
+      {
+        "kommunenavn": "Jevnaker"
+      },
+      {
+        "kommunenavn": "Lunner"
+      },
+      {
+        "kommunenavn": "Rakkestad"
+      },
+      {
+        "kommunenavn": "Råde"
+      },
+      {
+        "kommunenavn": "Halden"
+      },
+      {
+        "kommunenavn": "Sarpsborg"
+      },
+      {
+        "kommunenavn": "Fredrikstad"
+      },
+      {
+        "kommunenavn": "Hvaler"
+      },
+      {
+        "kommunenavn": "Aremark"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Innlandet",
+    "kommuner": [
+      {
+        "kommunenavn": "Kongsvinger"
+      },
+      {
+        "kommunenavn": "Hamar"
+      },
+      {
+        "kommunenavn": "Lillehammer"
+      },
+      {
+        "kommunenavn": "Gjøvik"
+      },
+      {
+        "kommunenavn": "Ringsaker"
+      },
+      {
+        "kommunenavn": "Løten"
+      },
+      {
+        "kommunenavn": "Stange"
+      },
+      {
+        "kommunenavn": "Nord-Odal"
+      },
+      {
+        "kommunenavn": "Sør-Odal"
+      },
+      {
+        "kommunenavn": "Eidskog"
+      },
+      {
+        "kommunenavn": "Grue"
+      },
+      {
+        "kommunenavn": "Åsnes"
+      },
+      {
+        "kommunenavn": "Våler"
+      },
+      {
+        "kommunenavn": "Elverum"
+      },
+      {
+        "kommunenavn": "Trysil"
+      },
+      {
+        "kommunenavn": "Åmot"
+      },
+      {
+        "kommunenavn": "Stor-Elvdal"
+      },
+      {
+        "kommunenavn": "Rendalen"
+      },
+      {
+        "kommunenavn": "Engerdal"
+      },
+      {
+        "kommunenavn": "Tolga"
+      },
+      {
+        "kommunenavn": "Tynset"
+      },
+      {
+        "kommunenavn": "Alvdal"
+      },
+      {
+        "kommunenavn": "Folldal"
+      },
+      {
+        "kommunenavn": "Os"
+      },
+      {
+        "kommunenavn": "Dovre"
+      },
+      {
+        "kommunenavn": "Lesja"
+      },
+      {
+        "kommunenavn": "Skjåk"
+      },
+      {
+        "kommunenavn": "Lom"
+      },
+      {
+        "kommunenavn": "Vågå"
+      },
+      {
+        "kommunenavn": "Nord-Fron"
+      },
+      {
+        "kommunenavn": "Sel"
+      },
+      {
+        "kommunenavn": "Sør-Fron"
+      },
+      {
+        "kommunenavn": "Ringebu"
+      },
+      {
+        "kommunenavn": "Øyer"
+      },
+      {
+        "kommunenavn": "Gausdal"
+      },
+      {
+        "kommunenavn": "Østre Toten"
+      },
+      {
+        "kommunenavn": "Vestre Toten"
+      },
+      {
+        "kommunenavn": "Gran"
+      },
+      {
+        "kommunenavn": "Søndre Land"
+      },
+      {
+        "kommunenavn": "Nordre Land"
+      },
+      {
+        "kommunenavn": "Sør-Aurdal"
+      },
+      {
+        "kommunenavn": "Etnedal"
+      },
+      {
+        "kommunenavn": "Nord-Aurdal"
+      },
+      {
+        "kommunenavn": "Vestre Slidre"
+      },
+      {
+        "kommunenavn": "Øystre Slidre"
+      },
+      {
+        "kommunenavn": "Vang"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Vestfold og Telemark",
+    "kommuner": [
+      {
+        "kommunenavn": "Holmestrand"
+      },
+      {
+        "kommunenavn": "Notodden"
+      },
+      {
+        "kommunenavn": "Midt-Telemark"
+      },
+      {
+        "kommunenavn": "Tinn"
+      },
+      {
+        "kommunenavn": "Hjartdal"
+      },
+      {
+        "kommunenavn": "Seljord"
+      },
+      {
+        "kommunenavn": "Kviteseid"
+      },
+      {
+        "kommunenavn": "Tokke"
+      },
+      {
+        "kommunenavn": "Vinje"
+      },
+      {
+        "kommunenavn": "Horten"
+      },
+      {
+        "kommunenavn": "Tønsberg"
+      },
+      {
+        "kommunenavn": "Siljan"
+      },
+      {
+        "kommunenavn": "Sandefjord"
+      },
+      {
+        "kommunenavn": "Larvik"
+      },
+      {
+        "kommunenavn": "Porsgrunn"
+      },
+      {
+        "kommunenavn": "Skien"
+      },
+      {
+        "kommunenavn": "Færder"
+      },
+      {
+        "kommunenavn": "Bamble"
+      },
+      {
+        "kommunenavn": "Kragerø"
+      },
+      {
+        "kommunenavn": "Drangedal"
+      },
+      {
+        "kommunenavn": "Nome"
+      },
+      {
+        "kommunenavn": "Nissedal"
+      },
+      {
+        "kommunenavn": "Fyresdal"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Agder",
+    "kommuner": [
+      {
+        "kommunenavn": "Bykle"
+      },
+      {
+        "kommunenavn": "Risør"
+      },
+      {
+        "kommunenavn": "Grimstad"
+      },
+      {
+        "kommunenavn": "Arendal"
+      },
+      {
+        "kommunenavn": "Kristiansand"
+      },
+      {
+        "kommunenavn": "Lindesnes"
+      },
+      {
+        "kommunenavn": "Farsund"
+      },
+      {
+        "kommunenavn": "Flekkefjord"
+      },
+      {
+        "kommunenavn": "Gjerstad"
+      },
+      {
+        "kommunenavn": "Vegårshei"
+      },
+      {
+        "kommunenavn": "Tvedestrand"
+      },
+      {
+        "kommunenavn": "Froland"
+      },
+      {
+        "kommunenavn": "Lillesand"
+      },
+      {
+        "kommunenavn": "Birkenes"
+      },
+      {
+        "kommunenavn": "Åmli"
+      },
+      {
+        "kommunenavn": "Iveland"
+      },
+      {
+        "kommunenavn": "Evje og Hornnes"
+      },
+      {
+        "kommunenavn": "Bygland"
+      },
+      {
+        "kommunenavn": "Valle"
+      },
+      {
+        "kommunenavn": "Vennesla"
+      },
+      {
+        "kommunenavn": "Åseral"
+      },
+      {
+        "kommunenavn": "Lyngdal"
+      },
+      {
+        "kommunenavn": "Hægebostad"
+      },
+      {
+        "kommunenavn": "Kvinesdal"
+      },
+      {
+        "kommunenavn": "Sirdal"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Vestland",
+    "kommuner": [
+      {
+        "kommunenavn": "Bergen"
+      },
+      {
+        "kommunenavn": "Kinn"
+      },
+      {
+        "kommunenavn": "Etne"
+      },
+      {
+        "kommunenavn": "Sveio"
+      },
+      {
+        "kommunenavn": "Bømlo"
+      },
+      {
+        "kommunenavn": "Stord"
+      },
+      {
+        "kommunenavn": "Fitjar"
+      },
+      {
+        "kommunenavn": "Tysnes"
+      },
+      {
+        "kommunenavn": "Kvinnherad"
+      },
+      {
+        "kommunenavn": "Ullensvang"
+      },
+      {
+        "kommunenavn": "Eidfjord"
+      },
+      {
+        "kommunenavn": "Ulvik"
+      },
+      {
+        "kommunenavn": "Voss"
+      },
+      {
+        "kommunenavn": "Kvam"
+      },
+      {
+        "kommunenavn": "Samnanger"
+      },
+      {
+        "kommunenavn": "Bjørnafjorden"
+      },
+      {
+        "kommunenavn": "Austevoll"
+      },
+      {
+        "kommunenavn": "Øygarden"
+      },
+      {
+        "kommunenavn": "Askøy"
+      },
+      {
+        "kommunenavn": "Vaksdal"
+      },
+      {
+        "kommunenavn": "Modalen"
+      },
+      {
+        "kommunenavn": "Osterøy"
+      },
+      {
+        "kommunenavn": "Alver"
+      },
+      {
+        "kommunenavn": "Austrheim"
+      },
+      {
+        "kommunenavn": "Fedje"
+      },
+      {
+        "kommunenavn": "Masfjorden"
+      },
+      {
+        "kommunenavn": "Gulen"
+      },
+      {
+        "kommunenavn": "Solund"
+      },
+      {
+        "kommunenavn": "Hyllestad"
+      },
+      {
+        "kommunenavn": "Høyanger"
+      },
+      {
+        "kommunenavn": "Vik"
+      },
+      {
+        "kommunenavn": "Sogndal"
+      },
+      {
+        "kommunenavn": "Aurland"
+      },
+      {
+        "kommunenavn": "Lærdal"
+      },
+      {
+        "kommunenavn": "Årdal"
+      },
+      {
+        "kommunenavn": "Luster"
+      },
+      {
+        "kommunenavn": "Askvoll"
+      },
+      {
+        "kommunenavn": "Fjaler"
+      },
+      {
+        "kommunenavn": "Sunnfjord"
+      },
+      {
+        "kommunenavn": "Bremanger"
+      },
+      {
+        "kommunenavn": "Stad"
+      },
+      {
+        "kommunenavn": "Gloppen"
+      },
+      {
+        "kommunenavn": "Stryn"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Trøndelag",
+    "kommuner": [
+      {
+        "kommunenavn": "Raarvihke"
+      },
+      {
+        "kommunenavn": "Namsskogan"
+      },
+      {
+        "kommunenavn": "Høylandet"
+      },
+      {
+        "kommunenavn": "Leka"
+      },
+      {
+        "kommunenavn": "Nærøysund"
+      },
+      {
+        "kommunenavn": "Trondheim"
+      },
+      {
+        "kommunenavn": "Steinkjer"
+      },
+      {
+        "kommunenavn": "Namsos"
+      },
+      {
+        "kommunenavn": "Frøya"
+      },
+      {
+        "kommunenavn": "Osen"
+      },
+      {
+        "kommunenavn": "Oppdal"
+      },
+      {
+        "kommunenavn": "Rennebu"
+      },
+      {
+        "kommunenavn": "Røros"
+      },
+      {
+        "kommunenavn": "Holtålen"
+      },
+      {
+        "kommunenavn": "Midtre Gauldal"
+      },
+      {
+        "kommunenavn": "Melhus"
+      },
+      {
+        "kommunenavn": "Skaun"
+      },
+      {
+        "kommunenavn": "Malvik"
+      },
+      {
+        "kommunenavn": "Selbu"
+      },
+      {
+        "kommunenavn": "Tydal"
+      },
+      {
+        "kommunenavn": "Meråker"
+      },
+      {
+        "kommunenavn": "Stjørdal"
+      },
+      {
+        "kommunenavn": "Frosta"
+      },
+      {
+        "kommunenavn": "Levanger"
+      },
+      {
+        "kommunenavn": "Verdal"
+      },
+      {
+        "kommunenavn": "Snåase"
+      },
+      {
+        "kommunenavn": "Lierne"
+      },
+      {
+        "kommunenavn": "Grong"
+      },
+      {
+        "kommunenavn": "Overhalla"
+      },
+      {
+        "kommunenavn": "Flatanger"
+      },
+      {
+        "kommunenavn": "Inderøy"
+      },
+      {
+        "kommunenavn": "Indre Fosen"
+      },
+      {
+        "kommunenavn": "Heim"
+      },
+      {
+        "kommunenavn": "Hitra"
+      },
+      {
+        "kommunenavn": "Ørland"
+      },
+      {
+        "kommunenavn": "Åfjord"
+      },
+      {
+        "kommunenavn": "Orkland"
+      },
+      {
+        "kommunenavn": "Rindal"
+      }
+    ]
+  },
+  {
+    "fylkesnavn": "Troms og Finnmark",
+    "kommuner": [
+      {
+        "kommunenavn": "Tromsø"
+      },
+      {
+        "kommunenavn": "Harstad"
+      },
+      {
+        "kommunenavn": "Alta"
+      },
+      {
+        "kommunenavn": "Vardø"
+      },
+      {
+        "kommunenavn": "Vadsø"
+      },
+      {
+        "kommunenavn": "Hammerfest"
+      },
+      {
+        "kommunenavn": "Kvæfjord"
+      },
+      {
+        "kommunenavn": "Dielddanuorri"
+      },
+      {
+        "kommunenavn": "Ibestad"
+      },
+      {
+        "kommunenavn": "Gratangen"
+      },
+      {
+        "kommunenavn": "Loabák"
+      },
+      {
+        "kommunenavn": "Bardu"
+      },
+      {
+        "kommunenavn": "Salangen"
+      },
+      {
+        "kommunenavn": "Målselv"
+      },
+      {
+        "kommunenavn": "Sørreisa"
+      },
+      {
+        "kommunenavn": "Dyrøy"
+      },
+      {
+        "kommunenavn": "Senja"
+      },
+      {
+        "kommunenavn": "Balsfjord"
+      },
+      {
+        "kommunenavn": "Karlsøy"
+      },
+      {
+        "kommunenavn": "Lyngen"
+      },
+      {
+        "kommunenavn": "Storfjord"
+      },
+      {
+        "kommunenavn": "Gáivuotna"
+      },
+      {
+        "kommunenavn": "Skjervøy"
+      },
+      {
+        "kommunenavn": "Nordreisa"
+      },
+      {
+        "kommunenavn": "Kvænangen"
+      },
+      {
+        "kommunenavn": "Guovdageaidnu"
+      },
+      {
+        "kommunenavn": "Loppa"
+      },
+      {
+        "kommunenavn": "Hasvik"
+      },
+      {
+        "kommunenavn": "Måsøy"
+      },
+      {
+        "kommunenavn": "Nordkapp"
+      },
+      {
+        "kommunenavn": "Porsanger"
+      },
+      {
+        "kommunenavn": "Kárášjohka"
+      },
+      {
+        "kommunenavn": "Lebesby"
+      },
+      {
+        "kommunenavn": "Gamvik"
+      },
+      {
+        "kommunenavn": "Berlevåg"
+      },
+      {
+        "kommunenavn": "Deatnu"
+      },
+      {
+        "kommunenavn": "Unjárga"
+      },
+      {
+        "kommunenavn": "Båtsfjord"
+      },
+      {
+        "kommunenavn": "Sør-Varanger"
+      }
+    ]
+  }
+]

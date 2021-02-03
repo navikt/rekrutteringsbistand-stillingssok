@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Søkefelt from './søkefelt/Søkefelt';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
-import Geografi from './Geografi';
+import Geografi from './geografi/Geografi';
 import './Søk.less';
 
 export type SøkProps = {
