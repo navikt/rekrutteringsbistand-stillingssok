@@ -73,7 +73,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         <div className="app">
             <Knapp
                 onClick={() => {
-                    throw Error('Tester feil ved å trykke på testknapp');
+                    throw Error('Tester feil ved å trykke på testknapp2');
                 }}
             >
                 Lag feil
