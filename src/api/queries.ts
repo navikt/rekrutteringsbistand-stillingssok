@@ -2,7 +2,6 @@ import { Query } from '../elasticSearchTyper';
 import { Søkekriterier } from '../App';
 import { Publisert } from '../søk/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
-import { skalViseGeografi } from '../søk/Søk';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -17,9 +16,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     aktivStilling,
-                    ...(skalViseGeografi
-                        ? fylker(søkekriterier.fylker)
-                        : fylker(new Set(['VESTFOLD OG TELEMARK']))),
+                    ...fylker(søkekriterier.fylker),
                 ],
             },
         },
