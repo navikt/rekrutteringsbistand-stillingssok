@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
 
 export type Søkekriterier = {
     side: number;
@@ -70,13 +69,6 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     return (
         <div className="app">
-            <Knapp
-                onClick={() => {
-                    throw Error('Tester feil ved å trykke på testknapp');
-                }}
-            >
-                Lag feil
-            </Knapp>
             <nav className="app__tilbakelenke">
                 <Link className="lenke" to="/stillinger">
                     <NavFrontendChevron type="venstre" />
