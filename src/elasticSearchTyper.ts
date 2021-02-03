@@ -32,7 +32,7 @@ export type Respons = {
             value: number;
             relation: string;
         };
-        max_score: number;
+        max_score: number | null;
         hits: Array<Hit>;
     };
 };
@@ -41,6 +41,7 @@ export type Hit = {
     _index: string;
     _type: string;
     _id: string;
-    _score: number;
+    _score: number | null;
     _source: Rekrutteringsbistandstilling;
+    sort?: number[];
 };
