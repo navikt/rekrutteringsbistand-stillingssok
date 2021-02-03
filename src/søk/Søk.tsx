@@ -13,7 +13,7 @@ export type SøkProps = {
 
 const enhetstype = hentEnhetstype();
 
-const skalViseGeografi = !window.location.href.includes('nais.adeo.no');
+export const skalViseGeografi = !window.location.href.includes('nais.adeo.no');
 
 const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     return (
