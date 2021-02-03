@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/react';
 
 import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
-import { fjernPersonopplysninger, getMiljø } from './sentryUtils';
+import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import './index.less';
 import { Router } from 'react-router-dom';
 

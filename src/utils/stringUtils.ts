@@ -30,3 +30,6 @@ const formaterOrd = (ord: string): string => {
         return ord;
     }
 };
+
+export const sorterAlfabetiskPåNorsk = (ord1: string, ord2: string): number =>
+    ord1.localeCompare(ord2, 'nb-NO');

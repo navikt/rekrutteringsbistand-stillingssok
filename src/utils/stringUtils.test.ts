@@ -1,4 +1,4 @@
-import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
+import formaterMedStoreOgSmåBokstaver from './stringUtils';
 
 describe('formaterMedStoreOgSmåBokstaver skal formatere arbeidsgiver riktig', () => {
     test('Arbeidsgiver med mellomrom', () => {

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Enhetstype, hentEnhetstype } from '../../skjermUtils';
+import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { SøkProps } from '../Søk';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';

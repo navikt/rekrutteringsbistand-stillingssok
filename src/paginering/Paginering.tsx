@@ -6,7 +6,7 @@ import { maksAntallTreffPerSøk } from '../api/queries';
 import { hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { useHistory } from 'react-router-dom';
 import { SøkProps } from '../søk/Søk';
-import { Enhetstype, useEnhetstype } from '../skjermUtils';
+import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import './Paginering.less';
 
 type Props = SøkProps & {

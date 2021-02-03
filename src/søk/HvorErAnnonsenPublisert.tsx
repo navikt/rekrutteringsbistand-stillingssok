@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
 import { SøkProps } from './Søk';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Enhetstype, hentEnhetstype } from '../skjermUtils';
+import { Enhetstype, hentEnhetstype } from '../utils/skjermUtils';
 import './Søk.less';
 
 export enum Publisert {

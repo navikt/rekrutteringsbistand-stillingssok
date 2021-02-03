@@ -3,7 +3,7 @@ import Søkefelt from './søkefelt/Søkefelt';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
 import Geografi from './geografi/Geografi';
-import { erIkkeProd } from '../featureToggleUtils';
+import { erIkkeProd } from '../utils/featureToggleUtils';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import './Søk.less';
 

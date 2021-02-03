@@ -9,9 +9,9 @@ import {
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
-} from '../../stillingsUtils';
-import formaterMedStoreOgSmåBokstaver from './formaterMedStoreOgSmåBokstaver';
+} from '../../utils/stillingsUtils';
 import './Stillingsrad.less';
+import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 
 const hentArbeidssted = (locations: Location[]): string | null => {
     const filtrerteLocations: string[] = [];
