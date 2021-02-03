@@ -4,6 +4,9 @@ import { Element } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
 import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
 import { SøkProps } from './Søk';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Enhetstype, hentEnhetstype } from '../skjermUtils';
+import './Søk.less';
 
 export enum Publisert {
     Intern = 'intern',
@@ -48,21 +51,31 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     };
 
     return (
-        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
-            <Checkbox
-                label="Internt i NAV"
-                value={Publisert.Intern}
-                checked={interntINav}
-                onChange={onPublisertChange}
-            />
-            <Checkbox
-                label="På Arbeidsplassen"
-                value={Publisert.Arbeidsplassen}
-                checked={påArbeidsplassen}
-                onChange={onPublisertChange}
-            />
-        </SkjemaGruppe>
+        <Ekspanderbartpanel
+            apen={enhetstype === Enhetstype.Desktop}
+            tittel="Om annonsen"
+            className="søk__ekspanderbart-panel"
+        >
+            <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
+                <Checkbox
+                    className="søk__checkbox"
+                    label="Internt i NAV"
+                    value={Publisert.Intern}
+                    checked={interntINav}
+                    onChange={onPublisertChange}
+                />
+                <Checkbox
+                    className="søk__checkbox"
+                    label="På Arbeidsplassen"
+                    value={Publisert.Arbeidsplassen}
+                    checked={påArbeidsplassen}
+                    onChange={onPublisertChange}
+                />
+            </SkjemaGruppe>
+        </Ekspanderbartpanel>
     );
 };
+
+const enhetstype = hentEnhetstype();
 
 export default HvorErAnnonsenPublisert;

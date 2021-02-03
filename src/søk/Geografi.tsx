@@ -26,14 +26,11 @@ const Geografi: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Velg fylke"
-            className=""
-        >
-            <SkjemaGruppe legend={<Element>Fylke</Element>}>
+        <Ekspanderbartpanel apen={enhetstype === Enhetstype.Desktop} tittel="Geografi">
+            <SkjemaGruppe legend={<Element>Velg fylke</Element>}>
                 {alleFylker.map((område) => (
                     <Checkbox
+                        className="søk__checkbox"
                         label={område}
                         value={område}
                         checked={valgteFylker.has(område)}
