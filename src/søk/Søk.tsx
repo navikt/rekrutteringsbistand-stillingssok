@@ -5,12 +5,15 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 import { Enhetstype, hentEnhetstype } from '../skjermUtils';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
+import Geografi from './Geografi';
 
 export type SøkProps = {
     oppdaterSøk: (queryParam: QueryParam, verdi: QueryParamValue) => void;
 };
 
 const enhetstype = hentEnhetstype();
+
+const skalViseGeografi = !window.location.href.includes('nais.adeo.no');
 
 const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     return (
@@ -23,6 +26,7 @@ const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             >
                 <HvorErAnnonsenPublisert oppdaterSøk={oppdaterSøk} />
             </Ekspanderbartpanel>
+            {skalViseGeografi && <Geografi oppdaterSøk={oppdaterSøk} />}
         </div>
     );
 };
