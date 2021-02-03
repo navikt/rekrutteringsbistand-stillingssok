@@ -16,7 +16,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     aktivStilling,
-                    ...fylker(['ROGALAND']),
+                    ...fylker(søkekriterier.fylker),
                 ],
             },
         },
@@ -50,13 +50,13 @@ const publisert = (publisert: Publisert) => {
     ];
 };
 
-const fylker = (fylker: string[]) => {
-    if (fylker.length === 0) return [];
+const fylker = (fylker: Set<string>) => {
+    if (fylker.size === 0) return [];
 
-    const should = fylker.map((fylke) => ({
+    const should = Array.from(fylker).map((fylke) => ({
         match: {
             'stilling.locations.county': {
-                query: fylke,
+                query: fylke.toUpperCase(),
                 operator: 'and',
             },
         },
