@@ -25,6 +25,7 @@ export type Søkekriterier = {
     tekst: string;
     publisert: Publisert;
     fylker: Set<string>;
+    kommuner: Set<string>;
 };
 
 export type AppProps = {

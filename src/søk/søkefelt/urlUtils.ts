@@ -6,6 +6,7 @@ export enum QueryParam {
     Publisert = 'publisert',
     Side = 'side',
     Fylker = 'fylker',
+    Kommuner = 'kommuner',
 }
 
 export type QueryParamValue = string | boolean | null | number | string[];
@@ -18,11 +19,17 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         ? new Set<string>(fylkerQueryParam.split(','))
         : new Set<string>();
 
+    const kommunerQueryParam = searchParams.get(QueryParam.Kommuner);
+    const kommuner = kommunerQueryParam
+        ? new Set<string>(kommunerQueryParam.split(','))
+        : new Set<string>();
+
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
         tekst: searchParams.get(QueryParam.Tekst) ?? '',
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
         fylker,
+        kommuner,
     };
 };
 

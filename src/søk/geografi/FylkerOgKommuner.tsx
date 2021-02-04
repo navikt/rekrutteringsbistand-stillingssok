@@ -11,9 +11,15 @@ import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 
 const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     const { search } = useLocation();
+
     const [valgteFylker, setValgteFylker] = useState<Set<string>>(hentSøkekriterier(search).fylker);
+    const [valgteKommuner, setValgteKommuner] = useState<Set<string>>(
+        hentSøkekriterier(search).kommuner
+    );
 
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // TODO: Hvis man deaktiverer fylke skal fylket og alle dens kommuner fjernes fra URL
+
         const fylke = event.target.value;
         const fylker = new Set<string>(valgteFylker.values());
 
@@ -27,7 +33,19 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         oppdaterSøk(QueryParam.Fylker, fylker.size !== 0 ? Array.from(fylker) : null);
     };
 
-    const onKommuneChange = (event: ChangeEvent<HTMLInputElement>) => {};
+    const onKommuneChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const kommuneMedFylke = event.target.value;
+        const kommuner = new Set<string>(valgteKommuner.values());
+
+        if (event.target.checked) {
+            kommuner.add(kommuneMedFylke);
+        } else {
+            kommuner.delete(kommuneMedFylke);
+        }
+
+        setValgteKommuner(kommuner);
+        oppdaterSøk(QueryParam.Kommuner, Array.from(kommuner));
+    };
 
     return (
         <Ekspanderbartpanel apen={enhetstype === Enhetstype.Desktop} tittel="Geografi">
@@ -50,9 +68,9 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
                                     <Checkbox
                                         className="søk__checkbox søk__checkbox--indentert"
                                         key={kommune}
-                                        label={kommune}
+                                        label={kommune.split('.')[1]}
                                         value={kommune}
-                                        checked={false}
+                                        checked={valgteKommuner.has(kommune)}
                                         onChange={onKommuneChange}
                                     />
                                 ))}
@@ -67,13 +85,20 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
 
 const enhetstype = hentEnhetstype();
 
+type KommuneMedFylke = string;
 type FylkeMedKommuner = {
     fylke: string;
-    kommuner: string[];
+    kommuner: Array<KommuneMedFylke>;
 };
 
-const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string =>
-    kommunenavn === 'Våler' ? `${kommunenavn} (${fylkesnavn})` : kommunenavn;
+const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
+    const navn = kommunenavn === 'Våler' ? `${kommunenavn} (${fylkesnavn})` : kommunenavn;
+    return navn;
+};
+
+const hentKommunenavnMedFylke = (kommunenavn: string, fylkesnavn: string): string => {
+    return `${fylkesnavn}.${hentKommunenavn(kommunenavn, fylkesnavn)}`;
+};
 
 const alleFylkerOgKommuner: Array<FylkeMedKommuner> = [
     ...fylkerOgKommuner.map(({ fylkesnavn, kommuner }) => ({
@@ -82,13 +107,17 @@ const alleFylkerOgKommuner: Array<FylkeMedKommuner> = [
             kommuner.length === 1
                 ? []
                 : kommuner
-                      .map((kommune) => hentKommunenavn(kommune.kommunenavnNorsk, fylkesnavn))
-                      .sort(sorterAlfabetiskPåNorsk),
+                      .sort((a, b) =>
+                          sorterAlfabetiskPåNorsk(a.kommunenavnNorsk, b.kommunenavnNorsk)
+                      )
+                      .map((kommune) =>
+                          hentKommunenavnMedFylke(kommune.kommunenavnNorsk, fylkesnavn)
+                      ),
     })),
     {
         fylke: 'Svalbard',
         kommuner: [],
     },
-].sort((fylke1, fylke2) => sorterAlfabetiskPåNorsk(fylke1.fylke, fylke2.fylke));
+].sort((a, b) => sorterAlfabetiskPåNorsk(a.fylke, b.fylke));
 
 export default FylkerOgKommuner;

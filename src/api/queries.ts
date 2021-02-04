@@ -6,6 +6,11 @@ import { Privacy } from '../Stilling';
 export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
+    const filtrerteFylker = beholdFylkerUtenValgteKommuner(
+        søkekriterier.fylker,
+        søkekriterier.kommuner
+    );
+
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
@@ -16,11 +21,18 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     aktivStilling,
-                    ...fylker(søkekriterier.fylker),
+                    ...fylker(filtrerteFylker),
                 ],
             },
         },
     };
+};
+
+const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
+    const kommuneArray = Array.from(kommuner);
+    const fylkerForKommuner = kommuneArray.map((kommune) => kommune.split('.')[0]);
+
+    return new Set(Array.from(fylker).filter((fylke) => !fylkerForKommuner.includes(fylke)));
 };
 
 const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
