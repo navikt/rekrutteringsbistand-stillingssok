@@ -7,6 +7,7 @@ export enum QueryParam {
     Side = 'side',
     Fylker = 'fylker',
     Kommuner = 'kommuner',
+    Annonsestatuser = 'annonsestatuser',
 }
 
 export type QueryParamValue = string | boolean | null | number | string[];
@@ -30,6 +31,7 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
         fylker,
         kommuner,
+        annonsestatuser: new Set([]), //todo
     };
 };
 

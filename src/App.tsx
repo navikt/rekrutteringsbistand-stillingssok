@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
+import { Annonsestatus } from './søk/VisAnnonsestatus';
 
 export type Søkekriterier = {
     side: number;
@@ -26,6 +27,7 @@ export type Søkekriterier = {
     publisert: Publisert;
     fylker: Set<string>;
     kommuner: Set<string>;
+    annonsestatuser: Set<Annonsestatus>;
 };
 
 export type AppProps = {
