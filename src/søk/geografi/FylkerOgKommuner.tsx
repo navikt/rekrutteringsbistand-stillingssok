@@ -18,24 +18,26 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     );
 
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // TODO: Hvis man deaktiverer fylke skal fylket og alle dens kommuner fjernes fra URL
-
         const fylke = event.target.value;
-        const fylker = new Set<string>(valgteFylker.values());
+        const fylker = new Set<string>(valgteFylker);
 
         if (event.target.checked) {
             fylker.add(fylke);
         } else {
             fylker.delete(fylke);
+
+            const kommuner = deaktiverKommunerIFylke(Array.from(valgteKommuner), fylke);
+            setValgteKommuner(new Set<string>(kommuner));
+            oppdaterSøk(QueryParam.Kommuner, kommuner);
         }
 
         setValgteFylker(fylker);
-        oppdaterSøk(QueryParam.Fylker, fylker.size !== 0 ? Array.from(fylker) : null);
+        oppdaterSøk(QueryParam.Fylker, Array.from(fylker));
     };
 
     const onKommuneChange = (event: ChangeEvent<HTMLInputElement>) => {
         const kommuneMedFylke = event.target.value;
-        const kommuner = new Set<string>(valgteKommuner.values());
+        const kommuner = new Set<string>(valgteKommuner);
 
         if (event.target.checked) {
             kommuner.add(kommuneMedFylke);
@@ -98,6 +100,10 @@ const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
 
 const hentKommunenavnMedFylke = (kommunenavn: string, fylkesnavn: string): string => {
     return `${fylkesnavn}.${hentKommunenavn(kommunenavn, fylkesnavn)}`;
+};
+
+const deaktiverKommunerIFylke = (kommuner: string[], fylke: string): string[] => {
+    return kommuner.filter((kommune) => kommune.split('.')[0] !== fylke);
 };
 
 const alleFylkerOgKommuner: Array<FylkeMedKommuner> = [
