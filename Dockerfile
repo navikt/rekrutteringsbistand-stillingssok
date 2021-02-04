@@ -1,11 +1,12 @@
 FROM navikt/node-express:14-alpine
 
-WORKDIR /app
+WORKDIR /var
 
 COPY build/ build/
 COPY server/ server/
 
-WORKDIR /app/server
+WORKDIR /var/server
+
 RUN npm ci
 
 EXPOSE 3000
