@@ -65,23 +65,31 @@ const publisert = (publisert: Publisert) => {
 const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
     if (fylker.size === 0 && kommuner.size === 0) return [];
 
-    const shouldFylker = Array.from(fylker).map((fylke) => ({
-        match: {
-            'stilling.locations.county': {
-                query: fylke.toUpperCase(),
-                operator: 'and',
-            },
-        },
-    }));
+    const shouldFylker =
+        fylker.size === 0
+            ? []
+            : [
+                  {
+                      terms: {
+                          'stilling.locations.county.keyword': Array.from(fylker).map((fylke) =>
+                              fylke.toUpperCase()
+                          ),
+                      },
+                  },
+              ];
 
-    const shouldKommuner = Array.from(kommuner).map((kommune) => ({
-        match: {
-            'stilling.locations.municipal': {
-                query: kommune.split('.')[1].toUpperCase(),
-                operator: 'and',
-            },
-        },
-    }));
+    const shouldKommuner =
+        kommuner.size === 0
+            ? []
+            : [
+                  {
+                      terms: {
+                          'stilling.locations.municipal.keyword': Array.from(
+                              kommuner
+                          ).map((kommune) => kommune.split('.')[1].toUpperCase()),
+                      },
+                  },
+              ];
 
     return [
         {
