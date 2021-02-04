@@ -21,7 +21,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     aktivStilling,
-                    ...fylker(filtrerteFylker),
+                    ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
                 ],
             },
         },
@@ -62,13 +62,22 @@ const publisert = (publisert: Publisert) => {
     ];
 };
 
-const fylker = (fylker: Set<string>) => {
-    if (fylker.size === 0) return [];
+const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
+    if (fylker.size === 0 && kommuner.size === 0) return [];
 
-    const should = Array.from(fylker).map((fylke) => ({
+    const shouldFylker = Array.from(fylker).map((fylke) => ({
         match: {
             'stilling.locations.county': {
                 query: fylke.toUpperCase(),
+                operator: 'and',
+            },
+        },
+    }));
+
+    const shouldKommuner = Array.from(kommuner).map((kommune) => ({
+        match: {
+            'stilling.locations.municipal': {
+                query: kommune.split('.')[1].toUpperCase(),
                 operator: 'and',
             },
         },
@@ -80,7 +89,7 @@ const fylker = (fylker: Set<string>) => {
                 path: 'stilling.locations',
                 query: {
                     bool: {
-                        should,
+                        should: [...shouldFylker, ...shouldKommuner],
                     },
                 },
             },
