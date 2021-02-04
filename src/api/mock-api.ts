@@ -2,7 +2,7 @@ import fetchMock, { MockOptionsMethodPost } from 'fetch-mock';
 import { stillingssøkProxy } from './api';
 import { resultat } from './mock-data';
 
-const adsUrl = `${stillingssøkProxy}/_search`;
+const adsUrl = `${stillingssøkProxy}/stilling/_search`;
 
 const logg = (url: string, options: MockOptionsMethodPost, response: any) => {
     console.info(

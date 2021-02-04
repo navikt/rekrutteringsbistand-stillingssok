@@ -7,7 +7,7 @@ if (process.env.REACT_APP_MOCK) {
 }
 
 export const søk = async (query: Query): Promise<Respons> => {
-    const respons = await post(`${stillingssøkProxy}/_search`, query);
+    const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
     if (respons.status !== 200) {
         throw Error('Klarte ikke å gjøre et søk');
