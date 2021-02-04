@@ -19,7 +19,7 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
 
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
         const fylke = event.target.value;
-        const fylker = new Set<string>(valgteFylker.values());
+        const fylker = new Set<string>(valgteFylker);
 
         if (event.target.checked) {
             fylker.add(fylke);
@@ -32,12 +32,12 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         }
 
         setValgteFylker(fylker);
-        oppdaterSøk(QueryParam.Fylker, fylker.size !== 0 ? Array.from(fylker) : null);
+        oppdaterSøk(QueryParam.Fylker, Array.from(fylker));
     };
 
     const onKommuneChange = (event: ChangeEvent<HTMLInputElement>) => {
         const kommuneMedFylke = event.target.value;
-        const kommuner = new Set<string>(valgteKommuner.values());
+        const kommuner = new Set<string>(valgteKommuner);
 
         if (event.target.checked) {
             kommuner.add(kommuneMedFylke);
