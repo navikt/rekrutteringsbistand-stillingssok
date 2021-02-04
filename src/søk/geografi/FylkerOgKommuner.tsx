@@ -72,14 +72,17 @@ type FylkeMedKommuner = {
     kommuner: string[];
 };
 
+const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string =>
+    kommunenavn === 'Våler' ? `${kommunenavn} (${fylkesnavn})` : kommunenavn;
+
 const alleFylkerOgKommuner: Array<FylkeMedKommuner> = [
-    ...fylkerOgKommuner.map((fylkeMedKommuner) => ({
-        fylke: fylkeMedKommuner.fylkesnavn,
+    ...fylkerOgKommuner.map(({ fylkesnavn, kommuner }) => ({
+        fylke: fylkesnavn,
         kommuner:
-            fylkeMedKommuner.kommuner.length === 1
+            kommuner.length === 1
                 ? []
-                : fylkeMedKommuner.kommuner
-                      .map((kommune) => kommune.kommunenavnNorsk)
+                : kommuner
+                      .map((kommune) => hentKommunenavn(kommune.kommunenavnNorsk, fylkesnavn))
                       .sort(sorterAlfabetiskPåNorsk),
     })),
     {
