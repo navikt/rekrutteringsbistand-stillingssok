@@ -26,7 +26,7 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         } else {
             fylker.delete(fylke);
 
-            const kommuner = deaktiverKommunerIFylke(Array.from(valgteKommuner.values()), fylke);
+            const kommuner = deaktiverKommunerIFylke(Array.from(valgteKommuner), fylke);
             setValgteKommuner(new Set<string>(kommuner));
             oppdaterSøk(QueryParam.Kommuner, kommuner);
         }
