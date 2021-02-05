@@ -2,6 +2,8 @@
 
 Frontend for nytt stillingssøk i Rekrutteringsbistand.
 
+Fylkes og kommuner er hentet fra [Kartverkets åpne API](https://ws.geonorge.no/kommuneinfo/v1/).
+
 ## Installasjon
 
 ```
