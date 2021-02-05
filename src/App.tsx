@@ -65,6 +65,17 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     }, [history.location.search]);
 
     useEffect(() => {
+        const hentFylker = async () => {
+            const response = await fetch(
+                '/kartverket/kommuneinfo/v1/fylkerkommuner?filtrer=fylkesnavn%2Ckommuner%2Ckommuner.kommunenavn'
+            );
+            const json = await response.json();
+            console.log(json);
+        };
+        hentFylker();
+    }, []);
+
+    useEffect(() => {
         if (!førsteSøkErGjort) {
             setFørsteSøkErGjort(true);
             søkBasertPåUrl();

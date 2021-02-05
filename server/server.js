@@ -19,6 +19,7 @@ const setupProxy = (fraPath, tilTarget) =>
 
 const startServer = () => {
     app.use(setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL));
+    app.use(setupProxy(`${basePath}/kartverket`, 'https://ws.geonorge.no'));
 
     app.use(`${basePath}/static`, express.static(buildPath + '/static'));
     app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
