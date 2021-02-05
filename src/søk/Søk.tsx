@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Søkefelt from './søkefelt/Søkefelt';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
-import Geografi from './geografi/Geografi';
-import { erIkkeProd } from '../utils/featureToggleUtils';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import './Søk.less';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
@@ -16,11 +14,7 @@ const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         <div className="søk">
             <Søkefelt oppdaterSøk={oppdaterSøk} />
             <OmAnnonsen oppdaterSøk={oppdaterSøk} />
-            {erIkkeProd ? (
-                <FylkerOgKommuner oppdaterSøk={oppdaterSøk} />
-            ) : (
-                <Geografi oppdaterSøk={oppdaterSøk} />
-            )}
+            <FylkerOgKommuner oppdaterSøk={oppdaterSøk} />
         </div>
     );
 };
