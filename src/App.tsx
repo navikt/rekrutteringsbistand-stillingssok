@@ -67,7 +67,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     useEffect(() => {
         const hentFylker = async () => {
             const response = await fetch(
-                '/kartverket/kommuneinfo/v1/fylkerkommuner?filtrer=fylkesnavn%2Ckommuner%2Ckommuner.kommunenavn'
+                '/rekrutteringsbistand-stillingssok/kartverket/kommuneinfo/v1/fylkerkommuner?filtrer=fylkesnavn%2Ckommuner%2Ckommuner.kommunenavn'
             );
             const json = await response.json();
             console.log(json);
