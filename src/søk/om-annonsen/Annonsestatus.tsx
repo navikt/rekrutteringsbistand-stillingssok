@@ -36,18 +36,21 @@ const Annonsestatus: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     return (
         <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
             <Checkbox
+                className="søk__checkbox"
                 label="Publisert"
                 value={Status.Publisert}
                 checked={publisert}
                 onChange={onAnnonsestatusChange}
             />
             <Checkbox
+                className="søk__checkbox"
                 label="Stoppet"
                 value={Status.Stoppet}
                 checked={stoppet}
                 onChange={onAnnonsestatusChange}
             />
             <Checkbox
+                className="søk__checkbox"
                 label="Utløpt"
                 value={Status.Utløpt}
                 checked={utløpt}
