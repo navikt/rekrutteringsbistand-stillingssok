@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { useHistory } from 'react-router-dom';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { QueryParam } from '../søkefelt/urlUtils';
 import { SøkProps } from '../Søk';
 
 export enum Status {
@@ -11,13 +10,7 @@ export enum Status {
     Utløpt = 'utløpt',
 }
 
-const matcherAnnonsestatusIUrl = (statuser: Set<Status>, searchParams: string) =>
-    hentSøkekriterier(searchParams).statuser === statuser;
-
 const Annonsestatus: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
-    const history = useHistory();
-    const search = history.location.search;
-
     // TODO default
     const [publisert, setPublisert] = useState<boolean>(false);
     const [stoppet, setStoppet] = useState<boolean>(false);
