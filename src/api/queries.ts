@@ -1,6 +1,6 @@
 import { Query } from '../elasticSearchTyper';
 import { Søkekriterier } from '../App';
-import { Publisert } from '../søk/HvorErAnnonsenPublisert';
+import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
 
 export const maksAntallTreffPerSøk = 40;

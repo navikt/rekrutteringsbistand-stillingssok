@@ -12,13 +12,14 @@ import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import './App.less';
-import { Publisert } from './søk/HvorErAnnonsenPublisert';
+import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import Paginering from './paginering/Paginering';
 import Introduksjon from './introduksjon/Introduksjon';
 import { Link } from 'react-router-dom';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
+import { Status } from './søk/om-annonsen/Annonsestatus';
 
 export type Søkekriterier = {
     side: number;
@@ -26,6 +27,7 @@ export type Søkekriterier = {
     publisert: Publisert;
     fylker: Set<string>;
     kommuner: Set<string>;
+    statuser: Set<Status>;
 };
 
 export type AppProps = {
