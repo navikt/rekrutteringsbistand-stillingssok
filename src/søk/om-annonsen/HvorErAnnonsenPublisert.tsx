@@ -2,11 +2,9 @@ import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
-import { hentSøkekriterier, QueryParam } from './søkefelt/urlUtils';
-import { SøkProps } from './Søk';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Enhetstype, hentEnhetstype } from '../utils/skjermUtils';
-import './Søk.less';
+import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { SøkProps } from '../Søk';
+import '../Søk.less';
 
 export enum Publisert {
     Intern = 'intern',
@@ -51,31 +49,23 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Om annonsen"
-            className="søk__ekspanderbart-panel"
-        >
-            <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
-                <Checkbox
-                    className="søk__checkbox"
-                    label="Internt i NAV"
-                    value={Publisert.Intern}
-                    checked={interntINav}
-                    onChange={onPublisertChange}
-                />
-                <Checkbox
-                    className="søk__checkbox"
-                    label="På Arbeidsplassen"
-                    value={Publisert.Arbeidsplassen}
-                    checked={påArbeidsplassen}
-                    onChange={onPublisertChange}
-                />
-            </SkjemaGruppe>
-        </Ekspanderbartpanel>
+        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
+            <Checkbox
+                className="søk__checkbox"
+                label="Internt i NAV"
+                value={Publisert.Intern}
+                checked={interntINav}
+                onChange={onPublisertChange}
+            />
+            <Checkbox
+                className="søk__checkbox"
+                label="På Arbeidsplassen"
+                value={Publisert.Arbeidsplassen}
+                checked={påArbeidsplassen}
+                onChange={onPublisertChange}
+            />
+        </SkjemaGruppe>
     );
 };
-
-const enhetstype = hentEnhetstype();
 
 export default HvorErAnnonsenPublisert;
