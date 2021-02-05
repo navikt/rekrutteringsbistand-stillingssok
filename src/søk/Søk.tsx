@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import Søkefelt from './søkefelt/Søkefelt';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
-import './Søk.less';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
+import './Søk.less';
 
 export type SøkProps = {
     oppdaterSøk: (queryParam: QueryParam, verdi: QueryParamValue) => void;

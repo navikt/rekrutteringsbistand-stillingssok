@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { QueryParam } from '../søkefelt/urlUtils';
+import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
 import { SøkProps } from '../Søk';
+import { useHistory } from 'react-router-dom';
 
 export enum Status {
     Publisert = 'publisert',
@@ -12,50 +13,36 @@ export enum Status {
 
 const Annonsestatus: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     // TODO default
-    const [publisert, setPublisert] = useState<boolean>(false);
-    const [stoppet, setStoppet] = useState<boolean>(false);
-    const [utløpt, setUtløpt] = useState<boolean>(false);
+    const history = useHistory();
+    const [valgteStatuser, setValgteStatuser] = useState<Set<Status>>(
+        hentSøkekriterier(history.location.search).statuser
+    );
 
     const onAnnonsestatusChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { checked } = event.target;
+        const status = event.target.value as Status;
+        const statuser = new Set<Status>(valgteStatuser);
 
-        if (event.target.value === Status.Publisert) {
-            setPublisert(checked);
-            oppdaterSøk(QueryParam.Statuser, Status.Publisert);
-        } else if (event.target.value === Status.Stoppet) {
-            setStoppet(checked);
-            oppdaterSøk(QueryParam.Statuser, Status.Stoppet);
-        } else if (event.target.value === Status.Utløpt) {
-            setUtløpt(checked);
-            oppdaterSøk(QueryParam.Statuser, Status.Utløpt);
-        } else if (!(publisert || stoppet || utløpt) || (publisert && stoppet && utløpt)) {
-            oppdaterSøk(QueryParam.Statuser, null);
+        if (event.target.checked) {
+            statuser.add(status);
+        } else {
+            statuser.delete(status);
         }
+        setValgteStatuser(statuser);
+        oppdaterSøk(QueryParam.Statuser, Array.from(statuser));
     };
 
     return (
-        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
-            <Checkbox
-                className="søk__checkbox"
-                label="Publisert"
-                value={Status.Publisert}
-                checked={publisert}
-                onChange={onAnnonsestatusChange}
-            />
-            <Checkbox
-                className="søk__checkbox"
-                label="Stoppet"
-                value={Status.Stoppet}
-                checked={stoppet}
-                onChange={onAnnonsestatusChange}
-            />
-            <Checkbox
-                className="søk__checkbox"
-                label="Utløpt"
-                value={Status.Utløpt}
-                checked={utløpt}
-                onChange={onAnnonsestatusChange}
-            />
+        <SkjemaGruppe legend={<Element>Status</Element>}>
+            {Object.values(Status).map((statusValue) => (
+                <Checkbox
+                    key={statusValue}
+                    className="søk__checkbox"
+                    label={statusValue[0].toUpperCase() + statusValue.substring(1)}
+                    value={statusValue}
+                    checked={valgteStatuser.has(statusValue)}
+                    onChange={onAnnonsestatusChange}
+                />
+            ))}
         </SkjemaGruppe>
     );
 };

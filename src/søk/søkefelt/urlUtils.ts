@@ -1,5 +1,6 @@
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
+import { Status } from '../om-annonsen/Annonsestatus';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -25,13 +26,18 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         ? new Set<string>(kommunerQueryParam.split(','))
         : new Set<string>();
 
+    const statusQueryParam = searchParams.get(QueryParam.Statuser);
+    const statuser = statusQueryParam
+        ? new Set<Status>(statusQueryParam.split(',') as Status[])
+        : new Set<Status>();
+
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
         tekst: searchParams.get(QueryParam.Tekst) ?? '',
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
         fylker,
         kommuner,
-        statuser: new Set([]), //todo
+        statuser,
     };
 };
 
