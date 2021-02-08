@@ -12,11 +12,16 @@ npm install
 
 ## Utvikling
 
+### Mot søk i prod
+
 ```
 npm start
 ```
 
-Med mock:
+For å søke mot produksjonsmiljøet må du manuelt legge til en cookie `isso-idtoken` med gyldig token. Denne kan f.eks hentes med innlogget bruker i Rekrutteringsbistand.
+
+### Med mock
+
 ```
 npm run start:mock
 ```
