@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
-import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import EtikettBase, { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { EtikettInfo } from 'nav-frontend-etiketter';
 import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {

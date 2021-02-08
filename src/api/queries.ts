@@ -2,6 +2,7 @@ import { Query } from '../elasticSearchTyper';
 import { Søkekriterier } from '../App';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
+// import { Status } from '../søk/om-annonsen/Annonsestatus';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -20,8 +21,8 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
                 filter: [
                     ...publisert(søkekriterier.publisert),
-                    aktivStilling,
                     ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
+                    aktivStilling, // ...status(søkekriterier.statuser),
                 ],
             },
         },
@@ -104,6 +105,46 @@ const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
         },
     ];
 };
+
+// const status = (statuser: Set<Status>) => {
+//     let should: any[] = [];
+
+//     if (statuser.size === 0) {
+//         should = [
+//             {
+//                 bool: {
+//                     must_not: [
+//                         {
+//                             term: {
+//                                 'stilling.status': 'REJECTED',
+//                             },
+//                         },
+//                         {
+//                             term: {
+//                                 'stilling.status': 'DELETED',
+//                             },
+//                         },
+//                     ],
+//                     must: {
+//                         range: {
+//                             'stilling.expires': {
+//                                 lt: 'now/d',
+//                             },
+//                         },
+//                     },
+//                 },
+//             },
+//         ];
+//     }
+
+//     return [
+//         {
+//             bool: {
+//                 should,
+//             },
+//         },
+//     ];
+// };
 
 const søkITittelOgStillingstekst = (tekst: string) => {
     if (!tekst) return [];
