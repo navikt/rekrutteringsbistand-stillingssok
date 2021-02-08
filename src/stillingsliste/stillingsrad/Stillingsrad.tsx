@@ -36,13 +36,15 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
 
+    const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
+
     return (
         <li className="stillingsrad">
             <div className="stillingsrad__info">
                 <Undertekst className="stillingsrad__opprettet">
                     {konverterTilPresenterbarDato(stilling.published)}
                 </Undertekst>
-                <Normaltekst>{formaterMedStoreOgSmåBokstaver(stilling.employer?.name)}</Normaltekst>
+                {arbeidsgiversNavn && <Normaltekst>{arbeidsgiversNavn}</Normaltekst>}
                 <div className="stillingsrad__tittel">
                     <Link className="lenke" to={lagUrlTilStilling(stilling)}>
                         {stilling.title}
