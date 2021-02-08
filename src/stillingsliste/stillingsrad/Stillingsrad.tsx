@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
+import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import EtikettBase, { EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
@@ -66,9 +66,13 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
             </div>
             <div className="stillingsrad__etikett">
                 {stilling.privacy === Privacy.Intern ? (
-                    <EtikettSuksess mini>Intern</EtikettSuksess>
+                    <EtikettInfo mini className="stillingsrad__etikett--intern">
+                        Intern
+                    </EtikettInfo>
                 ) : (
-                    <EtikettInfo mini>Arbeidsplassen</EtikettInfo>
+                    <EtikettInfo mini className="stillingsrad__etikett--arbeidsplassen">
+                        Arbeidsplassen
+                    </EtikettInfo>
                 )}
             </div>
             <div className="stillingsrad__kandidatlisteknapp">
