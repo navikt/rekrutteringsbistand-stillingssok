@@ -2,7 +2,7 @@ import { Query } from '../elasticSearchTyper';
 import { Søkekriterier } from '../App';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
-// import { Status } from '../søk/om-annonsen/Annonsestatus';
+import { Status } from '../søk/om-annonsen/Annonsestatus';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -22,7 +22,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
-                    aktivStilling, // ...status(søkekriterier.statuser),
+                    ...status(søkekriterier.statuser),
                 ],
             },
         },
@@ -106,45 +106,73 @@ const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
     ];
 };
 
-// const status = (statuser: Set<Status>) => {
-//     let should: any[] = [];
+/*
+    Når alle eller ingen filtre er valgt
+        Skal være true
+            administration.status ======= done
+            publishedByAdmin er satt
+            status != rejected
+            status != deleted
+            publiseringsdato <= i dag
 
-//     if (statuser.size === 0) {
-//         should = [
-//             {
-//                 bool: {
-//                     must_not: [
-//                         {
-//                             term: {
-//                                 'stilling.status': 'REJECTED',
-//                             },
-//                         },
-//                         {
-//                             term: {
-//                                 'stilling.status': 'DELETED',
-//                             },
-//                         },
-//                     ],
-//                     must: {
-//                         range: {
-//                             'stilling.expires': {
-//                                 lt: 'now/d',
-//                             },
-//                         },
-//                     },
-//                 },
-//             },
-//         ];
-//     }
+    Sjekkboks "publisert": For å se stillinger som er publiserte i dag
+        Skal være true
+            status ==== active
 
-//     return [
-//         {
-//             bool: {
-//                 should,
-//             },
-//         },
-//     ];
-// };
+    Sjekboks "utløpt": For å se stillinger som har vært publisert men ikke er det i dag
+        Skal være true
+            administration.status ======= done
+            publishedByAdmin er satt
+            expiry < i dag
+            status === inactive
+
+    Sjekkboks "stoppet":
+        Skal være true:
+            status === stopped
+            admininstratipn.status === done
+            publishedByAdmin er satt
+
+---
+
+Joar Aurdal  12:40
+Her er kriteriene fra gammel løsning:
+Alle: administrationStatus=DONE&status=!REJECTED,DELETED
+Publisert: administrationStatus=DONE&deactivatedByExpiry=false&status=ACTIVE
+Stoppet: administrationStatus=DONE&deactivatedByExpiry=false&status=STOPPED
+Utløpt: administrationStatus=DONE&deactivatedByExpiry=true&status=!REJECTED,DELETED
+ */
+const status = (statuser: Set<Status>) => {
+    let should: any[] = [];
+
+    if (statuser.size === 0 || statuser.size === Object.keys(Status).length) {
+        should = [
+            {
+                bool: {
+                    must_not: [
+                        {
+                            term: {
+                                'stilling.status': 'REJECTED',
+                            },
+                        },
+                        {
+                            term: {
+                                'stilling.status': 'DELETED',
+                            },
+                        },
+                    ],
+                },
+            },
+        ];
+    }
+
+    return [
+        {
+            bool: {
+                should,
+            },
+        },
+    ];
+};
 
 const søkITittelOgStillingstekst = (tekst: string) => {
     if (!tekst) return [];
