@@ -3,6 +3,7 @@ import { Søkekriterier } from '../App';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../Stilling';
 import { Status } from '../søk/om-annonsen/Annonsestatus';
+import { erIkkeProd } from '../utils/featureToggleUtils';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -22,7 +23,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
-                    ...status(søkekriterier.statuser),
+                    ...(erIkkeProd ? status(søkekriterier.statuser) : [aktivStilling]),
                 ],
             },
         },
