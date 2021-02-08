@@ -20,6 +20,8 @@ npm start
 
 For å søke mot produksjonsmiljøet må du manuelt legge til en cookie `isso-idtoken` med gyldig token. Denne kan f.eks hentes med innlogget bruker i Rekrutteringsbistand.
 
+For at proxy mot Elastic Search skal fungere må du kjøre med [Naisdevice](https://github.com/nais/device).
+
 ### Med mock
 
 ```
