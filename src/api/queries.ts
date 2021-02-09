@@ -145,7 +145,10 @@ Utløpt: administrationStatus=DONE&deactivatedByExpiry=true&status=!REJECTED,DEL
 const status = (statuser: Set<Status>) => {
     let should: any[] = [];
 
-    if (statuser.size === 0 || statuser.size === Object.keys(Status).length) {
+    const ingenFiltreValgt = statuser.size === 0;
+    const alleFiltreValgt = statuser.size === Object.keys(Status).length;
+
+    if (ingenFiltreValgt || alleFiltreValgt) {
         should = [
             {
                 bool: {
