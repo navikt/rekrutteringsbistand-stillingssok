@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import ReactPaginate from 'react-paginate';
 
-import { maksAntallTreffPerSøk } from '../api/queries';
+import { maksAntallTreffPerSøk } from '../api/queries/queries';
 import { hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { useHistory } from 'react-router-dom';
 import { SøkProps } from '../søk/Søk';

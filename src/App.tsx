@@ -7,7 +7,7 @@ import {
     QueryParam,
     QueryParamValue,
 } from './søk/søkefelt/urlUtils';
-import { lagQuery } from './api/queries';
+import { lagQuery } from './api/queries/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
