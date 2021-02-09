@@ -20,6 +20,7 @@ const Inkludering: FunctionComponent = () => {
                     <Fragment key={t.hovedtag}>
                         <Checkbox
                             className="søk__checkbox"
+                            //label={visningsnavnForFilter[t.hovedtag]}
                             label={t.hovedtag.toLowerCase().replaceAll('_', ' ')}
                             value={t.hovedtag}
                             checked={false}

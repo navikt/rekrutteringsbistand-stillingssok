@@ -65,3 +65,27 @@ export const hierarkiAvTagsForFilter: Array<GruppeMedTags> = [
         subtags: [],
     },
 ];
+
+export const visningsnavnForFilter = {
+    Tilrettelegging: 'Alle muligheter',
+
+    TilretteleggingArbeidstid: 'Arbeidstid',
+    TilretteleggingFysisk: 'Fysisk tilrettelegging',
+    TilretteleggingArbeidshverdagen: 'Arbeidshverdagen',
+    TilretteleggingGrunnleggende: 'Utfordringer med norsk',
+
+    TiltakEllerVirkemiddel: 'Alle virkemidler',
+    VirkemiddelLønnstilskudd: 'Lønnstilskudd',
+    VirkemiddelMentortilskudd: 'Mentor (tilskudd)',
+    VirkemiddelLærlingplass: 'Lærlingplass',
+
+    PrioritertMålgruppe: 'Alle målgrupper',
+    MålgruppeErUngeUnder30: 'Unge under 30 år',
+    MålgruppeErSeniorerOver50: 'Seniorer 50+',
+    MålgruppeKommerFraLandUtenforEØS: 'Borgere fra land utenfor EØS',
+    MålgruppeHullICVen: 'Hull i CV-en',
+    MålgruppeLiteEllerIngenUtdanning: 'Lite eller ingen utdanning',
+    MålgruppeLiteEllerIngenArbeidserfaring: 'Lite eller ingen arbeidserfaring',
+
+    StatligInkluderingsdugnad: 'Den statlige inkluderingsdugnaden',
+};
