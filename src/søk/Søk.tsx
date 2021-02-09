@@ -3,6 +3,8 @@ import Søkefelt from './søkefelt/Søkefelt';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
+import Inkludering from './inkludering/Inkludering';
+import { erIkkeProd } from '../utils/featureToggleUtils';
 import './Søk.less';
 
 export type SøkProps = {
@@ -15,6 +17,7 @@ const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             <Søkefelt oppdaterSøk={oppdaterSøk} />
             <OmAnnonsen oppdaterSøk={oppdaterSøk} />
             <FylkerOgKommuner oppdaterSøk={oppdaterSøk} />
+            {erIkkeProd && <Inkludering />}
         </div>
     );
 };
