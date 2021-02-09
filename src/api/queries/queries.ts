@@ -23,7 +23,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
-                    ...(erIkkeProd ? status(søkekriterier.statuser) : [aktivStilling]),
+                    ...status(søkekriterier.statuser),
                 ],
             },
         },

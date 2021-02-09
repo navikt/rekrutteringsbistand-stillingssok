@@ -4,7 +4,6 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import Annonsestatus from './Annonsestatus';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
-import { erIkkeProd } from '../../utils/featureToggleUtils';
 
 const OmAnnonsen: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
     return (
@@ -13,7 +12,7 @@ const OmAnnonsen: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             tittel="Om annonsen"
             className="søk__ekspanderbart-panel"
         >
-            {erIkkeProd && <Annonsestatus oppdaterSøk={oppdaterSøk} />}
+            <Annonsestatus oppdaterSøk={oppdaterSøk} />
             <HvorErAnnonsenPublisert oppdaterSøk={oppdaterSøk} />
         </Ekspanderbartpanel>
     );
