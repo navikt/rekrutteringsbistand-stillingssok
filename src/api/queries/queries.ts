@@ -2,7 +2,6 @@ import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../../Stilling';
-import { erIkkeProd } from '../../utils/featureToggleUtils';
 import { status } from './status';
 
 export const maksAntallTreffPerSøk = 40;
@@ -124,10 +123,4 @@ const søkITittelOgStillingstekst = (tekst: string) => {
             },
         },
     ];
-};
-
-const aktivStilling = {
-    term: {
-        'stilling.status': 'ACTIVE',
-    },
 };
