@@ -90,7 +90,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 {respons ? (
                     <>
                         <Systemtittel className="app__antall-stillinger" tag="output">
-                            {respons.hits.total.value} annonser
+                            {formaterAntallAnnonser(respons.hits.total.value)}
                         </Systemtittel>
                         <Stillingsliste esRespons={respons} />
                         <Paginering
@@ -104,6 +104,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             </main>
         </div>
     );
+};
+
+const formaterAntallAnnonser = (antallAnnonser: number) => {
+    const prefiks = antallAnnonser === 10000 ? 'Mer enn ' : '';
+    const suffiks = antallAnnonser === 1 ? ' annonse' : ' annonser';
+
+    return prefiks + antallAnnonser + suffiks;
 };
 
 export default App;
