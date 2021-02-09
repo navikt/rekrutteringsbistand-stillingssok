@@ -120,18 +120,19 @@ const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
         Skal være true
             status ==== active
 
+    Sjekkboks "stoppet":
+        Skal være true:
+            status === stopped
+            admininstratipn.status === done
+            publishedByAdmin er satt
+            publiseringsdato <= i dag
+
     Sjekboks "utløpt": For å se stillinger som har vært publisert men ikke er det i dag
         Skal være true
             administration.status ======= done
             publishedByAdmin er satt
             expiry < i dag
             status === inactive
-
-    Sjekkboks "stoppet":
-        Skal være true:
-            status === stopped
-            admininstratipn.status === done
-            publishedByAdmin er satt
 
 ---
 
@@ -143,13 +144,11 @@ Stoppet: administrationStatus=DONE&deactivatedByExpiry=false&status=STOPPED
 Utløpt: administrationStatus=DONE&deactivatedByExpiry=true&status=!REJECTED,DELETED
  */
 const status = (statuser: Set<Status>) => {
-    let should: any[] = [];
-
     const ingenFiltreValgt = statuser.size === 0;
     const alleFiltreValgt = statuser.size === Object.keys(Status).length;
 
     if (ingenFiltreValgt || alleFiltreValgt) {
-        should = [
+        return [
             {
                 bool: {
                     must_not: [
@@ -187,6 +186,74 @@ const status = (statuser: Set<Status>) => {
             },
         ];
     }
+
+    let should: any[] = [];
+
+    const publisert = {
+        term: {
+            'stilling.status': 'ACTIVE',
+        },
+    };
+    if (statuser.has(Status.Publisert)) should.push(publisert);
+
+    const stoppet = {
+        bool: {
+            must: [
+                { term: { 'stilling.status': 'STOPPED' } },
+                {
+                    term: {
+                        'stilling.administration.status': 'DONE',
+                    },
+                },
+                {
+                    exists: {
+                        field: 'stilling.publishedByAdmin',
+                    },
+                },
+                {
+                    range: {
+                        'stilling.published': {
+                            lte: 'now/d',
+                        },
+                    },
+                },
+            ],
+        },
+    };
+    if (statuser.has(Status.Stoppet)) should.push(stoppet);
+
+    const utløpt = {
+        bool: {
+            must: [
+                { term: { 'stilling.status': 'INACTIVE' } },
+                {
+                    term: {
+                        'stilling.administration.status': 'DONE',
+                    },
+                },
+                {
+                    exists: {
+                        field: 'stilling.publishedByAdmin',
+                    },
+                },
+                {
+                    range: {
+                        'stilling.published': {
+                            lte: 'now/d',
+                        },
+                    },
+                },
+                {
+                    range: {
+                        'stilling.expires': {
+                            lt: 'now/d',
+                        },
+                    },
+                },
+            ],
+        },
+    };
+    if (statuser.has(Status.Utløpt)) should.push(utløpt);
 
     return [
         {
