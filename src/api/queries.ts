@@ -164,6 +164,25 @@ const status = (statuser: Set<Status>) => {
                             },
                         },
                     ],
+                    must: [
+                        {
+                            term: {
+                                'stilling.administration.status': 'DONE',
+                            },
+                        },
+                        {
+                            exists: {
+                                field: 'stilling.publishedByAdmin',
+                            },
+                        },
+                        {
+                            range: {
+                                'stilling.published': {
+                                    lte: 'now/d',
+                                },
+                            },
+                        },
+                    ],
                 },
             },
         ];
