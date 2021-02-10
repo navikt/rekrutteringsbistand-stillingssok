@@ -29,6 +29,7 @@ export type Søkekriterier = {
     fylker: Set<string>;
     kommuner: Set<string>;
     statuser: Set<Status>;
+    inkludering: boolean;
 };
 
 export type AppProps = {

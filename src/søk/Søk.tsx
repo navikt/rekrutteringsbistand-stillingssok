@@ -17,7 +17,7 @@ const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             <Søkefelt oppdaterSøk={oppdaterSøk} />
             <OmAnnonsen oppdaterSøk={oppdaterSøk} />
             <FylkerOgKommuner oppdaterSøk={oppdaterSøk} />
-            {erIkkeProd && <Inkludering />}
+            {erIkkeProd && <Inkludering oppdaterSøk={oppdaterSøk} />}
         </div>
     );
 };

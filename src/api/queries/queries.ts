@@ -3,6 +3,7 @@ import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Privacy } from '../../Stilling';
 import { status } from './status';
+import { hentHovedtags } from '../../søk/inkludering/tags';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -23,6 +24,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
                     ...status(søkekriterier.statuser),
+                    ...inkludering(søkekriterier.inkludering),
                 ],
             },
         },
@@ -101,6 +103,18 @@ const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
                         should: [...shouldFylker, ...shouldKommuner],
                     },
                 },
+            },
+        },
+    ];
+};
+
+const inkludering = (harInkluderingsmuligheter: boolean) => {
+    if (!harInkluderingsmuligheter) return [];
+
+    return [
+        {
+            terms: {
+                'stilling.properties.tags': hentHovedtags(),
             },
         },
     ];
