@@ -20,6 +20,7 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
+import { sendEvent } from './amplitude';
 
 export type Søkekriterier = {
     side: number;
@@ -38,6 +39,11 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const [respons, setRespons] = useState<Respons | null>(null);
     const [førsteSøkErGjort, setFørsteSøkErGjort] = useState<boolean>(false);
+
+    useEffect(() => {
+        const side = history.location.pathname;
+        sendEvent('app', 'sidevisning', { side });
+    }, []);
 
     const oppdaterSøk = async (queryParam: QueryParam, verdi: QueryParamValue) => {
         const resetSidetall = queryParam !== QueryParam.Side;
