@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, FunctionComponent, useEffect, useState }
 import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { Input } from 'nav-frontend-skjema';
 import { useHistory, useLocation } from 'react-router-dom';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from './urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from './urlUtils';
 import './Søkefelt.less';
 
 const Søkefelt: FunctionComponent = () => {
@@ -21,8 +21,11 @@ const Søkefelt: FunctionComponent = () => {
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        const { search } = byggUrlMedParam(QueryParam.Tekst, input);
-        history.replace({ search });
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Tekst,
+            verdi: input,
+        });
     };
 
     return (

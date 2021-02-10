@@ -2,10 +2,10 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
 import { Respons } from './elasticSearchTyper';
 import {
-    byggUrlMedParam,
     hentSøkekriterier,
     QueryParam,
     Navigeringsstate,
+    oppdaterUrlMedParam,
 } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries/queries';
 import { søk } from './api/api';
@@ -52,8 +52,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         if (resetSidetall) {
-            const { search } = byggUrlMedParam(QueryParam.Side, null);
-            history.replace({ search });
+            oppdaterUrlMedParam({
+                history,
+                parameter: QueryParam.Side,
+                verdi: null,
+            });
         } else {
             const søkMedUrl = async () => {
                 setRespons(await søk(lagQuery(søkekriterier)));

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { useHistory, useLocation } from 'react-router-dom';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
 import '../Søk.less';
 
 export enum Publisert {
@@ -38,17 +38,18 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
     };
 
     const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
-        let url;
+        let verdi =
+            interntINav === påArbeidsplassen
+                ? null
+                : interntINav
+                ? Publisert.Intern
+                : Publisert.Arbeidsplassen;
 
-        if (interntINav === påArbeidsplassen) {
-            url = byggUrlMedParam(QueryParam.Publisert, null);
-        } else if (interntINav) {
-            url = byggUrlMedParam(QueryParam.Publisert, Publisert.Intern);
-        } else {
-            url = byggUrlMedParam(QueryParam.Publisert, Publisert.Arbeidsplassen);
-        }
-
-        history.replace({ search: url.search });
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Publisert,
+            verdi,
+        });
     };
 
     return (

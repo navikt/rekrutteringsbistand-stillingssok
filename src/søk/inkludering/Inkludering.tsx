@@ -2,7 +2,7 @@ import React, { FunctionComponent, ChangeEvent, useState, useEffect } from 'reac
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const Inkludering: FunctionComponent = () => {
@@ -22,8 +22,11 @@ const Inkludering: FunctionComponent = () => {
 
         setHarInkluderingsmulighet(checked);
 
-        const { search } = byggUrlMedParam(QueryParam.Inkludering, checked);
-        history.replace({ search });
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Inkludering,
+            verdi: checked,
+        });
     };
 
     return (

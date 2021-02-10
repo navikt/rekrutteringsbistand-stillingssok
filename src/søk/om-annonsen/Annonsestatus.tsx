@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 
 export enum Status {
@@ -31,8 +31,11 @@ const Annonsestatus: FunctionComponent = () => {
             statuser.delete(status);
         }
 
-        const { search } = byggUrlMedParam(QueryParam.Statuser, Array.from(statuser));
-        history.replace({ search });
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Statuser,
+            verdi: Array.from(statuser),
+        });
     };
 
     return (

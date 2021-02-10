@@ -3,7 +3,7 @@ import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import ReactPaginate from 'react-paginate';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
-import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { useHistory } from 'react-router-dom';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import './Paginering.less';
@@ -36,8 +36,14 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
         setSkalScrolleTilToppen(true);
         setSide(valgtSide);
 
-        const { search } = byggUrlMedParam(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
-        history.replace({ search, state: { harByttetSide: true } });
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Side,
+            verdi: valgtSide === 1 ? null : valgtSide,
+            state: {
+                harByttetSide: true,
+            },
+        });
     };
 
     const antallSider = regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk);
