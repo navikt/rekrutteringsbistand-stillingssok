@@ -2,13 +2,11 @@ import React, { FunctionComponent, ChangeEvent, Fragment } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { hierarkiAvTagsForFilter } from './tags';
+import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 
 const Inkludering: FunctionComponent = () => {
     const onHovedtagChange = (event: ChangeEvent<HTMLInputElement>) => {};
     const onSubtagChange = (event: ChangeEvent<HTMLInputElement>) => {};
-    const tagger = hierarkiAvTagsForFilter;
-    console.log('tadaa', tagger);
     return (
         <Ekspanderbartpanel
             apen={enhetstype === Enhetstype.Desktop}
@@ -16,22 +14,21 @@ const Inkludering: FunctionComponent = () => {
             className="søk__ekspanderbart-panel"
         >
             <>
-                {hierarkiAvTagsForFilter.map((t) => (
-                    <Fragment key={t.hovedtag}>
+                {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
+                    <Fragment key={gruppeMedTags.hovedtag}>
                         <Checkbox
                             className="søk__checkbox"
-                            //label={visningsnavnForFilter[t.hovedtag]}
-                            label={t.hovedtag.toLowerCase().replaceAll('_', ' ')}
-                            value={t.hovedtag}
+                            label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
+                            value={gruppeMedTags.hovedtag}
                             checked={false}
                             onChange={onHovedtagChange}
                         />
-                        {t.subtags.map((s) => (
+                        {gruppeMedTags.subtags.map((subtag) => (
                             <Checkbox
                                 className="søk__checkbox søk__checkbox--indentert"
-                                key={s}
-                                label={s.split('__')[1].toLowerCase().replaceAll('_', ' ')}
-                                value={s}
+                                key={subtag}
+                                label={visningsnavnForFilter[subtag]}
+                                value={subtag}
                                 checked={false}
                                 onChange={onSubtagChange}
                             />
