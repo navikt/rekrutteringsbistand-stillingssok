@@ -99,7 +99,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                         />
                     </>
                 ) : (
-                    <NavFrontendSpinner type="L" />
+                    <div className="app__spinner">
+                        <NavFrontendSpinner type="L" />
+                    </div>
                 )}
             </main>
         </div>

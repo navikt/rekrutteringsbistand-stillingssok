@@ -17,6 +17,7 @@ const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff 
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+    const [skalScrolleTilToppen, setSkalScrolleTilToppen] = useState<boolean>(false);
     const enhetstype = useEnhetstype();
 
     useEffect(() => {
@@ -25,12 +26,15 @@ const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff 
     }, [search]);
 
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-        });
-    }, [side]);
+        if (skalScrolleTilToppen) {
+            window.scrollTo({
+                top: 0,
+            });
+        }
+    }, [side, skalScrolleTilToppen]);
 
     const onPageChange = (valgtSide: number) => {
+        setSkalScrolleTilToppen(true);
         setSide(valgtSide);
         oppdaterSøk(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
     };
