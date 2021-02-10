@@ -12,6 +12,7 @@ import {
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import './Stillingsrad.less';
+import { hentHovedtags } from '../../søk/inkludering/tags';
 
 const hentArbeidssted = (locations: Location[]): string | null => {
     const filtrerteLocations: string[] = [];
@@ -37,6 +38,10 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
 
     const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
+
+    const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
+        hentHovedtags().includes(tag)
+    );
 
     return (
         <li className="stillingsrad">
@@ -72,6 +77,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 </span>
             </div>
             <div className="stillingsrad__etikett">
+                {registrertMedInkluderingsmulighet && (
+                    <EtikettInfo mini className="stillingsrad__etikett--inkludering">
+                        Inkludering
+                    </EtikettInfo>
+                )}
                 {stilling.privacy === Privacy.Intern ? (
                     <EtikettInfo mini className="stillingsrad__etikett--intern">
                         Intern

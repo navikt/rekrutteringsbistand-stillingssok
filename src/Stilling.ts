@@ -1,3 +1,5 @@
+import { Hovedtag, Subtag } from './søk/inkludering/tags';
+
 export type Rekrutteringsbistandstilling = {
     stilling: Stilling;
     stillingsinfo: Stillingsinfo | null;
@@ -82,7 +84,7 @@ export type Properties = Partial<{
     extent: Omfang;
     engagementtype: Ansettelsesform;
     positioncount: number;
-    tags: Tag[];
+    tags: Array<Hovedtag | Subtag>;
 }>;
 
 export enum Søknadsfrist {
@@ -107,29 +109,6 @@ export enum Ansettelsesform {
 export enum Omfang {
     Heltid = 'Heltid',
     Deltid = 'Deltid',
-}
-
-export enum Tag {
-    Tilrettelegging = 'INKLUDERING',
-    TilretteleggingArbeidstid = 'INKLUDERING__ARBEIDSTID',
-    TilretteleggingFysisk = 'INKLUDERING__FYSISK',
-    TilretteleggingArbeidshverdagen = 'INKLUDERING__ARBEIDSMILJØ',
-    TilretteleggingGrunnleggende = 'INKLUDERING__GRUNNLEGGENDE',
-
-    TiltakEllerVirkemiddel = 'TILTAK_ELLER_VIRKEMIDDEL',
-    VirkemiddelLønnstilskudd = 'TILTAK_ELLER_VIRKEMIDDEL__LØNNSTILSKUDD',
-    VirkemiddelMentortilskudd = 'TILTAK_ELLER_VIRKEMIDDEL__MENTORTILSKUDD',
-    VirkemiddelLærlingplass = 'TILTAK_ELLER_VIRKEMIDDEL__LÆRLINGPLASS',
-
-    PrioritertMålgruppe = 'PRIORITERT_MÅLGRUPPE',
-    MålgruppeErUngeUnder30 = 'PRIORITERT_MÅLGRUPPE__UNGE_UNDER_30',
-    MålgruppeErSeniorerOver50 = 'PRIORITERT_MÅLGRUPPE__SENIORER_OVER_45',
-    MålgruppeKommerFraLandUtenforEØS = 'PRIORITERT_MÅLGRUPPE__KOMMER_FRA_LAND_UTENFOR_EØS',
-    MålgruppeHullICVen = 'PRIORITERT_MÅLGRUPPE__HULL_I_CV_EN',
-    MålgruppeLiteEllerIngenUtdanning = 'PRIORITERT_MÅLGRUPPE__LITE_ELLER_INGEN_UTDANNING',
-    MålgruppeLiteEllerIngenArbeidserfaring = 'PRIORITERT_MÅLGRUPPE__LITE_ELLER_INGEN_ARBEIDSERFARING',
-
-    StatligInkluderingsdugnad = 'STATLIG_INKLUDERINGSDUGNAD',
 }
 
 export default Stilling;

@@ -3,8 +3,8 @@ import Søkefelt from './søkefelt/Søkefelt';
 import { QueryParam, QueryParamValue } from './søkefelt/urlUtils';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
-import Inkludering from './inkludering/Inkludering';
 import { erIkkeProd } from '../utils/featureToggleUtils';
+import Inkludering from './inkludering/Inkludering';
 import './Søk.less';
 
 export type SøkProps = {

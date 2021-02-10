@@ -45,6 +45,16 @@
         position: absolute;
         right: 1rem;
         top: 1rem;
+        display: flex;
+
+        &:not(:last-child) > * {
+            margin-left: 0.5rem;
+        }
+
+        &--inkludering {
+            background-color: @navGronnLighten80;
+            border-color: @navGronn;
+        }
 
         &--intern {
             background-color: @navLillaLighten80;

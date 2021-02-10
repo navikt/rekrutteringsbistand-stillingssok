@@ -11,15 +11,13 @@ const Inkludering: FunctionComponent = () => {
             tittel="Inkludering"
             className="søk__ekspanderbart-panel"
         >
-            <>
-                <Checkbox
-                    className="søk__checkbox"
-                    label="Inkludering"
-                    value="INKLUDERING"
-                    checked={false}
-                    onChange={onInkluderingChange}
-                />
-            </>
+            <Checkbox
+                className="søk__checkbox"
+                label="Inkludering"
+                value="INKLUDERING"
+                checked={false}
+                onChange={onInkluderingChange}
+            />
         </Ekspanderbartpanel>
     );
 };
