@@ -1,17 +1,21 @@
-import React, { FunctionComponent, ChangeEvent, useState } from 'react';
+import React, { FunctionComponent, ChangeEvent, useState, useEffect } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { SøkProps } from '../Søk';
 
 const Inkludering: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
-    const history = useHistory();
+    const { search } = useLocation();
 
     const [harInkluderingsmulighet, setHarInkluderingsmulighet] = useState<boolean>(
-        hentSøkekriterier(history.location.search).inkludering
+        hentSøkekriterier(search).inkludering
     );
+
+    useEffect(() => {
+        setHarInkluderingsmulighet(hentSøkekriterier(search).inkludering);
+    }, [search]);
 
     const onInkluderingChange = (event: ChangeEvent<HTMLInputElement>) => {
         const checked = event.target.checked;

@@ -6,14 +6,20 @@ import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import { erIkkeProd } from '../utils/featureToggleUtils';
 import Inkludering from './inkludering/Inkludering';
 import './Søk.less';
+import SlettKriterier from './slett-kriterier/SlettKriterier';
 
 export type SøkProps = {
     oppdaterSøk: (queryParam: QueryParam, verdi: QueryParamValue) => void;
 };
 
-const Søk: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+type Props = SøkProps & {
+    slettKriterier: () => void;
+};
+
+const Søk: FunctionComponent<Props> = ({ oppdaterSøk, slettKriterier }) => {
     return (
         <div className="søk">
+            <SlettKriterier slettKriterier={slettKriterier} />
             <Søkefelt oppdaterSøk={oppdaterSøk} />
             <OmAnnonsen oppdaterSøk={oppdaterSøk} />
             <FylkerOgKommuner oppdaterSøk={oppdaterSøk} />

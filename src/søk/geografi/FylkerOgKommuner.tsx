@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { SøkProps } from '../Søk';
@@ -17,6 +17,11 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         hentSøkekriterier(search).kommuner
     );
 
+    useEffect(() => {
+        setValgteFylker(hentSøkekriterier(search).fylker);
+        setValgteKommuner(hentSøkekriterier(search).kommuner);
+    }, [search]);
+
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
         const fylke = event.target.value;
         const fylker = new Set<string>(valgteFylker);
@@ -27,7 +32,6 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             fylker.delete(fylke);
 
             const kommuner = deaktiverKommunerIFylke(Array.from(valgteKommuner), fylke);
-            setValgteKommuner(new Set<string>(kommuner));
             oppdaterSøk(QueryParam.Kommuner, kommuner);
         }
 
@@ -45,7 +49,6 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             kommuner.delete(kommuneMedFylke);
         }
 
-        setValgteKommuner(kommuner);
         oppdaterSøk(QueryParam.Kommuner, Array.from(kommuner));
     };
 

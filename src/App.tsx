@@ -60,6 +60,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         søkBasertPåUrl();
     };
 
+    const slettKriterier = () => {
+        oppdaterSearchParams('');
+        søkBasertPåUrl();
+    };
+
     const oppdaterSearchParams = (search: string) => {
         history.replace({ search });
     };
@@ -90,7 +95,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <Introduksjon />
 
             <aside className="app__sidepanel">
-                <Søk oppdaterSøk={oppdaterSøk} />
+                <Søk oppdaterSøk={oppdaterSøk} slettKriterier={slettKriterier} />
             </aside>
 
             <main className="app__søkeresultat">

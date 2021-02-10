@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
 import { SøkProps } from '../Søk';
 import '../Søk.less';
@@ -16,8 +16,7 @@ const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
     hentSøkekriterier(searchParams).publisert === publisert;
 
 const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
-    const history = useHistory();
-    const search = history.location.search;
+    const { search } = useLocation();
 
     const [interntINav, setInterntINav] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Intern, search)
@@ -25,6 +24,11 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
     );
+
+    useEffect(() => {
+        setInterntINav(matcherPublisertIUrl(Publisert.Intern, search));
+        setPåArbeidsplassen(matcherPublisertIUrl(Publisert.Arbeidsplassen, search));
+    }, [search]);
 
     const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { checked } = event.target;
