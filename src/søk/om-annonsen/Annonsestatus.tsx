@@ -1,9 +1,8 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { SøkProps } from '../Søk';
-import { useLocation } from 'react-router-dom';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export enum Status {
     Publisert = 'publisert',
@@ -11,7 +10,8 @@ export enum Status {
     Utløpt = 'utløpt',
 }
 
-const Annonsestatus: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const Annonsestatus: FunctionComponent = () => {
+    const history = useHistory();
     const { search } = useLocation();
     const [valgteStatuser, setValgteStatuser] = useState<Set<Status>>(
         hentSøkekriterier(search).statuser
@@ -31,7 +31,8 @@ const Annonsestatus: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             statuser.delete(status);
         }
 
-        oppdaterSøk(QueryParam.Statuser, Array.from(statuser));
+        const { search } = byggUrlMedParam(QueryParam.Statuser, Array.from(statuser));
+        history.replace({ search });
     };
 
     return (

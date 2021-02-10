@@ -1,9 +1,8 @@
-import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { useLocation } from 'react-router-dom';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { SøkProps } from '../Søk';
+import { useHistory, useLocation } from 'react-router-dom';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
 import '../Søk.less';
 
 export enum Publisert {
@@ -15,7 +14,8 @@ export enum Publisert {
 const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
     hentSøkekriterier(searchParams).publisert === publisert;
 
-const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const HvorErAnnonsenPublisert: FunctionComponent = () => {
+    const history = useHistory();
     const { search } = useLocation();
 
     const [interntINav, setInterntINav] = useState<boolean>(
@@ -24,11 +24,6 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
     );
-
-    useEffect(() => {
-        setInterntINav(matcherPublisertIUrl(Publisert.Intern, search));
-        setPåArbeidsplassen(matcherPublisertIUrl(Publisert.Arbeidsplassen, search));
-    }, [search]);
 
     const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { checked } = event.target;
@@ -43,13 +38,17 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     };
 
     const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
+        let url;
+
         if (interntINav === påArbeidsplassen) {
-            oppdaterSøk(QueryParam.Publisert, null);
+            url = byggUrlMedParam(QueryParam.Publisert, null);
         } else if (interntINav) {
-            oppdaterSøk(QueryParam.Publisert, Publisert.Intern);
+            url = byggUrlMedParam(QueryParam.Publisert, Publisert.Intern);
         } else {
-            oppdaterSøk(QueryParam.Publisert, Publisert.Arbeidsplassen);
+            url = byggUrlMedParam(QueryParam.Publisert, Publisert.Arbeidsplassen);
         }
+
+        history.replace({ search: url.search });
     };
 
     return (

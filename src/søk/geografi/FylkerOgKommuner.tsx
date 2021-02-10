@@ -1,15 +1,15 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { SøkProps } from '../Søk';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { useLocation } from 'react-router-dom';
+import { byggUrlMedParam, hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
+import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 
-const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const FylkerOgKommuner: FunctionComponent = () => {
+    const history = useHistory();
     const { search } = useLocation();
 
     const [valgteFylker, setValgteFylker] = useState<Set<string>>(hentSøkekriterier(search).fylker);
@@ -21,6 +21,11 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
         setValgteFylker(hentSøkekriterier(search).fylker);
         setValgteKommuner(hentSøkekriterier(search).kommuner);
     }, [search]);
+
+    const oppdaterSøk = (queryParam: QueryParam, value: string[]) => {
+        const { search } = byggUrlMedParam(queryParam, value);
+        history.replace({ search });
+    };
 
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
         const fylke = event.target.value;

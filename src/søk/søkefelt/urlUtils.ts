@@ -12,6 +12,12 @@ export enum QueryParam {
     Inkludering = 'inkludering',
 }
 
+export type Navigeringsstate =
+    | {
+          harByttetSide: boolean;
+      }
+    | undefined;
+
 export type QueryParamValue = string | boolean | null | number | string[];
 
 export const hentSøkekriterier = (search: string): Søkekriterier => {
