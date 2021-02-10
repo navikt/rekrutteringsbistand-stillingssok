@@ -43,7 +43,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     useEffect(() => {
         const side = history.location.pathname;
         sendEvent('app', 'sidevisning', { side });
-    }, []);
+    }, [history.location.pathname]);
 
     const oppdaterSøk = async (queryParam: QueryParam, verdi: QueryParamValue) => {
         const resetSidetall = queryParam !== QueryParam.Side;
