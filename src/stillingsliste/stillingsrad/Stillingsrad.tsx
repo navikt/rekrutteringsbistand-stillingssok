@@ -10,8 +10,8 @@ import {
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
 } from '../../utils/stillingsUtils';
-import './Stillingsrad.less';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
+import './Stillingsrad.less';
 
 const hentArbeidssted = (locations: Location[]): string | null => {
     const filtrerteLocations: string[] = [];
@@ -46,7 +46,10 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 </Undertekst>
                 {arbeidsgiversNavn && <Normaltekst>{arbeidsgiversNavn}</Normaltekst>}
                 <div className="stillingsrad__tittel">
-                    <Link className="lenke" to={lagUrlTilStilling(stilling)}>
+                    <Link
+                        className="stillingsrad__lenke-til-stilling lenke"
+                        to={lagUrlTilStilling(stilling)}
+                    >
                         {stilling.title}
                     </Link>
                 </div>

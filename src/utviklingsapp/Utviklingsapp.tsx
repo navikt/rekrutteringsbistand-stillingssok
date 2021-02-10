@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Router } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import { cssScopeForApp } from '../index';
@@ -30,9 +30,14 @@ const Utviklingsapp: FunctionComponent = () => {
                         Utviklingsapp for rekrutteringsbistand-stillingssok
                     </Systemtittel>
                 </header>
-                <main>
-                    <App navKontor={navKontor} history={history} />
-                </main>
+                <Switch>
+                    <Route path="/stillinger/stilling">Side for stilling</Route>
+                    <Route>
+                        <main>
+                            <App navKontor={navKontor} history={history} />
+                        </main>
+                    </Route>
+                </Switch>
             </Router>
         </div>
     );
