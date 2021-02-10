@@ -501,7 +501,6 @@ export const resultat: Respons = {
                             sourceupdated: '2019-11-29T16:01:00.000Z',
                             applicationurl:
                                 'https://apply.recman.no/job_post.php?id=113835&path=finn',
-                            applicationdue: Søknadsfrist.Snarest,
                             extent: Omfang.Heltid,
                             logomain:
                                 'https://images.finncdn.no/mmo/logo/object/790312945/iad_4921366773981909339loyalty_people-logo-management-pos.png',

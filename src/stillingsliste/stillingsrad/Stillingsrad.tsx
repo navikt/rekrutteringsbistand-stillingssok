@@ -58,10 +58,12 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
                             'Ingen arbeidssted'}
                     </span>
-                    <span>
-                        Søknadsfrist:{' '}
-                        {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
-                    </span>
+                    {stilling.properties.applicationdue && (
+                        <span>
+                            Søknadsfrist:{' '}
+                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                        </span>
+                    )}
                     {antallStillinger && (
                         <span>
                             {antallStillinger} {antallStillingerSuffix}
