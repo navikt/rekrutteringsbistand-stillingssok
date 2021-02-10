@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ChangeEvent, Fragment } from 'react';
+import React, { FunctionComponent, ChangeEvent } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
