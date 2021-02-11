@@ -7,11 +7,6 @@ import { hentHovedtags } from '../../søk/inkludering/tags';
 export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
-    const filtrerteFylker = beholdFylkerUtenValgteKommuner(
-        søkekriterier.fylker,
-        søkekriterier.kommuner
-    );
-
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
@@ -21,9 +16,12 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
                 filter: [
                     ...publisert(søkekriterier.publisert),
-                    ...fylkerOgKommuner(filtrerteFylker, søkekriterier.kommuner),
+                    ...fylkerOgKommuner(søkekriterier.fylker, søkekriterier.kommuner),
                     ...status(søkekriterier.statuser),
-                    //...inkludering(søkekriterier.inkludering),
+                    ...inkludering(
+                        søkekriterier.hovedinkluderingstags,
+                        søkekriterier.subinkluderingstags
+                    ),
                 ],
             },
         },
@@ -72,7 +70,8 @@ const publisert = (publisert: Publisert) => {
     }
 };
 
-const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
+const fylkerOgKommuner = (alleFylker: Set<string>, kommuner: Set<string>) => {
+    const fylker = beholdFylkerUtenValgteKommuner(alleFylker, kommuner);
     if (fylker.size === 0 && kommuner.size === 0) return [];
 
     const shouldFylker =
@@ -115,13 +114,27 @@ const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
     ];
 };
 
-const inkludering = (harInkluderingsmuligheter: boolean) => {
-    if (!harInkluderingsmuligheter) return [];
+const beholdHovedtagsUtenValgteSubtags = (hovedtags: Set<string>, subtags: Set<string>) => {
+    const subtagArray = Array.from(subtags);
+    const hovedtagsForSubtags = subtagArray.map((subtag) => subtag.split('__')[0]);
+
+    const hovedtagsSomIkkeHarValgteSubtags = Array.from(hovedtags).filter(
+        (hovedtag) => !hovedtagsForSubtags.includes(hovedtag)
+    );
+
+    return new Set(hovedtagsSomIkkeHarValgteSubtags);
+};
+
+const inkludering = (alleHovedtags: Set<string>, subtags: Set<string>) => {
+    const hovedtags = beholdHovedtagsUtenValgteSubtags(alleHovedtags, subtags);
+    if (hovedtags.size === 0 && subtags.size === 0) return [];
+
+    const samletliste = [...Array.from(hovedtags), ...Array.from(subtags)];
 
     return [
         {
             terms: {
-                'stilling.properties.tags': hentHovedtags(),
+                'stilling.properties.tags': samletliste,
             },
         },
     ];
