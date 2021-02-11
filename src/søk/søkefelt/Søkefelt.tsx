@@ -2,17 +2,19 @@ import React, { ChangeEvent, FormEvent, FunctionComponent, useEffect, useState }
 import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { Input } from 'nav-frontend-skjema';
 import { useHistory, useLocation } from 'react-router-dom';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from './urlUtils';
+import { hentSøkekriterier, Navigeringsstate, oppdaterUrlMedParam, QueryParam } from './urlUtils';
 import './Søkefelt.less';
 
 const Søkefelt: FunctionComponent = () => {
     const history = useHistory();
-    const { search } = useLocation();
+    const { search, state } = useLocation<Navigeringsstate>();
     const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
 
     useEffect(() => {
-        setInput(hentSøkekriterier(search).tekst);
-    }, [search]);
+        if (state?.harSlettetKriterier) {
+            setInput('');
+        }
+    }, [search, state]);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value);

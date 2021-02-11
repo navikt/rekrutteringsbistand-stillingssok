@@ -15,7 +15,8 @@ export enum QueryParam {
 
 export type Navigeringsstate =
     | {
-          harByttetSide: boolean;
+          harByttetSide?: boolean;
+          harSlettetKriterier?: boolean;
       }
     | undefined;
 
