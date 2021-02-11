@@ -12,6 +12,16 @@ export type Query = {
             fields: string[];
         };
     };
+    aggs?: {
+        [A in Aggregering]?: {
+            terms?: {
+                field: string;
+            };
+            avg?: {
+                field: string;
+            };
+        };
+    };
 };
 
 type MatchQuery = {
@@ -35,7 +45,18 @@ export type Respons = {
         max_score: number | null;
         hits: Array<Hit>;
     };
+    aggregations?: {
+        [A in Aggregering]?: {
+            sum_other_doc_count: number;
+            buckets: Array<{
+                key: string;
+                doc_count: number;
+            }>;
+        };
+    };
 };
+
+type Aggregering = 'inkludering';
 
 export type Hit = {
     _index: string;

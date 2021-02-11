@@ -24,6 +24,13 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 ],
             },
         },
+        aggs: {
+            inkludering: {
+                terms: {
+                    field: 'stilling.properties.tags',
+                },
+            },
+        },
     };
 };
 
