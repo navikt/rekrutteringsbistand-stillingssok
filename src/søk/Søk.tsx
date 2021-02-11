@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import Søkefelt from './søkefelt/Søkefelt';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
-import { erIkkeProd } from '../utils/featureToggleUtils';
 import Inkludering from './inkludering/Inkludering';
 import SlettKriterier from './slett-kriterier/SlettKriterier';
 import './Søk.less';
@@ -14,7 +13,7 @@ const Søk: FunctionComponent = () => {
             <Søkefelt />
             <OmAnnonsen />
             <FylkerOgKommuner />
-            {erIkkeProd && <Inkludering />}
+            <Inkludering />
         </div>
     );
 };
