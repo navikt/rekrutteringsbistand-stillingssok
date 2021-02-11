@@ -69,12 +69,9 @@ const Inkludering: FunctionComponent<Props> = ({ aggregeringer }) => {
     };
 
     const hentAggregeringForTag = (tag: string) => {
-        const buckets = aggregeringer?.inkludering.buckets;
-        if (buckets === undefined) {
-            return undefined;
-        }
-
-        return buckets.find((bucket) => bucket.key === tag)?.doc_count || 0;
+        return (
+            aggregeringer?.inkludering.buckets.find((bucket) => bucket.key === tag)?.doc_count || 0
+        );
     };
 
     return (
@@ -86,8 +83,9 @@ const Inkludering: FunctionComponent<Props> = ({ aggregeringer }) => {
             <SkjemaGruppe legend={<Element>Velg kategori</Element>}>
                 {hierarkiAvTagsForFilter.map((gruppeMedTags: GruppeMedTags) => {
                     const aggregering = hentAggregeringForTag(gruppeMedTags.hovedtag);
-                    let label = visningsnavnForFilter[gruppeMedTags.hovedtag];
-                    if (aggregering) label += ` (${aggregering})`;
+                    const label =
+                        visningsnavnForFilter[gruppeMedTags.hovedtag] +
+                        (aggregering === undefined ? '' : ` (${aggregering})`);
 
                     return (
                         <Fragment key={gruppeMedTags.hovedtag}>
