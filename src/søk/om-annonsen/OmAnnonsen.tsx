@@ -1,19 +1,18 @@
 import React, { FunctionComponent } from 'react';
-import { SøkProps } from '../Søk';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import Annonsestatus from './Annonsestatus';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
 
-const OmAnnonsen: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const OmAnnonsen: FunctionComponent = () => {
     return (
         <Ekspanderbartpanel
             apen={enhetstype === Enhetstype.Desktop}
             tittel="Om annonsen"
             className="søk__ekspanderbart-panel"
         >
-            <Annonsestatus oppdaterSøk={oppdaterSøk} />
-            <HvorErAnnonsenPublisert oppdaterSøk={oppdaterSøk} />
+            <Annonsestatus />
+            <HvorErAnnonsenPublisert />
         </Ekspanderbartpanel>
     );
 };

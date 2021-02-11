@@ -3,17 +3,16 @@ import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import ReactPaginate from 'react-paginate';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
-import { hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
 import { useHistory } from 'react-router-dom';
-import { SøkProps } from '../søk/Søk';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import './Paginering.less';
 
-type Props = SøkProps & {
+type Props = {
     totaltAntallTreff: number;
 };
 
-const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff }) => {
+const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
     const history = useHistory();
     const { search } = history.location;
     const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
@@ -36,7 +35,15 @@ const Paginering: FunctionComponent<Props> = ({ oppdaterSøk, totaltAntallTreff 
     const onPageChange = (valgtSide: number) => {
         setSkalScrolleTilToppen(true);
         setSide(valgtSide);
-        oppdaterSøk(QueryParam.Side, valgtSide === 1 ? null : valgtSide);
+
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Side,
+            verdi: valgtSide === 1 ? null : valgtSide,
+            state: {
+                harByttetSide: true,
+            },
+        });
     };
 
     const antallSider = regnUtAntallSider(totaltAntallTreff, maksAntallTreffPerSøk);

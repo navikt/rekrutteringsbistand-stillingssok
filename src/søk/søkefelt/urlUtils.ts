@@ -1,6 +1,7 @@
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from '../om-annonsen/Annonsestatus';
+import { History } from 'history';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -11,6 +12,13 @@ export enum QueryParam {
     Statuser = 'statuser',
     Inkludering = 'inkludering',
 }
+
+export type Navigeringsstate =
+    | {
+          harByttetSide?: boolean;
+          harSlettetKriterier?: boolean;
+      }
+    | undefined;
 
 export type QueryParamValue = string | boolean | null | number | string[];
 
@@ -58,4 +66,19 @@ export const byggUrlMedParam = (param: QueryParam, value: QueryParamValue) => {
     }
 
     return url;
+};
+
+export const oppdaterUrlMedParam = ({
+    history,
+    parameter,
+    verdi,
+    state,
+}: {
+    parameter: QueryParam;
+    verdi: QueryParamValue;
+    history: History;
+    state?: Navigeringsstate;
+}) => {
+    const { search } = byggUrlMedParam(parameter, verdi);
+    history.replace({ search, state });
 };

@@ -1,14 +1,20 @@
-import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { Input } from 'nav-frontend-skjema';
-import { useLocation } from 'react-router-dom';
-import { hentSøkekriterier, QueryParam } from './urlUtils';
-import { SøkProps } from '../Søk';
+import { useHistory, useLocation } from 'react-router-dom';
+import { hentSøkekriterier, Navigeringsstate, oppdaterUrlMedParam, QueryParam } from './urlUtils';
 import './Søkefelt.less';
 
-const Søkefelt: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
-    const { search } = useLocation();
+const Søkefelt: FunctionComponent = () => {
+    const history = useHistory();
+    const { search, state } = useLocation<Navigeringsstate>();
     const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
+
+    useEffect(() => {
+        if (state?.harSlettetKriterier) {
+            setInput('');
+        }
+    }, [search, state]);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value);
@@ -16,7 +22,12 @@ const Søkefelt: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
-        oppdaterSøk(QueryParam.Tekst, input);
+
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Tekst,
+            verdi: input,
+        });
     };
 
     return (

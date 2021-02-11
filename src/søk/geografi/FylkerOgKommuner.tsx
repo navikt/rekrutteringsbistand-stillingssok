@@ -1,21 +1,34 @@
-import React, { ChangeEvent, Fragment, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { SøkProps } from '../Søk';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { useLocation } from 'react-router-dom';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
+import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 
-const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const FylkerOgKommuner: FunctionComponent = () => {
+    const history = useHistory();
     const { search } = useLocation();
 
     const [valgteFylker, setValgteFylker] = useState<Set<string>>(hentSøkekriterier(search).fylker);
     const [valgteKommuner, setValgteKommuner] = useState<Set<string>>(
         hentSøkekriterier(search).kommuner
     );
+
+    useEffect(() => {
+        setValgteFylker(hentSøkekriterier(search).fylker);
+        setValgteKommuner(hentSøkekriterier(search).kommuner);
+    }, [search]);
+
+    const oppdaterSøk = (parameter: QueryParam, verdi: string[]) => {
+        oppdaterUrlMedParam({
+            history,
+            parameter,
+            verdi,
+        });
+    };
 
     const onFylkeChange = (event: ChangeEvent<HTMLInputElement>) => {
         const fylke = event.target.value;
@@ -27,7 +40,6 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             fylker.delete(fylke);
 
             const kommuner = deaktiverKommunerIFylke(Array.from(valgteKommuner), fylke);
-            setValgteKommuner(new Set<string>(kommuner));
             oppdaterSøk(QueryParam.Kommuner, kommuner);
         }
 
@@ -45,7 +57,6 @@ const FylkerOgKommuner: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
             kommuner.delete(kommuneMedFylke);
         }
 
-        setValgteKommuner(kommuner);
         oppdaterSøk(QueryParam.Kommuner, Array.from(kommuner));
     };
 

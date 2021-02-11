@@ -1,9 +1,13 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { useHistory } from 'react-router-dom';
-import { hentSøkekriterier, QueryParam } from '../søkefelt/urlUtils';
-import { SøkProps } from '../Søk';
+import { useHistory, useLocation } from 'react-router-dom';
+import {
+    hentSøkekriterier,
+    Navigeringsstate,
+    oppdaterUrlMedParam,
+    QueryParam,
+} from '../søkefelt/urlUtils';
 import '../Søk.less';
 
 export enum Publisert {
@@ -15,9 +19,9 @@ export enum Publisert {
 const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
     hentSøkekriterier(searchParams).publisert === publisert;
 
-const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk }) => {
+const HvorErAnnonsenPublisert: FunctionComponent = () => {
     const history = useHistory();
-    const search = history.location.search;
+    const { search, state } = useLocation<Navigeringsstate>();
 
     const [interntINav, setInterntINav] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Intern, search)
@@ -25,6 +29,13 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
     );
+
+    useEffect(() => {
+        if (state?.harSlettetKriterier) {
+            setInterntINav(false);
+            setPåArbeidsplassen(false);
+        }
+    }, [search, state, interntINav, påArbeidsplassen]);
 
     const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { checked } = event.target;
@@ -39,13 +50,18 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     };
 
     const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
-        if (interntINav === påArbeidsplassen) {
-            oppdaterSøk(QueryParam.Publisert, null);
-        } else if (interntINav) {
-            oppdaterSøk(QueryParam.Publisert, Publisert.Intern);
-        } else {
-            oppdaterSøk(QueryParam.Publisert, Publisert.Arbeidsplassen);
-        }
+        let verdi =
+            interntINav === påArbeidsplassen
+                ? null
+                : interntINav
+                ? Publisert.Intern
+                : Publisert.Arbeidsplassen;
+
+        oppdaterUrlMedParam({
+            history,
+            parameter: QueryParam.Publisert,
+            verdi,
+        });
     };
 
     return (
