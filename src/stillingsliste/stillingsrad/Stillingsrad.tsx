@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
+import { Location, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
@@ -46,9 +46,37 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     return (
         <li className="stillingsrad">
             <div className="stillingsrad__info">
-                <Undertekst className="stillingsrad__opprettet">
-                    {konverterTilPresenterbarDato(stilling.published)}
-                </Undertekst>
+                <div className="stillingsrad__etiketter-og-dato">
+                    <div className="stillingsrad__etiketter">
+                        {registrertMedInkluderingsmulighet && (
+                            <EtikettInfo
+                                mini
+                                className="stillingsrad__etikett stillingsrad__etikett--inkludering"
+                            >
+                                Inkludering
+                            </EtikettInfo>
+                        )}
+                        {stilling.source === 'DIR' && (
+                            <EtikettInfo
+                                mini
+                                className="stillingsrad__etikett stillingsrad__etikett--intern"
+                            >
+                                Intern
+                            </EtikettInfo>
+                        )}
+                        {stilling.privacy === 'SHOW_ALL' && (
+                            <EtikettInfo
+                                mini
+                                className="stillingsrad__etikett stillingsrad__etikett--arbeidsplassen"
+                            >
+                                Arbeidsplassen
+                            </EtikettInfo>
+                        )}
+                    </div>
+                    <Undertekst className="stillingsrad__opprettet">
+                        {konverterTilPresenterbarDato(stilling.published)}
+                    </Undertekst>
+                </div>
                 {arbeidsgiversNavn && <Normaltekst>{arbeidsgiversNavn}</Normaltekst>}
                 <div className="stillingsrad__tittel">
                     <Link
@@ -75,22 +103,6 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                         </span>
                     )}
                 </span>
-            </div>
-            <div className="stillingsrad__etikett">
-                {registrertMedInkluderingsmulighet && (
-                    <EtikettInfo mini className="stillingsrad__etikett--inkludering">
-                        Inkludering
-                    </EtikettInfo>
-                )}
-                {stilling.privacy === Privacy.Intern ? (
-                    <EtikettInfo mini className="stillingsrad__etikett--intern">
-                        Intern
-                    </EtikettInfo>
-                ) : (
-                    <EtikettInfo mini className="stillingsrad__etikett--arbeidsplassen">
-                        Arbeidsplassen
-                    </EtikettInfo>
-                )}
             </div>
             <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (

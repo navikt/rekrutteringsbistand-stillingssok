@@ -3,9 +3,10 @@
 .stillingsrad {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
     position: relative;
     padding: 1.2rem 1rem 1rem;
+    align-items: center;
+    flex-direction: column;
 
     &:nth-child(even) {
         background: #f7f7f7;
@@ -17,8 +18,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-right: 0.5rem;
-        max-width: 35rem;
+        width: 100%;
     }
 
     &__lenke-til-stilling {
@@ -27,28 +27,32 @@
         }
     }
 
-    &__opprettet.typo-undertekst {
-        margin-bottom: 0.75rem;
-    }
-
     &__kandidatlisteknapp {
         padding-top: 0.5rem;
+        align-self: flex-start;
     }
 
     &__tittel {
         font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 0.75rem;
+        max-width: 35rem;
+    }
+
+    &__etiketter-og-dato {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.75rem;
+    }
+
+    &__etiketter {
+        display: flex;
+        margin-bottom: 1rem;
     }
 
     &__etikett {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        display: flex;
-
-        &:not(:last-child) > * {
-            margin-left: 0.5rem;
+        &:not(:last-of-type) {
+            margin-right: 0.5rem;
         }
 
         &--inkludering {
@@ -75,6 +79,20 @@
 
     @media (min-width: @screen-sm-min) {
         flex-direction: row;
-        align-items: center;
+
+        &__etiketter-og-dato {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+
+        &__etiketter {
+            margin-bottom: 0;
+        }
+
+        &__kandidatlisteknapp {
+            position: absolute;
+            right: 1rem;
+            align-self: unset;
+        }
     }
 }

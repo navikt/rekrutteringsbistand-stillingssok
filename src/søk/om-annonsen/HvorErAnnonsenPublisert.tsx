@@ -49,7 +49,7 @@ const HvorErAnnonsenPublisert: FunctionComponent<SøkProps> = ({ oppdaterSøk })
     };
 
     return (
-        <SkjemaGruppe legend={<Element>Hvor er annonsen publisert?</Element>}>
+        <SkjemaGruppe legend={<Element>Hvor er annonsen synlig?</Element>}>
             <Checkbox
                 className="søk__checkbox"
                 label="Internt i NAV"

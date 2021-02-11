@@ -1,7 +1,6 @@
 import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
-import { Privacy } from '../../Stilling';
 import { status } from './status';
 import { hentHovedtags } from '../../søk/inkludering/tags';
 
@@ -52,17 +51,25 @@ const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
     side * antallTreffPerSide - antallTreffPerSide;
 
 const publisert = (publisert: Publisert) => {
-    if (publisert === Publisert.Alle) return [];
-
-    const privacy = publisert === Publisert.Intern ? Privacy.Intern : Privacy.Arbeidsplassen;
-
-    return [
-        {
-            term: {
-                'stilling.privacy': privacy,
+    if (publisert === Publisert.Intern) {
+        return [
+            {
+                term: {
+                    'stilling.source': 'DIR',
+                },
             },
-        },
-    ];
+        ];
+    } else if (publisert === Publisert.Arbeidsplassen) {
+        return [
+            {
+                term: {
+                    'stilling.privacy': 'SHOW_ALL',
+                },
+            },
+        ];
+    } else {
+        return [];
+    }
 };
 
 const fylkerOgKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
