@@ -58,11 +58,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 verdi: null,
             });
         } else {
-            const søkMedUrl = async () => {
-                setRespons(await søk(lagQuery(søkekriterier)));
-            };
-
-            søkMedUrl();
+            søk(lagQuery(søkekriterier)).then((respons) => {
+                setRespons(respons);
+            });
         }
     }, [search, history, navigeringsstate]);
 

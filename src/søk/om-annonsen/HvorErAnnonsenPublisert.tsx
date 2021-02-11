@@ -1,8 +1,13 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { useHistory, useLocation } from 'react-router-dom';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
+import {
+    hentSøkekriterier,
+    Navigeringsstate,
+    oppdaterUrlMedParam,
+    QueryParam,
+} from '../søkefelt/urlUtils';
 import '../Søk.less';
 
 export enum Publisert {
@@ -16,7 +21,7 @@ const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
 
 const HvorErAnnonsenPublisert: FunctionComponent = () => {
     const history = useHistory();
-    const { search } = useLocation();
+    const { search, state } = useLocation<Navigeringsstate>();
 
     const [interntINav, setInterntINav] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Intern, search)
@@ -24,6 +29,13 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
     const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
         matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
     );
+
+    useEffect(() => {
+        if (state?.harSlettetKriterier) {
+            setInterntINav(false);
+            setPåArbeidsplassen(false);
+        }
+    }, [search, state, interntINav, påArbeidsplassen]);
 
     const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { checked } = event.target;
