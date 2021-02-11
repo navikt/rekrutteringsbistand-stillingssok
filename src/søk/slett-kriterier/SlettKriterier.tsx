@@ -18,7 +18,7 @@ const SlettKriterier: FunctionComponent = () => {
             }}
             className="slett-kriterier lenke"
         >
-            <Element>Slett kriterier</Element>
+            <Element>Slett alle kriterier</Element>
         </Link>
     );
 };
