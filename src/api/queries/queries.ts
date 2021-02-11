@@ -2,7 +2,6 @@ import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { status } from './status';
-import { hentHovedtags } from '../../søk/inkludering/tags';
 
 export const maksAntallTreffPerSøk = 40;
 
