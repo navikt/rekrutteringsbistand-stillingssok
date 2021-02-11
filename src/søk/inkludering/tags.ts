@@ -1,4 +1,4 @@
-type GruppeMedTags = {
+export type GruppeMedTags = {
     hovedtag: Hovedtag;
     subtags: Subtag[];
 };

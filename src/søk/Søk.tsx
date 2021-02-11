@@ -5,15 +5,20 @@ import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import Inkludering from './inkludering/Inkludering';
 import SlettKriterier from './slett-kriterier/SlettKriterier';
 import './Søk.less';
+import { Aggregeringer } from '../elasticSearchTyper';
 
-const Søk: FunctionComponent = () => {
+type Props = {
+    aggregeringer?: Aggregeringer;
+};
+
+const Søk: FunctionComponent<Props> = ({ aggregeringer }) => {
     return (
         <div className="søk">
             <SlettKriterier />
             <Søkefelt />
             <OmAnnonsen />
             <FylkerOgKommuner />
-            <Inkludering />
+            <Inkludering aggregeringer={aggregeringer} />
         </div>
     );
 };

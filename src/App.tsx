@@ -77,7 +77,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <Introduksjon />
 
             <aside className="app__sidepanel">
-                <Søk />
+                <Søk aggregeringer={respons?.aggregations} />
             </aside>
 
             <main className="app__søkeresultat">

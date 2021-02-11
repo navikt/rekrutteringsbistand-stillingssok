@@ -2,12 +2,17 @@ import React, { FunctionComponent, ChangeEvent, Fragment, useState, useEffect } 
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
+import { hierarkiAvTagsForFilter, visningsnavnForFilter, GruppeMedTags } from './tags';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
+import { Aggregeringer } from '../../elasticSearchTyper';
 
-const Inkludering: FunctionComponent = () => {
+type Props = {
+    aggregeringer?: Aggregeringer;
+};
+
+const Inkludering: FunctionComponent<Props> = ({ aggregeringer }) => {
     const history = useHistory();
     const { search } = useLocation();
 
@@ -63,6 +68,10 @@ const Inkludering: FunctionComponent = () => {
         oppdaterSøk(QueryParam.SubInkluderingTags, Array.from(subtags));
     };
 
+    const hentAggregeringForTag = (tag: string) => {
+        return aggregeringer?.inkludering.buckets.find((bucket) => bucket.key === tag)?.doc_count;
+    };
+
     return (
         <Ekspanderbartpanel
             apen={enhetstype === Enhetstype.Desktop}
@@ -70,37 +79,49 @@ const Inkludering: FunctionComponent = () => {
             className="søk__ekspanderbart-panel"
         >
             <SkjemaGruppe legend={<Element>Velg kategori</Element>}>
-                {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
-                    <Fragment key={gruppeMedTags.hovedtag}>
-                        <Checkbox
-                            className="søk__checkbox"
-                            label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
-                            value={gruppeMedTags.hovedtag}
-                            checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
-                            onChange={onHovedtagChange}
-                        />
+                {hierarkiAvTagsForFilter.map((gruppeMedTags: GruppeMedTags) => {
+                    const aggregering = hentAggregeringForTag(gruppeMedTags.hovedtag);
+                    let label = visningsnavnForFilter[gruppeMedTags.hovedtag];
+                    if (aggregering) label += ` (${aggregering})`;
 
-                        {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
-                            gruppeMedTags.subtags.length > 0 && (
-                                <fieldset>
-                                    <legend className="kun-skjermlesere">
-                                        Velg kategorier under {gruppeMedTags.hovedtag}
-                                    </legend>
+                    return (
+                        <Fragment key={gruppeMedTags.hovedtag}>
+                            <Checkbox
+                                className="søk__checkbox"
+                                label={label}
+                                value={gruppeMedTags.hovedtag}
+                                checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
+                                onChange={onHovedtagChange}
+                            />
 
-                                    {gruppeMedTags.subtags.map((subtag) => (
-                                        <Checkbox
-                                            className="søk__checkbox søk__checkbox--indentert"
-                                            key={subtag}
-                                            label={visningsnavnForFilter[subtag]}
-                                            value={subtag}
-                                            checked={valgteSubtags.has(subtag)}
-                                            onChange={onSubtagChange}
-                                        />
-                                    ))}
-                                </fieldset>
-                            )}
-                    </Fragment>
-                ))}
+                            {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
+                                gruppeMedTags.subtags.length > 0 && (
+                                    <fieldset>
+                                        <legend className="kun-skjermlesere">
+                                            Velg kategorier under {gruppeMedTags.hovedtag}
+                                        </legend>
+
+                                        {gruppeMedTags.subtags.map((subtag) => {
+                                            let label = visningsnavnForFilter[subtag];
+                                            const aggregering = hentAggregeringForTag(subtag);
+                                            if (aggregering) label += ` (${aggregering})`;
+
+                                            return (
+                                                <Checkbox
+                                                    className="søk__checkbox søk__checkbox--indentert"
+                                                    key={subtag}
+                                                    label={label}
+                                                    value={subtag}
+                                                    checked={valgteSubtags.has(subtag)}
+                                                    onChange={onSubtagChange}
+                                                />
+                                            );
+                                        })}
+                                    </fieldset>
+                                )}
+                        </Fragment>
+                    );
+                })}
             </SkjemaGruppe>
         </Ekspanderbartpanel>
     );
