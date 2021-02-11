@@ -1,33 +1,12 @@
-import React, { FunctionComponent, ChangeEvent, useState, useEffect } from 'react';
+import React, { FunctionComponent, ChangeEvent, Fragment } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
-import { useHistory, useLocation } from 'react-router-dom';
+import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 
 const Inkludering: FunctionComponent = () => {
-    const history = useHistory();
-    const { search } = useLocation();
-
-    const [harInkluderingsmulighet, setHarInkluderingsmulighet] = useState<boolean>(
-        hentSøkekriterier(search).inkludering
-    );
-
-    useEffect(() => {
-        setHarInkluderingsmulighet(hentSøkekriterier(search).inkludering);
-    }, [search]);
-
-    const onInkluderingChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const checked = event.target.checked;
-
-        setHarInkluderingsmulighet(checked);
-
-        oppdaterUrlMedParam({
-            history,
-            parameter: QueryParam.Inkludering,
-            verdi: checked,
-        });
-    };
+    const onHovedtagChange = (event: ChangeEvent<HTMLInputElement>) => {};
+    const onSubtagChange = (event: ChangeEvent<HTMLInputElement>) => {};
 
     return (
         <Ekspanderbartpanel
@@ -35,12 +14,29 @@ const Inkludering: FunctionComponent = () => {
             tittel="Inkludering"
             className="søk__ekspanderbart-panel"
         >
-            <Checkbox
-                className="søk__checkbox"
-                label="Har inkluderingsmuligheter"
-                checked={harInkluderingsmulighet}
-                onChange={onInkluderingChange}
-            />
+            <>
+                {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
+                    <Fragment key={gruppeMedTags.hovedtag}>
+                        <Checkbox
+                            className="søk__checkbox"
+                            label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
+                            value={gruppeMedTags.hovedtag}
+                            checked={false}
+                            onChange={onHovedtagChange}
+                        />
+                        {gruppeMedTags.subtags.map((subtag) => (
+                            <Checkbox
+                                className="søk__checkbox søk__checkbox--indentert"
+                                key={subtag}
+                                label={visningsnavnForFilter[subtag]}
+                                value={subtag}
+                                checked={false}
+                                onChange={onSubtagChange}
+                            />
+                        ))}
+                    </Fragment>
+                ))}
+            </>
         </Ekspanderbartpanel>
     );
 };
