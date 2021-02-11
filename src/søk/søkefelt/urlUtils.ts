@@ -10,7 +10,8 @@ export enum QueryParam {
     Fylker = 'fylker',
     Kommuner = 'kommuner',
     Statuser = 'statuser',
-    Inkludering = 'inkludering',
+    HovedInkluderingTags = 'hovedinkluderingstags',
+    SubInkluderingTags = 'subinkluderingstags',
 }
 
 export type Navigeringsstate =
@@ -35,6 +36,16 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         ? new Set<string>(kommunerQueryParam.split(','))
         : new Set<string>();
 
+    const hovedinkluderingstagsQueryParam = searchParams.get(QueryParam.HovedInkluderingTags);
+    const hovedinkluderingstags = hovedinkluderingstagsQueryParam
+        ? new Set<string>(hovedinkluderingstagsQueryParam.split(','))
+        : new Set<string>();
+
+    const subinkluderingstagsQueryParam = searchParams.get(QueryParam.SubInkluderingTags);
+    const subinkluderingstags = subinkluderingstagsQueryParam
+        ? new Set<string>(subinkluderingstagsQueryParam.split(','))
+        : new Set<string>();
+
     const statusQueryParam = searchParams.get(QueryParam.Statuser);
     const statuser = statusQueryParam
         ? new Set<Status>(statusQueryParam.split(',') as Status[])
@@ -44,10 +55,11 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
         tekst: searchParams.get(QueryParam.Tekst) ?? '',
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
-        inkludering: searchParams.get(QueryParam.Inkludering) === 'true',
         fylker,
         kommuner,
         statuser,
+        hovedinkluderingstags,
+        subinkluderingstags,
     };
 };
 
