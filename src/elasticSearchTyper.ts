@@ -13,12 +13,10 @@ export type Query = {
         };
     };
     aggs: {
-        [A in Aggregering]: {
+        inkludering: {
             terms?: {
                 field: string;
-            };
-            avg?: {
-                field: string;
+                size?: number;
             };
         };
     };
@@ -48,9 +46,8 @@ export type Respons = {
     aggregations: Aggregeringer;
 };
 
-type Aggregering = 'inkludering';
 export type Aggregeringer = {
-    [A in Aggregering]: {
+    inkludering: {
         sum_other_doc_count: number;
         buckets: Array<{
             key: string;

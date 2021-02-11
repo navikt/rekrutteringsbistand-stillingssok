@@ -69,7 +69,12 @@ const Inkludering: FunctionComponent<Props> = ({ aggregeringer }) => {
     };
 
     const hentAggregeringForTag = (tag: string) => {
-        return aggregeringer?.inkludering.buckets.find((bucket) => bucket.key === tag)?.doc_count;
+        const buckets = aggregeringer?.inkludering.buckets;
+        if (buckets === undefined) {
+            return undefined;
+        }
+
+        return buckets.find((bucket) => bucket.key === tag)?.doc_count || 0;
     };
 
     return (
@@ -102,9 +107,12 @@ const Inkludering: FunctionComponent<Props> = ({ aggregeringer }) => {
                                         </legend>
 
                                         {gruppeMedTags.subtags.map((subtag) => {
-                                            let label = visningsnavnForFilter[subtag];
                                             const aggregering = hentAggregeringForTag(subtag);
-                                            if (aggregering) label += ` (${aggregering})`;
+                                            const label =
+                                                visningsnavnForFilter[subtag] +
+                                                (aggregering === undefined
+                                                    ? ''
+                                                    : ` (${aggregering})`);
 
                                             return (
                                                 <Checkbox

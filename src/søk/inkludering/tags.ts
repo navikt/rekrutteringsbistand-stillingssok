@@ -90,6 +90,5 @@ export const visningsnavnForFilter = {
     [Hovedtag.StatligInkluderingsdugnad]: 'Statlig inkluderingsdugnad',
 };
 
-export const hentHovedtags = (): string[] => {
-    return Object.values(Hovedtag);
-};
+export const hentHovedtags = (): string[] => Object.values(Hovedtag);
+export const hentAlleTags = (): string[] => [...Object.values(Hovedtag), ...Object.values(Subtag)];
