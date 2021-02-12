@@ -5,6 +5,7 @@ import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
+import { sendEvent } from '../../amplitude';
 import { Element } from 'nav-frontend-typografi';
 
 const Inkludering: FunctionComponent = () => {
@@ -37,6 +38,7 @@ const Inkludering: FunctionComponent = () => {
         const hovedtags = new Set<string>(valgteHovedtags);
 
         if (event.target.checked) {
+            sendEvent('app', 'filter', { inkluderingHovedtag: hovedtag });
             hovedtags.add(hovedtag);
         } else {
             hovedtags.delete(hovedtag);
@@ -54,6 +56,7 @@ const Inkludering: FunctionComponent = () => {
         const subtags = new Set<string>(valgteSubtags);
 
         if (event.target.checked) {
+            sendEvent('app', 'filter', { inkluderingSubtag: subtag });
             subtags.add(subtag);
         } else {
             subtags.delete(subtag);
