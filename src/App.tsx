@@ -68,7 +68,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     return (
         <div className="app">
             <nav className="app__tilbakelenke">
-                <Link className="lenke" to="/stillinger">
+                <Link className="lenke" to="/stillinger?kommerfranyttsøk">
                     <NavFrontendChevron type="venstre" />
                     Tilbake til gammelt søk
                 </Link>
