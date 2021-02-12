@@ -2,7 +2,6 @@ import { Søkekriterier } from '../../App';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from '../om-annonsen/Annonsestatus';
 import { History } from 'history';
-import { sendEvent } from '../../amplitude';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -93,6 +92,5 @@ export const oppdaterUrlMedParam = ({
     state?: Navigeringsstate;
 }) => {
     const { search } = byggUrlMedParam(parameter, verdi);
-    sendEvent('app', 'filter', { filter: parameter });
     history.replace({ search, state });
 };
