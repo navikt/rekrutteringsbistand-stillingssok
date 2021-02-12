@@ -38,7 +38,7 @@ const Inkludering: FunctionComponent = () => {
         const hovedtags = new Set<string>(valgteHovedtags);
 
         if (event.target.checked) {
-            sendEvent('app', 'filter', { inkluderingHovedtag: hovedtag });
+            sendEvent('stillingssøk', 'aktiver_filter', { inkluderingHovedtag: hovedtag });
             hovedtags.add(hovedtag);
         } else {
             hovedtags.delete(hovedtag);
@@ -56,7 +56,7 @@ const Inkludering: FunctionComponent = () => {
         const subtags = new Set<string>(valgteSubtags);
 
         if (event.target.checked) {
-            sendEvent('app', 'filter', { inkluderingSubtag: subtag });
+            sendEvent('stillingssøk', 'aktiver_filter', { inkluderingSubtag: subtag });
             subtags.add(subtag);
         } else {
             subtags.delete(subtag);
