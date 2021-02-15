@@ -76,7 +76,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                     }}
                 >
                     <NavFrontendChevron type="venstre" />
-                    Tilbake til gammelt søk
+                    Til gammelt søk
                 </Link>
             </nav>
 
