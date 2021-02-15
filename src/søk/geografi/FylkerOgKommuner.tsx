@@ -63,10 +63,10 @@ const FylkerOgKommuner: FunctionComponent = () => {
     return (
         <Ekspanderbartpanel
             apen={enhetstype === Enhetstype.Desktop}
-            tittel="Velg fylke eller kommune"
+            tittel="Geografi"
             className="søk__ekspanderbart-panel"
         >
-            <SkjemaGruppe legend={<Element>Velg område</Element>}>
+            <SkjemaGruppe legend={<Element>Velg fylke eller kommune</Element>}>
                 {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                     <Fragment key={fylke}>
                         <Checkbox
