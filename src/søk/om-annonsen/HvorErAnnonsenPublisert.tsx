@@ -68,7 +68,7 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
         <SkjemaGruppe legend={<Element>Hvor er annonsen synlig?</Element>}>
             <Checkbox
                 className="søk__checkbox"
-                label="Internt i NAV"
+                label="Internt i NAV (direktemeldt)"
                 value={Publisert.Intern}
                 checked={interntINav}
                 onChange={onPublisertChange}
