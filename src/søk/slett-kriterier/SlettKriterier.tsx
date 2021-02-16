@@ -11,7 +11,7 @@ const SlettKriterier: FunctionComponent = () => {
         <Link
             to={{
                 pathname,
-                search: '',
+                search: '?publisert=intern&statuser=publisert',
                 state: {
                     harSlettetKriterier: true,
                 },

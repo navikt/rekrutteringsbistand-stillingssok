@@ -32,8 +32,8 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
 
     useEffect(() => {
         if (state?.harSlettetKriterier) {
-            setInterntINav(false);
-            setPåArbeidsplassen(false);
+            setInterntINav(matcherPublisertIUrl(Publisert.Intern, search));
+            setPåArbeidsplassen(matcherPublisertIUrl(Publisert.Arbeidsplassen, search));
         }
     }, [search, state, interntINav, påArbeidsplassen]);
 
