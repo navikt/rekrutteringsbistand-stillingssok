@@ -5,6 +5,53 @@ export const resultat: Respons = {
     took: 5,
     timed_out: false,
     _shards: { total: 3, successful: 3, skipped: 0, failed: 0 },
+    aggregations: {
+        inkludering: {
+            sum_other_doc_count: 53,
+            buckets: [
+                {
+                    key: 'PRIORITERT_MÅLGRUPPE',
+                    doc_count: 46,
+                },
+                {
+                    key: 'PRIORITERT_MÅLGRUPPE__UNGE_UNDER_30',
+                    doc_count: 40,
+                },
+                {
+                    key: 'TILTAK_ELLER_VIRKEMIDDEL',
+                    doc_count: 39,
+                },
+                {
+                    key: 'TILTAK_ELLER_VIRKEMIDDEL__LØNNSTILSKUDD',
+                    doc_count: 37,
+                },
+                {
+                    key: 'PRIORITERT_MÅLGRUPPE__HULL_I_CV_EN',
+                    doc_count: 27,
+                },
+                {
+                    key: 'INKLUDERING',
+                    doc_count: 26,
+                },
+                {
+                    key: 'PRIORITERT_MÅLGRUPPE__SENIORER_OVER_45',
+                    doc_count: 23,
+                },
+                {
+                    key: 'TILTAK_ELLER_VIRKEMIDDEL__MENTORTILSKUDD',
+                    doc_count: 21,
+                },
+                {
+                    key: 'INKLUDERING__ARBEIDSMILJØ',
+                    doc_count: 15,
+                },
+                {
+                    key: 'INKLUDERING__ARBEIDSTID',
+                    doc_count: 15,
+                },
+            ],
+        },
+    },
     hits: {
         total: { value: 10000, relation: 'gte' },
         max_score: 1.0,

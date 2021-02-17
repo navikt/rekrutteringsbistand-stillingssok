@@ -2,8 +2,10 @@ import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { status } from './status';
+import { hentAlleTags } from '../../søk/inkludering/tags';
 
 export const maksAntallTreffPerSøk = 40;
+const totaltAntallTags = hentAlleTags().length;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
@@ -22,6 +24,14 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                         søkekriterier.subinkluderingstags
                     ),
                 ],
+            },
+        },
+        aggs: {
+            inkludering: {
+                terms: {
+                    field: 'stilling.properties.tags',
+                    size: totaltAntallTags,
+                },
             },
         },
     };
