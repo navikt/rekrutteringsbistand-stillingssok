@@ -38,21 +38,20 @@ const Sorter: FunctionComponent = () => {
     };
 
     return (
-        <Select className="sorter" label="Sorter" onChange={onOptionValgt}>
-            <option selected={valgt === Sortering.MestRelevant} value={Sortering.MestRelevant}>
-                Mest relevant
-            </option>
-            <option
-                selected={valgt === Sortering.Publiseringsdato}
-                value={Sortering.Publiseringsdato}
-            >
-                Publiseringsdato
-            </option>
-            <option selected={valgt === Sortering.Utløpsdato} value={Sortering.Utløpsdato}>
-                Utløpsdato
-            </option>
+        <Select className="sorter" label="Sorter" defaultValue={valgt} onChange={onOptionValgt}>
+            {Object.values(Sortering).map((sortering) => (
+                <option key={sortering} value={sortering}>
+                    {labels[sortering]}
+                </option>
+            ))}
         </Select>
     );
+};
+
+const labels: Record<Sortering, string> = {
+    [Sortering.MestRelevant]: 'Mest relevant',
+    [Sortering.Publiseringsdato]: 'Publiseringsdato',
+    [Sortering.Utløpsdato]: 'Utløpsdato',
 };
 
 export default Sorter;
