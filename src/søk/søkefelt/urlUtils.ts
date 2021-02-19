@@ -2,6 +2,7 @@ import { Søkekriterier } from '../../App';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from '../om-annonsen/Annonsestatus';
 import { History } from 'history';
+import { Sortering } from '../../sorter/Sorter';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -12,6 +13,7 @@ export enum QueryParam {
     Statuser = 'statuser',
     HovedInkluderingTags = 'hovedinkluderingstags',
     SubInkluderingTags = 'subinkluderingstags',
+    Sortering = 'sortering',
 }
 
 export type Navigeringsstate =
@@ -60,6 +62,7 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         statuser,
         hovedinkluderingstags,
         subinkluderingstags,
+        sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
     };
 };
 

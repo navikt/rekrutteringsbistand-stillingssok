@@ -2,6 +2,7 @@ import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { status } from './status';
+import { sorterTreff } from './sortering';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -9,7 +10,6 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
-        ...sorterPåPublisertDatoHvisTekstErTom(søkekriterier.tekst),
         query: {
             bool: {
                 must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
@@ -24,6 +24,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                 ],
             },
         },
+        ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
     };
 };
 
@@ -32,16 +33,6 @@ const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<strin
     const fylkerForKommuner = kommuneArray.map((kommune) => kommune.split('.')[0]);
 
     return new Set(Array.from(fylker).filter((fylke) => !fylkerForKommuner.includes(fylke)));
-};
-
-const sorterPåPublisertDatoHvisTekstErTom = (tekst: string) => {
-    if (tekst) return [];
-
-    return {
-        sort: {
-            'stilling.published': { order: 'desc' },
-        },
-    };
 };
 
 const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
