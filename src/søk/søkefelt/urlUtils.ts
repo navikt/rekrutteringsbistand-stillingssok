@@ -2,6 +2,7 @@ import { Søkekriterier } from '../../App';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from '../om-annonsen/Annonsestatus';
 import { History } from 'history';
+import { Sortering } from '../../sorter/Sorter';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -12,6 +13,7 @@ export enum QueryParam {
     Statuser = 'statuser',
     HovedInkluderingTags = 'hovedinkluderingstags',
     SubInkluderingTags = 'subinkluderingstags',
+    Sortering = 'sortering',
 }
 
 export type Navigeringsstate =
@@ -23,43 +25,25 @@ export type Navigeringsstate =
 
 export type QueryParamValue = string | boolean | null | number | string[];
 
+const parseQueryParamSomSet = (searchParams: URLSearchParams) => (queryParam: QueryParam) => {
+    const verdiFraUrl = searchParams.get(queryParam);
+    return verdiFraUrl ? new Set<string>(verdiFraUrl.split(',')) : new Set<string>();
+};
+
 export const hentSøkekriterier = (search: string): Søkekriterier => {
     const searchParams = new URLSearchParams(search);
-
-    const fylkerQueryParam = searchParams.get(QueryParam.Fylker);
-    const fylker = fylkerQueryParam
-        ? new Set<string>(fylkerQueryParam.split(','))
-        : new Set<string>();
-
-    const kommunerQueryParam = searchParams.get(QueryParam.Kommuner);
-    const kommuner = kommunerQueryParam
-        ? new Set<string>(kommunerQueryParam.split(','))
-        : new Set<string>();
-
-    const hovedinkluderingstagsQueryParam = searchParams.get(QueryParam.HovedInkluderingTags);
-    const hovedinkluderingstags = hovedinkluderingstagsQueryParam
-        ? new Set<string>(hovedinkluderingstagsQueryParam.split(','))
-        : new Set<string>();
-
-    const subinkluderingstagsQueryParam = searchParams.get(QueryParam.SubInkluderingTags);
-    const subinkluderingstags = subinkluderingstagsQueryParam
-        ? new Set<string>(subinkluderingstagsQueryParam.split(','))
-        : new Set<string>();
-
-    const statusQueryParam = searchParams.get(QueryParam.Statuser);
-    const statuser = statusQueryParam
-        ? new Set<Status>(statusQueryParam.split(',') as Status[])
-        : new Set<Status>();
+    const hentSøkekriterie = parseQueryParamSomSet(searchParams);
 
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
         tekst: searchParams.get(QueryParam.Tekst) ?? '',
         publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
-        fylker,
-        kommuner,
-        statuser,
-        hovedinkluderingstags,
-        subinkluderingstags,
+        fylker: hentSøkekriterie(QueryParam.Fylker),
+        kommuner: hentSøkekriterie(QueryParam.Kommuner),
+        hovedinkluderingstags: hentSøkekriterie(QueryParam.HovedInkluderingTags),
+        subinkluderingstags: hentSøkekriterie(QueryParam.SubInkluderingTags),
+        statuser: hentSøkekriterie(QueryParam.Statuser) as Set<Status>,
+        sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
     };
 };
 

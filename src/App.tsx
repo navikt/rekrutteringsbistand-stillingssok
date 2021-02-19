@@ -21,6 +21,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
+import Sorter, { Sortering } from './sorter/Sorter';
 
 export type Søkekriterier = {
     side: number;
@@ -31,6 +32,7 @@ export type Søkekriterier = {
     statuser: Set<Status>;
     hovedinkluderingstags: Set<string>;
     subinkluderingstags: Set<string>;
+    sortering: Sortering;
 };
 
 export type AppProps = {
@@ -89,9 +91,12 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <main className="app__søkeresultat">
                 {respons ? (
                     <>
-                        <Systemtittel className="app__antall-stillinger" tag="output">
-                            {formaterAntallAnnonser(respons.hits.total.value)}
-                        </Systemtittel>
+                        <div className="app__antall-og-sortering">
+                            <Systemtittel className="app__antall-stillinger" tag="output">
+                                {formaterAntallAnnonser(respons.hits.total.value)}
+                            </Systemtittel>
+                            <Sorter />
+                        </div>
                         <Stillingsliste esRespons={respons} />
                         <Paginering totaltAntallTreff={respons.hits.total.value} />
                     </>
