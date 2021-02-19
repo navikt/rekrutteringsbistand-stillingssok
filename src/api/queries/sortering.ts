@@ -2,7 +2,7 @@ import { Sortering } from '../../sorter/Sorter';
 
 const sorteringPåUtløpsdato = {
     sort: {
-        'stilling.expires': { order: 'desc' },
+        'stilling.expires': { order: 'asc' },
     },
 };
 
@@ -12,15 +12,18 @@ const sorteringPåPubliseringsdato = {
     },
 };
 
-export const sorterTreff = (sortering: Sortering, tekst: string) => {
-    if (!tekst) {
-        return sortering === Sortering.Utløpsdato
-            ? sorteringPåUtløpsdato
-            : sorteringPåPubliseringsdato;
+export const sorterTreff = (sortering: Sortering, fritekst: string) => {
+    const girMeningÅSorterePåMestRelevant = fritekst;
+    if (!girMeningÅSorterePåMestRelevant && sortering === Sortering.MestRelevant) {
+        return sorteringPåPubliseringsdato;
     }
 
-    if (sortering === Sortering.MestRelevant) return [];
-    return sortering === Sortering.Publiseringsdato
-        ? sorteringPåPubliseringsdato
-        : sorteringPåUtløpsdato;
+    switch (sortering) {
+        case Sortering.MestRelevant:
+            return [];
+        case Sortering.Publiseringsdato:
+            return sorteringPåPubliseringsdato;
+        case Sortering.Utløpsdato:
+            return sorteringPåUtløpsdato;
+    }
 };
