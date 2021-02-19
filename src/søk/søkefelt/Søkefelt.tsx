@@ -34,7 +34,7 @@ const Søkefelt: FunctionComponent = () => {
         <form className="søkefelt" onSubmit={onSubmit}>
             <Input
                 label="Søk etter stillinger"
-                description="For eksempel arbeidsgiver, annonsenummer, tittel eller annonsetekst"
+                description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
                 value={input}
                 onChange={onInputChange}
                 className="søkefelt__input"
