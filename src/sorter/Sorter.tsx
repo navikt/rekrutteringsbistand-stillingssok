@@ -1,19 +1,30 @@
 import { Select } from 'nav-frontend-skjema';
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søk/søkefelt/urlUtils';
+import {
+    hentSøkekriterier,
+    Navigeringsstate,
+    oppdaterUrlMedParam,
+    QueryParam,
+} from '../søk/søkefelt/urlUtils';
 import './Sorter.less';
 
 export enum Sortering {
-    MestRelevant = 'mest-relevant',
+    MestRelevant = 'mestRelevant',
     Publiseringsdato = 'publiseringsdato',
-    Utløpsdato = 'utlopsdato',
+    Utløpsdato = 'utløpsdato',
 }
 
 const Sorter: FunctionComponent = () => {
     const history = useHistory();
-    const { search } = useLocation();
+    const { search, state } = useLocation<Navigeringsstate>();
     const [valgt, setValgt] = useState<Sortering>(hentSøkekriterier(search).sortering);
+
+    useEffect(() => {
+        if (state?.harSlettetKriterier) {
+            setValgt(Sortering.MestRelevant);
+        }
+    }, [search, state]);
 
     const onOptionValgt = (event: ChangeEvent<HTMLSelectElement>) => {
         const valgt = event.target.value as Sortering;
