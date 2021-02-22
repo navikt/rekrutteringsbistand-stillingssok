@@ -109,8 +109,11 @@ type FylkeMedKommuner = {
 };
 
 const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
-    const navn = kommunenavn === 'Våler' ? `${kommunenavn} (${fylkesnavn})` : kommunenavn;
-    return navn;
+    if (kommunenavn === 'Våler' || kommunenavn === 'Herøy') {
+        return `${kommunenavn} (${fylkesnavn})`;
+    } else {
+        return kommunenavn;
+    }
 };
 
 const hentKommunenavnMedFylke = (kommunenavn: string, fylkesnavn: string): string => {
