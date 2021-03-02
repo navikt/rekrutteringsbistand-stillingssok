@@ -14,9 +14,7 @@ const LagreFavorittsøk: FunctionComponent = () => {
 
     const onLagreSomFavorittsøkClick = () => {
         localStorage.setItem(favorittsøkLocalstorageKey, search);
-
-        const favorittsøk = localStorage.getItem(favorittsøkLocalstorageKey);
-        setFavorittsøkErAktivt(favorittsøk === search);
+        setFavorittsøkErAktivt(erFavorittsøkAktivt(search));
     };
 
     return favorittsøkErAktivt ? (
