@@ -14,6 +14,7 @@ export enum QueryParam {
     HovedInkluderingTags = 'hovedinkluderingstags',
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
+    Favorittsøk = 'favorittsok',
 }
 
 export type Navigeringsstate =

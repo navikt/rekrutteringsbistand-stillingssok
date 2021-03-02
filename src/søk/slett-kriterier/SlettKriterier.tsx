@@ -3,6 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import { Link, useLocation } from 'react-router-dom';
 import './SlettKriterier.less';
 import { Navigeringsstate } from '../søkefelt/urlUtils';
+import { standardsøk } from '../../App';
 
 const SlettKriterier: FunctionComponent = () => {
     const { pathname } = useLocation<Navigeringsstate>();
@@ -11,7 +12,7 @@ const SlettKriterier: FunctionComponent = () => {
         <Link
             to={{
                 pathname,
-                search: '?publisert=intern&statuser=publisert',
+                search: standardsøk,
                 state: {
                     harSlettetKriterier: true,
                 },
