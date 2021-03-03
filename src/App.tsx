@@ -22,7 +22,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
-import { standardsøkLocalstorageKey } from './søk/lagre-standardsøk/LagreStandardsøk';
+import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
 
 export type Søkekriterier = {
     side: number;
