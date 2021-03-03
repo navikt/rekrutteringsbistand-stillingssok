@@ -79,6 +79,10 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             } else {
                 history.replace({ search: defaultValgteKriterier });
             }
+
+            sendEvent('stillingssøk', 'har_lagret_standardsøk', {
+                harLagretStandardsøk: !!standardsøk,
+            });
         }
     }, [search, history]);
 
