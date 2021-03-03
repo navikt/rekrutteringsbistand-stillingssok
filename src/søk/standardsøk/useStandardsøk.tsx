@@ -16,7 +16,7 @@ export const useStandardsøk = () => {
 
     useEffect(() => {
         setStandardsøkErAktivt(erStandardsøkAktivt(search));
-    }, [search, standardsøkErAktivt, setStandardsøkErAktivt, erStandardsøkAktivt]);
+    }, [search, standardsøkErAktivt, setStandardsøkErAktivt]);
 
     function setStandardsøkTilAktivt() {
         setStandardsøkErAktivt(true);

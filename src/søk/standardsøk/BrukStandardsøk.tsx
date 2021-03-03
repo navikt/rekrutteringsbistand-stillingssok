@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 import { QueryParam } from '../søkefelt/urlUtils';
