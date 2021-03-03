@@ -8,15 +8,23 @@ import LagreStandardsøk from './standardsøk/LagreStandardsøk';
 import { erIkkeProd } from '../utils/featureToggleUtils';
 import BrukStandardsøk from './standardsøk/BrukStandardsøk';
 import './Søk.less';
+import { useStandardsøk } from './standardsøk/useStandardsøk';
 
 const Søk: FunctionComponent = () => {
+    const { standardsøkErAktivt, setStandardsøkTilAktivt } = useStandardsøk();
+
     return (
         <div className="søk">
             <div className="søk__lenker-over-søk">
-                {erIkkeProd && <BrukStandardsøk />}
+                {erIkkeProd && <BrukStandardsøk standardsøkErAktivt={standardsøkErAktivt} />}
                 <SlettKriterier />
             </div>
-            {erIkkeProd && <LagreStandardsøk />}
+            {erIkkeProd && (
+                <LagreStandardsøk
+                    standardsøkErAktivt={standardsøkErAktivt}
+                    setStandardsøkTilAktivt={setStandardsøkTilAktivt}
+                />
+            )}
             <Søkefelt />
             <OmAnnonsen />
             <FylkerOgKommuner />

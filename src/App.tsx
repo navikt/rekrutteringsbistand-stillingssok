@@ -20,8 +20,8 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
-import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
+import { standardsøkLocalstorageKey } from './søk/standardsøk/useStandardsøk';
 import './App.less';
 
 export type Søkekriterier = {

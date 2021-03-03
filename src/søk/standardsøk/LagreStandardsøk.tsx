@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { useLocation } from 'react-router-dom';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
@@ -6,20 +6,22 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { SaveFile } from '@navikt/ds-icons';
 import './LagreStandardsøk.less';
 import { PopoverOrientering } from 'nav-frontend-popover';
+import { standardsøkLocalstorageKey } from './useStandardsøk';
 
-const LagreStandardsøk: FunctionComponent = () => {
+type Props = {
+    standardsøkErAktivt: boolean;
+    setStandardsøkTilAktivt: () => void;
+};
+
+const LagreStandardsøk: FunctionComponent<Props> = ({
+    standardsøkErAktivt,
+    setStandardsøkTilAktivt,
+}) => {
     const { search } = useLocation();
-    const [standardsøkErAktivt, setStandardsøkErAktivt] = useState<boolean>(
-        erStandardsøkAktivt(search)
-    );
-
-    useEffect(() => {
-        setStandardsøkErAktivt(erStandardsøkAktivt(search));
-    }, [search]);
 
     const onLagreSomStandardsøkClick = () => {
         localStorage.setItem(standardsøkLocalstorageKey, search);
-        setStandardsøkErAktivt(erStandardsøkAktivt(search));
+        setStandardsøkTilAktivt();
     };
 
     return standardsøkErAktivt ? (
@@ -39,13 +41,6 @@ const LagreStandardsøk: FunctionComponent = () => {
             Lagre som standardsøk
         </Knapp>
     );
-};
-
-export const standardsøkLocalstorageKey = 'standardsok';
-
-const erStandardsøkAktivt = (search: string) => {
-    const standardsøk = localStorage.getItem(standardsøkLocalstorageKey);
-    return standardsøk === search;
 };
 
 export default LagreStandardsøk;
