@@ -13,75 +13,55 @@ import '../Søk.less';
 export enum Publisert {
     Intern = 'intern',
     Arbeidsplassen = 'arbeidsplassen',
-    Alle = 'alle',
 }
-
-const matcherPublisertIUrl = (publisert: Publisert, searchParams: string) =>
-    hentSøkekriterier(searchParams).publisert === publisert;
 
 const HvorErAnnonsenPublisert: FunctionComponent = () => {
     const history = useHistory();
-    const { search, state } = useLocation<Navigeringsstate>();
-
-    const [interntINav, setInterntINav] = useState<boolean>(
-        matcherPublisertIUrl(Publisert.Intern, search)
-    );
-    const [påArbeidsplassen, setPåArbeidsplassen] = useState<boolean>(
-        matcherPublisertIUrl(Publisert.Arbeidsplassen, search)
+    const { search } = useLocation<Navigeringsstate>();
+    const [publiseringssteder, setPubliseringssteder] = useState<Set<Publisert>>(
+        hentSøkekriterier(search).publisert
     );
 
     useEffect(() => {
-        if (state?.harSlettetKriterier) {
-            setInterntINav(matcherPublisertIUrl(Publisert.Intern, search));
-            setPåArbeidsplassen(matcherPublisertIUrl(Publisert.Arbeidsplassen, search));
-        }
-    }, [search, state, interntINav, påArbeidsplassen]);
+        setPubliseringssteder(hentSøkekriterier(search).publisert);
+    }, [search]);
 
-    const onPublisertChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { checked } = event.target;
+    const onPubliseringsstederChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const publiseringssted = event.target.value as Publisert;
+        const nyePubliseringssteder = new Set<Publisert>(publiseringssteder);
 
-        if (event.target.value === Publisert.Intern) {
-            setInterntINav(checked);
-            settIUrlOgSøk(checked, påArbeidsplassen);
+        if (event.target.checked) {
+            nyePubliseringssteder.add(publiseringssted);
         } else {
-            setPåArbeidsplassen(checked);
-            settIUrlOgSøk(interntINav, checked);
+            nyePubliseringssteder.delete(publiseringssted);
         }
-    };
-
-    const settIUrlOgSøk = (interntINav: boolean, påArbeidsplassen: boolean) => {
-        let verdi =
-            interntINav === påArbeidsplassen
-                ? null
-                : interntINav
-                ? Publisert.Intern
-                : Publisert.Arbeidsplassen;
 
         oppdaterUrlMedParam({
             history,
             parameter: QueryParam.Publisert,
-            verdi,
+            verdi: Array.from(nyePubliseringssteder),
         });
     };
 
     return (
         <SkjemaGruppe legend={<Element>Hvor er annonsen synlig?</Element>}>
-            <Checkbox
-                className="søk__checkbox"
-                label="Internt i NAV (direktemeldt)"
-                value={Publisert.Intern}
-                checked={interntINav}
-                onChange={onPublisertChange}
-            />
-            <Checkbox
-                className="søk__checkbox"
-                label="På Arbeidsplassen"
-                value={Publisert.Arbeidsplassen}
-                checked={påArbeidsplassen}
-                onChange={onPublisertChange}
-            />
+            {Object.values(Publisert).map((publisertValue) => (
+                <Checkbox
+                    key={publisertValue}
+                    className="søk__checkbox"
+                    label={labels[publisertValue]}
+                    value={publisertValue}
+                    checked={publiseringssteder.has(publisertValue)}
+                    onChange={onPubliseringsstederChange}
+                />
+            ))}
         </SkjemaGruppe>
     );
+};
+
+const labels: Record<Publisert, string> = {
+    [Publisert.Intern]: 'Internt i NAV (direktemeldt)',
+    [Publisert.Arbeidsplassen]: 'På Arbeidsplassen',
 };
 
 export default HvorErAnnonsenPublisert;

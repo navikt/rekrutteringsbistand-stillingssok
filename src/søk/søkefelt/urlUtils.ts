@@ -1,8 +1,8 @@
 import { Søkekriterier } from '../../App';
-import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from '../om-annonsen/Annonsestatus';
 import { History } from 'history';
 import { Sortering } from '../../sorter/Sorter';
+import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -38,7 +38,7 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
         tekst: searchParams.get(QueryParam.Tekst) ?? '',
-        publisert: (searchParams.get(QueryParam.Publisert) as Publisert) ?? Publisert.Alle,
+        publisert: hentSøkekriterie(QueryParam.Publisert) as Set<Publisert>,
         fylker: hentSøkekriterie(QueryParam.Fylker),
         kommuner: hentSøkekriterie(QueryParam.Kommuner),
         hovedinkluderingstags: hentSøkekriterie(QueryParam.HovedInkluderingTags),

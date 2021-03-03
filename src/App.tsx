@@ -11,8 +11,6 @@ import { lagQuery } from './api/queries/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
-import './App.less';
-import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import Paginering from './paginering/Paginering';
 import Introduksjon from './introduksjon/Introduksjon';
 import { Link, useLocation } from 'react-router-dom';
@@ -23,11 +21,13 @@ import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
 import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
+import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
+import './App.less';
 
 export type Søkekriterier = {
     side: number;
     tekst: string;
-    publisert: Publisert;
+    publisert: Set<Publisert>;
     fylker: Set<string>;
     kommuner: Set<string>;
     statuser: Set<Status>;

@@ -38,26 +38,30 @@ const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<strin
 const regnUtFørsteTreffFra = (side: number, antallTreffPerSide: number) =>
     side * antallTreffPerSide - antallTreffPerSide;
 
-const publisert = (publisert: Publisert) => {
-    if (publisert === Publisert.Intern) {
-        return [
-            {
-                term: {
-                    'stilling.source': 'DIR',
+const publisert = (publiseringssteder: Set<Publisert>) => {
+    const ettValgtPubliseringssted = publiseringssteder.size === 1;
+
+    if (ettValgtPubliseringssted) {
+        if (publiseringssteder.has(Publisert.Intern)) {
+            return [
+                {
+                    term: {
+                        'stilling.source': 'DIR',
+                    },
                 },
-            },
-        ];
-    } else if (publisert === Publisert.Arbeidsplassen) {
-        return [
-            {
-                term: {
-                    'stilling.privacy': 'SHOW_ALL',
+            ];
+        } else if (publiseringssteder.has(Publisert.Arbeidsplassen)) {
+            return [
+                {
+                    term: {
+                        'stilling.privacy': 'SHOW_ALL',
+                    },
                 },
-            },
-        ];
-    } else {
-        return [];
+            ];
+        }
     }
+
+    return [];
 };
 
 const fylkerOgKommuner = (alleFylker: Set<string>, kommuner: Set<string>) => {
