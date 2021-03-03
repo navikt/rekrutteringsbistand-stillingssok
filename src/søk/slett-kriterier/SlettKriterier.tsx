@@ -3,8 +3,6 @@ import { Element } from 'nav-frontend-typografi';
 import { Link, useLocation } from 'react-router-dom';
 import './SlettKriterier.less';
 import { Navigeringsstate } from '../søkefelt/urlUtils';
-import { defaultValgteKriterier } from '../../App';
-import { erIkkeProd } from '../../utils/featureToggleUtils';
 
 const SlettKriterier: FunctionComponent = () => {
     const { pathname } = useLocation<Navigeringsstate>();
@@ -13,7 +11,7 @@ const SlettKriterier: FunctionComponent = () => {
         <Link
             to={{
                 pathname,
-                search: erIkkeProd ? '' : defaultValgteKriterier,
+                search: '',
                 state: {
                     harSlettetKriterier: true,
                 },
