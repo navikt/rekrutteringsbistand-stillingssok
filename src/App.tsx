@@ -74,8 +74,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
         if (skalBrukeStandardsøk) {
             const standardsøk = localStorage.getItem(standardsøkLocalstorageKey);
-            if (standardsøk) {
-                history.replace({ search: standardsøk });
+            if (standardsøk !== null) {
+                history.replace({
+                    search: standardsøk,
+                    state: {
+                        brukStandardsøk: true,
+                    },
+                });
             } else {
                 history.replace({ search: defaultValgteKriterier });
             }

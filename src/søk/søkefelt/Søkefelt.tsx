@@ -11,8 +11,8 @@ const Søkefelt: FunctionComponent = () => {
     const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
 
     useEffect(() => {
-        if (state?.harSlettetKriterier) {
-            setInput('');
+        if (state?.harSlettetKriterier || state?.brukStandardsøk) {
+            setInput(hentSøkekriterier(search).tekst);
         }
     }, [search, state]);
 

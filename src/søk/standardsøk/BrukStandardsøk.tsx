@@ -6,7 +6,15 @@ import './BrukStandardsøk.less';
 
 const BrukStandardsøk: FunctionComponent = () => {
     return (
-        <Link to={`?${QueryParam.Standardsøk}`} className="bruk-standardsøk lenke">
+        <Link
+            to={{
+                search: `?${QueryParam.Standardsøk}`,
+                state: {
+                    brukStandardsøk: true,
+                },
+            }}
+            className="bruk-standardsøk lenke"
+        >
             <Element>Bruk standardsøk</Element>
         </Link>
     );

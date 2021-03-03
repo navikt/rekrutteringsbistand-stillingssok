@@ -21,6 +21,7 @@ export type Navigeringsstate =
     | {
           harByttetSide?: boolean;
           harSlettetKriterier?: boolean;
+          brukStandardsøk?: boolean;
       }
     | undefined;
 
