@@ -22,7 +22,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
-import { favorittsøkLocalstorageKey } from './søk/lagre-favorittsøk/LagreFavorittsøk';
+import { standardsøkLocalstorageKey } from './søk/lagre-standardsøk/LagreStandardsøk';
 
 export type Søkekriterier = {
     side: number;
@@ -70,14 +70,14 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     useEffect(() => {
         const searchParams = new URLSearchParams(search);
-        const skalBrukeFavorittsøk = searchParams.has(QueryParam.Favorittsøk);
+        const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
-        if (skalBrukeFavorittsøk) {
-            const favorittsøk = localStorage.getItem(favorittsøkLocalstorageKey);
-            if (favorittsøk) {
-                history.replace({ search: favorittsøk });
-            } else {
+        if (skalBrukeStandardsøk) {
+            const standardsøk = localStorage.getItem(standardsøkLocalstorageKey);
+            if (standardsøk) {
                 history.replace({ search: standardsøk });
+            } else {
+                history.replace({ search: defaultValgteKriterier });
             }
         }
     }, [search, history]);
@@ -132,6 +132,6 @@ const formaterAntallAnnonser = (antallAnnonser: number) => {
     return prefiks + antallAnnonser + suffiks;
 };
 
-export const standardsøk = '?publisert=intern&statuser=publisert';
+export const defaultValgteKriterier = '?publisert=intern&statuser=publisert';
 
 export default App;
