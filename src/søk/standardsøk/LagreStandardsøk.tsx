@@ -3,6 +3,9 @@ import { Knapp } from 'nav-frontend-knapper';
 import { useLocation } from 'react-router-dom';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { SaveFile } from '@navikt/ds-icons';
+import './LagreStandardsøk.less';
+import { PopoverOrientering } from 'nav-frontend-popover';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
@@ -20,15 +23,21 @@ const LagreStandardsøk: FunctionComponent = () => {
     };
 
     return standardsøkErAktivt ? (
-        <AlertStripeSuksess>
+        <AlertStripeSuksess className="lagre-standardsøk lagre-standardsøk__alertstripe">
             Lagret som standardsøk
-            <Hjelpetekst>
+            <Hjelpetekst className="lagre-standardsøk__hjelpetekst" type={PopoverOrientering.Under}>
                 Hver gang du benytter søket vil det være ferdig utfylt med kriteriene du har valgt å
                 lagre som standardsøk.
             </Hjelpetekst>
         </AlertStripeSuksess>
     ) : (
-        <Knapp onClick={onLagreSomStandardsøkClick}>Lagre som standardsøk</Knapp>
+        <Knapp
+            onClick={onLagreSomStandardsøkClick}
+            className=" lagre-standardsøk lagre-standardsøk__knapp"
+        >
+            <SaveFile className="lagre-standardsøk__lagre-ikon" />
+            Lagre som standardsøk
+        </Knapp>
     );
 };
 

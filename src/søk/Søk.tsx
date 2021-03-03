@@ -12,8 +12,10 @@ import './Søk.less';
 const Søk: FunctionComponent = () => {
     return (
         <div className="søk">
-            {erIkkeProd && <BrukStandardsøk />}
-            <SlettKriterier />
+            <div className="søk__lenker-over-søk">
+                {erIkkeProd && <BrukStandardsøk />}
+                <SlettKriterier />
+            </div>
             {erIkkeProd && <LagreStandardsøk />}
             <Søkefelt />
             <OmAnnonsen />
