@@ -21,7 +21,7 @@ import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { standardsøkLocalstorageKey } from './søk/standardsøk/useStandardsøk';
+import { standardsøkLocalstorageKey } from './søk/standardsøk/useStandardsøkErAktivt';
 import './App.less';
 
 export type Søkekriterier = {

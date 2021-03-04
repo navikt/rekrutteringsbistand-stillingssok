@@ -22,7 +22,7 @@ const BrukStandardsøk: FunctionComponent<Props> = ({ standardsøkErAktivt }) =>
             <Element>Bruk standardsøk</Element>
         </Link>
     ) : (
-        <div></div>
+        <div />
     );
 };
 

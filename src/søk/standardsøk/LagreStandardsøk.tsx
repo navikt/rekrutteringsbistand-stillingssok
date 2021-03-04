@@ -5,7 +5,7 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { SaveFile } from '@navikt/ds-icons';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import { standardsøkLocalstorageKey } from './useStandardsøk';
+import { standardsøkLocalstorageKey } from './useStandardsøkErAktivt';
 import './LagreStandardsøk.less';
 
 type Props = {
