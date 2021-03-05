@@ -10,7 +10,9 @@ export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
     if (respons.status !== 200) {
-        throw Error('Klarte ikke å gjøre et søk');
+        throw Error(
+            `Klarte ikke å gjøre et søk. HTTP respons status: ${respons.status}, HTTP respons tekst: ${respons.statusText}, URL: ${respons.url}`
+        );
     }
 
     return respons.json();
