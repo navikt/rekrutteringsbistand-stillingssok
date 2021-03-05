@@ -51,6 +51,10 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     }, [history.location.pathname]);
 
     useEffect(() => {
+        const searchParams = new URLSearchParams(search);
+        const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
+        if (skalBrukeStandardsøk) return;
+
         const søkekriterier = hentSøkekriterier(search);
         const harByttetSide = navigeringsstate?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
