@@ -8,7 +8,7 @@ const erStandardsøkAktivt = (search: string) => {
     return standardsøk === search;
 };
 
-export const useStandardsKErAktivt = () => {
+export const useStandardøkErAktivt = () => {
     const { search } = useLocation();
     const [standardsøkErAktivt, setStandardsøkErAktivt] = useState<boolean>(
         erStandardsøkAktivt(search)

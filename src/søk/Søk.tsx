@@ -6,11 +6,11 @@ import Inkludering from './inkludering/Inkludering';
 import SlettKriterier from './slett-kriterier/SlettKriterier';
 import LagreStandardsøk from './standardsøk/LagreStandardsøk';
 import BrukStandardsøk from './standardsøk/BrukStandardsøk';
-import { useStandardsKErAktivt } from './standardsøk/useStandardsøkErAktivt';
+import { useStandardøkErAktivt } from './standardsøk/useStandardsøkErAktivt';
 import './Søk.less';
 
 const Søk: FunctionComponent = () => {
-    const { standardsøkErAktivt, setStandardsøkTilAktivt } = useStandardsKErAktivt();
+    const { standardsøkErAktivt, setStandardsøkTilAktivt } = useStandardøkErAktivt();
 
     return (
         <div className="søk">
