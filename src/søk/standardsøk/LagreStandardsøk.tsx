@@ -29,7 +29,7 @@ const LagreStandardsøk: FunctionComponent = () => {
         </AlertStripeSuksess>
     ) : (
         <Knapp
-            spinner={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
+            disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
             className=" lagre-standardsøk lagre-standardsøk__knapp"
         >

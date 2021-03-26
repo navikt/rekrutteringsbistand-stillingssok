@@ -43,14 +43,13 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
     }, []);
 
     const oppdaterStandardsøk = async (nyttStandardsøk: string) => {
-        console.log('OPPDATERER');
-        setStandardsøk({
+        const stateUnderOppdatering = {
             harHentetStandardsøk: true,
             standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : null,
             lagrerSomStandardsøk: true,
-        });
+        };
 
-        // TODO: PUT standardsøk til backend
+        setStandardsøk(stateUnderOppdatering);
         const standardsøkRespons = await oppdaterStandardsøkMedApi(nyttStandardsøk);
 
         setStandardsøk({

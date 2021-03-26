@@ -14,9 +14,11 @@ const logg = (url: string, options: MockOptionsMethodPost, response: any) => {
 };
 
 const putStandardsøk = (url: string, options: MockRequest): StandardsøkDto => {
+    const nyttSøk = JSON.parse(options.body as string) as StandardsøkDto;
+
     return {
         ...standardsøk,
-        søk: options.body as any,
+        søk: nyttSøk.søk,
     };
 };
 
