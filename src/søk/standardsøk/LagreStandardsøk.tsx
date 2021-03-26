@@ -5,8 +5,8 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { SaveFile } from '@navikt/ds-icons';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import './LagreStandardsøk.less';
 import useStandardsøk from '../../StandardsøkContext';
+import './LagreStandardsøk.less';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
@@ -38,7 +38,5 @@ const LagreStandardsøk: FunctionComponent = () => {
         </Knapp>
     );
 };
-
-export const standardsøkLocalstorageKey = 'standardsok';
 
 export default LagreStandardsøk;
