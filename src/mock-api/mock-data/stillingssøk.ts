@@ -1,5 +1,5 @@
-import { Respons } from '../elasticSearchTyper';
-import { Ansettelsesform, Omfang, Søknadsfrist } from '../Stilling';
+import { Respons } from '../../elasticSearchTyper';
+import { Ansettelsesform, Omfang, Søknadsfrist } from '../../Stilling';
 
 export const resultat: Respons = {
     took: 5,

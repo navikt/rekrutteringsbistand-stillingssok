@@ -1,9 +1,11 @@
 import { Query, Respons } from '../elasticSearchTyper';
+import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 
 export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
+export const stillingApi = '/rekrutteringsbistand-stillingssok/stilling-api';
 
 if (process.env.REACT_APP_MOCK) {
-    require('./mock-api.ts');
+    require('../mock-api/mock-api.ts');
 }
 
 export const søk = async (query: Query): Promise<Respons> => {
@@ -11,11 +13,23 @@ export const søk = async (query: Query): Promise<Respons> => {
 
     if (respons.status !== 200) {
         throw Error(
-            `Klarte ikke å gjøre et søk. HTTP respons status: ${respons.status}, HTTP respons tekst: ${respons.statusText}, URL: ${respons.url}`
+            `Klarte ikke å gjøre et søk. Statuskode: ${respons.status}, Statustekst: ${respons.statusText}, URL: ${respons.url}`
         );
     }
 
     return respons.json();
+};
+
+export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
+    const respons = await fetch(`${stillingApi}/standardsok`);
+
+    if (respons.ok) {
+        return await respons.json();
+    }
+
+    throw Error(
+        `Klarte ikke å hente standardsøk. Statuskode: ${respons.status}, Statustekst: ${respons.statusText}, URL: ${respons.url}`
+    );
 };
 
 const post = (url: string, body: object) => {

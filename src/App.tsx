@@ -8,7 +8,7 @@ import {
     oppdaterUrlMedParam,
 } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries/queries';
-import { søk } from './api/api';
+import { hentStandardsøk, søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import Paginering from './paginering/Paginering';
@@ -23,6 +23,7 @@ import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import { standardsøkLocalstorageKey } from './søk/standardsøk/useStandardsøkErAktivt';
 import './App.less';
+import { erIkkeProd } from './utils/featureToggleUtils';
 
 export type Søkekriterier = {
     side: number;
@@ -44,6 +45,17 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
+
+    useEffect(() => {
+        const hent = async () => {
+            const standardsøk = await hentStandardsøk();
+            console.log('Fikk standardsøk:', standardsøk);
+        };
+
+        if (erIkkeProd) {
+            hent();
+        }
+    }, []);
 
     useEffect(() => {
         const side = history.location.pathname;
