@@ -8,7 +8,7 @@ import {
     oppdaterUrlMedParam,
 } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries/queries';
-import { hentStandardsøk, søk } from './api/api';
+import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import Paginering from './paginering/Paginering';
@@ -21,9 +21,8 @@ import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
-import { erIkkeProd } from './utils/featureToggleUtils';
-import useLocalStorage from './utils/useLocalStorage';
+import { StandardsøkProvider } from './StandardsøkContext';
+import useStandardsøk from './StandardsøkContext';
 import './App.less';
 
 export type Søkekriterier = {
@@ -46,18 +45,7 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
-    const { verdi: standardsøk } = useLocalStorage(standardsøkLocalstorageKey);
-
-    useEffect(() => {
-        const hent = async () => {
-            const standardsøk = await hentStandardsøk();
-            console.log('Fikk standardsøk:', standardsøk);
-        };
-
-        if (erIkkeProd) {
-            hent();
-        }
-    }, []);
+    const { standardsøk } = useStandardsøk();
 
     useEffect(() => {
         const side = history.location.pathname;
@@ -90,10 +78,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const searchParams = new URLSearchParams(search);
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
-        if (skalBrukeStandardsøk) {
-            if (standardsøk !== null) {
+        if (skalBrukeStandardsøk && standardsøk.harHentetStandardsøk) {
+            if (standardsøk.standardsøk !== null) {
+                console.log('Bruker standardsøk med verdi:', standardsøk.standardsøk);
                 history.replace({
-                    search: standardsøk,
+                    search: standardsøk.standardsøk,
                     state: {
                         brukStandardsøk: true,
                     },
@@ -160,4 +149,10 @@ const formaterAntallAnnonser = (antallAnnonser: number) => {
 
 export const defaultValgteKriterier = '?publisert=intern&statuser=publisert';
 
-export default App;
+const AppContainer = (props: any) => (
+    <StandardsøkProvider>
+        <App {...props} />
+    </StandardsøkProvider>
+);
+
+export default AppContainer;

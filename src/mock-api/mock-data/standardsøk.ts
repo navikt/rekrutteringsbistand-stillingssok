@@ -1,5 +1,5 @@
 const standardsøk = {
-    søk: '?publisert=intern&fritekst=jallaballa&fylker=Oslo',
+    søk: '?publisert=intern&statuser=publisert%2Cstoppet%2Cutløpt&fylker=Oslo',
     navIdent: 'Z992782',
     tidspunkt: '2021-03-26T10:19:50.601956',
 };
