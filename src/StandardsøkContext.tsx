@@ -1,5 +1,5 @@
 import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
-import { hentStandardsøk } from './api/api';
+import { hentStandardsøk, oppdaterStandardsøk as oppdaterStandardsøkMedApi } from './api/api';
 import { erIkkeProd } from './utils/featureToggleUtils';
 
 type StandardsøkNettressurs =
@@ -9,29 +9,31 @@ type StandardsøkNettressurs =
     | {
           harHentetStandardsøk: true;
           standardsøk: string | null;
+          lagrerSomStandardsøk: boolean;
       };
 
 const StandardsøkContext = createContext<{
     standardsøk: StandardsøkNettressurs;
-    setStandardsøk: (standardsøk: string) => void;
+    oppdaterStandardsøk: (standardsøk: string) => void;
 }>({
     standardsøk: {
         harHentetStandardsøk: false,
     },
-    setStandardsøk: () => {},
+    oppdaterStandardsøk: () => {},
 });
 
 export const StandardsøkProvider: FunctionComponent = (props) => {
-    const [standardsøkState, setStandardsøkState] = useState<StandardsøkNettressurs>({
+    const [standardsøk, setStandardsøk] = useState<StandardsøkNettressurs>({
         harHentetStandardsøk: false,
     });
 
     useEffect(() => {
         const hent = async () => {
             const standardsøk = await hentStandardsøk();
-            setStandardsøkState({
+            setStandardsøk({
                 harHentetStandardsøk: true,
                 standardsøk: standardsøk.søk,
+                lagrerSomStandardsøk: false,
             });
         };
 
@@ -40,17 +42,27 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
         }
     }, []);
 
-    const setStandardsøk = (standardsøk: string) => {
-        // TODO: PUT standardsøk til backend
-        setStandardsøkState({
+    const oppdaterStandardsøk = async (nyttStandardsøk: string) => {
+        console.log('OPPDATERER');
+        setStandardsøk({
             harHentetStandardsøk: true,
-            standardsøk,
+            standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : null,
+            lagrerSomStandardsøk: true,
+        });
+
+        // TODO: PUT standardsøk til backend
+        const standardsøkRespons = await oppdaterStandardsøkMedApi(nyttStandardsøk);
+
+        setStandardsøk({
+            harHentetStandardsøk: true,
+            standardsøk: standardsøkRespons.søk,
+            lagrerSomStandardsøk: false,
         });
     };
 
     const context = {
-        standardsøk: standardsøkState,
-        setStandardsøk,
+        standardsøk,
+        oppdaterStandardsøk,
     };
 
     return (

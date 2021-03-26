@@ -80,7 +80,6 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
         if (skalBrukeStandardsøk && standardsøk.harHentetStandardsøk) {
             if (standardsøk.standardsøk !== null) {
-                console.log('Bruker standardsøk med verdi:', standardsøk.standardsøk);
                 history.replace({
                     search: standardsøk.standardsøk,
                     state: {

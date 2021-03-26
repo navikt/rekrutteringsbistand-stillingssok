@@ -2,15 +2,19 @@ import React, { FunctionComponent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 import { QueryParam } from '../søkefelt/urlUtils';
-import useLocalStorage from '../../utils/useLocalStorage';
-import { standardsøkLocalstorageKey } from './LagreStandardsøk';
+import useStandardsøk from '../../StandardsøkContext';
 import './BrukStandardsøk.less';
 
 const BrukStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
-    const { verdi: standardsøk } = useLocalStorage(standardsøkLocalstorageKey);
+    const { standardsøk } = useStandardsøk();
 
-    return standardsøk !== search && standardsøk !== null ? (
+    const visBrukStandardsøk =
+        standardsøk.harHentetStandardsøk &&
+        standardsøk.standardsøk !== search &&
+        standardsøk !== null;
+
+    return visBrukStandardsøk ? (
         <Link
             to={{
                 search: `?${QueryParam.Standardsøk}`,
