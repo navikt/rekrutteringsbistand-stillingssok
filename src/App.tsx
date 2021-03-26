@@ -21,9 +21,10 @@ import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { standardsøkLocalstorageKey } from './søk/standardsøk/useStandardsøkErAktivt';
-import './App.less';
+import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
 import { erIkkeProd } from './utils/featureToggleUtils';
+import useLocalStorage from './utils/useLocalStorage';
+import './App.less';
 
 export type Søkekriterier = {
     side: number;
@@ -45,6 +46,7 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
+    const { verdi: standardsøk } = useLocalStorage(standardsøkLocalstorageKey);
 
     useEffect(() => {
         const hent = async () => {
@@ -89,7 +91,6 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
         if (skalBrukeStandardsøk) {
-            const standardsøk = localStorage.getItem(standardsøkLocalstorageKey);
             if (standardsøk !== null) {
                 history.replace({
                     search: standardsøk,
@@ -105,7 +106,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 harLagretStandardsøk: !!standardsøk,
             });
         }
-    }, [search, history]);
+    }, [search, history, standardsøk]);
 
     return (
         <div className="app">
