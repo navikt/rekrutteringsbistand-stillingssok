@@ -23,3 +23,5 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: STILLINGSOK_PROXY_URL
           value: {{ stillingssok-proxy-url }}
+        - name: STILLING_API_URL
+          value: {{ stilling-api-url }}
