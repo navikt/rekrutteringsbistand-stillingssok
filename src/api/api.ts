@@ -19,7 +19,9 @@ export const søk = async (query: Query): Promise<Respons> => {
 };
 
 export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
-    const respons = await fetch(`${stillingApi}/standardsok`);
+    const respons = await fetch(`${stillingApi}/standardsok`, {
+        method: 'GET',
+    });
 
     if (respons.ok) {
         return await respons.json();

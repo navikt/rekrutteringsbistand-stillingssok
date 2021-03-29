@@ -4,12 +4,16 @@ const hentVerdiFraLocalStorage = (key: string) => window.localStorage.getItem(ke
 
 const useLocalStorage = (
     key: string
-): { verdi: string | null; setVerdi: (verdi: string) => void } => {
+): { verdi: string | null; setVerdi: (verdi: string) => void; slettVerdi: () => void } => {
     const [storedValue, setStoredValue] = useState<string | null>(hentVerdiFraLocalStorage(key));
 
     const setValue = (value: string) => {
         window.localStorage.setItem(key, value);
-        setStoredValue(value);
+        window.dispatchEvent(new Event('local-storage'));
+    };
+
+    const deleteValue = () => {
+        window.localStorage.removeItem(key);
         window.dispatchEvent(new Event('local-storage'));
     };
 
@@ -30,6 +34,7 @@ const useLocalStorage = (
             window.removeEventListener('local-storage', handleStorageChange);
         };
     }, [key]);
-    return { verdi: storedValue, setVerdi: setValue };
+
+    return { verdi: storedValue, setVerdi: setValue, slettVerdi: deleteValue };
 };
 export default useLocalStorage;

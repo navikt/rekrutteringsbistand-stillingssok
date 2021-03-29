@@ -14,12 +14,12 @@ type StandardsøkNettressurs =
 
 const StandardsøkContext = createContext<{
     standardsøk: StandardsøkNettressurs;
-    oppdaterStandardsøk: (standardsøk: string) => void;
+    oppdaterStandardsøk: (standardsøk: string) => Promise<void>;
 }>({
     standardsøk: {
         harHentetStandardsøk: false,
     },
-    oppdaterStandardsøk: () => {},
+    oppdaterStandardsøk: () => Promise.resolve(),
 });
 
 export const StandardsøkProvider: FunctionComponent = (props) => {
@@ -29,12 +29,21 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
 
     useEffect(() => {
         const hent = async () => {
-            const standardsøk = await hentStandardsøk();
-            setStandardsøk({
-                harHentetStandardsøk: true,
-                standardsøk: standardsøk.søk,
-                lagrerSomStandardsøk: false,
-            });
+            try {
+                const standardsøk = await hentStandardsøk();
+
+                setStandardsøk({
+                    harHentetStandardsøk: true,
+                    standardsøk: standardsøk.søk,
+                    lagrerSomStandardsøk: false,
+                });
+            } catch (e) {
+                setStandardsøk({
+                    harHentetStandardsøk: true,
+                    standardsøk: null,
+                    lagrerSomStandardsøk: false,
+                });
+            }
         };
 
         if (erIkkeProd) {
@@ -42,9 +51,9 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
         }
     }, []);
 
-    const oppdaterStandardsøk = async (nyttStandardsøk: string) => {
+    const oppdaterStandardsøk = async (nyttStandardsøk: string): Promise<void> => {
         const stateUnderOppdatering = {
-            harHentetStandardsøk: true,
+            harHentetStandardsøk: false,
             standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : null,
             lagrerSomStandardsøk: true,
         };
