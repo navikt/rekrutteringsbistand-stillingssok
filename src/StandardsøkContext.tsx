@@ -1,6 +1,5 @@
 import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 import { hentStandardsøk, oppdaterStandardsøk as oppdaterStandardsøkMedApi } from './api/api';
-import { erIkkeProd } from './utils/featureToggleUtils';
 
 type StandardsøkNettressurs =
     | {
