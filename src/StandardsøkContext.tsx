@@ -46,9 +46,7 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
             }
         };
 
-        if (erIkkeProd) {
-            hent();
-        }
+        hent();
     }, []);
 
     const oppdaterStandardsøk = async (nyttStandardsøk: string): Promise<void> => {
