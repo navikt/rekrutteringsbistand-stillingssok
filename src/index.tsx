@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Navspa from '@navikt/navspa';
 import * as Sentry from '@sentry/react';
@@ -7,7 +8,6 @@ import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
 import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import './index.less';
-import { Router } from 'react-router-dom';
 
 Sentry.init({
     dsn: 'https://766bf43f7bd849e4aadc3528a9e94c60@sentry.gc.nav.no/64',

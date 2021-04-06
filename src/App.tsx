@@ -8,7 +8,7 @@ import {
     oppdaterUrlMedParam,
 } from './søk/søkefelt/urlUtils';
 import { lagQuery } from './api/queries/queries';
-import { hentStandardsøk, søk } from './api/api';
+import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import Paginering from './paginering/Paginering';
@@ -21,8 +21,8 @@ import { Status } from './søk/om-annonsen/Annonsestatus';
 import { sendEvent } from './amplitude';
 import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { standardsøkLocalstorageKey } from './søk/standardsøk/LagreStandardsøk';
-import { erIkkeProd } from './utils/featureToggleUtils';
+import { StandardsøkProvider } from './StandardsøkContext';
+import useStandardsøk from './StandardsøkContext';
 import useLocalStorage from './utils/useLocalStorage';
 import './App.less';
 
@@ -46,18 +46,11 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
-    const { verdi: standardsøk } = useLocalStorage(standardsøkLocalstorageKey);
-
-    useEffect(() => {
-        const hent = async () => {
-            const standardsøk = await hentStandardsøk();
-            console.log('Fikk standardsøk:', standardsøk);
-        };
-
-        if (erIkkeProd) {
-            hent();
-        }
-    }, []);
+    const { standardsøk, oppdaterStandardsøk } = useStandardsøk();
+    const {
+        verdi: standardsøkFraLocalStorage,
+        slettVerdi: slettStandardsøkFraLocalStorage,
+    } = useLocalStorage('standardsok');
 
     useEffect(() => {
         const side = history.location.pathname;
@@ -86,14 +79,32 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         }
     }, [search, history, navigeringsstate]);
 
+    // TODO: Fjern migreringsstrategi etterhvert
+    useEffect(() => {
+        const flyttStandardsøkTilBackend = async (fraLocalStorage: string) => {
+            await oppdaterStandardsøk(fraLocalStorage);
+            slettStandardsøkFraLocalStorage();
+            sendEvent('stillingssøk', 'har_flyttet_standardsøk');
+        };
+
+        if (standardsøkFraLocalStorage !== null) {
+            flyttStandardsøkTilBackend(standardsøkFraLocalStorage);
+        }
+        // eslint-disable-next-line
+    }, []);
+
     useEffect(() => {
         const searchParams = new URLSearchParams(search);
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
-        if (skalBrukeStandardsøk) {
-            if (standardsøk !== null) {
+        if (
+            skalBrukeStandardsøk &&
+            standardsøk.harHentetStandardsøk &&
+            standardsøkFraLocalStorage === null
+        ) {
+            if (standardsøk.standardsøk !== null) {
                 history.replace({
-                    search: standardsøk,
+                    search: standardsøk.standardsøk,
                     state: {
                         brukStandardsøk: true,
                     },
@@ -106,7 +117,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 harLagretStandardsøk: !!standardsøk,
             });
         }
-    }, [search, history, standardsøk]);
+    }, [search, history, standardsøk, standardsøkFraLocalStorage]);
 
     return (
         <div className="app">
@@ -160,4 +171,10 @@ const formaterAntallAnnonser = (antallAnnonser: number) => {
 
 export const defaultValgteKriterier = '?publisert=intern&statuser=publisert';
 
-export default App;
+const AppContainer = (props: any) => (
+    <StandardsøkProvider>
+        <App {...props} />
+    </StandardsøkProvider>
+);
+
+export default AppContainer;
