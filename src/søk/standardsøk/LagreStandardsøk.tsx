@@ -5,20 +5,21 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { SaveFile } from '@navikt/ds-icons';
 import { PopoverOrientering } from 'nav-frontend-popover';
+import useStandardsøk from '../../StandardsøkContext';
 import './LagreStandardsøk.less';
-import useLocalStorage from '../../utils/useLocalStorage';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
-    const { verdi: standardsøk, setVerdi: setStandardsøk } = useLocalStorage(
-        standardsøkLocalstorageKey
-    );
+    const { standardsøk, oppdaterStandardsøk } = useStandardsøk();
 
     const onLagreSomStandardsøkClick = () => {
-        setStandardsøk(search);
+        oppdaterStandardsøk(search);
     };
 
-    return standardsøk === search ? (
+    const aktivtSøkErStandardsøk =
+        standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
+
+    return aktivtSøkErStandardsøk ? (
         <AlertStripeSuksess className="lagre-standardsøk lagre-standardsøk__alertstripe">
             Lagret som standardsøk
             <Hjelpetekst className="lagre-standardsøk__hjelpetekst" type={PopoverOrientering.Under}>
@@ -28,6 +29,7 @@ const LagreStandardsøk: FunctionComponent = () => {
         </AlertStripeSuksess>
     ) : (
         <Knapp
+            disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
             className=" lagre-standardsøk lagre-standardsøk__knapp"
         >
@@ -36,7 +38,5 @@ const LagreStandardsøk: FunctionComponent = () => {
         </Knapp>
     );
 };
-
-export const standardsøkLocalstorageKey = 'standardsok';
 
 export default LagreStandardsøk;
