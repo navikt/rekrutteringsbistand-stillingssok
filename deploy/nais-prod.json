@@ -1,5 +1,5 @@
 {
     "ingress": "https://rekrutteringsbistand.nais.adeo.no/rekrutteringsbistand-stillingssok",
     "stillingssok-proxy-url": "https://rekrutteringsbistand-stillingssok-proxy.intern.nav.no",
-    "stilling-api-url": "https://arbeidsgiver.nais.adeo.no/rekrutteringsbistand-api"
+    "stilling-api-url": "https://rekrutteringsbistand-stilling-api.nais.adeo.no"
 }
