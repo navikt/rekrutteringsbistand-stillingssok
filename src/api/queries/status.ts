@@ -42,7 +42,7 @@ const stillingenErEllerHarVærtPublisert = [
     },
 ];
 
-const alleStillinger = [
+export const alleStillinger = [
     {
         bool: {
             must_not: [

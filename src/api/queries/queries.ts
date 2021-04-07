@@ -1,7 +1,7 @@
 import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
-import { status } from './status';
+import { status, alleStillinger as defaultStatusFilter } from './status';
 import { sorterTreff } from './sortering';
 
 export const maksAntallTreffPerSøk = 40;
@@ -25,6 +25,23 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
             },
         },
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
+    };
+};
+
+export const lagQueryPåAnnonsenummer = (annonsenummer: string): Query => {
+    return {
+        query: {
+            bool: {
+                filter: [
+                    {
+                        term: {
+                            'stilling.annonsenr': annonsenummer,
+                        },
+                    },
+                    ...defaultStatusFilter,
+                ],
+            },
+        },
     };
 };
 

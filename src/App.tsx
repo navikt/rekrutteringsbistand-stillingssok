@@ -7,7 +7,7 @@ import {
     Navigeringsstate,
     oppdaterUrlMedParam,
 } from './søk/søkefelt/urlUtils';
-import { lagQuery } from './api/queries/queries';
+import { lagQuery, lagQueryPåAnnonsenummer } from './api/queries/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
@@ -66,6 +66,17 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const harByttetSide = navigeringsstate?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
+        const søkMedQuery = async () => {
+            let respons = await søk(lagQuery(søkekriterier));
+
+            const fikkIngenStillinger = respons.hits.total.value === 0;
+            if (fikkIngenStillinger) {
+                respons = await søk(lagQueryPåAnnonsenummer(søkekriterier.tekst));
+            }
+
+            setRespons(respons);
+        };
+
         if (resetSidetall) {
             oppdaterUrlMedParam({
                 history,
@@ -73,9 +84,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 verdi: null,
             });
         } else {
-            søk(lagQuery(søkekriterier)).then((respons) => {
-                setRespons(respons);
-            });
+            søkMedQuery();
         }
     }, [search, history, navigeringsstate]);
 

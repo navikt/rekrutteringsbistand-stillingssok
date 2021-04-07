@@ -1,9 +1,10 @@
 import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
-    size: number;
-    from: number;
+    size?: number;
+    from?: number;
     query: {
+        term?: Record<string, object>;
         match?: Record<string, MatchQuery>;
         bool?: object;
         match_all?: object;
@@ -11,6 +12,7 @@ export type Query = {
             query: string;
             fields: string[];
         };
+        filter?: any;
     };
 };
 
