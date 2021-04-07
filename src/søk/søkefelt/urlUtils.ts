@@ -3,6 +3,7 @@ import { Status } from '../om-annonsen/Annonsestatus';
 import { History } from 'history';
 import { Sortering } from '../../sorter/Sorter';
 import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
+import { Fane } from '../../søkefaner/Søkefaner';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -15,6 +16,7 @@ export enum QueryParam {
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
     Standardsøk = 'standardsok',
+    Fane = 'fane',
 }
 
 export type Navigeringsstate =
@@ -46,6 +48,7 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         subinkluderingstags: hentSøkekriterie(QueryParam.SubInkluderingTags),
         statuser: hentSøkekriterie(QueryParam.Statuser) as Set<Status>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
+        fane: (searchParams.get(QueryParam.Fane) as Fane) ?? Fane.Alle,
     };
 };
 

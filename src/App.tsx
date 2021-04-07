@@ -26,7 +26,7 @@ import useStandardsøk from './StandardsøkContext';
 import useLocalStorage from './utils/useLocalStorage';
 import './App.less';
 import { erIkkeProd } from './utils/featureToggleUtils';
-import Søkefaner from './søkefaner/Søkefaner';
+import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 
 export type Søkekriterier = {
     side: number;
@@ -38,6 +38,7 @@ export type Søkekriterier = {
     hovedinkluderingstags: Set<string>;
     subinkluderingstags: Set<string>;
     sortering: Sortering;
+    fane: Fane;
 };
 
 export type AppProps = {
