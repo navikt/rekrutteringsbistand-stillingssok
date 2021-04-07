@@ -25,6 +25,8 @@ import { StandardsøkProvider } from './StandardsøkContext';
 import useStandardsøk from './StandardsøkContext';
 import useLocalStorage from './utils/useLocalStorage';
 import './App.less';
+import { erIkkeProd } from './utils/featureToggleUtils';
+import Søkefaner from './søkefaner/Søkefaner';
 
 export type Søkekriterier = {
     side: number;
@@ -152,10 +154,21 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             <main className="app__søkeresultat">
                 {respons ? (
                     <>
-                        <div className="app__antall-og-sortering">
+                        {erIkkeProd && (
                             <Systemtittel className="app__antall-stillinger" tag="output">
                                 {formaterAntallAnnonser(respons.hits.total.value)}
                             </Systemtittel>
+                        )}
+                        <div className="app__antall-og-sortering">
+                            {!erIkkeProd && (
+                                <Systemtittel
+                                    className="app__antall-stillinger-gammel"
+                                    tag="output"
+                                >
+                                    {formaterAntallAnnonser(respons.hits.total.value)}
+                                </Systemtittel>
+                            )}
+                            {erIkkeProd && <Søkefaner />}
                             <Sorter />
                         </div>
                         <Stillingsliste esRespons={respons} />
