@@ -8,12 +8,10 @@ import { Fane } from '../../søkefaner/Søkefaner';
 export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
-    return {
-        size: maksAntallTreffPerSøk,
-        from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
-        query: {
+    const query = (fane: Fane) => {
+        return {
             bool: {
-                must: [...søkefelt(søkekriterier.tekst, søkekriterier.fane)],
+                must: [...søkefelt(søkekriterier.tekst, fane)],
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(søkekriterier.fylker, søkekriterier.kommuner),
@@ -24,8 +22,31 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                     ),
                 ],
             },
-        },
+        };
+    };
+
+    return {
+        size: maksAntallTreffPerSøk,
+        from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
+        query: query(søkekriterier.fane),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
+        aggs: {
+            globalAggregering: {
+                global: {},
+                aggs: {
+                    faner: {
+                        filters: {
+                            filters: {
+                                alle: query(Fane.Alle),
+                                arbeidsgiver: query(Fane.Arbeidsgiver),
+                                annonsetittel: query(Fane.Annonsetittel),
+                                annonsetekst: query(Fane.Annonsetekst),
+                            },
+                        },
+                    },
+                },
+            },
+        },
     };
 };
 

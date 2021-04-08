@@ -1,4 +1,5 @@
 import { Rekrutteringsbistandstilling } from './Stilling';
+import { Fane } from './søkefaner/Søkefaner';
 
 export type Query = {
     size?: number;
@@ -13,6 +14,18 @@ export type Query = {
             fields: string[];
         };
         filter?: any;
+    };
+    aggs?: {
+        globalAggregering: {
+            global: object;
+            aggs: {
+                faner: {
+                    filters: {
+                        filters: Record<Fane, object>;
+                    };
+                };
+            };
+        };
     };
 };
 
@@ -36,6 +49,13 @@ export type Respons = {
         };
         max_score: number | null;
         hits: Array<Hit>;
+    };
+    aggregations?: {
+        globalAggregering: {
+            faner: {
+                buckets: Record<Fane, { doc_count: number }>;
+            };
+        };
     };
 };
 
