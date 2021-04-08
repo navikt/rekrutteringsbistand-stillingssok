@@ -6,7 +6,7 @@ import {
     Navigeringsstate,
     oppdaterUrlMedParam,
     QueryParam,
-} from '../søk/søkefelt/urlUtils';
+} from '../utils/urlUtils';
 import './Sorter.less';
 
 export enum Sortering {

@@ -6,7 +6,7 @@ import {
     QueryParam,
     Navigeringsstate,
     oppdaterUrlMedParam,
-} from './søk/søkefelt/urlUtils';
+} from './utils/urlUtils';
 import { lagQuery, lagQueryPåAnnonsenummer } from './api/queries/queries';
 import { søk } from './api/api';
 import Søk from './søk/Søk';

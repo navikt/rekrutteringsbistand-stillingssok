@@ -3,7 +3,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../søkefelt/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import { sendEvent } from '../../amplitude';
 import { Element } from 'nav-frontend-typografi';

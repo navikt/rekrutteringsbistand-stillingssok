@@ -1,9 +1,9 @@
-import { Søkekriterier } from '../../App';
-import { Status } from '../om-annonsen/Annonsestatus';
+import { Søkekriterier } from '../App';
+import { Status } from '../søk/om-annonsen/Annonsestatus';
 import { History } from 'history';
-import { Sortering } from '../../sorter/Sorter';
-import { Publisert } from '../om-annonsen/HvorErAnnonsenPublisert';
-import { Fane } from '../../søkefaner/Søkefaner';
+import { Sortering } from '../sorter/Sorter';
+import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
+import { Fane } from '../søkefaner/Søkefaner';
 
 export enum QueryParam {
     Tekst = 'q',

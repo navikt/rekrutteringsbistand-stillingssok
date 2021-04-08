@@ -2,7 +2,12 @@ import React, { ChangeEvent, FormEvent, FunctionComponent, useEffect, useState }
 import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { Input } from 'nav-frontend-skjema';
 import { useHistory, useLocation } from 'react-router-dom';
-import { hentSøkekriterier, Navigeringsstate, oppdaterUrlMedParam, QueryParam } from './urlUtils';
+import {
+    hentSøkekriterier,
+    Navigeringsstate,
+    oppdaterUrlMedParam,
+    QueryParam,
+} from '../../utils/urlUtils';
 import './Søkefelt.less';
 
 const Søkefelt: FunctionComponent = () => {

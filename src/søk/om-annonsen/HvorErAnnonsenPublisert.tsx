@@ -7,7 +7,7 @@ import {
     Navigeringsstate,
     oppdaterUrlMedParam,
     QueryParam,
-} from '../søkefelt/urlUtils';
+} from '../../utils/urlUtils';
 import '../Søk.less';
 
 export enum Publisert {

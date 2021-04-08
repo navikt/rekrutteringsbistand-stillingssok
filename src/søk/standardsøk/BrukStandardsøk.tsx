@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-import { QueryParam } from '../søkefelt/urlUtils';
+import { QueryParam } from '../../utils/urlUtils';
 import useStandardsøk from '../../StandardsøkContext';
 import './BrukStandardsøk.less';
 

@@ -3,7 +3,7 @@ import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
 import ReactPaginate from 'react-paginate';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
-import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../søk/søkefelt/urlUtils';
+import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../utils/urlUtils';
 import { useHistory } from 'react-router-dom';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import './Paginering.less';

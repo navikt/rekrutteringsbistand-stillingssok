@@ -5,7 +5,7 @@ import {
     Navigeringsstate,
     oppdaterUrlMedParam,
     QueryParam,
-} from '../søk/søkefelt/urlUtils';
+} from '../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router';
 
 export enum Fane {
