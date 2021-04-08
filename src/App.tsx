@@ -170,7 +170,15 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                                 </Systemtittel>
                             )}
                             {erIkkeProd &&
-                                (hentSøkekriterier(search).tekst ? <Søkefaner /> : <span />)}
+                                (hentSøkekriterier(search).tekst ? (
+                                    <Søkefaner
+                                        aggregeringer={
+                                            respons.aggregations?.globalAggregering.faner.buckets
+                                        }
+                                    />
+                                ) : (
+                                    <span />
+                                ))}
                             <Sorter />
                         </div>
                         <Stillingsliste esRespons={respons} />

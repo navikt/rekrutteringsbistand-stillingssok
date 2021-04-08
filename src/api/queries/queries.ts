@@ -30,23 +30,27 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         query: query(søkekriterier.fane),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
-        aggs: {
-            globalAggregering: {
-                global: {},
-                aggs: {
-                    faner: {
-                        filters: {
-                            filters: {
-                                alle: query(Fane.Alle),
-                                arbeidsgiver: query(Fane.Arbeidsgiver),
-                                annonsetittel: query(Fane.Annonsetittel),
-                                annonsetekst: query(Fane.Annonsetekst),
-                            },
-                        },
-                    },
-                },
-            },
-        },
+        ...(søkekriterier.tekst
+            ? {
+                  aggs: {
+                      globalAggregering: {
+                          global: {},
+                          aggs: {
+                              faner: {
+                                  filters: {
+                                      filters: {
+                                          alle: query(Fane.Alle),
+                                          arbeidsgiver: query(Fane.Arbeidsgiver),
+                                          annonsetittel: query(Fane.Annonsetittel),
+                                          annonsetekst: query(Fane.Annonsetekst),
+                                      },
+                                  },
+                              },
+                          },
+                      },
+                  },
+              }
+            : {}),
     };
 };
 

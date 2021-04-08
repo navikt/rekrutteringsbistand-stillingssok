@@ -17,7 +17,11 @@ export enum Fane {
     Annonsetekst = 'annonsetekst',
 }
 
-const Søkefaner: FunctionComponent = () => {
+type Props = {
+    aggregeringer?: Record<Fane, { doc_count: number }>;
+};
+
+const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     const history = useHistory();
     const { search } = useLocation<Navigeringsstate>();
 
@@ -42,11 +46,14 @@ const Søkefaner: FunctionComponent = () => {
     return (
         <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
             <TabList className="søkefaner__faner">
-                {Object.keys(Fane).map((fane) => (
-                    <Tab className="søkefaner__fane" key={fane}>
-                        {fane}
-                    </Tab>
-                ))}
+                {Object.entries(Fane).map(([key, value]) => {
+                    const aggregering = aggregeringer && aggregeringer[value as Fane].doc_count;
+                    return (
+                        <Tab className="søkefaner__fane" key={value}>
+                            {key} {aggregering ? `(${aggregering})` : ''}
+                        </Tab>
+                    );
+                })}
             </TabList>
         </Tabs>
     );
