@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import Tabs from 'nav-frontend-tabs';
+import { Tabs, TabList, Tab } from '@reach/tabs';
 import {
     hentSøkekriterier,
     Navigeringsstate,
@@ -7,6 +7,8 @@ import {
     QueryParam,
 } from '../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router';
+import '@reach/tabs/styles.css';
+import './Søkefaner.less';
 
 export enum Fane {
     Alle = 'alle',
@@ -25,7 +27,7 @@ const Søkefaner: FunctionComponent = () => {
         setAktivFaneIndex(hentAktivFaneIndex(search));
     }, [search]);
 
-    const onChange = (_: any, index: number) => {
+    const onChange = (index: number) => {
         setAktivFaneIndex(index);
 
         const valgtFane = Object.values(Fane)[index];
@@ -38,13 +40,13 @@ const Søkefaner: FunctionComponent = () => {
     };
 
     return (
-        <Tabs
-            tabs={Object.keys(Fane).map((fane, index) => ({
-                label: fane,
-                aktiv: aktivFaneIndex === index,
-            }))}
-            onChange={onChange}
-        />
+        <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
+            <TabList>
+                {Object.keys(Fane).map((fane) => (
+                    <Tab className="søkefaner__fane">{fane}</Tab>
+                ))}
+            </TabList>
+        </Tabs>
     );
 };
 
