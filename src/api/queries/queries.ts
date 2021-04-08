@@ -178,6 +178,7 @@ const søkefelt = (tekst: string, fane: Fane) => {
             multi_match: {
                 query: tekst,
                 fields: feltManSkalSøkeI,
+                operator: fane === Fane.Alle ? 'or' : 'and',
             },
         },
     ];
