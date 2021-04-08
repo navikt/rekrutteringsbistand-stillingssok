@@ -47,10 +47,10 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
         <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
             <TabList className="søkefaner__faner">
                 {Object.entries(Fane).map(([key, value]) => {
-                    const aggregering = aggregeringer && aggregeringer[value as Fane].doc_count;
+                    const aggregering = aggregeringer && aggregeringer[value].doc_count;
                     return (
                         <Tab className="søkefaner__fane" key={value}>
-                            {key} {aggregering ? `(${aggregering})` : ''}
+                            {key} {aggregering !== undefined ? `(${aggregering})` : ''}
                         </Tab>
                     );
                 })}

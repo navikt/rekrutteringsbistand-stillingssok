@@ -8,28 +8,52 @@ import { Fane } from '../../søkefaner/Søkefaner';
 export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (søkekriterier: Søkekriterier): Query => {
-    const query = (fane: Fane) => {
-        return {
-            bool: {
-                must: [...søkefelt(søkekriterier.tekst, fane)],
-                filter: [
-                    ...publisert(søkekriterier.publisert),
-                    ...fylkerOgKommuner(søkekriterier.fylker, søkekriterier.kommuner),
-                    ...status(søkekriterier.statuser),
-                    ...inkludering(
-                        søkekriterier.hovedinkluderingstags,
-                        søkekriterier.subinkluderingstags
-                    ),
-                ],
-            },
-        };
-    };
-
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
-        query: query(søkekriterier.fane),
+        query: query(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
+        ...aggregeringer(søkekriterier),
+    };
+};
+
+export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query => {
+    return {
+        query: {
+            bool: {
+                filter: [
+                    {
+                        term: {
+                            'stilling.annonsenr': søkekriterier.tekst,
+                        },
+                    },
+                    ...defaultStatusFilter,
+                ],
+            },
+        },
+        ...aggregeringer(søkekriterier),
+    };
+};
+
+const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
+    return {
+        bool: {
+            must: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
+            filter: [
+                ...publisert(søkekriterier.publisert),
+                ...fylkerOgKommuner(søkekriterier.fylker, søkekriterier.kommuner),
+                ...status(søkekriterier.statuser),
+                ...inkludering(
+                    søkekriterier.hovedinkluderingstags,
+                    søkekriterier.subinkluderingstags
+                ),
+            ],
+        },
+    };
+};
+
+const aggregeringer = (søkekriterier: Søkekriterier) => {
+    return {
         ...(søkekriterier.tekst
             ? {
                   aggs: {
@@ -39,10 +63,10 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                               faner: {
                                   filters: {
                                       filters: {
-                                          alle: query(Fane.Alle),
-                                          arbeidsgiver: query(Fane.Arbeidsgiver),
-                                          annonsetittel: query(Fane.Annonsetittel),
-                                          annonsetekst: query(Fane.Annonsetekst),
+                                          alle: query(søkekriterier, Fane.Alle),
+                                          arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
+                                          annonsetittel: query(søkekriterier, Fane.Annonsetittel),
+                                          annonsetekst: query(søkekriterier, Fane.Annonsetekst),
                                       },
                                   },
                               },
@@ -51,23 +75,6 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
                   },
               }
             : {}),
-    };
-};
-
-export const lagQueryPåAnnonsenummer = (annonsenummer: string): Query => {
-    return {
-        query: {
-            bool: {
-                filter: [
-                    {
-                        term: {
-                            'stilling.annonsenr': annonsenummer,
-                        },
-                    },
-                    ...defaultStatusFilter,
-                ],
-            },
-        },
     };
 };
 

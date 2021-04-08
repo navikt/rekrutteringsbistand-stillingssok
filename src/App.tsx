@@ -55,6 +55,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         slettVerdi: slettStandardsøkFraLocalStorage,
     } = useLocalStorage('standardsok');
 
+    const globaleAggregeringer = respons?.aggregations?.globalAggregering;
+
     useEffect(() => {
         const side = history.location.pathname;
         sendEvent('app', 'sidevisning', { side });
@@ -74,7 +76,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
             const fikkIngenStillinger = respons.hits.total.value === 0;
             if (fikkIngenStillinger) {
-                respons = await søk(lagQueryPåAnnonsenummer(søkekriterier.tekst));
+                respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
 
             setRespons(respons);
@@ -172,9 +174,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                             {erIkkeProd &&
                                 (hentSøkekriterier(search).tekst ? (
                                     <Søkefaner
-                                        aggregeringer={
-                                            respons.aggregations?.globalAggregering.faner.buckets
-                                        }
+                                        aggregeringer={globaleAggregeringer?.faner.buckets}
                                     />
                                 ) : (
                                     <span />
