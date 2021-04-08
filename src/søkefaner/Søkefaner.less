@@ -1,9 +1,24 @@
 @import '../variabler.less';
 
 .søkefaner {
+    &__faner {
+        background: none;
+    }
+
     &__fane {
+        padding-top: 0.75rem;
+        padding-bottom: 1.4rem;
+        border-radius: 0.25rem 0.25rem 0 0;
+
+        &:focus {
+            outline: 0;
+            box-shadow: inset 0 0 0 3px @fokusFarge;
+        }
+
         &[data-selected] {
-            border-bottom-color: @navBla;
+            font-weight: 600;
+            color: @navDypBlaDarken20;
+            border-bottom: 3px solid @navBlaDarken40;
         }
     }
 }

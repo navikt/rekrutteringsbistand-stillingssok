@@ -31,7 +31,11 @@
         align-self: stretch;
         justify-content: space-between;
         align-items: flex-end;
-        padding-bottom: 1rem;
+        flex-wrap: wrap;
+
+        .sorter {
+            padding-bottom: 1rem;
+        }
     }
 
     &__antall-stillinger {
@@ -59,11 +63,6 @@
         grid-template-columns: 19rem 1fr;
         column-gap: 3rem;
         max-width: 74.125rem;
-
-        &__antall-og-sortering {
-            // Denne er ganske presis for å aligne med toppen av søkefeltet
-            padding-bottom: 1.25rem;
-        }
     }
 
     @media (min-width: @screen-lg-min) {

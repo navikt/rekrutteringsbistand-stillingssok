@@ -41,7 +41,7 @@ const Søkefaner: FunctionComponent = () => {
 
     return (
         <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
-            <TabList>
+            <TabList className="søkefaner__faner">
                 {Object.keys(Fane).map((fane) => (
                     <Tab className="søkefaner__fane">{fane}</Tab>
                 ))}
