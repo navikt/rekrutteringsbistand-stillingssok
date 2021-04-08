@@ -1,8 +1,9 @@
 import { Query } from '../../elasticSearchTyper';
 import { Søkekriterier } from '../../App';
 import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
-import { status, alleStillinger as defaultStatusFilter } from './status';
+import { alleStillinger as defaultStatusFilter, status } from './status';
 import { sorterTreff } from './sortering';
+import { Fane } from '../../søkefaner/Søkefaner';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -12,7 +13,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         query: {
             bool: {
-                must: [...søkITittelOgStillingstekst(søkekriterier.tekst)],
+                must: [...søkefelt(søkekriterier.tekst, søkekriterier.fane)],
                 filter: [
                     ...publisert(søkekriterier.publisert),
                     ...fylkerOgKommuner(søkekriterier.fylker, søkekriterier.kommuner),
@@ -151,20 +152,32 @@ const inkludering = (alleHovedtags: Set<string>, subtags: Set<string>) => {
     ];
 };
 
-const søkITittelOgStillingstekst = (tekst: string) => {
+const søkefelt = (tekst: string, fane: Fane) => {
     if (!tekst) return [];
+
+    let feltManSkalSøkeI;
+
+    if (fane === Fane.Arbeidsgiver) {
+        feltManSkalSøkeI = ['stilling.employer.name', 'stilling.employer.orgnr'];
+    } else if (fane === Fane.Annonsetittel) {
+        feltManSkalSøkeI = ['stilling.title'];
+    } else if (fane === Fane.Annonsetekst) {
+        feltManSkalSøkeI = ['stilling.adtext_no'];
+    } else {
+        feltManSkalSøkeI = [
+            'stilling.adtext_no',
+            'stilling.title',
+            'stilling.annonsenr',
+            'stilling.employer.name',
+            'stilling.employer.orgnr',
+        ];
+    }
 
     return [
         {
             multi_match: {
                 query: tekst,
-                fields: [
-                    'stilling.adtext_no',
-                    'stilling.title',
-                    'stilling.annonsenr',
-                    'stilling.employer.name',
-                    'stilling.employer.orgnr',
-                ],
+                fields: feltManSkalSøkeI,
             },
         },
     ];

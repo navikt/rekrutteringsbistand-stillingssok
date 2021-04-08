@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Tabs from 'nav-frontend-tabs';
 import {
     hentSøkekriterier,
@@ -19,12 +19,14 @@ const Søkefaner: FunctionComponent = () => {
     const history = useHistory();
     const { search } = useLocation<Navigeringsstate>();
 
-    const [aktivFane, setAktivFane] = useState<number>(
-        Object.values(Fane).indexOf(hentSøkekriterier(search).fane) || 0
-    );
+    const [aktivFaneIndex, setAktivFaneIndex] = useState<number>(hentAktivFaneIndex(search));
+
+    useEffect(() => {
+        setAktivFaneIndex(hentAktivFaneIndex(search));
+    }, [search]);
 
     const onChange = (_: any, index: number) => {
-        setAktivFane(index);
+        setAktivFaneIndex(index);
 
         const valgtFane = Object.values(Fane)[index];
 
@@ -39,11 +41,16 @@ const Søkefaner: FunctionComponent = () => {
         <Tabs
             tabs={Object.keys(Fane).map((fane, index) => ({
                 label: fane,
-                aktiv: aktivFane === index,
+                aktiv: aktivFaneIndex === index,
             }))}
             onChange={onChange}
         />
     );
+};
+
+const hentAktivFaneIndex = (search: string): number => {
+    const aktivFaneIndex = Object.values(Fane).indexOf(hentSøkekriterier(search).fane);
+    return aktivFaneIndex !== -1 ? aktivFaneIndex : 0;
 };
 
 export default Søkefaner;
