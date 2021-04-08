@@ -169,7 +169,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                                     {formaterAntallAnnonser(respons.hits.total.value)}
                                 </Systemtittel>
                             )}
-                            {erIkkeProd && <Søkefaner />}
+                            {erIkkeProd &&
+                                (hentSøkekriterier(search).tekst ? <Søkefaner /> : <span />)}
                             <Sorter />
                         </div>
                         <Stillingsliste esRespons={respons} />
