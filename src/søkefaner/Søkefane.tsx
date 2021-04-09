@@ -10,8 +10,7 @@ type Props = {
 const Søkefane: FunctionComponent<Props> = ({ fane, antallTreff }) => {
     return (
         <Tab className="søkefaner__fane" key={fane}>
-            {visningsnavn(fane)}{' '}
-            {antallTreff !== undefined ? `(${antallTreff.toLocaleString('nb-NO')})` : ''}
+            {visningsnavn(fane)} ({`${antallTreff?.toLocaleString('nb-NO') ?? 0}`})
         </Tab>
     );
 };

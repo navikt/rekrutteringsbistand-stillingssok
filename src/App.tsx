@@ -45,10 +45,10 @@ export type AppProps = {
     history: History;
 };
 
-const useAntallTreff = (globalAggregering?: GlobalAggregering) => {
+const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
     const { search } = useLocation();
     const aktivFane = hentSøkekriterier(search).fane;
-    return globalAggregering ? globalAggregering.faner.buckets[aktivFane].doc_count : 0;
+    return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
 };
 
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
@@ -81,7 +81,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             let respons = await søk(lagQuery(søkekriterier));
 
             const fikkIngenStillinger =
-                respons.aggregations.globalAggregering.faner.buckets.alle.doc_count === 0;
+                respons.aggregations.globalAggregering.faner.buckets.alle?.doc_count === 0;
             if (fikkIngenStillinger) {
                 respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }

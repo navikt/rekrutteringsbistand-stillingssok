@@ -57,6 +57,19 @@ const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
 };
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
+    let queriesForFaneaggregering: Partial<Record<Fane, object>> = {
+        alle: query(søkekriterier, Fane.Alle),
+    };
+
+    if (søkekriterier.tekst) {
+        queriesForFaneaggregering = {
+            ...queriesForFaneaggregering,
+            arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
+            annonsetittel: query(søkekriterier, Fane.Annonsetittel),
+            annonsetekst: query(søkekriterier, Fane.Annonsetekst),
+        };
+    }
+
     return {
         aggs: {
             globalAggregering: {
@@ -64,12 +77,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
                 aggs: {
                     faner: {
                         filters: {
-                            filters: {
-                                alle: query(søkekriterier, Fane.Alle),
-                                arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
-                                annonsetittel: query(søkekriterier, Fane.Annonsetittel),
-                                annonsetekst: query(søkekriterier, Fane.Annonsetekst),
-                            },
+                            filters: queriesForFaneaggregering,
                         },
                     },
                 },

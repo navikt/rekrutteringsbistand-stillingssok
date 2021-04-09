@@ -19,7 +19,7 @@ export enum Fane {
 }
 
 type Props = {
-    aggregeringer?: Record<Fane, { doc_count: number }>;
+    aggregeringer?: Partial<Record<Fane, { doc_count: number }>>;
 };
 
 const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
@@ -47,7 +47,7 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     return (
         <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
             <TabList className="søkefaner__faner">
-                <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle.doc_count} />
+                <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle?.doc_count ?? 0} />
                 {hentSøkekriterier(search).tekst &&
                     Object.values(Fane)
                         .filter((fane) => fane !== Fane.Alle)

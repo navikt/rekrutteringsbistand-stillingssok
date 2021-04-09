@@ -22,7 +22,7 @@ export type Query = {
             aggs: {
                 faner: {
                     filters: {
-                        filters: Record<Fane, object>;
+                        filters: Partial<Record<Fane, object>>;
                     };
                 };
             };
@@ -54,7 +54,7 @@ export type Respons = {
 
 export type GlobalAggregering = {
     faner: {
-        buckets: Record<Fane, { doc_count: number }>;
+        buckets: Partial<Record<Fane, { doc_count: number }>>;
     };
 };
 
