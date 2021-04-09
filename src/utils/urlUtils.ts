@@ -52,8 +52,12 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
     };
 };
 
-export const byggUrlMedParam = (param: QueryParam, value: QueryParamValue) => {
-    const url = new URL(window.location.href);
+const oppdaterQueryParametere = (
+    search: string,
+    param: QueryParam,
+    value: QueryParamValue
+): string => {
+    const searchParams = new URLSearchParams(search);
 
     if (
         value === null ||
@@ -61,12 +65,12 @@ export const byggUrlMedParam = (param: QueryParam, value: QueryParamValue) => {
         (typeof value === 'boolean' && value === false) ||
         (value instanceof Array && value.length === 0)
     ) {
-        url.searchParams.delete(param);
+        searchParams.delete(param);
     } else {
-        url.searchParams.set(param, String(value));
+        searchParams.set(param, String(value));
     }
 
-    return url;
+    return searchParams.toString();
 };
 
 export const oppdaterUrlMedParam = ({
@@ -80,6 +84,26 @@ export const oppdaterUrlMedParam = ({
     history: History;
     state?: Navigeringsstate;
 }) => {
-    const { search } = byggUrlMedParam(parameter, verdi);
+    let search = oppdaterQueryParametere(history.location.search, parameter, verdi);
+    history.replace({ search, state });
+};
+
+export const oppdaterUrlMedToParams = ({
+    history,
+    parameter,
+    verdi,
+    parameter2,
+    verdi2,
+    state,
+}: {
+    parameter: QueryParam;
+    verdi: QueryParamValue;
+    parameter2: QueryParam;
+    verdi2: QueryParamValue;
+    history: History;
+    state?: Navigeringsstate;
+}) => {
+    let search = oppdaterQueryParametere(history.location.search, parameter, verdi);
+    search = oppdaterQueryParametere(search, parameter2, verdi2);
     history.replace({ search, state });
 };

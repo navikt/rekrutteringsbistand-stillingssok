@@ -6,6 +6,7 @@ import {
     hentSøkekriterier,
     Navigeringsstate,
     oppdaterUrlMedParam,
+    oppdaterUrlMedToParams,
     QueryParam,
 } from '../../utils/urlUtils';
 import './Søkefelt.less';
@@ -28,10 +29,24 @@ const Søkefelt: FunctionComponent = () => {
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        oppdaterUrlMedParam({
+        if (input.length > 0) {
+            oppdaterUrlMedParam({
+                history,
+                parameter: QueryParam.Tekst,
+                verdi: input,
+            });
+        } else {
+            oppdaterTekstOgResetFane();
+        }
+    };
+
+    const oppdaterTekstOgResetFane = () => {
+        oppdaterUrlMedToParams({
             history,
             parameter: QueryParam.Tekst,
             verdi: input,
+            parameter2: QueryParam.Fane,
+            verdi2: null,
         });
     };
 
