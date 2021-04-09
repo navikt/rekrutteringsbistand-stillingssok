@@ -4,6 +4,7 @@ import { Fane } from './søkefaner/Søkefaner';
 export type Query = {
     size?: number;
     from?: number;
+    track_total_hits?: boolean;
     query: {
         term?: Record<string, object>;
         match?: Record<string, MatchQuery>;
@@ -15,7 +16,7 @@ export type Query = {
         };
         filter?: any;
     };
-    aggs?: {
+    aggs: {
         globalAggregering: {
             global: object;
             aggs: {
@@ -43,19 +44,17 @@ export type Respons = {
         failed: number;
     };
     hits: {
-        total: {
-            value: number;
-            relation: string;
-        };
         max_score: number | null;
         hits: Array<Hit>;
     };
-    aggregations?: {
-        globalAggregering: {
-            faner: {
-                buckets: Record<Fane, { doc_count: number }>;
-            };
-        };
+    aggregations: {
+        globalAggregering: GlobalAggregering;
+    };
+};
+
+export type GlobalAggregering = {
+    faner: {
+        buckets: Record<Fane, { doc_count: number }>;
     };
 };
 

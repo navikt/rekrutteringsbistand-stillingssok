@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
-import { Respons } from './elasticSearchTyper';
+import { GlobalAggregering, Respons } from './elasticSearchTyper';
 import {
     hentSøkekriterier,
     QueryParam,
@@ -45,6 +45,12 @@ export type AppProps = {
     history: History;
 };
 
+const useAntallTreff = (globalAggregering?: GlobalAggregering) => {
+    const { search } = useLocation();
+    const aktivFane = hentSøkekriterier(search).fane;
+    return globalAggregering ? globalAggregering.faner.buckets[aktivFane].doc_count : 0;
+};
+
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
@@ -54,7 +60,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         slettVerdi: slettStandardsøkFraLocalStorage,
     } = useLocalStorage('standardsok');
 
-    const globaleAggregeringer = respons?.aggregations?.globalAggregering;
+    const globalAggregering = respons?.aggregations.globalAggregering;
+    const antallTreff = useAntallTreff(globalAggregering);
 
     useEffect(() => {
         const side = history.location.pathname;
@@ -73,7 +80,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const søkMedQuery = async () => {
             let respons = await søk(lagQuery(søkekriterier));
 
-            const fikkIngenStillinger = respons.hits.total.value === 0;
+            const fikkIngenStillinger =
+                respons.aggregations.globalAggregering.faner.buckets.alle.doc_count === 0;
             if (fikkIngenStillinger) {
                 respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
@@ -157,14 +165,14 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 {respons ? (
                     <>
                         <Systemtittel className="app__antall-stillinger" tag="output">
-                            {formaterAntallAnnonser(respons.hits.total.value)}
+                            {formaterAntallAnnonser(antallTreff)}
                         </Systemtittel>
                         <div className="app__antall-og-sortering">
-                            <Søkefaner aggregeringer={globaleAggregeringer?.faner.buckets} />
+                            <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                             <Sorter />
                         </div>
                         <Stillingsliste esRespons={respons} />
-                        <Paginering totaltAntallTreff={respons.hits.total.value} />
+                        <Paginering totaltAntallTreff={antallTreff} />
                     </>
                 ) : (
                     <div className="app__spinner">
@@ -177,10 +185,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 };
 
 const formaterAntallAnnonser = (antallAnnonser: number) => {
-    const prefiks = antallAnnonser === 10000 ? 'Mer enn ' : '';
     const suffiks = antallAnnonser === 1 ? ' annonse' : ' annonser';
-
-    return prefiks + antallAnnonser + suffiks;
+    return antallAnnonser.toLocaleString('nb-NO') + suffiks;
 };
 
 export const defaultValgteKriterier = '?publisert=intern&statuser=publisert';

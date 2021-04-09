@@ -6,7 +6,6 @@ export const resultat: Respons = {
     timed_out: false,
     _shards: { total: 3, successful: 3, skipped: 0, failed: 0 },
     hits: {
-        total: { value: 10000, relation: 'gte' },
         max_score: 1.0,
         hits: [
             {

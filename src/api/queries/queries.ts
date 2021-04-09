@@ -11,6 +11,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
+        track_total_hits: false,
         query: query(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
@@ -54,27 +55,23 @@ const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
     return {
-        ...(søkekriterier.tekst
-            ? {
-                  aggs: {
-                      globalAggregering: {
-                          global: {},
-                          aggs: {
-                              faner: {
-                                  filters: {
-                                      filters: {
-                                          alle: query(søkekriterier, Fane.Alle),
-                                          arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
-                                          annonsetittel: query(søkekriterier, Fane.Annonsetittel),
-                                          annonsetekst: query(søkekriterier, Fane.Annonsetekst),
-                                      },
-                                  },
-                              },
-                          },
-                      },
-                  },
-              }
-            : {}),
+        aggs: {
+            globalAggregering: {
+                global: {},
+                aggs: {
+                    faner: {
+                        filters: {
+                            filters: {
+                                alle: query(søkekriterier, Fane.Alle),
+                                arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
+                                annonsetittel: query(søkekriterier, Fane.Annonsetittel),
+                                annonsetekst: query(søkekriterier, Fane.Annonsetekst),
+                            },
+                        },
+                    },
+                },
+            },
+        },
     };
 };
 
