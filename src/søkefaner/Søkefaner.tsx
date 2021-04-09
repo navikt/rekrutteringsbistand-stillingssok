@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Tabs, TabList, Tab } from '@reach/tabs';
+import { Tabs, TabList } from '@reach/tabs';
 import {
     hentSøkekriterier,
     Navigeringsstate,
@@ -9,6 +9,7 @@ import {
 import { useHistory, useLocation } from 'react-router';
 import '@reach/tabs/styles.css';
 import './Søkefaner.less';
+import Søkefane from './Søkefane';
 
 export enum Fane {
     Alle = 'alle',
@@ -46,14 +47,14 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     return (
         <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
             <TabList className="søkefaner__faner">
-                {Object.entries(Fane).map(([key, value]) => {
-                    const aggregering = aggregeringer && aggregeringer[value].doc_count;
-                    return (
-                        <Tab className="søkefaner__fane" key={value}>
-                            {key} {aggregering !== undefined ? `(${aggregering})` : ''}
-                        </Tab>
-                    );
-                })}
+                <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle.doc_count} />
+                {hentSøkekriterier(search).tekst &&
+                    Object.values(Fane)
+                        .filter((fane) => fane !== Fane.Alle)
+                        .map((fane) => {
+                            const aggregering = aggregeringer && aggregeringer[fane];
+                            return <Søkefane fane={fane} antallTreff={aggregering?.doc_count} />;
+                        })}
             </TabList>
         </Tabs>
     );

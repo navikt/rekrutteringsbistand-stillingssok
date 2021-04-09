@@ -171,14 +171,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                                     {formaterAntallAnnonser(respons.hits.total.value)}
                                 </Systemtittel>
                             )}
-                            {erIkkeProd &&
-                                (hentSøkekriterier(search).tekst ? (
-                                    <Søkefaner
-                                        aggregeringer={globaleAggregeringer?.faner.buckets}
-                                    />
-                                ) : (
-                                    <span />
-                                ))}
+                            {erIkkeProd && (
+                                <Søkefaner aggregeringer={globaleAggregeringer?.faner.buckets} />
+                            )}
                             <Sorter />
                         </div>
                         <Stillingsliste esRespons={respons} />
