@@ -12,7 +12,7 @@ const sorteringPåPubliseringsdato = {
     },
 };
 
-export const sorterTreff = (sortering: Sortering, fritekst: string) => {
+const sorterTreff = (sortering: Sortering, fritekst: string) => {
     const girMeningÅSorterePåMestRelevant = fritekst;
     if (!girMeningÅSorterePåMestRelevant && sortering === Sortering.MestRelevant) {
         return sorteringPåPubliseringsdato;
@@ -27,3 +27,5 @@ export const sorterTreff = (sortering: Sortering, fritekst: string) => {
             return sorteringPåUtløpsdato;
     }
 };
+
+export default sorterTreff;
