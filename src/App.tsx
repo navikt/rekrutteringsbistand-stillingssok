@@ -45,12 +45,6 @@ export type AppProps = {
     history: History;
 };
 
-const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
-    const { search } = useLocation();
-    const aktivFane = hentSøkekriterier(search).fane;
-    return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
-};
-
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
@@ -80,9 +74,9 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         const søkMedQuery = async () => {
             let respons = await søk(lagQuery(søkekriterier));
 
-            const fikkIngenStillinger =
-                respons.aggregations.globalAggregering.faner.buckets.alle?.doc_count === 0;
-            if (fikkIngenStillinger) {
+            const fikkIngenTreff =
+                hentAntallTreff(search, respons.aggregations.globalAggregering) === 0;
+            if (fikkIngenTreff) {
                 respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
 
@@ -182,6 +176,16 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             </main>
         </div>
     );
+};
+
+const hentAntallTreff = (search: string, globalAggregering?: GlobalAggregering): number => {
+    const aktivFane = hentSøkekriterier(search).fane;
+    return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
+};
+
+const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
+    const { search } = useLocation();
+    return hentAntallTreff(search, globalAggregering);
 };
 
 const formaterAntallAnnonser = (antallAnnonser: number) => {
