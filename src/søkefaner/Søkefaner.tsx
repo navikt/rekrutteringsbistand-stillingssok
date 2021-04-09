@@ -53,7 +53,13 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
                         .filter((fane) => fane !== Fane.Alle)
                         .map((fane) => {
                             const aggregering = aggregeringer && aggregeringer[fane];
-                            return <Søkefane fane={fane} antallTreff={aggregering?.doc_count} />;
+                            return (
+                                <Søkefane
+                                    key={fane}
+                                    fane={fane}
+                                    antallTreff={aggregering?.doc_count}
+                                />
+                            );
                         })}
             </TabList>
         </Tabs>
