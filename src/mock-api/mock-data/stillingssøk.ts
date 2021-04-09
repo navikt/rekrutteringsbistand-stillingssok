@@ -874,4 +874,24 @@ export const resultat: Respons = {
             },
         ],
     },
+    aggregations: {
+        globalAggregering: {
+            faner: {
+                buckets: {
+                    alle: {
+                        doc_count: 282,
+                    },
+                    annonsetekst: {
+                        doc_count: 277,
+                    },
+                    annonsetittel: {
+                        doc_count: 87,
+                    },
+                    arbeidsgiver: {
+                        doc_count: 52,
+                    },
+                },
+            },
+        },
+    },
 };
