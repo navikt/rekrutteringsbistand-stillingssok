@@ -24,9 +24,10 @@ const søkefelt = (tekst: string, fane: Fane) => {
     return [
         {
             multi_match: {
+                type: 'cross_fields',
                 query: tekst,
                 fields: feltManSkalSøkeI,
-                operator: fane === Fane.Alle ? 'or' : 'and',
+                operator: 'and',
             },
         },
     ];
