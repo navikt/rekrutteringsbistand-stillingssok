@@ -17,6 +17,7 @@ Sentry.init({
     beforeSend: fjernPersonopplysninger,
     allowUrls: ['/rekrutteringsbistand-stillingssok'],
     autoSessionTracking: false,
+    debug: true,
 });
 
 const skalEksporteres = process.env.REACT_APP_EXPORT || process.env.NODE_ENV === 'production';
