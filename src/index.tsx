@@ -15,7 +15,7 @@ Sentry.init({
     release: process.env.REACT_APP_SENTRY_RELEASE || 'unknown',
     enabled: getMiljø() === 'dev-fss' || getMiljø() === 'prod-fss',
     beforeSend: fjernPersonopplysninger,
-    allowUrls: ['/stillingssok'],
+    allowUrls: ['/rekrutteringsbistand-stillingssok'],
 });
 
 const skalEksporteres = process.env.REACT_APP_EXPORT || process.env.NODE_ENV === 'production';
