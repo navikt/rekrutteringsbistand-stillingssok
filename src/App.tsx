@@ -57,6 +57,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const globalAggregering = respons?.aggregations.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
 
+    const [shouldThrowError, throwError] = useState<boolean>(false);
+    if (shouldThrowError) {
+        throw new Error('Feil i komponent!');
+    }
+
     useEffect(() => {
         const side = history.location.pathname;
         sendEvent('app', 'sidevisning', { side });
@@ -137,6 +142,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     return (
         <div className="app">
             <nav className="app__tilbakelenke">
+                <button
+                    onClick={() => {
+                        throwError(true);
+                    }}
+                >
+                    Trykk meg!
+                </button>
                 <Link
                     className="lenke"
                     to="/stillinger?kommerfranyttsøk"
