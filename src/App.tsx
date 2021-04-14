@@ -137,6 +137,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     return (
         <div className="app">
             <nav className="app__tilbakelenke">
+                <button
+                    onClick={() => {
+                        throw new Error('Trigget feil!');
+                    }}
+                >
+                    Trykk meg!
+                </button>
                 <Link
                     className="lenke"
                     to="/stillinger?kommerfranyttsøk"
