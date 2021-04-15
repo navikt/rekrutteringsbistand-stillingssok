@@ -33,9 +33,12 @@ type Props = {
 
 const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
+    const stillingInfo = rekrutteringsbistandstilling.stillingsinfo;
 
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
+
+    const erInternStilling = stilling.privacy == Privacy.Intern;
 
     const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
 
@@ -100,6 +103,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     {antallStillinger && (
                         <span>
                             {antallStillinger} {antallStillingerSuffix}
+                        </span>
+                    )}
+                    {erInternStilling && (
+                        <span>
+                            Eier: {stillingInfo?.eierNavn}
                         </span>
                     )}
                 </span>
