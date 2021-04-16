@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import {Location, Privacy, Rekrutteringsbistandstilling, Stillingsinfo} from '../../Stilling';
+import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
