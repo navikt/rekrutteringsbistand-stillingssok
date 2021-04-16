@@ -34,7 +34,7 @@ type Props = {
 function fornavnEtternavn(stillingsInfo: Stillingsinfo | null) {
     if(stillingsInfo == null || stillingsInfo.eierNavn == null) return null;
     const navnDel = stillingsInfo.eierNavn.split(",");
-    if(navnDel.length != 2) return stillingsInfo.eierNavn;
+    if(navnDel.length !== 2) return stillingsInfo.eierNavn;
     return navnDel[1].trim() + " " + navnDel[0].trim();
 }
 
@@ -45,7 +45,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
 
-    const erInternStilling = stilling.privacy == Privacy.Intern;
+    const erInternStilling = stilling.privacy === Privacy.Intern;
 
     const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
 
