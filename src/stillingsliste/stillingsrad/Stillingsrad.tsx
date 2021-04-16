@@ -31,16 +31,21 @@ type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
-function fornavnEtternavn(stillingsInfo: Stillingsinfo | null) {
-    if(stillingsInfo == null || stillingsInfo.eierNavn == null) return null;
-    const navnDel = stillingsInfo.eierNavn.split(",");
-    if(navnDel.length !== 2) return stillingsInfo.eierNavn;
-    return navnDel[1].trim() + " " + navnDel[0].trim();
+function fornavnEtternavn(eierNavn: string | null) {
+    if(eierNavn == null) return null;
+    const navnDel = eierNavn.split(",");
+    return navnDel.length !== 2 ? eierNavn : navnDel[1].trim() + " " + navnDel[0].trim();
+}
+
+function eier(rekrutteringsbistandstilling: Rekrutteringsbistandstilling) {
+    const eierNavn = rekrutteringsbistandstilling.stillingsinfo?.eierNavn;
+    const reportee = rekrutteringsbistandstilling.stilling.administration?.reportee;
+    return eierNavn != null ? eierNavn : (reportee != null ? reportee : null);
 }
 
 const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
-    const eierNavn = fornavnEtternavn(rekrutteringsbistandstilling.stillingsinfo);
+    const eierNavn = fornavnEtternavn(eier(rekrutteringsbistandstilling));
 
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
