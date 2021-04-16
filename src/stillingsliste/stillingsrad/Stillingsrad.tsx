@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Location, Rekrutteringsbistandstilling } from '../../Stilling';
+import {Location, Privacy, Rekrutteringsbistandstilling, Stillingsinfo} from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
@@ -31,9 +31,16 @@ type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
+function fornavnEtternavn(stillingsInfo: Stillingsinfo | null) {
+    if(stillingsInfo == null || stillingsInfo.eierNavn == null) return null;
+    const navnDel = stillingsInfo.eierNavn.split(",");
+    if(navnDel.length != 2) return stillingsInfo.eierNavn;
+    return navnDel[1].trim() + " " + navnDel[0].trim();
+}
+
 const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
-    const stillingInfo = rekrutteringsbistandstilling.stillingsinfo;
+    const eierNavn = fornavnEtternavn(rekrutteringsbistandstilling.stillingsinfo);
 
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
@@ -105,9 +112,9 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                             {antallStillinger} {antallStillingerSuffix}
                         </span>
                     )}
-                    {erInternStilling && (
+                    {erInternStilling && eierNavn && (
                         <span>
-                            Eier: {stillingInfo?.eierNavn}
+                            Eier: {eierNavn}
                         </span>
                     )}
                 </span>
