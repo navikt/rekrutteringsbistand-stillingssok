@@ -23,7 +23,6 @@ import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import { StandardsøkProvider } from './StandardsøkContext';
 import useStandardsøk from './StandardsøkContext';
-import useLocalStorage from './utils/useLocalStorage';
 import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import './App.less';
 
@@ -48,11 +47,7 @@ export type AppProps = {
 const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
-    const { standardsøk, oppdaterStandardsøk } = useStandardsøk();
-    const {
-        verdi: standardsøkFraLocalStorage,
-        slettVerdi: slettStandardsøkFraLocalStorage,
-    } = useLocalStorage('standardsok');
+    const { standardsøk } = useStandardsøk();
 
     const globalAggregering = respons?.aggregations.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
@@ -94,29 +89,11 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
         }
     }, [search, history, navigeringsstate]);
 
-    // TODO: Fjern migreringsstrategi etterhvert
-    useEffect(() => {
-        const flyttStandardsøkTilBackend = async (fraLocalStorage: string) => {
-            await oppdaterStandardsøk(fraLocalStorage);
-            slettStandardsøkFraLocalStorage();
-            sendEvent('stillingssøk', 'har_flyttet_standardsøk');
-        };
-
-        if (standardsøkFraLocalStorage !== null) {
-            flyttStandardsøkTilBackend(standardsøkFraLocalStorage);
-        }
-        // eslint-disable-next-line
-    }, []);
-
     useEffect(() => {
         const searchParams = new URLSearchParams(search);
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
-        if (
-            skalBrukeStandardsøk &&
-            standardsøk.harHentetStandardsøk &&
-            standardsøkFraLocalStorage === null
-        ) {
+        if (skalBrukeStandardsøk && standardsøk.harHentetStandardsøk) {
             if (standardsøk.standardsøk !== null) {
                 history.replace({
                     search: standardsøk.standardsøk,
@@ -132,7 +109,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                 harLagretStandardsøk: !!standardsøk,
             });
         }
-    }, [search, history, standardsøk, standardsøkFraLocalStorage]);
+    }, [search, history, standardsøk]);
 
     return (
         <div className="app">
