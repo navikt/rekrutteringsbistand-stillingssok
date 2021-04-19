@@ -12,9 +12,7 @@ import { søk } from './api/api';
 import Søk from './søk/Søk';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import Paginering from './paginering/Paginering';
-import Introduksjon from './introduksjon/Introduksjon';
-import { Link, useLocation } from 'react-router-dom';
-import NavFrontendChevron from 'nav-frontend-chevron';
+import { useLocation } from 'react-router-dom';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Status } from './søk/om-annonsen/Annonsestatus';
@@ -113,21 +111,6 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
 
     return (
         <div className="app">
-            <nav className="app__tilbakelenke">
-                <Link
-                    className="lenke"
-                    to="/stillinger?kommerfranyttsøk"
-                    onClick={() => {
-                        sendEvent('app', 'naviger_til_gammelt_søk');
-                    }}
-                >
-                    <NavFrontendChevron type="venstre" />
-                    Til gammelt søk
-                </Link>
-            </nav>
-
-            <Introduksjon />
-
             <aside className="app__sidepanel">
                 <Søk />
             </aside>
