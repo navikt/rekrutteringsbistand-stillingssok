@@ -39,7 +39,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/rename-rekrutteringsbistand-api'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/eier-intern-stilling'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1

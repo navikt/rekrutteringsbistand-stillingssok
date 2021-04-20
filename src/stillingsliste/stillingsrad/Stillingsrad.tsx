@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Location, Rekrutteringsbistandstilling } from '../../Stilling';
+import { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
@@ -31,11 +31,26 @@ type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
+function fornavnEtternavn(eierNavn: string | null) {
+    if(eierNavn == null) return null;
+    const navnDel = eierNavn.split(",");
+    return navnDel.length !== 2 ? eierNavn : navnDel[1].trim() + " " + navnDel[0].trim();
+}
+
+function eier(rekrutteringsbistandstilling: Rekrutteringsbistandstilling) {
+    const eierNavn = rekrutteringsbistandstilling.stillingsinfo?.eierNavn;
+    const reportee = rekrutteringsbistandstilling.stilling.administration?.reportee;
+    return eierNavn != null ? eierNavn : (reportee != null ? reportee : null);
+}
+
 const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
+    const eierNavn = fornavnEtternavn(eier(rekrutteringsbistandstilling));
 
     const antallStillinger = stilling.properties.positioncount;
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
+
+    const erInternStilling = stilling.privacy === Privacy.Intern;
 
     const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
 
@@ -100,6 +115,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     {antallStillinger && (
                         <span>
                             {antallStillinger} {antallStillingerSuffix}
+                        </span>
+                    )}
+                    {erInternStilling && eierNavn && (
+                        <span>
+                            Eier: {eierNavn}
                         </span>
                     )}
                 </span>
