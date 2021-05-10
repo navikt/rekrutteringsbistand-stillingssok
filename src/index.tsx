@@ -8,6 +8,7 @@ import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
 import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import './index.less';
+import FeilMedApp from './FeilMedApp';
 
 Sentry.init({
     dsn: 'https://766bf43f7bd849e4aadc3528a9e94c60@sentry.gc.nav.no/64',
@@ -26,7 +27,7 @@ export const cssScopeForApp = 'rekbis-stillingssok';
 
 const AppMedCssScope: FunctionComponent = (props: any) => (
     <div className={cssScopeForApp}>
-        <Sentry.ErrorBoundary>
+        <Sentry.ErrorBoundary fallback={(error) => <FeilMedApp {...error} />}>
             <Router history={props.history}>
                 <App {...props} />
             </Router>
