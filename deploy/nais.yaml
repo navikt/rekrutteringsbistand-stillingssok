@@ -11,6 +11,7 @@ spec:
     port: 3000
     ingresses:
         - {{ ingress }}
+        - {{ ingress-intern }}
     liveness:
         initialDelay: 5
         path: /rekrutteringsbistand-stillingssok/internal/isAlive
