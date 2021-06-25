@@ -76,7 +76,12 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
     );
 };
 
-const regnUtAntallSider = (totaltAntallTreff: number, maksAntallTreffPerSøk: number) =>
-    Math.ceil(totaltAntallTreff / maksAntallTreffPerSøk);
+const regnUtAntallSider = (totaltAntallTreff: number, maksAntallTreffPerSøk: number) => {
+    const antallSider = Math.ceil(totaltAntallTreff / maksAntallTreffPerSøk);
+    const maksAntallTreffStøttetAvES = 10000;
+    const maksAntallSider = maksAntallTreffStøttetAvES / 40 - 1;
+
+    return Math.min(antallSider, maksAntallSider);
+};
 
 export default Paginering;
