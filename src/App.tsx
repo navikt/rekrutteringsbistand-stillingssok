@@ -68,7 +68,7 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
             let respons = await søk(lagQuery(søkekriterier));
 
             const fikkIngenTreff =
-                hentAntallTreff(search, respons.aggregations.globalAggregering) === 0;
+                hentAntallTreff(search, respons.aggregations?.globalAggregering) === 0;
             if (fikkIngenTreff) {
                 respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
