@@ -84,10 +84,10 @@ const FylkerOgKommuner: FunctionComponent = () => {
                                 {kommuner.map((kommune) => (
                                     <Checkbox
                                         className="søk__checkbox søk__checkbox--indentert"
-                                        key={kommune}
-                                        label={kommune.split('.')[1]}
-                                        value={kommune}
-                                        checked={valgteKommuner.has(kommune)}
+                                        key={kommune.kommune}
+                                        label={kommune.label}
+                                        value={kommune.kommune}
+                                        checked={valgteKommuner.has(kommune.kommune)}
                                         onChange={onKommuneChange}
                                     />
                                 ))}
@@ -102,13 +102,51 @@ const FylkerOgKommuner: FunctionComponent = () => {
 
 const enhetstype = hentEnhetstype();
 
-type KommuneMedFylke = string;
+type KommuneMedFylke = {
+    kommune: string;
+    label: string;
+};
+
 type FylkeMedKommuner = {
     fylke: string;
     kommuner: Array<KommuneMedFylke>;
 };
 
-const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
+const kommunerMedSamiskeNavnIStillinger: {
+    [s: string]:
+        | undefined
+        | {
+              samisk: string;
+              søkeord: string;
+          };
+} = {
+    Tana: {
+        samisk: 'Deatnu',
+        søkeord: 'Deatnu Tana',
+    },
+    Karasjok: {
+        samisk: 'Karasjohka',
+        søkeord: 'Karasjohka Karasjok',
+    },
+    Kautokeino: {
+        samisk: 'Guovdageaidnu',
+        søkeord: 'Guovdageaidnu Kautokeino',
+    },
+    Kåfjord: {
+        samisk: 'Gáivuotna',
+        søkeord: 'Gáivuotna Kåfjord',
+    },
+    Nesseby: {
+        samisk: 'Unjargga',
+        søkeord: 'Unjargga Nesseby',
+    },
+    Porsanger: {
+        samisk: 'Porsángu Porsanki',
+        søkeord: 'Porsanger Porsángu Porsanki',
+    },
+};
+
+const hentSøkbartKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
     if (kommunenavn === 'Våler' || kommunenavn === 'Herøy') {
         return `${kommunenavn} (${fylkesnavn})`;
     } else {
@@ -116,8 +154,18 @@ const hentKommunenavn = (kommunenavn: string, fylkesnavn: string): string => {
     }
 };
 
-const hentKommunenavnMedFylke = (kommunenavn: string, fylkesnavn: string): string => {
-    return `${fylkesnavn}.${hentKommunenavn(kommunenavn, fylkesnavn)}`;
+const hentKommunenavnMedFylke = (kommunenavnNorsk: string, fylkesnavn: string): KommuneMedFylke => {
+    const kommunenavnSamisk = kommunerMedSamiskeNavnIStillinger[kommunenavnNorsk];
+
+    return {
+        kommune: `${fylkesnavn}.${hentSøkbartKommunenavn(
+            kommunenavnSamisk ? kommunenavnSamisk.søkeord : kommunenavnNorsk,
+            fylkesnavn
+        )}`,
+        label: kommunenavnSamisk
+            ? `${kommunenavnNorsk} (${kommunenavnSamisk.samisk})`
+            : kommunenavnNorsk,
+    };
 };
 
 const deaktiverKommunerIFylke = (kommuner: string[], fylke: string): string[] => {
