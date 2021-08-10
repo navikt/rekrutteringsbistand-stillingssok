@@ -117,32 +117,32 @@ const kommunerMedSamiskeNavnIStillinger: {
         | undefined
         | {
               samisk: string;
-              kombinert: string;
+              søkeord: string;
           };
 } = {
     Tana: {
         samisk: 'Deatnu',
-        kombinert: 'Deatnu Tana',
+        søkeord: 'Deatnu Tana',
     },
     Karasjok: {
         samisk: 'Karasjohka',
-        kombinert: 'Karasjohka Karasjok',
+        søkeord: 'Karasjohka Karasjok',
     },
     Kautokeino: {
         samisk: 'Guovdageaidnu',
-        kombinert: 'Guovdageaidnu Kautokeino',
+        søkeord: 'Guovdageaidnu Kautokeino',
     },
     Kåfjord: {
         samisk: 'Gáivuotna',
-        kombinert: 'Gáivuotna Kåfjord',
+        søkeord: 'Gáivuotna Kåfjord',
     },
     Nesseby: {
         samisk: 'Unjargga',
-        kombinert: 'Unjargga Nesseby',
+        søkeord: 'Unjargga Nesseby',
     },
     Porsanger: {
         samisk: 'Porsángu Porsanki',
-        kombinert: 'Porsanger Porsángu Porsanki',
+        søkeord: 'Porsanger Porsángu Porsanki',
     },
 };
 
@@ -159,7 +159,7 @@ const hentKommunenavnMedFylke = (kommunenavnNorsk: string, fylkesnavn: string): 
 
     return {
         kommune: `${fylkesnavn}.${hentSøkbartKommunenavn(
-            kommunenavnSamisk ? kommunenavnSamisk.kombinert : kommunenavnNorsk,
+            kommunenavnSamisk ? kommunenavnSamisk.søkeord : kommunenavnNorsk,
             fylkesnavn
         )}`,
         label: kommunenavnSamisk
