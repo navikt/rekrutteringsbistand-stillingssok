@@ -18,6 +18,7 @@ const søkefelt = (tekst: string, fane: Fane) => {
             'stilling.annonsenr',
             'stilling.employer.name',
             'stilling.employer.orgnr',
+            'stilling.properties.jobtitle',
         ];
     }
 
