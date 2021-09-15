@@ -26,7 +26,7 @@ export const resultat: Respons = {
                         updated: '2020-01-10T07:08:26.236421',
                         employer: {
                             name: 'NORSECRAFT TEC AS',
-                            publicName: 'NORSECRAFT TEC AS',
+                            publicName: 'NORSECRAFT TEC',
                             orgnr: '997833007',
                             parentOrgnr: '997818997',
                             orgform: 'BEDR',
