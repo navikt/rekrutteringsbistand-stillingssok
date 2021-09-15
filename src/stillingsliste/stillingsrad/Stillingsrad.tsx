@@ -52,7 +52,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
 
     const erInternStilling = stilling.privacy === Privacy.Intern;
 
-    const arbeidsgiversNavn = stilling.employer && stilling.employer.publicName.length > 0 ? stilling.employer.name : stilling.employer?.name
+    const arbeidsgiversNavn = stilling.employer && stilling.employer.publicName.length > 0 ? stilling.employer.publicName : stilling.employer?.name
     const arbeidsgiversNavnFormatert = formaterMedStoreOgSmåBokstaver(arbeidsgiversNavn);
 
     const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
