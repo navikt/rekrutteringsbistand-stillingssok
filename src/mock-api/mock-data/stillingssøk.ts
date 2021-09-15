@@ -26,7 +26,7 @@ export const resultat: Respons = {
                         updated: '2020-01-10T07:08:26.236421',
                         employer: {
                             name: 'NORSECRAFT TEC AS',
-                            publicName: 'NORSECRAFT TEC',
+                            publicName: 'NORSECRAFT TEC AS',
                             orgnr: '997833007',
                             parentOrgnr: '997818997',
                             orgform: 'BEDR',
@@ -34,7 +34,7 @@ export const resultat: Respons = {
                         categories: [{ styrkCode: '4110.23', name: 'Ordremedarbeider' }],
                         source: 'DIR',
                         medium: 'DIR',
-                        businessName: 'Norsecraft Tec AS',
+                        businessName: 'Norsecraft Tec',
                         locations: [
                             {
                                 address: 'Skuiveien 43',
@@ -123,7 +123,7 @@ export const resultat: Respons = {
                         categories: [],
                         source: 'FINN',
                         medium: 'FINN',
-                        businessName: 'Dreamwork Talents AS',
+                        businessName: 'Drømmejobbtalenter',
                         locations: [
                             {
                                 address: 'Gjerdums Vei 11,',
@@ -203,8 +203,8 @@ export const resultat: Respons = {
                         created: '2019-12-12T07:06:12.328378',
                         updated: '2020-01-11T01:31:19.493987',
                         employer: {
-                            name: 'KIWI RÅBEKKEN',
-                            publicName: 'KIWI RÅBEKKEN',
+                            name: 'KIWI RÅBEKKEN AS',
+                            publicName: 'KIWI RÅBEKKEN AS',
                             orgnr: '971633786',
                             parentOrgnr: '877227162',
                             orgform: 'BEDR',
@@ -212,7 +212,7 @@ export const resultat: Respons = {
                         categories: [{ styrkCode: '1420.07', name: 'Daglig leder (butikk)' }],
                         source: 'FINN',
                         medium: 'FINN',
-                        businessName: 'KIWI Råbekken',
+                        businessName: '',
                         locations: [
                             {
                                 address: 'Dikeveien 6',
