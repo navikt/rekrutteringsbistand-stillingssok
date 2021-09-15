@@ -52,7 +52,8 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
 
     const erInternStilling = stilling.privacy === Privacy.Intern;
 
-    const arbeidsgiversNavn = formaterMedStoreOgSmåBokstaver(stilling.employer?.publicName);
+    const arbeidsgiversNavn = stilling.employer && stilling.employer.publicName.length > 0 ? stilling.employer.name : stilling.employer?.name
+    const arbeidsgiversNavnFormatert = formaterMedStoreOgSmåBokstaver(arbeidsgiversNavn);
 
     const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
         hentHovedtags().includes(tag)
@@ -92,7 +93,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                         {konverterTilPresenterbarDato(stilling.published)}
                     </Undertekst>
                 </div>
-                {arbeidsgiversNavn && <Normaltekst>{arbeidsgiversNavn}</Normaltekst>}
+                {arbeidsgiversNavnFormatert && <Normaltekst>{arbeidsgiversNavnFormatert}</Normaltekst>}
                 <div className="stillingsrad__tittel">
                     <Link
                         className="stillingsrad__lenke-til-stilling lenke"
