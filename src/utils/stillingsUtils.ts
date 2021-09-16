@@ -4,7 +4,7 @@ export const skalViseLenkeTilKandidatliste = (
     rekrutteringsbistandStilling: Rekrutteringsbistandstilling
 ) =>
     rekrutteringsbistandStilling.stilling.source === Kilde.Intern ||
-    rekrutteringsbistandStilling.stillingsinfo?.eierNavident !== null;
+    rekrutteringsbistandStilling.stillingsinfo?.eierNavident;
 
 export const lagUrlTilStilling = (stilling: Stilling) => `/stillinger/stilling/${stilling.uuid}`;
 
