@@ -50,6 +50,13 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const globalAggregering = respons?.aggregations.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
 
+    const [scrolletFraToppen, setScrolletFraToppen] = useState(0);
+
+    useEffect(() => {
+        console.log('Scroller til', scrolletFraToppen);
+        window.scrollTo(0, scrolletFraToppen);
+    }, [scrolletFraToppen]);
+
     useEffect(() => {
         const side = history.location.pathname;
         sendEvent('app', 'sidevisning', { side });
@@ -125,7 +132,10 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                             <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                             <Sorter />
                         </div>
-                        <Stillingsliste esRespons={respons} />
+                        <Stillingsliste
+                            esRespons={respons}
+                            setScrolletFraToppen={setScrolletFraToppen}
+                        />
                         <Paginering totaltAntallTreff={antallTreff} />
                     </>
                 ) : (

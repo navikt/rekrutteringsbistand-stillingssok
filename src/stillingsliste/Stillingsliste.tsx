@@ -5,14 +5,19 @@ import './Stillingsliste.less';
 
 type Props = {
     esRespons: Respons;
+    setScrolletFraToppen: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Stillingsliste: FunctionComponent<Props> = ({ esRespons }) => {
+const Stillingsliste: FunctionComponent<Props> = ({ esRespons, setScrolletFraToppen }) => {
     const hits = esRespons.hits.hits;
     return (
         <ul className="stillingliste">
             {hits.map((hit) => (
-                <Stillingsrad key={hit._id} rekrutteringsbistandstilling={hit._source} />
+                <Stillingsrad
+                    key={hit._id}
+                    rekrutteringsbistandstilling={hit._source}
+                    setScrolletFraToppen={setScrolletFraToppen}
+                />
             ))}
         </ul>
     );
