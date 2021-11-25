@@ -23,6 +23,7 @@ const BrukStandardsøk: FunctionComponent = () => {
                 },
             }}
             className="bruk-standardsøk lenke"
+            onClick={() => window.scrollTo(0, 0)}
         >
             <Element>Bruk standardsøk</Element>
         </Link>

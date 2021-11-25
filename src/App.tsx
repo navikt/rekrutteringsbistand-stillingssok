@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useState, useContext } from 'react';
 import { History } from 'history';
 import { GlobalAggregering, Respons } from './elasticSearchTyper';
 import {
@@ -51,11 +51,42 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
     const antallTreff = useAntallTreff(globalAggregering);
 
     const [scrolletFraToppen, setScrolletFraToppen] = useState(0);
+    const [lagretScrollFraToppen, setLagretScrollFraToppen] = useState(0);
+
+    const håndterScroll = useCallback(() => {
+        setScrolletFraToppen(window.pageYOffset);
+    }, [setScrolletFraToppen]);
+
+    const håndterEndreScroll = (nyVerdi: number) => {
+        console.log('håndter verdi', nyVerdi);
+        setLagretScrollFraToppen(nyVerdi);
+        // console.log('etter', lagretScrollFraToppen);
+    };
+    window.history.scrollRestoration = 'auto';
+    if ('scrollRestoration' in window.history) {
+        console.log('window.history.scrollRestoration', window.history.scrollRestoration);
+    } else {
+        console.log('window.history.scrollRestoration not in history');
+    }
+
+    useEffect(
+        function () {
+            window.addEventListener('scroll', håndterScroll);
+            return function () {
+                window.removeEventListener('scroll', håndterScroll);
+            };
+        },
+        [håndterScroll]
+    );
 
     useEffect(() => {
-        console.log('Scroller til', scrolletFraToppen);
-        window.scrollTo(0, scrolletFraToppen);
-    }, [scrolletFraToppen]);
+        console.log('lagret', lagretScrollFraToppen, scrolletFraToppen);
+        //window.scrollTo(0, lagretScrollFraToppen);
+
+        /*return () => {
+            console.log('lagret etter', lagretScrollFraToppen, scrolletFraToppen);
+        };*/
+    }, [lagretScrollFraToppen]);
 
     useEffect(() => {
         const side = history.location.pathname;
@@ -134,7 +165,8 @@ const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
                         </div>
                         <Stillingsliste
                             esRespons={respons}
-                            setScrolletFraToppen={setScrolletFraToppen}
+                            scrolletFraToppen={scrolletFraToppen}
+                            håndterEndreScroll={håndterEndreScroll}
                         />
                         <Paginering totaltAntallTreff={antallTreff} />
                     </>

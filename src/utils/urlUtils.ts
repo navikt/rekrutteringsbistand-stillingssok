@@ -58,6 +58,7 @@ const oppdaterQueryParametere = (
     value: QueryParamValue
 ): string => {
     const searchParams = new URLSearchParams(search);
+    window.scrollTo(0, 0);
 
     if (
         value === null ||

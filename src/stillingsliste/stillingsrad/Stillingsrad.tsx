@@ -16,12 +16,14 @@ import { hentHovedtags } from '../../søk/inkludering/tags';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
-    setScrolletFraToppen: React.Dispatch<React.SetStateAction<number>>;
+    scrolletFraToppen: Number;
+    håndterEndreScroll: any;
 };
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
-    setScrolletFraToppen,
+    scrolletFraToppen,
+    håndterEndreScroll,
 }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
@@ -36,8 +38,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
     const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
         hentHovedtags().includes(tag)
     );
-
-    console.log('current y', window.pageYOffset);
 
     return (
         <li className="stillingsrad">
@@ -78,7 +78,14 @@ const Stillingsrad: FunctionComponent<Props> = ({
                     <Link
                         className="stillingsrad__lenke-til-stilling lenke"
                         to={lagUrlTilStilling(stilling)}
-                        onClick={() => setScrolletFraToppen(window.pageYOffset)}
+                        onClick={() => {
+                            console.log(
+                                'scrolletFraToppen i click',
+                                scrolletFraToppen,
+                                window.pageYOffset
+                            );
+                            håndterEndreScroll(window.pageYOffset);
+                        }}
                     >
                         {stilling.title}
                     </Link>

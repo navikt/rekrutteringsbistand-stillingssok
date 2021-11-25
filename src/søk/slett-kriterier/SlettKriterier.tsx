@@ -17,6 +17,7 @@ const SlettKriterier: FunctionComponent = () => {
                 },
             }}
             className="slett-kriterier lenke"
+            onClick={() => window.scrollTo(0, 0)}
         >
             <Element>Slett alle kriterier</Element>
         </Link>
