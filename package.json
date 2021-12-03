@@ -59,7 +59,9 @@
         "build": "REACT_APP_SENTRY_RELEASE=$(git rev-parse --short HEAD) craco build",
         "sentry-release": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); node scripts/sentry-release)",
         "test": "craco test",
-        "eject": "craco eject"
+        "eject": "craco eject",
+        "prepare": "husky install",
+        "format": "prettier --write ."
     },
     "eslintConfig": {
         "extends": [
@@ -69,8 +71,9 @@
     },
     "prettier": {
         "tabWidth": 4,
-        "trailingComma": "es5",
         "singleQuote": true,
+        "trailingComma": "es5",
+        "arrowParens": "always",
         "printWidth": 100
     },
     "browserslist": {
@@ -98,8 +101,10 @@
         "eslint-config-prettier": "^6.13.0",
         "fetch-mock": "^9.10.7",
         "http-proxy-middleware": "^1.0.6",
+        "husky": "^7.0.0",
         "jest": "^24.9.0",
         "postcss-prefix-selector": "^1.7.2",
-        "prettier": "^2.1.2"
+        "prettier": "^2.5.0",
+        "pretty-quick": "^3.1.2"
     }
 }
