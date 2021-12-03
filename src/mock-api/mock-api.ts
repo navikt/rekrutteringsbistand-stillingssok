@@ -7,10 +7,12 @@ import { resultat } from './mock-data/stillingssøk';
 const adsUrl = `${stillingssøkProxy}/stilling/_search`;
 const standardsøkUrl = `${stillingApi}/standardsok`;
 
-const logg = (response: any): MockResponseFunction => (url, opts) => {
-    console.info(`Mock ${opts.method} mot ${url}`, { body: opts.body, response });
-    return response;
-};
+const logg =
+    (response: any): MockResponseFunction =>
+    (url, opts) => {
+        console.info(`Mock ${opts.method} mot ${url}`, { body: opts.body, response });
+        return response;
+    };
 
 const putStandardsøk = (url: string, options: MockRequest): StandardsøkDto => {
     const nyttSøk = JSON.parse(options.body as string) as StandardsøkDto;

@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from 'react';
-import Stilling, {Location, Privacy, Rekrutteringsbistandstilling} from '../../Stilling';
-import {Link} from 'react-router-dom';
-import {Normaltekst, Undertekst} from 'nav-frontend-typografi';
-import {EtikettInfo} from 'nav-frontend-etiketter';
-import {List} from '@navikt/ds-icons';
-import {konverterTilPresenterbarDato} from './datoUtils';
+import React, { FunctionComponent } from 'react';
+import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
+import { Link } from 'react-router-dom';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { EtikettInfo } from 'nav-frontend-etiketter';
+import { List } from '@navikt/ds-icons';
+import { konverterTilPresenterbarDato } from './datoUtils';
 import {
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
@@ -12,14 +12,13 @@ import {
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import './Stillingsrad.less';
-import {hentHovedtags} from '../../søk/inkludering/tags';
-
+import { hentHovedtags } from '../../søk/inkludering/tags';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
 };
 
-const Stillingsrad: FunctionComponent<Props> = ({rekrutteringsbistandstilling}) => {
+const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
@@ -28,7 +27,7 @@ const Stillingsrad: FunctionComponent<Props> = ({rekrutteringsbistandstilling}) 
 
     const erInternStilling = stilling.privacy === Privacy.Intern;
 
-    const arbeidsgiversNavn = hentArbeidsgiversNavn(stilling)
+    const arbeidsgiversNavn = hentArbeidsgiversNavn(stilling);
 
     const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
         hentHovedtags().includes(tag)
@@ -80,7 +79,7 @@ const Stillingsrad: FunctionComponent<Props> = ({rekrutteringsbistandstilling}) 
                 <span className="stillingsrad__stillingsinfo">
                     <span>
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
-                        'Ingen arbeidssted'}
+                            'Ingen arbeidssted'}
                     </span>
                     {stilling.properties.applicationdue && (
                         <span>
@@ -93,20 +92,16 @@ const Stillingsrad: FunctionComponent<Props> = ({rekrutteringsbistandstilling}) 
                             {antallStillinger} {antallStillingerSuffix}
                         </span>
                     )}
-                    {erInternStilling && eierNavn && (
-                        <span>
-                            Eier: {eierNavn}
-                        </span>
-                    )}
+                    {erInternStilling && eierNavn && <span>Eier: {eierNavn}</span>}
                 </span>
             </div>
             <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <List className="lenke"/>
+                        <List className="lenke" />
                     </Link>
                 )}
-                <div/>
+                <div />
             </div>
         </li>
     );
@@ -114,15 +109,15 @@ const Stillingsrad: FunctionComponent<Props> = ({rekrutteringsbistandstilling}) 
 
 const formaterEiernavn = (eierNavn: string | null) => {
     if (eierNavn == null) return null;
-    const navnDel = eierNavn.split(",");
-    return navnDel.length !== 2 ? eierNavn : navnDel[1].trim() + " " + navnDel[0].trim();
-}
+    const navnDel = eierNavn.split(',');
+    return navnDel.length !== 2 ? eierNavn : navnDel[1].trim() + ' ' + navnDel[0].trim();
+};
 
 const hentEier = (rekrutteringsbistandstilling: Rekrutteringsbistandstilling) => {
     const eierNavn = rekrutteringsbistandstilling.stillingsinfo?.eierNavn;
     const reportee = rekrutteringsbistandstilling.stilling.administration?.reportee;
-    return eierNavn != null ? eierNavn : (reportee != null ? reportee : null);
-}
+    return eierNavn != null ? eierNavn : reportee != null ? reportee : null;
+};
 
 const hentArbeidssted = (locations: Location[]): string | null => {
     const filtrerteLocations: string[] = [];
@@ -137,8 +132,9 @@ const hentArbeidssted = (locations: Location[]): string | null => {
     return filtrerteLocations.join(', ');
 };
 
-const hentArbeidsgiversNavn = (stilling: Stilling) => (stilling.businessName && stilling.businessName.length > 0)
-    ? stilling.businessName
-    : formaterMedStoreOgSmåBokstaver(stilling.employer?.name)
+const hentArbeidsgiversNavn = (stilling: Stilling) =>
+    stilling.businessName && stilling.businessName.length > 0
+        ? stilling.businessName
+        : formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
 
 export default Stillingsrad;
