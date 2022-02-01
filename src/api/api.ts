@@ -2,11 +2,8 @@ import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 import { getMiljø } from '../utils/sentryUtils';
 
-// TODO: Fiks URL for prod
-export const stillingssøkProxy =
-    'https://rekrutteringsbistand-stillingssok.dev.intern.nav.no/rekrutteringsbistand-stillingssok/stillingssok-proxy';
-export const stillingApi =
-    'https://rekrutteringsbistand-stillingssok.dev.intern.nav.no/rekrutteringsbistand-stillingssok/stilling-api';
+export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
+export const stillingApi = '/rekrutteringsbistand-stillingssok/stilling-api';
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');
