@@ -2,9 +2,9 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
     name: rekrutteringsbistand-stillingssok
-    namespace: toi
+    namespace: arbeidsgiver
     labels:
-        team: toi
+        team: arbeidsgiver
 spec:
     # prettier-ignore
     image: {{ image }}
