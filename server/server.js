@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
@@ -17,11 +18,18 @@ const setupProxy = (fraPath, tilTarget) =>
         pathRewrite: (path) => path.replace(fraPath, ''),
     });
 
+const corsMiddleware = cors({
+    origin: [
+        'https://rekrutteringsbistand-container.dev.intern.nav.no',
+        'https://rekrutteringsbistand-container.intern.nav.no',
+    ],
+});
+
 const startServer = () => {
     app.use(setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL));
     app.use(setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL));
 
-    app.use(`${basePath}/static`, express.static(buildPath + '/static'));
+    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
     app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
 
     app.get(`${basePath}/internal/isAlive`, (req, res) => res.sendStatus(200));
