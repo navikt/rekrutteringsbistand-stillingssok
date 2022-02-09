@@ -1,5 +1,6 @@
 import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
+import { getMiljø } from '../utils/sentryUtils';
 
 export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
 export const stillingApi = '/rekrutteringsbistand-stillingssok/stilling-api';
@@ -12,7 +13,7 @@ export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
     if (respons.status === 403) {
-        throw Error(`Er ikke autentisert. ${logErrorResponse(respons)}`);
+        redirectTilLogin();
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
     }
@@ -60,3 +61,12 @@ const jsonRequestMedCredentials = (url: string, body: object, method: string) =>
             'Content-Type': 'application/json',
         },
     });
+
+const redirectTilLogin = () => {
+    const loginserviceUrl =
+        getMiljø() === 'dev-fss'
+            ? 'https://loginservice.nais.preprod.local/login'
+            : 'https://loginservice.nais.adeo.no/login';
+
+    window.location.href = `${loginserviceUrl}?redirect=${window.location.href}`;
+};
