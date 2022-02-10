@@ -39,14 +39,14 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gcp'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/app-i-gcp'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: dev-fss
+                  CLUSTER: dev-gcp
                   RESOURCE: deploy/nais.yaml
                   VARS: deploy/nais-dev.json
 
@@ -60,6 +60,6 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-fss
+                  CLUSTER: prod-gcp
                   RESOURCE: deploy/nais.yaml
                   VARS: deploy/nais-prod.json
