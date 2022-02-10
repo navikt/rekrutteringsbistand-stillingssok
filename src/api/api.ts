@@ -64,7 +64,7 @@ const jsonRequestUtenCORS = (url: string, body: object, method: string) =>
     fetch(url, {
         body: JSON.stringify(body),
         method,
-        mode: 'no-cors',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
