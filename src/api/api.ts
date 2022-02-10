@@ -57,14 +57,14 @@ const logErrorResponse = (respons: Response) => {
     return `Statuskode: ${respons.status}, Statustekst: ${respons.statusText}, URL: ${respons.url}`;
 };
 
-const post = (url: string, body: object) => jsonRequestMedCredentials(url, body, 'POST');
-const put = (url: string, body: object) => jsonRequestMedCredentials(url, body, 'PUT');
+const post = (url: string, body: object) => jsonRequestUtenCORS(url, body, 'POST');
+const put = (url: string, body: object) => jsonRequestUtenCORS(url, body, 'PUT');
 
-const jsonRequestMedCredentials = (url: string, body: object, method: string) =>
+const jsonRequestUtenCORS = (url: string, body: object, method: string) =>
     fetch(url, {
         body: JSON.stringify(body),
         method,
-        credentials: 'include',
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
         },
