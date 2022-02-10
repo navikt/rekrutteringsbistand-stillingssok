@@ -2,8 +2,16 @@ import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 import { getMiljø } from '../utils/sentryUtils';
 
-export const stillingssøkProxy = '/rekrutteringsbistand-stillingssok/stillingssok-proxy';
-export const stillingApi = '/rekrutteringsbistand-stillingssok/stilling-api';
+const hentProxyBaseUrl = (): string => {
+    switch (getMiljø()) {
+        case "prod-fss": return "https://rekrutteringsbistand.intern.nav.no"
+        case "dev-fss": return "https://rekrutteringsbistand.dev.intern.nav.no"
+        default: return ""
+    }
+}
+
+export const stillingssøkProxy = `${hentProxyBaseUrl()}/rekrutteringsbistand-stillingssok/stillingssok-proxy`;
+export const stillingApi = `${hentProxyBaseUrl()}/rekrutteringsbistand-stillingssok/stilling-api`;
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');
