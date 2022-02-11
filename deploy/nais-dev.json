@@ -1,5 +1,6 @@
 {
     "ingress": "https://rekrutteringsbistand-stillingssok.dev.intern.nav.no",
     "stillingssok-proxy-url": "https://rekrutteringsbistand-stillingssok-proxy.dev.intern.nav.no",
-    "stilling-api-url": "https://rekrutteringsbistand-stilling-api.dev-fss-pub.nais.io"
+    "stilling-api-url": "https://rekrutteringsbistand-stilling-api.dev-fss-pub.nais.io",
+    "stilling-api-host": "rekrutteringsbistand-stilling-api.dev-fss-pub.nais.io"
 }
