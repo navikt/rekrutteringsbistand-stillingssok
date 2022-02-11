@@ -19,6 +19,7 @@ const setupProxy = (fraPath, tilTarget) =>
     });
 
 const corsMiddleware = cors({
+    credentials: true,
     origin: [
         'https://rekrutteringsbistand.nais.preprod.local',
         'https://rekrutteringsbistand.nais.adeo.no',
