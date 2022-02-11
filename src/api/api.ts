@@ -4,11 +4,14 @@ import { getMiljø } from '../utils/sentryUtils';
 
 const hentProxyBaseUrl = (): string => {
     switch (getMiljø()) {
-        case "prod-fss": return "https://rekrutteringsbistand.intern.nav.no"
-        case "dev-fss": return "https://rekrutteringsbistand.dev.intern.nav.no"
-        default: return ""
+        case 'prod-fss':
+            return 'https://rekrutteringsbistand.intern.nav.no';
+        case 'dev-fss':
+            return 'https://rekrutteringsbistand.dev.intern.nav.no';
+        default:
+            return '';
     }
-}
+};
 
 export const stillingssøkProxy = `${hentProxyBaseUrl()}/rekrutteringsbistand-stillingssok/stillingssok-proxy`;
 export const stillingApi = `${hentProxyBaseUrl()}/rekrutteringsbistand-stillingssok/stilling-api`;
@@ -21,7 +24,7 @@ export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
     if (respons.status === 403) {
-        redirectTilLogin();
+        throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
     }
@@ -69,6 +72,7 @@ const jsonRequestUtenCORS = (url: string, body: object, method: string) =>
         },
     });
 
+/*
 const redirectTilLogin = () => {
     const loginserviceUrl =
         getMiljø() === 'dev-fss'
@@ -77,3 +81,4 @@ const redirectTilLogin = () => {
 
     window.location.href = `${loginserviceUrl}?redirect=${window.location.href}`;
 };
+*/
