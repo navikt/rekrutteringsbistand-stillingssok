@@ -66,7 +66,10 @@ const userIsLoggedIn = (req) => {
         'originalurl',
         req.originalUrl,
         'url',
-        req.url
+        req.url,
+        'resheaders',
+        res.headers
+
     );
 
     return true;
