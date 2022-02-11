@@ -56,7 +56,7 @@ const startServer = () => {
     });
 };
 
-const userIsLoggedIn = (req) => {
+const userIsLoggedIn = (req, res) => {
     console.log(
         'Authorization header for et kall som forhåpentligvis har gått via AzureAD sidecar:',
         'auth',
@@ -76,7 +76,7 @@ const userIsLoggedIn = (req) => {
 };
 
 const ensureLoggedIn = (req, res, next) => {
-    if (userIsLoggedIn(req)) {
+    if (userIsLoggedIn(req, res)) {
         next();
     } else {
         res.redirect('/rekrutteringsbistand-stillingssok/oauth2/login');
