@@ -26,8 +26,8 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
-    app.get(`${basePath}/internal/isAlive`, (req, res) => res.sendStatus(200));
-    app.get(`${basePath}/internal/isReady`, (req, res) => res.sendStatus(200));
+    app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
+    app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
 
