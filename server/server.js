@@ -26,8 +26,11 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
-    app.use(setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL), corsMiddleware);
-    app.use(setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL), corsMiddleware);
+    app.use(
+        corsMiddleware,
+        setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
+    );
+    app.use(corsMiddleware, setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL));
 
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
     app.use(
