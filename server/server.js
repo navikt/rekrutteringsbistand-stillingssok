@@ -26,6 +26,9 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
+    const kreverAutentisering = [`${basePath}/stillingssok-proxy`, `${basePath}/stilling-api`];
+    app.use(kreverAutentisering, ensureLoggedIn);
+
     app.use(
         `${basePath}/stillingssok-proxy`,
         corsMiddleware,
@@ -51,6 +54,20 @@ const startServer = () => {
     app.listen(port, () => {
         console.log('Server kjører på port', port);
     });
+};
+
+const userIsLoggedIn = (req) => {
+    console.log('Request som forhåpentligvis har gått via AzureAD sidecar:', req);
+
+    return true;
+};
+
+const ensureLoggedIn = (req, res, next) => {
+    if (userIsLoggedIn(req)) {
+        next();
+    } else {
+        res.redirect('/rekrutteringsbistand-stillingssok/oauth2/login');
+    }
 };
 
 startServer();
