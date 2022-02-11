@@ -59,7 +59,8 @@ const startServer = () => {
 const userIsLoggedIn = (req) => {
     console.log(
         'Authorization header for et kall som forhåpentligvis har gått via AzureAD sidecar:',
-        req.get('Authorization')
+        req.get('Authorization'),
+        req.headers
     );
 
     return true;
