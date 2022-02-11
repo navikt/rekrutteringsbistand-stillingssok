@@ -26,8 +26,18 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
-    const kreverAutentisering = [`${basePath}/stillingssok-proxy`, `${basePath}/stilling-api`];
-    app.use(kreverAutentisering, ensureLoggedIn);
+    app.get(`${basePath}/internal/isAlive`, (req, res) => res.sendStatus(200));
+    app.get(`${basePath}/internal/isReady`, (req, res) => res.sendStatus(200));
+
+    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
+
+    app.use(
+        `${basePath}/asset-manifest.json`,
+        corsMiddleware,
+        express.static(`${buildPath}/asset-manifest.json`)
+    );
+
+    app.use(`${basePath}/*`, ensureLoggedIn);
 
     app.use(
         `${basePath}/stillingssok-proxy`,
@@ -40,16 +50,6 @@ const startServer = () => {
         corsMiddleware,
         setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
     );
-
-    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
-    app.use(
-        `${basePath}/asset-manifest.json`,
-        corsMiddleware,
-        express.static(`${buildPath}/asset-manifest.json`)
-    );
-
-    app.get(`${basePath}/internal/isAlive`, (req, res) => res.sendStatus(200));
-    app.get(`${basePath}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.listen(port, () => {
         console.log('Server kjører på port', port);
@@ -69,7 +69,6 @@ const userIsLoggedIn = (req, res) => {
         req.url,
         'resheaders',
         res.headers
-
     );
 
     return true;
