@@ -37,7 +37,7 @@ const startServer = () => {
         express.static(`${buildPath}/asset-manifest.json`)
     );
 
-    app.use(`/*`, ensureLoggedIn);
+    app.use(`/*`, corsMiddleware, ensureLoggedIn);
 
     app.use(
         `/stillingssok-proxy`,
