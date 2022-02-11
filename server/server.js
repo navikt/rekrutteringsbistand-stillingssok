@@ -37,18 +37,18 @@ const startServer = () => {
         express.static(`${buildPath}/asset-manifest.json`)
     );
 
-    app.use(`${basePath}/*`, ensureLoggedIn);
+    app.use(`/*`, ensureLoggedIn);
 
     app.use(
-        `${basePath}/stillingssok-proxy`,
+        `/stillingssok-proxy`,
         corsMiddleware,
-        setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
+        setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
     app.use(
-        `${basePath}/stilling-api`,
+        `/stilling-api`,
         corsMiddleware,
-        setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
+        setupProxy(`/stilling-api`, process.env.STILLING_API_URL)
     );
 
     app.listen(port, () => {
@@ -71,7 +71,7 @@ const ensureLoggedIn = (req, res, next) => {
     if (userIsLoggedIn(req, res)) {
         next();
     } else {
-        res.redirect(`/oauth2/login?${req.originalUrl}`);
+        res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
     }
 };
 

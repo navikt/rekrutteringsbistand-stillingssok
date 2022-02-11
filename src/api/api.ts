@@ -13,7 +13,7 @@ const hentServerIngress = (): string => {
     }
 };
 
-const serverBaseUrl = hentServerIngress() + '/rekrutteringsbistand-stillingssok';
+const serverBaseUrl = hentServerIngress();
 
 export const stillingssøkProxy = `${serverBaseUrl}/stillingssok-proxy`;
 export const stillingApi = `${serverBaseUrl}/stilling-api`;
@@ -26,7 +26,7 @@ export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
     if (respons.status === 403) {
-        // redirectTilLogin();
+        throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
     }
@@ -73,10 +73,3 @@ const jsonRequest = (url: string, body: object, method: string) =>
             'Content-Type': 'application/json',
         },
     });
-
-/*
-const redirectTilLogin = () => {
-    const loginEndpoint = `${serverBaseUrl}/oauth2/login`;
-    window.location.href = `${loginEndpoint}?redirect=${window.location.href}`;
-};
-*/
