@@ -64,14 +64,14 @@ const userIsLoggedIn = (req, res) => {
         req.headers
     );
 
-    return true;
+    return req.headers.authorization;
 };
 
 const ensureLoggedIn = (req, res, next) => {
     if (userIsLoggedIn(req, res)) {
         next();
     } else {
-        res.redirect(`/rekrutteringsbistand-stillingssok/oauth2/login?${req.originalUrl}`);
+        res.redirect(`/oauth2/login?${req.originalUrl}`);
     }
 };
 
