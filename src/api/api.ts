@@ -15,8 +15,8 @@ const hentServerIngress = (): string => {
 
 const serverBaseUrl = hentServerIngress() + '/rekrutteringsbistand-stillingssok';
 
-export const stillingssøkProxy = `${serverBaseUrl}/rekrutteringsbistand-stillingssok/stillingssok-proxy`;
-export const stillingApi = `${serverBaseUrl}/rekrutteringsbistand-stillingssok/stilling-api`;
+export const stillingssøkProxy = `${serverBaseUrl}/stillingssok-proxy`;
+export const stillingApi = `${serverBaseUrl}/stilling-api`;
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');
