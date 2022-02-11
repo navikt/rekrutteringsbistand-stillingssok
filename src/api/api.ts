@@ -74,7 +74,9 @@ const jsonRequest = (url: string, body: object, method: string) =>
         },
     });
 
+/*
 const redirectTilLogin = () => {
     const loginEndpoint = `${serverBaseUrl}/oauth2/login`;
     window.location.href = `${loginEndpoint}?redirect=${window.location.href}`;
 };
+*/
