@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
-const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
@@ -39,7 +38,7 @@ const startServer = () => {
     });
 };
 
-const userIsLoggedIn = (req, res) => {
+const userIsLoggedIn = (req) => {
     console.log(
         'Authorization header:',
         req.headers.authorization,
@@ -51,7 +50,7 @@ const userIsLoggedIn = (req, res) => {
 };
 
 const ensureLoggedIn = (req, res, next) => {
-    if (userIsLoggedIn(req, res)) {
+    if (userIsLoggedIn(req)) {
         next();
     } else {
         res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
