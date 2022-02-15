@@ -4,9 +4,9 @@ import { getMiljø } from '../utils/sentryUtils';
 
 const hentServerIngress = (): string => {
     switch (getMiljø()) {
-        case 'prod-fss':
+        case 'prod-gcp':
             return 'https://rekrutteringsbistand-stillingssok.intern.nav.no';
-        case 'dev-fss':
+        case 'dev-gcp':
             return 'https://rekrutteringsbistand-stillingssok.dev.intern.nav.no';
         default:
             return '';
