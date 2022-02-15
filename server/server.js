@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
+const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
@@ -17,12 +18,20 @@ const setupProxy = (fraPath, tilTarget) =>
         pathRewrite: (path) => path.replace(fraPath, ''),
     });
 
+const corsMiddleware = cors({
+    credentials: true,
+    origin: [
+        'https://rekrutteringsbistand.dev.intern.nav.no',
+        'https://rekrutteringsbistand.intern.nav.no',
+    ],
+});
+
 const startServer = () => {
     app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    app.use(`${basePath}/static`, express.static(buildPath + '/static'));
-    app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
+    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
+    app.use(`${basePath}/asset-manifest.json`, corsMiddleware, express.static(`${buildPath}/asset-manifest.json`));
 
     app.use(`/*`, ensureLoggedIn);
 
