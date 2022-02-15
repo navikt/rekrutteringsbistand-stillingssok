@@ -18,39 +18,21 @@ const setupProxy = (fraPath, tilTarget) =>
         pathRewrite: (path) => path.replace(fraPath, ''),
     });
 
-const corsMiddleware = cors({
-    credentials: true,
-    origin: [
-        'https://rekrutteringsbistand.nais.preprod.local',
-        'https://rekrutteringsbistand.nais.adeo.no',
-    ],
-});
-
 const startServer = () => {
     app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
-
-    app.use(
-        `${basePath}/asset-manifest.json`,
-        corsMiddleware,
-        express.static(`${buildPath}/asset-manifest.json`)
-    );
+    app.use(`${basePath}/static`, express.static(buildPath + '/static'));
+    app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
 
     app.use(`/*`, ensureLoggedIn);
 
     app.use(
         `/stillingssok-proxy`,
-        corsMiddleware,
         setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
-    app.use(
-        `/stilling-api`,
-        corsMiddleware,
-        setupProxy(`/stilling-api`, process.env.STILLING_API_URL)
-    );
+    app.use(`/stilling-api`, setupProxy(`/stilling-api`, process.env.STILLING_API_URL));
 
     app.listen(port, () => {
         console.log('Server kjører på port', port);
