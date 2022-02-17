@@ -1,5 +1,5 @@
 import {initializeAzureAd} from "./azureAd";
-import {ensureLoggedIn, opprettCookieFraAuthorizationHeader} from "./authorization";
+import {ensureLoggedIn} from "./authorization";
 
 const path = require('path');
 const express = require('express');
