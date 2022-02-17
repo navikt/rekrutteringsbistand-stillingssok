@@ -2,7 +2,8 @@ import path from 'path';
 import express, { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { initializeAzureAd } from './azureAd';
-import { ensureLoggedIn } from './authorization';
+import { ensureLoggedIn, setOnBehalfOfToken } from './authorization';
+import { getMiljø } from '../../src/utils/sentryUtils';
 
 const app = express();
 
@@ -10,6 +11,9 @@ const port = process.env.PORT || 3000;
 
 const basePath = '/rekrutteringsbistand-stillingssok';
 const buildPath = path.join(__dirname, '../build');
+
+const gcpMiljø = getMiljø();
+const fssMiljø = getMiljø() === 'prod-gcp' ? 'prod-fss' : 'dev-fss';
 
 // Krever ekstra miljøvariabler, se nais.yaml
 const setupProxy = (fraPath: string, tilTarget: string) =>
@@ -32,12 +36,18 @@ const startServer = () => {
     app.use(
         `${basePath}/stillingssok-proxy`,
         ensureLoggedIn,
+        setOnBehalfOfToken(
+            `api://${gcpMiljø}.arbeidsgiver.rekrutteringsbistand-stillingssok-proxy/.default`
+        ),
         setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
     app.use(
         `${basePath}/stilling-api`,
         ensureLoggedIn,
+        setOnBehalfOfToken(
+            `api://${fssMiljø}.arbeidsgiver.rekrutteringsbistand-stilling-api/.default`
+        ),
         setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
     );
 
