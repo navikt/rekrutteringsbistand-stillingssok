@@ -11,7 +11,13 @@ if (process.env.REACT_APP_MOCK) {
 export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
-    if (respons.status === 403) {
+    if (respons.status === 302) {
+        const redirectUrl = respons.headers.get('location');
+
+        if (redirectUrl) {
+            window.location.href = redirectUrl;
+        }
+    } else if (respons.status === 403) {
         throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
@@ -25,6 +31,14 @@ export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
         method: 'GET',
         redirect: 'follow',
     });
+
+    if (respons.status === 302) {
+        const redirectUrl = respons.headers.get('location');
+
+        if (redirectUrl) {
+            window.location.href = redirectUrl;
+        }
+    }
 
     if (respons.ok) {
         return await respons.json();
