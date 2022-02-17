@@ -23,6 +23,7 @@ export const søk = async (query: Query): Promise<Respons> => {
 export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
     const respons = await fetch(`${stillingApi}/standardsok`, {
         method: 'GET',
+        redirect: 'follow',
     });
 
     if (respons.ok) {
@@ -55,6 +56,7 @@ const jsonRequest = (url: string, body: object, method: string) =>
     fetch(url, {
         body: JSON.stringify(body),
         method,
+        redirect: 'follow',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
