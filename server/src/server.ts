@@ -1,9 +1,9 @@
-import {initializeAzureAd} from "./azureAd";
-import {ensureLoggedIn} from "./authorization";
+import { initializeAzureAd } from './azureAd';
+import { ensureLoggedIn } from './authorization';
 
 const path = require('path');
 const express = require('express');
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const cors = require('cors');
 
@@ -33,15 +33,25 @@ const startServer = () => {
     app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
 
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
-    app.use(`${basePath}/asset-manifest.json`, corsMiddleware, express.static(`${buildPath}/asset-manifest.json`));
+    app.use(
+        `${basePath}/asset-manifest.json`,
+        corsMiddleware,
+        express.static(`${buildPath}/asset-manifest.json`)
+    );
 
     app.use(
         `/stillingssok-proxy`,
+        corsMiddleware,
         ensureLoggedIn,
         setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
-    app.use(`/stilling-api`, ensureLoggedIn, setupProxy(`/stilling-api`, process.env.STILLING_API_URL));
+    app.use(
+        `/stilling-api`,
+        corsMiddleware,
+        ensureLoggedIn,
+        setupProxy(`/stilling-api`, process.env.STILLING_API_URL)
+    );
 
     app.listen(port, () => {
         console.log('Server kjører på port', port);
