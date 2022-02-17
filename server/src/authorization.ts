@@ -24,20 +24,3 @@ export const ensureLoggedIn: Middleware = async (req, res, next) => {
         res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
     }
 };
-
-export const opprettCookieFraAuthorizationHeader: Middleware = (req, res, next) => {
-    const token = retrieveToken(req.headers);
-
-    if (token) {
-        const cookieDomain = cluster === 'prod-gcp' ? 'intern.nav.no' : 'dev.intern.nav.no';
-
-        res.header(
-            'Set-Cookie',
-            `isso-idtoken=${token}; Domain=${cookieDomain}; Secure; HttpOnly; SameSite=Lax;`
-        );
-
-        next();
-    } else {
-        res.status(500).send('Klarte ikke å opprette isso-idtoken-cookie');
-    }
-};

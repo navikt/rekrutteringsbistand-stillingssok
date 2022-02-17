@@ -35,14 +35,13 @@ const startServer = () => {
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
     app.use(`${basePath}/asset-manifest.json`, corsMiddleware, express.static(`${buildPath}/asset-manifest.json`));
 
-    app.use(`/*`, ensureLoggedIn, opprettCookieFraAuthorizationHeader);
-
     app.use(
         `/stillingssok-proxy`,
+        ensureLoggedIn,
         setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
-    app.use(`/stilling-api`, setupProxy(`/stilling-api`, process.env.STILLING_API_URL));
+    app.use(`/stilling-api`, ensureLoggedIn, setupProxy(`/stilling-api`, process.env.STILLING_API_URL));
 
     app.listen(port, () => {
         console.log('Server kjører på port', port);
