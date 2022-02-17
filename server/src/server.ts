@@ -1,12 +1,10 @@
+import path from 'path';
+import express, { Request, Response } from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import { initializeAzureAd } from './azureAd';
 import { ensureLoggedIn } from './authorization';
-import { Request, Response } from 'express';
 
-const path = require('path');
-const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
-const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
@@ -14,7 +12,7 @@ const basePath = '/rekrutteringsbistand-stillingssok';
 const buildPath = path.join(__dirname, '../build');
 
 // Krever ekstra miljøvariabler, se nais.yaml
-const setupProxy = (fraPath, tilTarget) =>
+const setupProxy = (fraPath: string, tilTarget: string) =>
     createProxyMiddleware(fraPath, {
         target: tilTarget,
         changeOrigin: true,
@@ -22,36 +20,22 @@ const setupProxy = (fraPath, tilTarget) =>
         pathRewrite: (path) => path.replace(fraPath, ''),
     });
 
-const corsMiddleware = cors({
-    credentials: true,
-    origin: [
-        'https://rekrutteringsbistand.dev.intern.nav.no',
-        'https://rekrutteringsbistand.intern.nav.no',
-    ],
-});
-
 const startServer = () => {
     app.get([`/internal/isAlive`, `/internal/isReady`], (req: Request, res: Response) =>
         res.sendStatus(200)
     );
 
-    app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
-    app.use(
-        `${basePath}/asset-manifest.json`,
-        corsMiddleware,
-        express.static(`${buildPath}/asset-manifest.json`)
-    );
+    app.use(`${basePath}/static`, express.static(buildPath + '/static'));
+    app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
 
     app.use(
         `/stillingssok-proxy`,
-        corsMiddleware,
         ensureLoggedIn,
         setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
     app.use(
         `/stilling-api`,
-        corsMiddleware,
         ensureLoggedIn,
         setupProxy(`/stilling-api`, process.env.STILLING_API_URL)
     );

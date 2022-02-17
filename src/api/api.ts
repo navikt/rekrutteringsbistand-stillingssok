@@ -1,22 +1,8 @@
 import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
-import { getMiljø } from '../utils/sentryUtils';
 
-const hentServerIngress = (): string => {
-    switch (getMiljø()) {
-        case 'prod-gcp':
-            return 'https://rekrutteringsbistand-stillingssok.intern.nav.no';
-        case 'dev-gcp':
-            return 'https://rekrutteringsbistand-stillingssok.dev.intern.nav.no';
-        default:
-            return '';
-    }
-};
-
-const serverBaseUrl = hentServerIngress();
-
-export const stillingssøkProxy = `${serverBaseUrl}/stillingssok-proxy`;
-export const stillingApi = `${serverBaseUrl}/stilling-api`;
+export const stillingssøkProxy = `/stillingssok-proxy`;
+export const stillingApi = `/stilling-api`;
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');

@@ -43,7 +43,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/app-i-gcp'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/samme-ingress'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
@@ -57,7 +57,7 @@ jobs:
     deploy-to-prod:
         name: Deploy til prod
         needs: deploy-til-dev
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/samme-ingress'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
