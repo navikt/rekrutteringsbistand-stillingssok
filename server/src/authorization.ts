@@ -4,8 +4,6 @@ import { tokenIsValid } from './azureAd';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 
-const cluster = process.env.NAIS_CLUSTER_NAME;
-
 const retrieveToken = (headers: IncomingHttpHeaders) =>
     headers.authorization?.replace('Bearer ', '');
 
@@ -21,6 +19,6 @@ export const ensureLoggedIn: Middleware = async (req, res, next) => {
         next();
     } else {
         console.log('Bruker er ikke logget inn, videresender til /oauth2/login');
-        res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
+        res.redirect(`${req.hostname}/oauth2/login?redirect=${req.originalUrl}`);
     }
 };
