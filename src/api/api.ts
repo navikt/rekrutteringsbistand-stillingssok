@@ -11,12 +11,8 @@ if (process.env.REACT_APP_MOCK) {
 export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
-    if (respons.status === 302) {
-        const redirectUrl = respons.headers.get('location');
-
-        if (redirectUrl) {
-            window.location.href = redirectUrl;
-        }
+    if (respons.status === 401) {
+        window.location.href = `/rekrutteringsbistand-stillingssok/oauth2/login?redirect=${window.location.href}`;
     } else if (respons.status === 403) {
         throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
@@ -29,15 +25,10 @@ export const søk = async (query: Query): Promise<Respons> => {
 export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
     const respons = await fetch(`${stillingApi}/standardsok`, {
         method: 'GET',
-        redirect: 'follow',
     });
 
-    if (respons.status === 302) {
-        const redirectUrl = respons.headers.get('location');
-
-        if (redirectUrl) {
-            window.location.href = redirectUrl;
-        }
+    if (respons.status === 401) {
+        window.location.href = `/rekrutteringsbistand-stillingssok/oauth2/login?redirect=${window.location.href}`;
     }
 
     if (respons.ok) {
@@ -70,7 +61,6 @@ const jsonRequest = (url: string, body: object, method: string) =>
     fetch(url, {
         body: JSON.stringify(body),
         method,
-        redirect: 'follow',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
