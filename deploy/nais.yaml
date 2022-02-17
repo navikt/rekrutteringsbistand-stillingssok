@@ -13,10 +13,10 @@ spec:
         - {{ ingress }}
     liveness:
         initialDelay: 5
-        path: /internal/isAlive
+        path: /rekrutteringsbistand-stillingssok/internal/isAlive
     readiness:
         initialDelay: 5
-        path: /internal/isReady
+        path: /rekrutteringsbistand-stillingssok/internal/isReady
     replicas:
       min: 1
       max: 1
