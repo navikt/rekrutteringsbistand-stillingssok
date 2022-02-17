@@ -21,8 +21,9 @@ const setupProxy = (fraPath: string, tilTarget: string) =>
     });
 
 const startServer = () => {
-    app.get([`/internal/isAlive`, `/internal/isReady`], (req: Request, res: Response) =>
-        res.sendStatus(200)
+    app.get(
+        [`${basePath}/internal/isAlive`, `${basePath}/internal/isReady`],
+        (req: Request, res: Response) => res.sendStatus(200)
     );
 
     app.use(`${basePath}/static`, express.static(buildPath + '/static'));
