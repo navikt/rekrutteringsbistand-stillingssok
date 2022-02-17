@@ -1,5 +1,6 @@
 import { initializeAzureAd } from './azureAd';
 import { ensureLoggedIn } from './authorization';
+import { Request, Response } from 'express';
 
 const path = require('path');
 const express = require('express');
@@ -30,7 +31,9 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
-    app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
+    app.get([`/internal/isAlive`, `/internal/isReady`], (req: Request, res: Response) =>
+        res.sendStatus(200)
+    );
 
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
     app.use(
