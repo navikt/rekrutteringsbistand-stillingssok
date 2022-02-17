@@ -1,8 +1,8 @@
 import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 
-export const stillingssøkProxy = `/stillingssok-proxy`;
-export const stillingApi = `/stilling-api`;
+export const stillingssøkProxy = `/rekrutteringsbistand-stillingssok/stillingssok-proxy`;
+export const stillingApi = `/rekrutteringsbistand-stillingssok/stilling-api`;
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');

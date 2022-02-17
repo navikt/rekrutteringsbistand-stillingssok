@@ -29,15 +29,15 @@ const startServer = () => {
     app.use(`${basePath}/asset-manifest.json`, express.static(`${buildPath}/asset-manifest.json`));
 
     app.use(
-        `/stillingssok-proxy`,
+        `${basePath}/stillingssok-proxy`,
         ensureLoggedIn,
-        setupProxy(`/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
+        setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
     app.use(
-        `/stilling-api`,
+        `${basePath}/stilling-api`,
         ensureLoggedIn,
-        setupProxy(`/stilling-api`, process.env.STILLING_API_URL)
+        setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
     );
 
     app.listen(port, () => {
