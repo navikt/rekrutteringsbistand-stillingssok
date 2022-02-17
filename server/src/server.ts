@@ -1,6 +1,9 @@
+import {initializeAzureAd} from "./azureAd";
+import {ensureLoggedIn, opprettCookieFraAuthorizationHeader} from "./authorization";
+
 const path = require('path');
 const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const {createProxyMiddleware} = require('http-proxy-middleware');
 const app = express();
 const cors = require('cors');
 
@@ -27,13 +30,12 @@ const corsMiddleware = cors({
 });
 
 const startServer = () => {
-    app.get(`/internal/isAlive`, (req, res) => res.sendStatus(200));
-    app.get(`/internal/isReady`, (req, res) => res.sendStatus(200));
+    app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
 
     app.use(`${basePath}/static`, corsMiddleware, express.static(buildPath + '/static'));
     app.use(`${basePath}/asset-manifest.json`, corsMiddleware, express.static(`${buildPath}/asset-manifest.json`));
 
-    app.use(`/*`, ensureLoggedIn);
+    app.use(`/*`, ensureLoggedIn, opprettCookieFraAuthorizationHeader);
 
     app.use(
         `/stillingssok-proxy`,
@@ -47,23 +49,6 @@ const startServer = () => {
     });
 };
 
-const userIsLoggedIn = (req) => {
-    console.log(
-        'Authorization header:',
-        req.headers.authorization,
-        'Resten av headers:',
-        req.headers
-    );
-
-    return true;
-};
-
-const ensureLoggedIn = (req, res, next) => {
-    if (userIsLoggedIn(req)) {
-        next();
-    } else {
-        res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
-    }
-};
+initializeAzureAd();
 
 startServer();
