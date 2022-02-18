@@ -33,21 +33,23 @@ export const setOnBehalfOfToken =
             console.log('Bruker accessToken til å hente OBO-token');
 
             const url = process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT;
-            const formData = new URLSearchParams({
+            const formData = {
                 grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 scope: scope,
                 client_id: process.env.AZURE_APP_CLIENT_ID,
                 client_secret: process.env.AZURE_APP_CLIENT_SECRET,
                 assertion: accessToken,
                 requested_token_use: 'on_behalf_of',
-            });
+            };
+
+            console.log('Henter OBO token med innstillinger:', formData);
 
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: formData,
+                body: new URLSearchParams(formData),
             });
 
             if (response.ok) {
