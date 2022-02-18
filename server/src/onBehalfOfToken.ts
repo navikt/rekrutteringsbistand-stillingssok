@@ -74,12 +74,13 @@ async function hentNyttOnBehalfOfToken(accessToken: string, scope: string): Prom
         });
 
         if (response.ok) {
-            return await response.json();
+            const token = await response.json();
+            return token;
         } else {
-            throw new Error('Fikk ikke gyldig OBO-token');
+            throw new Error('Fikk ikke gyldig OBO-token: ' + response.statusText);
         }
     } catch (e) {
-        throw new Error('Feil ved henting av nytt OBO-token');
+        throw new Error('Feil ved henting av nytt OBO-token: ' + e);
     }
 }
 

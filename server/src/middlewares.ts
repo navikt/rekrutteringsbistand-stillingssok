@@ -34,7 +34,7 @@ export const setOnBehalfOfToken =
                 console.log('setOnBehalfOfToken: satt token');
                 next();
             } catch (e) {
-                res.status(500).send('Feil ved henting av OBO-token');
+                res.status(500).send('Feil ved henting av OBO-token: ' + e);
             }
         }
     };
