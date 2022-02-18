@@ -28,8 +28,10 @@ export const setOnBehalfOfToken =
         } else {
             try {
                 const token = await hentOnBehalfOfToken(accessToken, scope);
+                console.log('setOnBehalfOfToken: fikk token');
 
                 req.headers.authorization = `Bearer ${token.access_token}`;
+                console.log('setOnBehalfOfToken: satt token');
                 next();
             } catch (e) {
                 res.status(500).send('Feil ved henting av OBO-token');
