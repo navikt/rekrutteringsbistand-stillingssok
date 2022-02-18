@@ -53,9 +53,9 @@ export const setOnBehalfOfToken =
             });
 
             if (response.ok) {
-                console.log('Fikk OBO-token!');
-
                 const body = (await response.json()) as OboToken;
+
+                console.log('Fikk OBO-token:', body);
                 // Cache
                 req.headers.authorization = `Bearer ${body.access_token}`;
                 next();
