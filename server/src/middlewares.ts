@@ -39,10 +39,11 @@ export const setOnBehalfOfToken =
         }
     };
 
-const retrieveToken = (headers: IncomingHttpHeaders) =>
-    headers.authorization?.replace('Bearer ', '');
+function retrieveToken(headers: IncomingHttpHeaders) {
+    return headers.authorization?.replace('Bearer ', '');
+}
 
-const userIsLoggedIn = async (req: Request): Promise<boolean> => {
+async function userIsLoggedIn(req: Request): Promise<boolean> {
     const token = retrieveToken(req.headers);
     return token && (await tokenIsValid(token));
-};
+}

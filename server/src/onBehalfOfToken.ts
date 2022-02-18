@@ -15,7 +15,7 @@ type AccessToken = string;
 
 const tokenCache: Record<Scope, Record<AccessToken, CachetOboToken>> = {};
 
-export const hentOnBehalfOfToken = async (accessToken: string, scope: string) => {
+export async function hentOnBehalfOfToken(accessToken: string, scope: string) {
     console.log('hentOnBehalfOfToken');
     const oboTokenFraCache = tokenCache[scope]?.[accessToken];
 
@@ -44,9 +44,9 @@ export const hentOnBehalfOfToken = async (accessToken: string, scope: string) =>
         console.log('hentOnBehalfOfToken: returnerer nytt');
         return nyttOboToken;
     }
-};
+}
 
-const hentNyttOnBehalfOfToken = async (accessToken: string, scope: string): Promise<OboToken> => {
+async function hentNyttOnBehalfOfToken(accessToken: string, scope: string): Promise<OboToken> {
     console.log('hentNyttOnBehalfOfToken');
 
     const formData = {
@@ -77,6 +77,8 @@ const hentNyttOnBehalfOfToken = async (accessToken: string, scope: string): Prom
     } catch (e) {
         throw new Error('Feil ved henting av nytt OBO-token');
     }
-};
+}
 
-const tokenErFremdelesGyldig = (token: CachetOboToken) => token.expires >= Date.now() - 5000;
+function tokenErFremdelesGyldig(token: CachetOboToken) {
+    return token.expires >= Date.now() - 5000;
+}
