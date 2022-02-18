@@ -24,6 +24,7 @@ export const ensureLoggedIn: Middleware = async (req, res, next) => {
 };
 
 export const removeIssoIdToken: Middleware = async (req, _, next) => {
+    console.log('Mottok cookies:', req.cookies);
     req.cookies['isso-idtoken'] = undefined;
     next();
 };
