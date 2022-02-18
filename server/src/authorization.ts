@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import { tokenIsValid } from './azureAd';
+import fetch from 'node-fetch';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;
 
