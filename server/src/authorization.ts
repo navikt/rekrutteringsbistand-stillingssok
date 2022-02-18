@@ -36,7 +36,7 @@ type CachetOboToken = {
 
 type NavIdent = string;
 
-const oboTokenCache: Record<NavIdent, CachetOboToken> = {};
+const oboTokenCache: Record<string, Record<NavIdent, CachetOboToken>> = {};
 
 const tokenErFremdelesGyldig = (token: CachetOboToken) => token.expires >= Date.now() - 5000;
 
@@ -74,7 +74,7 @@ const hentNyttOboToken = async (accessToken: string, scope: string): Promise<Obo
 };
 
 const hentOboToken = async (accessToken: string, scope: string) => {
-    const oboTokenFraCache = oboTokenCache[accessToken];
+    const oboTokenFraCache = oboTokenCache[scope][accessToken];
 
     if (oboTokenFraCache && tokenErFremdelesGyldig(oboTokenFraCache)) {
         console.log('Bruker token fra cache som utløper', new Date(oboTokenFraCache.expires));
@@ -85,7 +85,7 @@ const hentOboToken = async (accessToken: string, scope: string) => {
 
         console.log('Fikk nytt OBO-token som utløper', expires);
 
-        oboTokenCache[accessToken] = {
+        oboTokenCache[scope][accessToken] = {
             token: nyttOboToken,
             expires,
         };
