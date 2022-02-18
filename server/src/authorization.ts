@@ -23,6 +23,11 @@ export const ensureLoggedIn: Middleware = async (req, res, next) => {
     }
 };
 
+export const removeIssoIdToken: Middleware = async (req, _, next) => {
+    req.cookies['isso-idtoken'] = undefined;
+    next();
+};
+
 export const setOnBehalfOfToken =
     (scope: string) => async (req: Request, res: Response, next: NextFunction) => {
         const accessToken = retrieveToken(req.headers);

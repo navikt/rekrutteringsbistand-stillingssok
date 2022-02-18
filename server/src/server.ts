@@ -2,7 +2,8 @@ import path from 'path';
 import express, { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { initializeAzureAd } from './azureAd';
-import { ensureLoggedIn, setOnBehalfOfToken } from './authorization';
+import { ensureLoggedIn, removeIssoIdToken, setOnBehalfOfToken } from './authorization';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -27,6 +28,8 @@ const setupProxy = (fraPath: string, tilTarget: string) =>
     });
 
 const startServer = () => {
+    app.use(cookieParser());
+
     app.get(
         [`${basePath}/internal/isAlive`, `${basePath}/internal/isReady`],
         (req: Request, res: Response) => res.sendStatus(200)
@@ -37,6 +40,7 @@ const startServer = () => {
 
     app.use(
         `${basePath}/stillingssok-proxy`,
+        removeIssoIdToken,
         ensureLoggedIn,
         setOnBehalfOfToken(stillingssøkProxyScope),
         setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
@@ -44,6 +48,7 @@ const startServer = () => {
 
     app.use(
         `${basePath}/stilling-api`,
+        removeIssoIdToken,
         ensureLoggedIn,
         setOnBehalfOfToken(stillingApiScope),
         setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
