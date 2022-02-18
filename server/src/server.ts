@@ -2,7 +2,7 @@ import path from 'path';
 import express, { Request, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { initializeAzureAd } from './azureAd';
-import { ensureLoggedIn, removeIssoIdToken, setOnBehalfOfToken } from './authorization';
+import { ensureLoggedIn, removeIssoIdToken, setOnBehalfOfToken } from './middlewares';
 import cookieParser from 'cookie-parser';
 
 const app = express();
