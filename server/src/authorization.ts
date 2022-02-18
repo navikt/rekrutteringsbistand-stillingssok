@@ -74,7 +74,7 @@ const hentNyttOboToken = async (accessToken: string, scope: string): Promise<Obo
 };
 
 const hentOboToken = async (accessToken: string, scope: string) => {
-    const oboTokenFraCache = oboTokenCache[scope][accessToken];
+    const oboTokenFraCache = oboTokenCache[scope]?.[accessToken];
 
     if (oboTokenFraCache && tokenErFremdelesGyldig(oboTokenFraCache)) {
         console.log('Bruker token fra cache som utløper', new Date(oboTokenFraCache.expires));
@@ -84,6 +84,10 @@ const hentOboToken = async (accessToken: string, scope: string) => {
         const expires = Date.now() + nyttOboToken.expires_in * 1000;
 
         console.log('Fikk nytt OBO-token som utløper', expires);
+
+        if (!oboTokenCache[scope]) {
+            oboTokenCache[scope] = {};
+        }
 
         oboTokenCache[scope][accessToken] = {
             token: nyttOboToken,
