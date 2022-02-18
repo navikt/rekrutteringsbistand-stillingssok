@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 type OboToken = {
     access_token: string;
     expires_in: number;
