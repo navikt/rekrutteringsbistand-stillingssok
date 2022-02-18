@@ -16,9 +16,11 @@ type AccessToken = string;
 const tokenCache: Record<Scope, Record<AccessToken, CachetOboToken>> = {};
 
 export const hentOnBehalfOfToken = async (accessToken: string, scope: string) => {
+    console.log('hentOnBehalfOfToken');
     const oboTokenFraCache = tokenCache[scope]?.[accessToken];
 
     if (oboTokenFraCache && tokenErFremdelesGyldig(oboTokenFraCache)) {
+        console.log('hentOnBehalfOfToken: returnerer fra cache');
         return oboTokenFraCache.token;
     } else {
         const nyttOboToken = await hentNyttOnBehalfOfToken(accessToken, scope);
@@ -33,11 +35,14 @@ export const hentOnBehalfOfToken = async (accessToken: string, scope: string) =>
             expires,
         };
 
+        console.log('hentOnBehalfOfToken: returnerer nytt');
         return nyttOboToken;
     }
 };
 
 const hentNyttOnBehalfOfToken = async (accessToken: string, scope: string): Promise<OboToken> => {
+    console.log('hentNyttOnBehalfOfToken');
+
     const url = process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT;
     const formData = {
         grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',

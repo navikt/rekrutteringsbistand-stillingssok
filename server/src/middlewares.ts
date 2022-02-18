@@ -24,9 +24,7 @@ export const setOnBehalfOfToken =
         const accessToken = retrieveToken(req.headers);
 
         if (!accessToken) {
-            res.status(500).send(
-                'Kan ikke be om on-behalf-of-token siden access-token ikke finnes'
-            );
+            res.status(500).send('Kan ikke be om OBO-token siden access-token ikke finnes');
         } else {
             try {
                 const token = await hentOnBehalfOfToken(accessToken, scope);
