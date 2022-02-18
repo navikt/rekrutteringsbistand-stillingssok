@@ -58,7 +58,11 @@ async function hentNyttOnBehalfOfToken(accessToken: string, scope: string): Prom
         requested_token_use: 'on_behalf_of',
     };
 
+    console.log('hentNyttOnBehalfOfToken med formdata', formData);
+
     const url = process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT;
+
+    console.log('hentNyttOnBehalfOfToken med url', url);
 
     try {
         const response = await fetch(url, {
