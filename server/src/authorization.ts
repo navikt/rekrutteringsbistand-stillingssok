@@ -29,9 +29,11 @@ export const setOnBehalfOfToken =
         if (!accessToken) {
             res.status(500).send('Kan ikke be om OBO-token siden accessToken ikke finnes');
         } else {
+            console.log('Bruker accessToken til å hente OBO-token');
+
             const url = process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT;
             const formData = new URLSearchParams({
-                grant_type: 'client_credentials',
+                grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 scope: scope,
                 client_id: process.env.AZURE_APP_CLIENT_ID,
                 client_secret: process.env.AZURE_APP_CLIENT_SECRET,
@@ -48,6 +50,8 @@ export const setOnBehalfOfToken =
             });
 
             if (response.ok) {
+                console.log('Fikk OBO-token!');
+
                 const body = (await response.json()) as OboToken;
                 // Cache
                 req.headers.authorization = `Bearer ${body.access_token}`;

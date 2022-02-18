@@ -14,6 +14,9 @@ const buildPath = path.join(__dirname, '../build');
 const cluster = process.env.NAIS_CLUSTER_NAME;
 const fssMiljø = cluster === 'prod-gcp' ? 'prod-fss' : 'dev-fss';
 
+const stillingssøkProxyScope = `api://${cluster}.arbeidsgiver.rekrutteringsbistand-stillingssok-proxy/.default`;
+const stillingApiScope = `api://${fssMiljø}.arbeidsgiver.rekrutteringsbistand-stilling-api/.default`;
+
 // Krever ekstra miljøvariabler, se nais.yaml
 const setupProxy = (fraPath: string, tilTarget: string) =>
     createProxyMiddleware(fraPath, {
@@ -35,18 +38,14 @@ const startServer = () => {
     app.use(
         `${basePath}/stillingssok-proxy`,
         ensureLoggedIn,
-        setOnBehalfOfToken(
-            `api://${cluster}.arbeidsgiver.rekrutteringsbistand-stillingssok-proxy/.default`
-        ),
+        setOnBehalfOfToken(stillingssøkProxyScope),
         setupProxy(`${basePath}/stillingssok-proxy`, process.env.STILLINGSOK_PROXY_URL)
     );
 
     app.use(
         `${basePath}/stilling-api`,
         ensureLoggedIn,
-        setOnBehalfOfToken(
-            `api://${fssMiljø}.arbeidsgiver.rekrutteringsbistand-stilling-api/.default`
-        ),
+        setOnBehalfOfToken(stillingApiScope),
         setupProxy(`${basePath}/stilling-api`, process.env.STILLING_API_URL)
     );
 

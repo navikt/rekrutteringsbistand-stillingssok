@@ -35,7 +35,7 @@ export const tokenIsValid = async (token: string) => {
             issuer: azureAdIssuer.metadata.issuer,
         });
 
-        console.log('Fikk verifisert token:', verification);
+        console.log('Token er gyldig:', !!verification.payload);
         return !!verification.payload;
     } catch (e) {
         console.error('Noe galt skjedde under validering av token:', e);
