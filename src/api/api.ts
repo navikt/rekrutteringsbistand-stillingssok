@@ -1,8 +1,8 @@
 import { Query, Respons } from '../elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 
-export const stillingssøkProxy = `/rekrutteringsbistand-stillingssok/stillingssok-proxy`;
-export const stillingApi = `/rekrutteringsbistand-stillingssok/stilling-api`;
+export const stillingssøkProxy = `/stillingssok-proxy`;
+export const stillingApi = `/stilling-api`;
 
 if (process.env.REACT_APP_MOCK) {
     require('../mock-api/mock-api.ts');
@@ -11,9 +11,7 @@ if (process.env.REACT_APP_MOCK) {
 export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
-    if (respons.status === 401) {
-        window.location.href = `/rekrutteringsbistand-stillingssok/oauth2/login?redirect=${window.location.href}`;
-    } else if (respons.status === 403) {
+    if (respons.status === 403) {
         throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
@@ -26,10 +24,6 @@ export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
     const respons = await fetch(`${stillingApi}/standardsok`, {
         method: 'GET',
     });
-
-    if (respons.status === 401) {
-        window.location.href = `/rekrutteringsbistand-stillingssok/oauth2/login?redirect=${window.location.href}`;
-    }
 
     if (respons.ok) {
         return await respons.json();
