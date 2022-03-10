@@ -14,7 +14,7 @@ Sentry.init({
     dsn: 'https://766bf43f7bd849e4aadc3528a9e94c60@sentry.gc.nav.no/64',
     environment: getMiljø(),
     release: process.env.REACT_APP_SENTRY_RELEASE || 'unknown',
-    enabled: getMiljø() === 'dev-fss' || getMiljø() === 'prod-fss',
+    enabled: getMiljø() === 'dev-gcp' || getMiljø() === 'prod-gcp',
     beforeSend: fjernPersonopplysninger,
     autoSessionTracking: false,
 });
