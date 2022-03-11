@@ -1,5 +1,6 @@
 import path from 'path';
 import express, { Request, Response } from 'express';
+import compression from 'compression';
 
 const port = process.env.PORT || 3000;
 const basePath = '/rekrutteringsbistand-stillingssok';
@@ -8,6 +9,8 @@ const buildPath = path.join(__dirname, '../build');
 const app = express();
 
 const startServer = () => {
+    app.use(compression());
+
     app.get(
         [`${basePath}/internal/isAlive`, `${basePath}/internal/isReady`],
         (_: Request, res: Response) => res.sendStatus(200)
