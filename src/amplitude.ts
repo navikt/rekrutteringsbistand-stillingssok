@@ -1,8 +1,10 @@
 import amplitudeJs, { AmplitudeClient } from 'amplitude-js';
-import { erIkkeProd } from './utils/featureToggleUtils';
+
+const bucketIdDev = '55477baea93c5227d8c0f6b813653615';
+const bucketIdProd = '3a6fe32c3457e77ce81c356bb14ca886';
 
 const getApiKey = () => {
-    return erIkkeProd ? '55477baea93c5227d8c0f6b813653615' : '3a6fe32c3457e77ce81c356bb14ca886';
+    return window.location.href.includes('dev.intern.nav.no') ? bucketIdDev : bucketIdProd;
 };
 
 const client: AmplitudeClient = amplitudeJs.getInstance();

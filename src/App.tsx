@@ -1,5 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
+import { Systemtittel } from 'nav-frontend-typografi';
+import { useLocation } from 'react-router-dom';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+
 import { GlobalAggregering, Respons } from './elasticSearchTyper';
 import {
     hentSøkekriterier,
@@ -8,20 +12,17 @@ import {
     oppdaterUrlMedParam,
 } from './utils/urlUtils';
 import { lagQuery, lagQueryPåAnnonsenummer } from './api/queries/queries';
-import { søk } from './api/api';
-import Søk from './søk/Søk';
-import Stillingsliste from './stillingsliste/Stillingsliste';
-import Paginering from './paginering/Paginering';
-import { useLocation } from 'react-router-dom';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { Status } from './søk/om-annonsen/Annonsestatus';
-import { sendEvent } from './amplitude';
-import Sorter, { Sortering } from './sorter/Sorter';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
+import { sendEvent } from './amplitude';
+import { søk } from './api/api';
 import { StandardsøkProvider } from './StandardsøkContext';
-import useStandardsøk from './StandardsøkContext';
+import { Status } from './søk/om-annonsen/Annonsestatus';
+import Paginering from './paginering/Paginering';
+import Søk from './søk/Søk';
 import Søkefaner, { Fane } from './søkefaner/Søkefaner';
+import Sorter, { Sortering } from './sorter/Sorter';
+import Stillingsliste from './stillingsliste/Stillingsliste';
+import useStandardsøk from './StandardsøkContext';
 import './App.less';
 
 export type Søkekriterier = {
@@ -42,18 +43,13 @@ export type AppProps = {
     history: History;
 };
 
-const App: FunctionComponent<AppProps> = ({ navKontor, history }) => {
+const App: FunctionComponent<AppProps> = ({ history }) => {
     const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
     const [respons, setRespons] = useState<Respons | null>(null);
     const { standardsøk } = useStandardsøk();
 
     const globalAggregering = respons?.aggregations.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
-
-    useEffect(() => {
-        const side = history.location.pathname;
-        sendEvent('app', 'sidevisning', { side });
-    }, [history.location.pathname]);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(search);
