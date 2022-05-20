@@ -1,8 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
-import { Systemtittel } from 'nav-frontend-typografi';
 import { useLocation } from 'react-router-dom';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 
 import { GlobalAggregering, Respons } from './elasticSearchTyper';
 import {
@@ -23,6 +21,7 @@ import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useStandardsøk from './StandardsøkContext';
+import { Heading, Loader } from '@navikt/ds-react';
 import './App.less';
 
 export type Søkekriterier = {
@@ -114,9 +113,9 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
             <main className="app__søkeresultat">
                 {respons ? (
                     <>
-                        <Systemtittel className="app__antall-stillinger" tag="output">
+                        <Heading level="2" size="medium" className="app__antall-stillinger">
                             {formaterAntallAnnonser(antallTreff)}
-                        </Systemtittel>
+                        </Heading>
                         <div className="app__antall-og-sortering">
                             <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                             <Sorter />
@@ -126,7 +125,7 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
                     </>
                 ) : (
                     <div className="app__spinner">
-                        <NavFrontendSpinner type="L" />
+                        <Loader fr="" />
                     </div>
                 )}
             </main>
