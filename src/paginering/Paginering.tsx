@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
+import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import { Back, Next } from '@navikt/ds-icons';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
 import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../utils/urlUtils';
-import { useHistory } from 'react-router-dom';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import './Paginering.less';
 
@@ -68,8 +68,8 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
             activeClassName="paginering__side--aktiv"
             pageLinkClassName="paginering__side-lenke"
             activeLinkClassName="paginering__side-lenke--aktiv"
-            nextLabel={<HoyreChevron />}
-            previousLabel={<VenstreChevron />}
+            nextLabel={<Next />}
+            previousLabel={<Back />}
             nextLinkClassName="paginering__side-lenke"
             previousLinkClassName="paginering__side-lenke"
         />

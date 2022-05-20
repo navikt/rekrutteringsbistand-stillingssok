@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
 import { Link } from 'react-router-dom';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { EtikettInfo } from 'nav-frontend-etiketter';
+import { BodyShort, Detail, Tag } from '@navikt/ds-react';
 import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
@@ -11,8 +10,8 @@ import {
     skalViseLenkeTilKandidatliste,
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
-import './Stillingsrad.less';
 import { hentHovedtags } from '../../søk/inkludering/tags';
+import './Stillingsrad.less';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -39,35 +38,38 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 <div className="stillingsrad__etiketter-og-dato">
                     <div className="stillingsrad__etiketter">
                         {registrertMedInkluderingsmulighet && (
-                            <EtikettInfo
-                                mini
+                            <Tag
+                                size="small"
+                                variant="info"
                                 className="stillingsrad__etikett stillingsrad__etikett--inkludering"
                             >
                                 Inkludering
-                            </EtikettInfo>
+                            </Tag>
                         )}
                         {stilling.source === 'DIR' && (
-                            <EtikettInfo
-                                mini
+                            <Tag
+                                variant="info"
+                                size="small"
                                 className="stillingsrad__etikett stillingsrad__etikett--intern"
                             >
                                 Intern
-                            </EtikettInfo>
+                            </Tag>
                         )}
                         {stilling.privacy === 'SHOW_ALL' && (
-                            <EtikettInfo
-                                mini
+                            <Tag
+                                variant="info"
+                                size="small"
                                 className="stillingsrad__etikett stillingsrad__etikett--arbeidsplassen"
                             >
                                 Arbeidsplassen
-                            </EtikettInfo>
+                            </Tag>
                         )}
                     </div>
-                    <Undertekst className="stillingsrad__opprettet">
+                    <Detail size="small" className="stillingsrad__opprettet">
                         {konverterTilPresenterbarDato(stilling.published)}
-                    </Undertekst>
+                    </Detail>
                 </div>
-                {arbeidsgiversNavn && <Normaltekst>{arbeidsgiversNavn}</Normaltekst>}
+                {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
                 <div className="stillingsrad__tittel">
                     <Link
                         className="stillingsrad__lenke-til-stilling lenke"
