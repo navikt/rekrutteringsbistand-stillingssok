@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Knapp } from 'nav-frontend-knapper';
 import { useLocation } from 'react-router-dom';
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { SaveFile } from '@navikt/ds-icons';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { Button, Detail } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
 import './LagreStandardsøk.less';
 
@@ -20,22 +17,29 @@ const LagreStandardsøk: FunctionComponent = () => {
         standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
 
     return aktivtSøkErStandardsøk ? (
-        <AlertStripeSuksess className="lagre-standardsøk lagre-standardsøk__alertstripe">
-            Lagret som standardsøk
-            <Hjelpetekst className="lagre-standardsøk__hjelpetekst" type={PopoverOrientering.Under}>
+        <>
+            <Button
+                disabled
+                aria-describedby="lagre-standardsok-beskrivelse"
+                className="lagre-standardsøk lagre-standardsøk__har-lagret"
+            >
+                Lagret som standardsøk
+            </Button>
+            <Detail size="small" id="lagre-standardsok-beskrivelse" className="blokk-xs">
                 Hver gang du benytter søket vil det være ferdig utfylt med kriteriene du har valgt å
                 lagre som standardsøk.
-            </Hjelpetekst>
-        </AlertStripeSuksess>
+            </Detail>
+        </>
     ) : (
-        <Knapp
+        <Button
+            aria-describedby="lagre-standardsok-beskrivelse"
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
-            className=" lagre-standardsøk lagre-standardsøk__knapp"
+            className="lagre-standardsøk lagre-standardsøk__knapp"
         >
             <SaveFile className="lagre-standardsøk__lagre-ikon" />
             Lagre som standardsøk
-        </Knapp>
+        </Button>
     );
 };
 
