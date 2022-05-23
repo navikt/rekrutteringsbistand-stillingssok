@@ -23,6 +23,7 @@ const LagreStandardsøk: FunctionComponent = () => {
                     disabled
                     variant="secondary"
                     className="lagre-standardsøk lagre-standardsøk__lagre"
+                    aria-describedby="lagre-standardsok-beskrivelse"
                 >
                     <Success />
                     Lagret som standardsøk
@@ -34,12 +35,13 @@ const LagreStandardsøk: FunctionComponent = () => {
                     disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
                     onClick={onLagreSomStandardsøkClick}
                     className="lagre-standardsøk lagre-standardsøk__lagre"
+                    aria-describedby="lagre-standardsok-beskrivelse"
                 >
                     <SaveFile />
                     Lagre som standardsøk
                 </Button>
             )}
-            <Detail size="small">
+            <Detail size="small" id="lagre-standardsok-beskrivelse">
                 Når du har lagrer et standardsøk, vil søket alltid være ferdig utfylt med kriteriene
                 du har valgt.
             </Detail>
