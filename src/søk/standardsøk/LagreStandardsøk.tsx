@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SaveFile } from '@navikt/ds-icons';
-import { Alert, Button, Detail } from '@navikt/ds-react';
+import { SaveFile, Success } from '@navikt/ds-icons';
+import { Button, Detail } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
 import './LagreStandardsøk.less';
 
@@ -16,26 +16,34 @@ const LagreStandardsøk: FunctionComponent = () => {
     const aktivtSøkErStandardsøk =
         standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
 
-    return aktivtSøkErStandardsøk ? (
-        <>
-            <Alert variant="success" fullWidth className="lagre-standardsøk__er-lagret">
-                Lagret som standardsøk
-                <Detail size="small">
-                    Hver gang du benytter søket vil det være ferdig utfylt med standardsøket.
-                </Detail>
-            </Alert>
-        </>
-    ) : (
-        <Button
-            variant="secondary"
-            aria-describedby="lagre-standardsok-beskrivelse"
-            disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
-            onClick={onLagreSomStandardsøkClick}
-            className="lagre-standardsøk lagre-standardsøk__knapp"
-        >
-            <SaveFile />
-            Lagre som standardsøk
-        </Button>
+    return (
+        <div className="lagre-standardsøk">
+            {aktivtSøkErStandardsøk ? (
+                <Button
+                    disabled
+                    variant="secondary"
+                    className="lagre-standardsøk lagre-standardsøk__lagre"
+                >
+                    <Success />
+                    Lagret som standardsøk
+                </Button>
+            ) : (
+                <Button
+                    variant="secondary"
+                    loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
+                    disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
+                    onClick={onLagreSomStandardsøkClick}
+                    className="lagre-standardsøk lagre-standardsøk__lagre"
+                >
+                    <SaveFile />
+                    Lagre som standardsøk
+                </Button>
+            )}
+            <Detail size="small">
+                Når du har lagrer et standardsøk, vil søket alltid være ferdig utfylt med kriteriene
+                du har valgt.
+            </Detail>
+        </div>
     );
 };
 
