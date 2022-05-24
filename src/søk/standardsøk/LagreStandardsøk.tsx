@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SaveFile, Success } from '@navikt/ds-icons';
-import { Button, Detail } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
 import './LagreStandardsøk.less';
 
@@ -16,36 +16,28 @@ const LagreStandardsøk: FunctionComponent = () => {
     const aktivtSøkErStandardsøk =
         standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
 
-    return (
-        <div className="lagre-standardsøk">
-            {aktivtSøkErStandardsøk ? (
-                <Button
-                    disabled
-                    variant="secondary"
-                    className="lagre-standardsøk lagre-standardsøk__lagre"
-                    aria-describedby="lagre-standardsok-beskrivelse"
-                >
-                    <Success />
-                    Lagret som standardsøk
-                </Button>
-            ) : (
-                <Button
-                    variant="secondary"
-                    loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
-                    disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
-                    onClick={onLagreSomStandardsøkClick}
-                    className="lagre-standardsøk lagre-standardsøk__lagre"
-                    aria-describedby="lagre-standardsok-beskrivelse"
-                >
-                    <SaveFile />
-                    Lagre som standardsøk
-                </Button>
-            )}
-            <Detail size="small" id="lagre-standardsok-beskrivelse">
-                Når du har lagrer et standardsøk, vil søket alltid være ferdig utfylt med kriteriene
-                du har valgt.
-            </Detail>
-        </div>
+    return aktivtSøkErStandardsøk ? (
+        <Button
+            disabled
+            variant="secondary"
+            className="lagre-standardsøk lagre-standardsøk__lagre"
+            aria-describedby="lagre-standardsok-beskrivelse"
+        >
+            <Success />
+            Lagret som standardsøk
+        </Button>
+    ) : (
+        <Button
+            variant="secondary"
+            loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
+            disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
+            onClick={onLagreSomStandardsøkClick}
+            className="lagre-standardsøk lagre-standardsøk__lagre"
+            aria-describedby="lagre-standardsok-beskrivelse"
+        >
+            <SaveFile />
+            Lagre som standardsøk
+        </Button>
     );
 };
 
