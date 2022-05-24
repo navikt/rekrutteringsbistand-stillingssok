@@ -1,5 +1,4 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
@@ -7,6 +6,7 @@ import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils
 import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
+import { Accordion } from '@navikt/ds-react';
 
 const FylkerOgKommuner: FunctionComponent = () => {
     const history = useHistory();
@@ -61,42 +61,43 @@ const FylkerOgKommuner: FunctionComponent = () => {
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Geografi"
-            className="søk__ekspanderbart-panel"
-        >
-            <SkjemaGruppe legend={<Element>Velg fylke eller kommune</Element>}>
-                {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
-                    <Fragment key={fylke}>
-                        <Checkbox
-                            className="søk__checkbox"
-                            label={fylke}
-                            value={fylke}
-                            checked={valgteFylker.has(fylke)}
-                            onChange={onFylkeChange}
-                        />
-                        {valgteFylker.has(fylke) && kommuner.length > 0 && (
-                            <fieldset>
-                                <legend className="kun-skjermlesere">
-                                    Velg kommuner i {fylke}
-                                </legend>
-                                {kommuner.map((kommune) => (
-                                    <Checkbox
-                                        className="søk__checkbox søk__checkbox--indentert"
-                                        key={kommune.kommune}
-                                        label={kommune.label}
-                                        value={kommune.kommune}
-                                        checked={valgteKommuner.has(kommune.kommune)}
-                                        onChange={onKommuneChange}
-                                    />
-                                ))}
-                            </fieldset>
-                        )}
-                    </Fragment>
-                ))}
-            </SkjemaGruppe>
-        </Ekspanderbartpanel>
+        <Accordion className="søk__ekspanderbart-panel">
+            <Accordion.Item defaultOpen={enhetstype === Enhetstype.Desktop}>
+                <Accordion.Header>Geografi</Accordion.Header>
+                <Accordion.Content>
+                    <SkjemaGruppe legend={<Element>Velg fylke eller kommune</Element>}>
+                        {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
+                            <Fragment key={fylke}>
+                                <Checkbox
+                                    className="søk__checkbox"
+                                    label={fylke}
+                                    value={fylke}
+                                    checked={valgteFylker.has(fylke)}
+                                    onChange={onFylkeChange}
+                                />
+                                {valgteFylker.has(fylke) && kommuner.length > 0 && (
+                                    <fieldset>
+                                        <legend className="kun-skjermlesere">
+                                            Velg kommuner i {fylke}
+                                        </legend>
+                                        {kommuner.map((kommune) => (
+                                            <Checkbox
+                                                className="søk__checkbox søk__checkbox--indentert"
+                                                key={kommune.kommune}
+                                                label={kommune.label}
+                                                value={kommune.kommune}
+                                                checked={valgteKommuner.has(kommune.kommune)}
+                                                onChange={onKommuneChange}
+                                            />
+                                        ))}
+                                    </fieldset>
+                                )}
+                            </Fragment>
+                        ))}
+                    </SkjemaGruppe>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
 };
 

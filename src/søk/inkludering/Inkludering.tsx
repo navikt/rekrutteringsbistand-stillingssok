@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ChangeEvent, Fragment, useState, useEffect } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
@@ -7,6 +6,7 @@ import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils
 import { useHistory, useLocation } from 'react-router-dom';
 import { sendEvent } from '../../amplitude';
 import { Element } from 'nav-frontend-typografi';
+import { Accordion } from '@navikt/ds-react';
 
 const Inkludering: FunctionComponent = () => {
     const history = useHistory();
@@ -67,45 +67,46 @@ const Inkludering: FunctionComponent = () => {
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Inkludering"
-            className="søk__ekspanderbart-panel"
-        >
-            <SkjemaGruppe legend={<Element>Velg kategori</Element>}>
-                {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
-                    <Fragment key={gruppeMedTags.hovedtag}>
-                        <Checkbox
-                            className="søk__checkbox"
-                            label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
-                            value={gruppeMedTags.hovedtag}
-                            checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
-                            onChange={onHovedtagChange}
-                        />
+        <Accordion className="søk__ekspanderbart-panel">
+            <Accordion.Item defaultOpen={enhetstype === Enhetstype.Desktop}>
+                <Accordion.Header>Inkludering</Accordion.Header>
+                <Accordion.Content>
+                    <SkjemaGruppe legend={<Element>Velg kategori</Element>}>
+                        {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
+                            <Fragment key={gruppeMedTags.hovedtag}>
+                                <Checkbox
+                                    className="søk__checkbox"
+                                    label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
+                                    value={gruppeMedTags.hovedtag}
+                                    checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
+                                    onChange={onHovedtagChange}
+                                />
 
-                        {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
-                            gruppeMedTags.subtags.length > 0 && (
-                                <fieldset>
-                                    <legend className="kun-skjermlesere">
-                                        Velg kategorier under {gruppeMedTags.hovedtag}
-                                    </legend>
+                                {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
+                                    gruppeMedTags.subtags.length > 0 && (
+                                        <fieldset>
+                                            <legend className="kun-skjermlesere">
+                                                Velg kategorier under {gruppeMedTags.hovedtag}
+                                            </legend>
 
-                                    {gruppeMedTags.subtags.map((subtag) => (
-                                        <Checkbox
-                                            className="søk__checkbox søk__checkbox--indentert"
-                                            key={subtag}
-                                            label={visningsnavnForFilter[subtag]}
-                                            value={subtag}
-                                            checked={valgteSubtags.has(subtag)}
-                                            onChange={onSubtagChange}
-                                        />
-                                    ))}
-                                </fieldset>
-                            )}
-                    </Fragment>
-                ))}
-            </SkjemaGruppe>
-        </Ekspanderbartpanel>
+                                            {gruppeMedTags.subtags.map((subtag) => (
+                                                <Checkbox
+                                                    className="søk__checkbox søk__checkbox--indentert"
+                                                    key={subtag}
+                                                    label={visningsnavnForFilter[subtag]}
+                                                    value={subtag}
+                                                    checked={valgteSubtags.has(subtag)}
+                                                    onChange={onSubtagChange}
+                                                />
+                                            ))}
+                                        </fieldset>
+                                    )}
+                            </Fragment>
+                        ))}
+                    </SkjemaGruppe>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
 };
 
