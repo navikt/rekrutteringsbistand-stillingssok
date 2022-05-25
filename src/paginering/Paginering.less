@@ -1,5 +1,3 @@
-@import '../variabler.less';
-
 .paginering {
     display: flex;
     align-items: center;
@@ -12,7 +10,7 @@
         border-radius: 0.25rem;
 
         &--aktiv {
-            background-color: @navDypBla;
+            background-color: var(--navds-semantic-color-interaction-primary-selected);
         }
     }
 
@@ -21,7 +19,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 0.25rem;
-        color: @navBla;
+        color: var(--navds-semantic-color-link);
         height: 2rem;
         width: 2rem;
 
@@ -30,21 +28,22 @@
         }
 
         &--break {
-            color: @navMorkGra;
+            color: var(--navds-global-color-gray-600);
         }
 
         &:hover,
         &:active {
-            box-shadow: inset 0 0 0 2px @navBla;
+            cursor: pointer;
+            box-shadow: inset 0 0 0 2px var(--navds-semantic-color-focus);
         }
 
         &:focus {
             outline: none;
-            box-shadow: inset 0 0 0 2px @fokusFarge;
+            box-shadow: inset 0 0 0 2px var(--navds-semantic-color-focus);
         }
     }
 
     .nav-frontend-chevron {
-        color: @navBla;
+        color: var(--navds-semantic-color-link);
     }
 }

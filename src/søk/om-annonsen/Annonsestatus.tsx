@@ -38,7 +38,7 @@ const Annonsestatus: FunctionComponent = () => {
     };
 
     return (
-        <CheckboxGroup legend="Status">
+        <CheckboxGroup legend="Status" className="søk__avstand">
             {Object.values(Status).map((statusValue) => (
                 <Checkbox
                     size="small"

@@ -22,7 +22,7 @@ const BrukStandardsøk: FunctionComponent = () => {
                     brukStandardsøk: true,
                 },
             }}
-            className="bruk-standardsøk lenke"
+            className="bruk-standardsøk navds-link"
         >
             <Label>Bruk standardsøk</Label>
         </Link>

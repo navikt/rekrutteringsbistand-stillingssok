@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
-import { Link } from 'react-router-dom';
 import { BodyShort, Detail, Tag } from '@navikt/ds-react';
 import { List } from '@navikt/ds-icons';
 import { konverterTilPresenterbarDato } from './datoUtils';
@@ -12,6 +11,7 @@ import {
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import { hentHovedtags } from '../../søk/inkludering/tags';
 import './Stillingsrad.less';
+import { Link } from 'react-router-dom';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -72,7 +72,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
                 <div className="stillingsrad__tittel">
                     <Link
-                        className="stillingsrad__lenke-til-stilling lenke"
+                        className="navds-link stillingsrad__lenke-til-stilling"
                         to={lagUrlTilStilling(stilling)}
                     >
                         {stilling.title}
@@ -100,7 +100,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
             <div className="stillingsrad__kandidatlisteknapp">
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <List className="lenke" />
+                        <List className="navds-link" />
                     </Link>
                 )}
                 <div />

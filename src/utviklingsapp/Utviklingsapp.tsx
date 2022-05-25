@@ -30,7 +30,7 @@ const Utviklingsapp: FunctionComponent = () => {
                         Utviklingsapp for rekrutteringsbistand-stillingssok
                     </Heading>
                     <Link
-                        className="lenke"
+                        className="navds-link"
                         to={{
                             search: '?standardsok',
                         }}

@@ -1,5 +1,3 @@
-@import '../variabler.less';
-
 .søkefaner {
     &__faner {
         background: none;
@@ -12,7 +10,7 @@
 
         &:focus {
             outline: 0;
-            box-shadow: inset 0 0 0 3px @fokusFarge;
+            box-shadow: inset 0 0 0 3px var(--navds-semantic-color-focus);
         }
 
         &:active {
@@ -21,8 +19,8 @@
 
         &[data-selected] {
             font-weight: 600;
-            color: @navDypBlaDarken20;
-            border-bottom: 3px solid @navBlaDarken40;
+            color: var(--navds-global-color-blue-600);
+            border-bottom: 3px solid var(--navds-global-color-blue-400);
         }
     }
 }

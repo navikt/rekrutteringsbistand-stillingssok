@@ -16,7 +16,7 @@ const SlettKriterier: FunctionComponent = () => {
                     harSlettetKriterier: true,
                 },
             }}
-            className="slett-kriterier lenke"
+            className="slett-kriterier navds-link"
         >
             <Label>Slett alle kriterier</Label>
         </Link>
