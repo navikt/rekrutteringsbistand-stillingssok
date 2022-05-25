@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Heading } from '@navikt/ds-react';
-import { Link, Route, Router, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import { cssScopeForApp } from '../index';
 import App from '../App';
 import './Utviklingsapp.less';
+import Router from '../Router';
 
 const history = createBrowserHistory();
 

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Tabs, TabList } from '@reach/tabs';
 import {
     hentSøkekriterier,
     Navigeringsstate,
@@ -7,9 +6,8 @@ import {
     QueryParam,
 } from '../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router';
-import '@reach/tabs/styles.css';
-import './Søkefaner.less';
 import Søkefane from './Søkefane';
+import { Tabs } from '@navikt/ds-react';
 
 export enum Fane {
     Alle = 'alle',
@@ -26,27 +24,25 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     const history = useHistory();
     const { search } = useLocation<Navigeringsstate>();
 
-    const [aktivFaneIndex, setAktivFaneIndex] = useState<number>(hentAktivFaneIndex(search));
+    const [aktivFane, setAktivFane] = useState<Fane>(hentAktivFane(search));
 
     useEffect(() => {
-        setAktivFaneIndex(hentAktivFaneIndex(search));
+        setAktivFane(hentAktivFane(search));
     }, [search]);
 
-    const onChange = (index: number) => {
-        setAktivFaneIndex(index);
-
-        const valgtFane = Object.values(Fane)[index];
+    const onChange = (fane: string) => {
+        setAktivFane(fane as Fane);
 
         oppdaterUrlMedParam({
             history,
             parameter: QueryParam.Fane,
-            verdi: valgtFane === Fane.Alle ? null : valgtFane,
+            verdi: fane === Fane.Alle ? null : fane,
         });
     };
 
     return (
-        <Tabs className="søkefaner" index={aktivFaneIndex} onChange={onChange}>
-            <TabList className="søkefaner__faner">
+        <Tabs value={aktivFane} onChange={onChange}>
+            <Tabs.List>
                 <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle?.doc_count ?? 0} />
                 {hentSøkekriterier(search).tekst &&
                     Object.values(Fane)
@@ -61,14 +57,13 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
                                 />
                             );
                         })}
-            </TabList>
+            </Tabs.List>
         </Tabs>
     );
 };
 
-const hentAktivFaneIndex = (search: string): number => {
-    const aktivFaneIndex = Object.values(Fane).indexOf(hentSøkekriterier(search).fane);
-    return aktivFaneIndex !== -1 ? aktivFaneIndex : 0;
+const hentAktivFane = (search: string): Fane => {
+    return hentSøkekriterier(search).fane;
 };
 
 export default Søkefaner;
