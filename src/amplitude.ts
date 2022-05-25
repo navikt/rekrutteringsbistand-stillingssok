@@ -1,7 +1,7 @@
 import amplitudeJs, { AmplitudeClient } from 'amplitude-js';
 
-const bucketIdDev = '55477baea93c5227d8c0f6b813653615';
-const bucketIdProd = '3a6fe32c3457e77ce81c356bb14ca886';
+const bucketIdDev = '6ed1f00aabc6ced4fd6fcb7fcdc01b30';
+const bucketIdProd = 'a8243d37808422b4c768d31c88a22ef4';
 
 const getApiKey = () => {
     return window.location.href.includes('dev.intern.nav.no') ? bucketIdDev : bucketIdProd;
