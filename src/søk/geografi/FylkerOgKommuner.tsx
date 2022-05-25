@@ -1,6 +1,5 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
@@ -61,36 +60,39 @@ const FylkerOgKommuner: FunctionComponent = () => {
 
     return (
         <Filtergruppe tittel="Geografi">
-            <SkjemaGruppe legend={<Element>Velg fylke eller kommune</Element>}>
+            <CheckboxGroup legend="Velg fylke eller kommune">
                 {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                     <Fragment key={fylke}>
                         <Checkbox
-                            className="søk__checkbox"
-                            label={fylke}
+                            size="small"
                             value={fylke}
                             checked={valgteFylker.has(fylke)}
                             onChange={onFylkeChange}
-                        />
+                        >
+                            {fylke}
+                        </Checkbox>
                         {valgteFylker.has(fylke) && kommuner.length > 0 && (
-                            <fieldset>
-                                <legend className="kun-skjermlesere">
-                                    Velg kommuner i {fylke}
-                                </legend>
+                            <CheckboxGroup
+                                hideLegend
+                                className="søk__indentert-checkboxgruppe"
+                                legend={`Velg kommuner i ${fylke}`}
+                            >
                                 {kommuner.map((kommune) => (
                                     <Checkbox
-                                        className="søk__checkbox søk__checkbox--indentert"
+                                        size="small"
                                         key={kommune.kommune}
-                                        label={kommune.label}
                                         value={kommune.kommune}
                                         checked={valgteKommuner.has(kommune.kommune)}
                                         onChange={onKommuneChange}
-                                    />
+                                    >
+                                        {kommune.label}
+                                    </Checkbox>
                                 ))}
-                            </fieldset>
+                            </CheckboxGroup>
                         )}
                     </Fragment>
                 ))}
-            </SkjemaGruppe>
+            </CheckboxGroup>
         </Filtergruppe>
     );
 };
