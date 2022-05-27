@@ -18,20 +18,31 @@
     width: 100%;
 }
 
-.lenkeTilStilling:visited:not(:focus):not(:active) {
+.lenkeTilStilling {
+    align-self: flex-start;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    max-width: 35rem;
+    color: var(--navds-semantic-color-link);
+}
+
+.lenkeTilStilling:hover {
+    text-decoration: underline;
+}
+
+.lenkeTilStilling:focus {
+    box-shadow: var(--navds-shadow-focus);
+}
+
+.lenkeTilStilling:visited {
     color: var(--navds-semantic-color-link-visited);
 }
 
 .kandidatlisteknapp {
     padding-top: 0.5rem;
     align-self: flex-start;
-}
-
-.tittel {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    max-width: 35rem;
 }
 
 .etiketterOgDato {

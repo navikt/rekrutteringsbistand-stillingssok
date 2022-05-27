@@ -69,14 +69,9 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     <Detail size="small">{konverterTilPresenterbarDato(stilling.published)}</Detail>
                 </div>
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
-                <div className={css.tittel}>
-                    <Link
-                        className={classNames(css.lenkeTilStilling, 'navds-link')}
-                        to={lagUrlTilStilling(stilling)}
-                    >
-                        {stilling.title}
-                    </Link>
-                </div>
+                <Link className={classNames(css.lenkeTilStilling)} to={lagUrlTilStilling(stilling)}>
+                    {stilling.title}
+                </Link>
                 <span className={css.stillingsinfo}>
                     <span>
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
