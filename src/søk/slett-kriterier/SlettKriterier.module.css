@@ -2,6 +2,6 @@
     text-decoration: none;
 }
 
-.slettKriterier:global(.navds-link) {
+.slettKriterier:global(.navds-link):hover {
     text-decoration: underline;
 }

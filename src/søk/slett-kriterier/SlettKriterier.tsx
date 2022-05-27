@@ -19,7 +19,7 @@ const SlettKriterier: FunctionComponent = () => {
             }}
             className={classNames(css.slettKriterier, 'navds-link')}
         >
-            <Label>Slett alle kriterier</Label>
+            <Label as="span">Slett alle kriterier</Label>
         </Link>
     );
 };
