@@ -1,0 +1,7 @@
+.slettKriterier:global(.navds-link) {
+    text-decoration: none;
+}
+
+.slettKriterier:global(.navds-link) {
+    text-decoration: underline;
+}

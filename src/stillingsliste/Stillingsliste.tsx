@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Respons } from '../elasticSearchTyper';
 import Stillingsrad from './stillingsrad/Stillingsrad';
-import './Stillingsliste.less';
+import css from './Stillingsliste.module.css';
 
 type Props = {
     esRespons: Respons;
@@ -10,7 +10,7 @@ type Props = {
 const Stillingsliste: FunctionComponent<Props> = ({ esRespons }) => {
     const hits = esRespons.hits.hits;
     return (
-        <ul className="stillingliste">
+        <ul className={css.stillingliste}>
             {hits.map((hit) => (
                 <Stillingsrad key={hit._id} rekrutteringsbistandstilling={hit._source} />
             ))}

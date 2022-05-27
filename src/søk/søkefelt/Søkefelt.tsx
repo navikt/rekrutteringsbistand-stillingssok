@@ -7,7 +7,6 @@ import {
     oppdaterUrlMedToParams,
     QueryParam,
 } from '../../utils/urlUtils';
-import './Søkefelt.less';
 import { Search } from '@navikt/ds-react';
 
 const Søkefelt: FunctionComponent = () => {

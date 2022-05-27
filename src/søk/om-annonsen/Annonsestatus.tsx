@@ -2,6 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'reac
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import søkCss from '../Søk.module.css';
 
 export enum Status {
     Publisert = 'publisert',
@@ -38,7 +39,11 @@ const Annonsestatus: FunctionComponent = () => {
     };
 
     return (
-        <CheckboxGroup legend="Status" className="søk__avstand" value={Array.from(valgteStatuser)}>
+        <CheckboxGroup
+            legend="Status"
+            className={søkCss.avstand}
+            value={Array.from(valgteStatuser)}
+        >
             {Object.values(Status).map((statusValue) => (
                 <Checkbox key={statusValue} value={statusValue} onChange={onAnnonsestatusChange}>
                     {statusValue[0].toUpperCase() + statusValue.substring(1)}

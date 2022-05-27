@@ -6,7 +6,6 @@ import {
     oppdaterUrlMedParam,
     QueryParam,
 } from '../../utils/urlUtils';
-import '../Søk.less';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 export enum Publisert {
