@@ -7,7 +7,7 @@ import {
     oppdaterUrlMedParam,
     QueryParam,
 } from '../utils/urlUtils';
-import './Sorter.less';
+import css from './Sorter.module.css';
 
 export enum Sortering {
     MestRelevant = 'mestRelevant',
@@ -38,7 +38,7 @@ const Sorter: FunctionComponent = () => {
     };
 
     return (
-        <Select className="sorter" label="Sorter" defaultValue={valgt} onChange={onOptionValgt}>
+        <Select className={css.sorter} label="Sorter" defaultValue={valgt} onChange={onOptionValgt}>
             {Object.values(Sortering).map((sortering) => (
                 <option key={sortering} value={sortering}>
                     {labels[sortering]}
