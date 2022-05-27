@@ -8,6 +8,7 @@ import {
 import { useHistory, useLocation } from 'react-router';
 import Søkefane from './Søkefane';
 import { Tabs } from '@navikt/ds-react';
+import './Søkefaner.less';
 
 export enum Fane {
     Alle = 'alle',
@@ -41,7 +42,7 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     };
 
     return (
-        <Tabs value={aktivFane} onChange={onChange}>
+        <Tabs className="søkefaner" value={aktivFane} onChange={onChange}>
             <Tabs.List>
                 <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle?.doc_count ?? 0} />
                 {hentSøkekriterier(search).tekst &&

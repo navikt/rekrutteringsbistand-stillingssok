@@ -38,14 +38,9 @@ const Annonsestatus: FunctionComponent = () => {
     };
 
     return (
-        <CheckboxGroup legend="Status" className="søk__avstand">
+        <CheckboxGroup legend="Status" className="søk__avstand" value={Array.from(valgteStatuser)}>
             {Object.values(Status).map((statusValue) => (
-                <Checkbox
-                    key={statusValue}
-                    value={statusValue}
-                    checked={valgteStatuser.has(statusValue)}
-                    onChange={onAnnonsestatusChange}
-                >
+                <Checkbox key={statusValue} value={statusValue} onChange={onAnnonsestatusChange}>
                     {statusValue[0].toUpperCase() + statusValue.substring(1)}
                 </Checkbox>
             ))}

@@ -66,14 +66,10 @@ const Inkludering: FunctionComponent = () => {
 
     return (
         <Filtergruppe tittel="Inkludering">
-            <CheckboxGroup legend="Velg kategori">
+            <CheckboxGroup legend="Velg kategori" value={Array.from(valgteHovedtags)}>
                 {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
                     <Fragment key={gruppeMedTags.hovedtag}>
-                        <Checkbox
-                            value={gruppeMedTags.hovedtag}
-                            checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
-                            onChange={onHovedtagChange}
-                        >
+                        <Checkbox value={gruppeMedTags.hovedtag} onChange={onHovedtagChange}>
                             {visningsnavnForFilter[gruppeMedTags.hovedtag]}
                         </Checkbox>
 
@@ -83,12 +79,12 @@ const Inkludering: FunctionComponent = () => {
                                     hideLegend
                                     className="søk__indentert-checkboxgruppe"
                                     legend={`Velg kategorier under ${gruppeMedTags.hovedtag}`}
+                                    value={Array.from(valgteSubtags)}
                                 >
                                     {gruppeMedTags.subtags.map((subtag) => (
                                         <Checkbox
                                             key={subtag}
                                             value={subtag}
-                                            checked={valgteSubtags.has(subtag)}
                                             onChange={onSubtagChange}
                                         >
                                             {visningsnavnForFilter[subtag]}

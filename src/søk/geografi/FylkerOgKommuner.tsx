@@ -60,14 +60,10 @@ const FylkerOgKommuner: FunctionComponent = () => {
 
     return (
         <Filtergruppe tittel="Geografi">
-            <CheckboxGroup legend="Velg fylke eller kommune">
+            <CheckboxGroup legend="Velg fylke eller kommune" value={Array.from(valgteFylker)}>
                 {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                     <Fragment key={fylke}>
-                        <Checkbox
-                            value={fylke}
-                            checked={valgteFylker.has(fylke)}
-                            onChange={onFylkeChange}
-                        >
+                        <Checkbox value={fylke} onChange={onFylkeChange}>
                             {fylke}
                         </Checkbox>
                         {valgteFylker.has(fylke) && kommuner.length > 0 && (
@@ -75,12 +71,12 @@ const FylkerOgKommuner: FunctionComponent = () => {
                                 hideLegend
                                 className="søk__indentert-checkboxgruppe"
                                 legend={`Velg kommuner i ${fylke}`}
+                                value={Array.from(valgteKommuner)}
                             >
                                 {kommuner.map((kommune) => (
                                     <Checkbox
                                         key={kommune.kommune}
                                         value={kommune.kommune}
-                                        checked={valgteKommuner.has(kommune.kommune)}
                                         onChange={onKommuneChange}
                                     >
                                         {kommune.label}

@@ -50,15 +50,16 @@ const Søkefelt: FunctionComponent = () => {
     };
 
     return (
-        <Search
-            label="Søk etter stillinger"
-            description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
-            value={input}
-            hideLabel={false}
-            onChange={onInputChange}
-            onSubmit={onSubmit}
-            onClear={() => onInputChange('')}
-        />
+        <form onSubmit={onSubmit}>
+            <Search
+                label="Søk etter stillinger"
+                description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
+                value={input}
+                hideLabel={false}
+                onChange={onInputChange}
+                onClear={() => onInputChange('')}
+            />
+        </form>
     );
 };
 
