@@ -1,4 +1,4 @@
-import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { hentStandardsøk, oppdaterStandardsøk as oppdaterStandardsøkMedApi } from './api/api';
 
 type StandardsøkNettressurs =
@@ -21,7 +21,11 @@ const StandardsøkContext = createContext<{
     oppdaterStandardsøk: () => Promise.resolve(),
 });
 
-export const StandardsøkProvider: FunctionComponent = (props) => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+export const StandardsøkProvider = ({ children }: Props) => {
     const [standardsøk, setStandardsøk] = useState<StandardsøkNettressurs>({
         harHentetStandardsøk: false,
     });
@@ -70,9 +74,7 @@ export const StandardsøkProvider: FunctionComponent = (props) => {
         oppdaterStandardsøk,
     };
 
-    return (
-        <StandardsøkContext.Provider value={context}>{props.children}</StandardsøkContext.Provider>
-    );
+    return <StandardsøkContext.Provider value={context}>{children}</StandardsøkContext.Provider>;
 };
 
 const useStandardsøk = () => useContext(StandardsøkContext);

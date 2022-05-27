@@ -1,11 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron';
-import ReactPaginate from 'react-paginate';
+import { useHistory } from 'react-router-dom';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
 import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../utils/urlUtils';
-import { useHistory } from 'react-router-dom';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
+import { Pagination } from '@navikt/ds-react';
 import './Paginering.less';
 
 type Props = {
@@ -53,25 +52,14 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
     }
 
     return (
-        <ReactPaginate
-            forcePage={side - 1}
-            pageCount={antallSider}
-            pageRangeDisplayed={
+        <Pagination
+            className="paginering"
+            page={side}
+            siblingCount={
                 enhetstype === Enhetstype.Mobil ? 1 : enhetstype === Enhetstype.Tablet ? 3 : 5
             }
-            marginPagesDisplayed={1}
-            onPageChange={({ selected }) => onPageChange(selected + 1)}
-            containerClassName="paginering typo-element"
-            pageClassName="paginering__side"
-            breakClassName="paginering__side"
-            breakLinkClassName="paginering__side-lenke paginering__side-lenke--break"
-            activeClassName="paginering__side--aktiv"
-            pageLinkClassName="paginering__side-lenke"
-            activeLinkClassName="paginering__side-lenke--aktiv"
-            nextLabel={<HoyreChevron />}
-            previousLabel={<VenstreChevron />}
-            nextLinkClassName="paginering__side-lenke"
-            previousLinkClassName="paginering__side-lenke"
+            count={antallSider}
+            onPageChange={(page) => onPageChange(page)}
         />
     );
 };

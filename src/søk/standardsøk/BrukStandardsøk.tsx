@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Element } from 'nav-frontend-typografi';
 import { QueryParam } from '../../utils/urlUtils';
 import useStandardsøk from '../../StandardsøkContext';
+import { Label } from '@navikt/ds-react';
 import './BrukStandardsøk.less';
 
 const BrukStandardsøk: FunctionComponent = () => {
@@ -22,9 +22,9 @@ const BrukStandardsøk: FunctionComponent = () => {
                     brukStandardsøk: true,
                 },
             }}
-            className="bruk-standardsøk lenke"
+            className="bruk-standardsøk navds-link"
         >
-            <Element>Bruk standardsøk</Element>
+            <Label>Bruk standardsøk</Label>
         </Link>
     ) : (
         <div />

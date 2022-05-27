@@ -1,5 +1,5 @@
+import { Tabs } from '@navikt/ds-react';
 import React, { FunctionComponent } from 'react';
-import { Tab } from '@reach/tabs';
 import { Fane } from './Søkefaner';
 
 type Props = {
@@ -9,9 +9,11 @@ type Props = {
 
 const Søkefane: FunctionComponent<Props> = ({ fane, antallTreff }) => {
     return (
-        <Tab className="søkefaner__fane" key={fane}>
-            {visningsnavn(fane)} ({`${antallTreff?.toLocaleString('nb-NO') ?? 0}`})
-        </Tab>
+        <Tabs.Tab
+            className="søkefaner__fane"
+            value={fane}
+            label={`${visningsnavn(fane)} (${antallTreff?.toLocaleString('nb-NO') ?? 0})`}
+        />
     );
 };
 

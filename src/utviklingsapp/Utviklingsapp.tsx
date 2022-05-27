@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { Link, Route, Router, Switch } from 'react-router-dom';
+import { Heading } from '@navikt/ds-react';
+import { Link, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import { cssScopeForApp } from '../index';
 import App from '../App';
 import './Utviklingsapp.less';
+import Router from '../Router';
 
 const history = createBrowserHistory();
 
@@ -26,9 +27,11 @@ const Utviklingsapp: FunctionComponent = () => {
         <div className={cssScopeForApp}>
             <Router history={history}>
                 <header className="utviklingsapp">
-                    <Systemtittel>Utviklingsapp for rekrutteringsbistand-stillingssok</Systemtittel>
+                    <Heading size="medium" level="1">
+                        Utviklingsapp for rekrutteringsbistand-stillingssok
+                    </Heading>
                     <Link
-                        className="lenke"
+                        className="navds-link"
                         to={{
                             search: '?standardsok',
                         }}

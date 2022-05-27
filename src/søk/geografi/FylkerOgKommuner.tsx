@@ -1,12 +1,10 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
+import Filtergruppe from '../Filtergruppe';
 
 const FylkerOgKommuner: FunctionComponent = () => {
     const history = useHistory();
@@ -61,46 +59,37 @@ const FylkerOgKommuner: FunctionComponent = () => {
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Geografi"
-            className="søk__ekspanderbart-panel"
-        >
-            <SkjemaGruppe legend={<Element>Velg fylke eller kommune</Element>}>
+        <Filtergruppe tittel="Geografi">
+            <CheckboxGroup legend="Velg fylke eller kommune" value={Array.from(valgteFylker)}>
                 {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                     <Fragment key={fylke}>
-                        <Checkbox
-                            className="søk__checkbox"
-                            label={fylke}
-                            value={fylke}
-                            checked={valgteFylker.has(fylke)}
-                            onChange={onFylkeChange}
-                        />
+                        <Checkbox value={fylke} onChange={onFylkeChange}>
+                            {fylke}
+                        </Checkbox>
                         {valgteFylker.has(fylke) && kommuner.length > 0 && (
-                            <fieldset>
-                                <legend className="kun-skjermlesere">
-                                    Velg kommuner i {fylke}
-                                </legend>
+                            <CheckboxGroup
+                                hideLegend
+                                className="søk__indentert-checkboxgruppe"
+                                legend={`Velg kommuner i ${fylke}`}
+                                value={Array.from(valgteKommuner)}
+                            >
                                 {kommuner.map((kommune) => (
                                     <Checkbox
-                                        className="søk__checkbox søk__checkbox--indentert"
                                         key={kommune.kommune}
-                                        label={kommune.label}
                                         value={kommune.kommune}
-                                        checked={valgteKommuner.has(kommune.kommune)}
                                         onChange={onKommuneChange}
-                                    />
+                                    >
+                                        {kommune.label}
+                                    </Checkbox>
                                 ))}
-                            </fieldset>
+                            </CheckboxGroup>
                         )}
                     </Fragment>
                 ))}
-            </SkjemaGruppe>
-        </Ekspanderbartpanel>
+            </CheckboxGroup>
+        </Filtergruppe>
     );
 };
-
-const enhetstype = hentEnhetstype();
 
 type KommuneMedFylke = {
     kommune: string;

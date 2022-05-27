@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 export enum Status {
     Publisert = 'publisert',
@@ -39,18 +38,13 @@ const Annonsestatus: FunctionComponent = () => {
     };
 
     return (
-        <SkjemaGruppe legend={<Element>Status</Element>}>
+        <CheckboxGroup legend="Status" className="søk__avstand" value={Array.from(valgteStatuser)}>
             {Object.values(Status).map((statusValue) => (
-                <Checkbox
-                    key={statusValue}
-                    className="søk__checkbox"
-                    label={statusValue[0].toUpperCase() + statusValue.substring(1)}
-                    value={statusValue}
-                    checked={valgteStatuser.has(statusValue)}
-                    onChange={onAnnonsestatusChange}
-                />
+                <Checkbox key={statusValue} value={statusValue} onChange={onAnnonsestatusChange}>
+                    {statusValue[0].toUpperCase() + statusValue.substring(1)}
+                </Checkbox>
             ))}
-        </SkjemaGruppe>
+        </CheckboxGroup>
     );
 };
 

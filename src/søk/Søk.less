@@ -1,9 +1,11 @@
-@import '../variabler.less';
-
 .søk {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    .navds-checkbox__label {
+        padding: var(--navds-spacing-1) 0;
+    }
 
     &__lenker-over-søk {
         display: flex;
@@ -11,28 +13,21 @@
         margin-bottom: 1.75rem;
     }
 
-    &__ekspanderbart-panel {
+    &__filtergruppe-header {
+        background-color: white !important;
+    }
+
+    &__filtergruppe {
         margin-top: 1rem;
+    }
 
-        .skjemagruppe {
-            &:not(:last-child) {
-                margin-bottom: 1.5rem;
-            }
-
-            &__legend {
-                margin-bottom: 0.5rem;
-            }
+    &__indentert-checkboxgruppe {
+        .navds-checkboxes {
+            margin-left: 2rem;
         }
     }
 
-    &__checkbox {
-        &.skjemaelement {
-            margin-bottom: 0.5rem;
-        }
-
-        &.søk__checkbox--indentert.skjemaelement {
-            margin-left: 2rem;
-            margin-bottom: 0.5rem;
-        }
+    &__avstand.navds-fieldset {
+        margin-bottom: 1.25rem;
     }
 }

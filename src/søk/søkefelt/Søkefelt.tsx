@@ -1,6 +1,4 @@
-import React, { ChangeEvent, FormEvent, FunctionComponent, useEffect, useState } from 'react';
-import { Søkeknapp } from 'nav-frontend-ikonknapper';
-import { Input } from 'nav-frontend-skjema';
+import React, { FormEvent, FunctionComponent, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
     hentSøkekriterier,
@@ -10,6 +8,7 @@ import {
     QueryParam,
 } from '../../utils/urlUtils';
 import './Søkefelt.less';
+import { Search } from '@navikt/ds-react';
 
 const Søkefelt: FunctionComponent = () => {
     const history = useHistory();
@@ -22,8 +21,8 @@ const Søkefelt: FunctionComponent = () => {
         }
     }, [search, state]);
 
-    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInput(event.target.value);
+    const onInputChange = (input: string) => {
+        setInput(input);
     };
 
     const onSubmit = (event: FormEvent) => {
@@ -51,15 +50,15 @@ const Søkefelt: FunctionComponent = () => {
     };
 
     return (
-        <form className="søkefelt" onSubmit={onSubmit}>
-            <Input
+        <form onSubmit={onSubmit}>
+            <Search
                 label="Søk etter stillinger"
                 description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
                 value={input}
+                hideLabel={false}
                 onChange={onInputChange}
-                className="søkefelt__input"
+                onClear={() => onInputChange('')}
             />
-            <Søkeknapp type="flat" className="søkefelt__søkeknapp" htmlType="submit" />
         </form>
     );
 };

@@ -1,35 +1,22 @@
 .lagre-standardsøk {
-    margin-bottom: 1.75rem;
-    height: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 
-    &__knapp {
-        text-transform: none;
-    }
-
-    &.knapp svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        margin-right: 0.75rem;
-    }
-
-    &__alertstripe {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-
-        .alertstripe__tekst {
-            display: flex;
-            align-items: center;
-            flex: unset;
-        }
-
-        .hjelpetekst__innhold {
-            max-width: 18rem;
+    &__lagre {
+        &.navds-button {
+            margin-bottom: 1.5rem;
         }
     }
 
-    &__hjelpetekst {
-        margin-left: 0.75rem;
+    &__er-lagret {
+        padding: 0.75rem !important;
+        margin-bottom: 0.75rem;
+
+        &.navds-alert {
+            background-color: #cde7d8;
+            border-radius: 0.25rem;
+        }
     }
 }

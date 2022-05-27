@@ -1,6 +1,4 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
     hentSøkekriterier,
@@ -9,6 +7,7 @@ import {
     QueryParam,
 } from '../../utils/urlUtils';
 import '../Søk.less';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 export enum Publisert {
     Intern = 'intern',
@@ -44,18 +43,17 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
     };
 
     return (
-        <SkjemaGruppe legend={<Element>Hvor er annonsen synlig?</Element>}>
+        <CheckboxGroup legend="Hvor er annonsen synlig?" value={Array.from(publiseringssteder)}>
             {Object.values(Publisert).map((publisertValue) => (
                 <Checkbox
                     key={publisertValue}
-                    className="søk__checkbox"
-                    label={labels[publisertValue]}
                     value={publisertValue}
-                    checked={publiseringssteder.has(publisertValue)}
                     onChange={onPubliseringsstederChange}
-                />
+                >
+                    {labels[publisertValue]}
+                </Checkbox>
             ))}
-        </SkjemaGruppe>
+        </CheckboxGroup>
     );
 };
 

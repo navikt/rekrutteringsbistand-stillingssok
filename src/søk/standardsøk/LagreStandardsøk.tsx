@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Knapp } from 'nav-frontend-knapper';
 import { useLocation } from 'react-router-dom';
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { SaveFile } from '@navikt/ds-icons';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { SaveFile, Success } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
 import './LagreStandardsøk.less';
 
@@ -20,22 +17,27 @@ const LagreStandardsøk: FunctionComponent = () => {
         standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
 
     return aktivtSøkErStandardsøk ? (
-        <AlertStripeSuksess className="lagre-standardsøk lagre-standardsøk__alertstripe">
+        <Button
+            disabled
+            variant="secondary"
+            className="lagre-standardsøk lagre-standardsøk__lagre"
+            aria-describedby="lagre-standardsok-beskrivelse"
+        >
+            <Success />
             Lagret som standardsøk
-            <Hjelpetekst className="lagre-standardsøk__hjelpetekst" type={PopoverOrientering.Under}>
-                Hver gang du benytter søket vil det være ferdig utfylt med kriteriene du har valgt å
-                lagre som standardsøk.
-            </Hjelpetekst>
-        </AlertStripeSuksess>
+        </Button>
     ) : (
-        <Knapp
+        <Button
+            variant="secondary"
+            loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
-            className=" lagre-standardsøk lagre-standardsøk__knapp"
+            className="lagre-standardsøk lagre-standardsøk__lagre"
+            aria-describedby="lagre-standardsok-beskrivelse"
         >
-            <SaveFile className="lagre-standardsøk__lagre-ikon" />
+            <SaveFile />
             Lagre som standardsøk
-        </Knapp>
+        </Button>
     );
 };
 

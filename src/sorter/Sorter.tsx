@@ -1,4 +1,4 @@
-import { Select } from 'nav-frontend-skjema';
+import { Select } from '@navikt/ds-react';
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {

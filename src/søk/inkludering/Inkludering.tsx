@@ -1,12 +1,10 @@
 import React, { FunctionComponent, ChangeEvent, Fragment, useState, useEffect } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Enhetstype, hentEnhetstype } from '../../utils/skjermUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { useHistory, useLocation } from 'react-router-dom';
 import { sendEvent } from '../../amplitude';
-import { Element } from 'nav-frontend-typografi';
+import Filtergruppe from '../Filtergruppe';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 const Inkludering: FunctionComponent = () => {
     const history = useHistory();
@@ -67,49 +65,39 @@ const Inkludering: FunctionComponent = () => {
     };
 
     return (
-        <Ekspanderbartpanel
-            apen={enhetstype === Enhetstype.Desktop}
-            tittel="Inkludering"
-            className="søk__ekspanderbart-panel"
-        >
-            <SkjemaGruppe legend={<Element>Velg kategori</Element>}>
+        <Filtergruppe tittel="Inkludering">
+            <CheckboxGroup legend="Velg kategori" value={Array.from(valgteHovedtags)}>
                 {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
                     <Fragment key={gruppeMedTags.hovedtag}>
-                        <Checkbox
-                            className="søk__checkbox"
-                            label={visningsnavnForFilter[gruppeMedTags.hovedtag]}
-                            value={gruppeMedTags.hovedtag}
-                            checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
-                            onChange={onHovedtagChange}
-                        />
+                        <Checkbox value={gruppeMedTags.hovedtag} onChange={onHovedtagChange}>
+                            {visningsnavnForFilter[gruppeMedTags.hovedtag]}
+                        </Checkbox>
 
                         {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
                             gruppeMedTags.subtags.length > 0 && (
-                                <fieldset>
-                                    <legend className="kun-skjermlesere">
-                                        Velg kategorier under {gruppeMedTags.hovedtag}
-                                    </legend>
-
+                                <CheckboxGroup
+                                    hideLegend
+                                    className="søk__indentert-checkboxgruppe"
+                                    legend={`Velg kategorier under ${gruppeMedTags.hovedtag}`}
+                                    value={Array.from(valgteSubtags)}
+                                >
                                     {gruppeMedTags.subtags.map((subtag) => (
                                         <Checkbox
-                                            className="søk__checkbox søk__checkbox--indentert"
                                             key={subtag}
-                                            label={visningsnavnForFilter[subtag]}
                                             value={subtag}
-                                            checked={valgteSubtags.has(subtag)}
                                             onChange={onSubtagChange}
-                                        />
+                                        >
+                                            {visningsnavnForFilter[subtag]}
+                                        </Checkbox>
                                     ))}
-                                </fieldset>
+                                </CheckboxGroup>
                             )}
                     </Fragment>
                 ))}
-            </SkjemaGruppe>
-        </Ekspanderbartpanel>
+            </CheckboxGroup>
+        </Filtergruppe>
     );
 };
-
-const enhetstype = hentEnhetstype();
 
 const deaktiverSubtagsUnderHovedtag = (subtags: string[], hovedtag: string): string[] => {
     return subtags.filter((subtag) => subtag.split('__')[0] !== hovedtag);
