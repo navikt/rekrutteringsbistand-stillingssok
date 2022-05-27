@@ -7,6 +7,7 @@ import {
     oppdaterUrlMedParam,
     QueryParam,
 } from '../utils/urlUtils';
+import './Sorter.less';
 
 export enum Sortering {
     MestRelevant = 'mestRelevant',

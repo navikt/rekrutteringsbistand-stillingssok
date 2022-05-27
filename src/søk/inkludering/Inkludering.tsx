@@ -70,7 +70,6 @@ const Inkludering: FunctionComponent = () => {
                 {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
                     <Fragment key={gruppeMedTags.hovedtag}>
                         <Checkbox
-                            size="small"
                             value={gruppeMedTags.hovedtag}
                             checked={valgteHovedtags.has(gruppeMedTags.hovedtag)}
                             onChange={onHovedtagChange}
@@ -87,7 +86,6 @@ const Inkludering: FunctionComponent = () => {
                                 >
                                     {gruppeMedTags.subtags.map((subtag) => (
                                         <Checkbox
-                                            size="small"
                                             key={subtag}
                                             value={subtag}
                                             checked={valgteSubtags.has(subtag)}

@@ -64,7 +64,6 @@ const FylkerOgKommuner: FunctionComponent = () => {
                 {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                     <Fragment key={fylke}>
                         <Checkbox
-                            size="small"
                             value={fylke}
                             checked={valgteFylker.has(fylke)}
                             onChange={onFylkeChange}
@@ -79,7 +78,6 @@ const FylkerOgKommuner: FunctionComponent = () => {
                             >
                                 {kommuner.map((kommune) => (
                                     <Checkbox
-                                        size="small"
                                         key={kommune.kommune}
                                         value={kommune.kommune}
                                         checked={valgteKommuner.has(kommune.kommune)}

@@ -46,7 +46,6 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
         <CheckboxGroup legend="Hvor er annonsen synlig?">
             {Object.values(Publisert).map((publisertValue) => (
                 <Checkbox
-                    size="small"
                     key={publisertValue}
                     value={publisertValue}
                     checked={publiseringssteder.has(publisertValue)}
