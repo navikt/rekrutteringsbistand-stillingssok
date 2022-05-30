@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { SaveFile, Success } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
-import './LagreStandardsøk.less';
+import css from './LagreStandardsøk.module.css';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
@@ -20,7 +20,7 @@ const LagreStandardsøk: FunctionComponent = () => {
         <Button
             disabled
             variant="secondary"
-            className="lagre-standardsøk lagre-standardsøk__lagre"
+            className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
         >
             <Success />
@@ -32,7 +32,7 @@ const LagreStandardsøk: FunctionComponent = () => {
             loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
-            className="lagre-standardsøk lagre-standardsøk__lagre"
+            className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
         >
             <SaveFile />

@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { QueryParam } from '../../utils/urlUtils';
 import useStandardsøk from '../../StandardsøkContext';
 import { Label } from '@navikt/ds-react';
-import './BrukStandardsøk.less';
+import css from './BrukStandardsøk.module.css';
+import classNames from 'classnames';
 
 const BrukStandardsøk: FunctionComponent = () => {
     const { search } = useLocation();
@@ -22,7 +23,7 @@ const BrukStandardsøk: FunctionComponent = () => {
                     brukStandardsøk: true,
                 },
             }}
-            className="bruk-standardsøk navds-link"
+            className={classNames(css.brukStandardsøk, 'navds-link')}
         >
             <Label>Bruk standardsøk</Label>
         </Link>

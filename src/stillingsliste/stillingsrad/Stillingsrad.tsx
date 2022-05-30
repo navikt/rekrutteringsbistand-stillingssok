@@ -10,8 +10,9 @@ import {
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import { hentHovedtags } from '../../søk/inkludering/tags';
-import './Stillingsrad.less';
 import { Link } from 'react-router-dom';
+import css from './Stillingsrad.module.css';
+import classNames from 'classnames';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
@@ -33,52 +34,45 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
     );
 
     return (
-        <li className="stillingsrad">
-            <div className="stillingsrad__info">
-                <div className="stillingsrad__etiketter-og-dato">
-                    <div className="stillingsrad__etiketter">
+        <li className={css.stillingsrad}>
+            <div className={css.info}>
+                <div className={css.etiketterOgDato}>
+                    <div className={css.etiketter}>
                         {registrertMedInkluderingsmulighet && (
                             <Tag
                                 size="small"
                                 variant="info"
-                                className="stillingsrad__etikett stillingsrad__etikett--inkludering"
+                                className={classNames(css.etikett, css.etikettInkludering)}
                             >
                                 Inkludering
                             </Tag>
                         )}
                         {stilling.source === 'DIR' && (
                             <Tag
-                                variant="info"
                                 size="small"
-                                className="stillingsrad__etikett stillingsrad__etikett--intern"
+                                variant="info"
+                                className={classNames(css.etikett, css.etikettIntern)}
                             >
                                 Intern
                             </Tag>
                         )}
                         {stilling.privacy === 'SHOW_ALL' && (
                             <Tag
-                                variant="info"
                                 size="small"
-                                className="stillingsrad__etikett stillingsrad__etikett--arbeidsplassen"
+                                variant="info"
+                                className={classNames(css.etikett, css.etikettArbeidsplassen)}
                             >
                                 Arbeidsplassen
                             </Tag>
                         )}
                     </div>
-                    <Detail size="small" className="stillingsrad__opprettet">
-                        {konverterTilPresenterbarDato(stilling.published)}
-                    </Detail>
+                    <Detail size="small">{konverterTilPresenterbarDato(stilling.published)}</Detail>
                 </div>
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
-                <div className="stillingsrad__tittel">
-                    <Link
-                        className="navds-link stillingsrad__lenke-til-stilling"
-                        to={lagUrlTilStilling(stilling)}
-                    >
-                        {stilling.title}
-                    </Link>
-                </div>
-                <span className="stillingsrad__stillingsinfo">
+                <Link className={classNames(css.lenkeTilStilling)} to={lagUrlTilStilling(stilling)}>
+                    {stilling.title}
+                </Link>
+                <span className={css.stillingsinfo}>
                     <span>
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
                             'Ingen arbeidssted'}
@@ -97,7 +91,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     {erInternStilling && eierNavn && <span>Eier: {eierNavn}</span>}
                 </span>
             </div>
-            <div className="stillingsrad__kandidatlisteknapp">
+            <div className={css.kandidatlisteknapp}>
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
                         <List className="navds-link" />

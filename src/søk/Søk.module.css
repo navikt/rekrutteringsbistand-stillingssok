@@ -1,0 +1,27 @@
+.søk {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.søk :global(.navds-checkbox__label) {
+    padding: var(--navds-spacing-2) 0;
+}
+
+.lenkerOverSøk {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+}
+
+.filtergruppe {
+    margin-top: 1rem;
+}
+
+.indentertCheckboxgruppe :global(.navds-checkboxes) {
+    margin-left: 2rem;
+}
+
+.avstand:global(.navds-fieldset) {
+    margin-bottom: 1.25rem;
+}

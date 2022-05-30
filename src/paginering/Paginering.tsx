@@ -5,7 +5,7 @@ import { maksAntallTreffPerSøk } from '../api/queries/queries';
 import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../utils/urlUtils';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
 import { Pagination } from '@navikt/ds-react';
-import './Paginering.less';
+import css from './Paginering.module.css';
 
 type Props = {
     totaltAntallTreff: number;
@@ -53,7 +53,7 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
 
     return (
         <Pagination
-            className="paginering"
+            className={css.paginering}
             page={side}
             siblingCount={
                 enhetstype === Enhetstype.Mobil ? 1 : enhetstype === Enhetstype.Tablet ? 3 : 5

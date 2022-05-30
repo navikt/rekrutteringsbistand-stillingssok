@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { sendEvent } from '../../amplitude';
 import Filtergruppe from '../Filtergruppe';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import css from '../Søk.module.css';
 
 const Inkludering: FunctionComponent = () => {
     const history = useHistory();
@@ -77,7 +78,7 @@ const Inkludering: FunctionComponent = () => {
                             gruppeMedTags.subtags.length > 0 && (
                                 <CheckboxGroup
                                     hideLegend
-                                    className="søk__indentert-checkboxgruppe"
+                                    className={css.indentertCheckboxgruppe}
                                     legend={`Velg kategorier under ${gruppeMedTags.hovedtag}`}
                                     value={Array.from(valgteSubtags)}
                                 >

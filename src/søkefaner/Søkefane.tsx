@@ -10,7 +10,6 @@ type Props = {
 const Søkefane: FunctionComponent<Props> = ({ fane, antallTreff }) => {
     return (
         <Tabs.Tab
-            className="søkefaner__fane"
             value={fane}
             label={`${visningsnavn(fane)} (${antallTreff?.toLocaleString('nb-NO') ?? 0})`}
         />

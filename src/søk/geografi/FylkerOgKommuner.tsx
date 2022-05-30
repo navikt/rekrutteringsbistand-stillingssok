@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 import Filtergruppe from '../Filtergruppe';
+import css from '../Søk.module.css';
 
 const FylkerOgKommuner: FunctionComponent = () => {
     const history = useHistory();
@@ -69,7 +70,7 @@ const FylkerOgKommuner: FunctionComponent = () => {
                         {valgteFylker.has(fylke) && kommuner.length > 0 && (
                             <CheckboxGroup
                                 hideLegend
-                                className="søk__indentert-checkboxgruppe"
+                                className={css.indentertCheckboxgruppe}
                                 legend={`Velg kommuner i ${fylke}`}
                                 value={Array.from(valgteKommuner)}
                             >

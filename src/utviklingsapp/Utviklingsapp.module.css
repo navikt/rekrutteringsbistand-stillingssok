@@ -6,8 +6,8 @@
     padding: 1rem;
     color: var(--navds-global-color-gray-400);
     font-family: 'Source Sans Pro';
+}
 
-    a {
-        margin-left: 1rem;
-    }
+.utviklingsapp a {
+    margin-left: 1rem;
 }

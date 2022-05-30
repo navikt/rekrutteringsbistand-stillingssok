@@ -22,7 +22,7 @@ import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useStandardsøk from './StandardsøkContext';
 import { Heading, Loader } from '@navikt/ds-react';
-import './App.less';
+import css from './App.module.css';
 
 export type Søkekriterier = {
     side: number;
@@ -105,18 +105,18 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
     }, [search, history, standardsøk]);
 
     return (
-        <div className="app">
-            <aside className="app__sidepanel">
+        <div className={css.app}>
+            <aside className={css.sidepanel}>
                 <Søk />
             </aside>
 
-            <main className="app__søkeresultat">
+            <main className={css.sokeresultat}>
                 {respons ? (
                     <>
-                        <Heading level="2" size="medium" className="app__antall-stillinger">
+                        <Heading level="2" size="medium" className={css.antallStillinger}>
                             {formaterAntallAnnonser(antallTreff)}
                         </Heading>
-                        <div className="app__antall-og-sortering">
+                        <div className={css.antallOgSortering}>
                             <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                             <Sorter />
                         </div>
@@ -124,7 +124,7 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
                         <Paginering totaltAntallTreff={antallTreff} />
                     </>
                 ) : (
-                    <div className="app__spinner">
+                    <div className={css.spinner}>
                         <Loader fr="" />
                     </div>
                 )}

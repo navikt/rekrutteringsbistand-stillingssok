@@ -6,12 +6,12 @@ import Inkludering from './inkludering/Inkludering';
 import SlettKriterier from './slett-kriterier/SlettKriterier';
 import LagreStandardsøk from './standardsøk/LagreStandardsøk';
 import BrukStandardsøk from './standardsøk/BrukStandardsøk';
-import './Søk.less';
+import css from './Søk.module.css';
 
 const Søk: FunctionComponent = () => {
     return (
-        <div className="søk">
-            <div className="søk__lenker-over-søk">
+        <div className={css.søk}>
+            <div className={css.lenkerOverSøk}>
                 <BrukStandardsøk />
                 <SlettKriterier />
             </div>

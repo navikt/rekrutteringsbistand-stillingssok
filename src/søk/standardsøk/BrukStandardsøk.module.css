@@ -1,0 +1,7 @@
+.brukStandardsøk:global(.navds-link) {
+    text-decoration: none;
+}
+
+.brukStandardsøk:global(.navds-link):hover {
+    text-decoration: underline;
+}
