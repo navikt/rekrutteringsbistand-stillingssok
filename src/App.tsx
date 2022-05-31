@@ -105,7 +105,7 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
     }, [search, history, standardsøk]);
 
     return (
-        <div className={css.app}>
+        <div className={css.stillingssøk}>
             <aside className={css.sidepanel}>
                 <Søk />
             </aside>

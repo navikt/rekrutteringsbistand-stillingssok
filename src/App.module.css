@@ -1,4 +1,4 @@
-.app {
+.stillingssøk {
     display: grid;
     row-gap: 2rem;
 
@@ -8,13 +8,13 @@
 }
 
 @media (min-width: 768px) {
-    .app {
+    .stillingssøk {
         padding: 0 2rem;
     }
 }
 
 @media (min-width: 992px) {
-    .app {
+    .stillingssøk {
         display: grid;
         grid-template-columns: 19rem 1fr;
         column-gap: 3rem;
@@ -23,7 +23,7 @@
 }
 
 @media (min-width: 1200px) {
-    .app {
+    .stillingssøk {
         column-gap: 5rem;
     }
 }
