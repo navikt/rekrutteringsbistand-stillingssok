@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { erIkkeProd } from '../../utils/featureToggleUtils';
 import Filtergruppe from '../Filtergruppe';
 import Annonsestatus from './Annonsestatus';
 import HvorErAnnonsenPublisert from './HvorErAnnonsenPublisert';
@@ -10,7 +9,7 @@ const OmAnnonsen: FunctionComponent = () => {
         <Filtergruppe tittel="Om annonsen">
             <Annonsestatus />
             <HvorErAnnonsenPublisert />
-            {erIkkeProd && <VisAlleStillingskategorier />}
+            <VisAlleStillingskategorier />
         </Filtergruppe>
     );
 };
