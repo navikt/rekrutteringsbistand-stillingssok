@@ -4,23 +4,29 @@ import { erIkkeProd } from '../../utils/featureToggleUtils';
 export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => {
     if (erIkkeProd) {
         const visAlleStillinger = stillingskategori.has(Stillingskategori.Alle);
+
         if (visAlleStillinger) {
             return [];
         } else {
-            return kunStillingskategoriStilling;
+            return ingenJobbmesserEllerFormidlingsstillinger;
         }
     } else {
         return [];
     }
 };
 
-const kunStillingskategoriStilling = [
+const ingenJobbmesserEllerFormidlingsstillinger = [
     {
         bool: {
-            must: [
+            must_not: [
                 {
                     term: {
-                        'stillingsinfo.stillingskategori': 'STILLING',
+                        'stillingsinfo.stillingskategori': 'FORMIDLING',
+                    },
+                },
+                {
+                    term: {
+                        'stillingsinfo.stillingskategori': 'JOBBMESSE',
                     },
                 },
             ],

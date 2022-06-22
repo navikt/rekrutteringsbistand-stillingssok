@@ -49,7 +49,7 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
     const [respons, setRespons] = useState<Respons | null>(null);
     const { standardsøk } = useStandardsøk();
 
-    const globalAggregering = respons?.aggregations.globalAggregering;
+    const globalAggregering = respons?.aggregations?.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
 
     useEffect(() => {
