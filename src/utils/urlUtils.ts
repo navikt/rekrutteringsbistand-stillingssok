@@ -4,6 +4,7 @@ import { History } from 'history';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Fane } from '../søkefaner/Søkefaner';
+import { Stillingskategori } from '../søk/om-annonsen/VisAlleStillingskategorier';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -12,6 +13,7 @@ export enum QueryParam {
     Fylker = 'fylker',
     Kommuner = 'kommuner',
     Statuser = 'statuser',
+    Stillingskategorier = 'stillingskategori',
     HovedInkluderingTags = 'hovedinkluderingstags',
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
@@ -47,6 +49,9 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
         hovedinkluderingstags: hentSøkekriterie(QueryParam.HovedInkluderingTags),
         subinkluderingstags: hentSøkekriterie(QueryParam.SubInkluderingTags),
         statuser: hentSøkekriterie(QueryParam.Statuser) as Set<Status>,
+        stillingskategorier: hentSøkekriterie(
+            QueryParam.Stillingskategorier
+        ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
         fane: (searchParams.get(QueryParam.Fane) as Fane) ?? Fane.Alle,
     };

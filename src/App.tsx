@@ -22,6 +22,7 @@ import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useStandardsøk from './StandardsøkContext';
 import { Heading, Loader } from '@navikt/ds-react';
+import { Stillingskategori } from './søk/om-annonsen/VisAlleStillingskategorier';
 import css from './App.module.css';
 
 export type Søkekriterier = {
@@ -31,6 +32,7 @@ export type Søkekriterier = {
     fylker: Set<string>;
     kommuner: Set<string>;
     statuser: Set<Status>;
+    stillingskategorier: Set<Stillingskategori>;
     hovedinkluderingstags: Set<string>;
     subinkluderingstags: Set<string>;
     sortering: Sortering;

@@ -7,6 +7,7 @@ import publisert from './publisert';
 import geografi from './geografi';
 import inkludering from './inkludering';
 import søkefelt from './søkefelt';
+import { stillingskategori } from './stillingskategori';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -47,6 +48,7 @@ const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
                 ...status(søkekriterier.statuser),
+                ...stillingskategori(søkekriterier.stillingskategorier),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,
                     søkekriterier.subinkluderingstags
