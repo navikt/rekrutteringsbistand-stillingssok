@@ -1,8 +1,8 @@
 .sorter {
     margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .sorter select {
     min-height: 42px;
-    margin-bottom: 0.75rem;
 }
