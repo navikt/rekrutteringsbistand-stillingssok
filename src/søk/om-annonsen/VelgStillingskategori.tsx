@@ -52,7 +52,7 @@ const VelgStillingskategori = () => {
                 Jobbmesse/jobbtreff
             </Checkbox>
             <Checkbox value={Stillingskategori.Formidling} onChange={onToggle}>
-                Formidlingsstilling
+                Formidling
             </Checkbox>
         </CheckboxGroup>
     );
