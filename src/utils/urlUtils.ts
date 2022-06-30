@@ -4,7 +4,7 @@ import { History } from 'history';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Fane } from '../søkefaner/Søkefaner';
-import { Stillingskategori } from '../søk/om-annonsen/VisAlleStillingskategorier';
+import { Stillingskategori } from '../søk/om-annonsen/VelgStillingskategori';
 
 export enum QueryParam {
     Tekst = 'q',
