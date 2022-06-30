@@ -1,7 +1,7 @@
 import { Stillingskategori } from '../../søk/om-annonsen/VelgStillingskategori';
 
 export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => {
-    const visAlleStillinger = stillingskategori.size === 0;
+    const visAlleStillinger = stillingskategori.size === Object.keys(Stillingskategori).length;
 
     if (visAlleStillinger) {
         return [];
@@ -11,17 +11,43 @@ export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => 
 };
 
 const kunValgteKategorier = (stillingskategori: Set<Stillingskategori>) => {
-    const should = Array.from(stillingskategori).map((kategori) => ({
-        term: {
-            'stillingsinfo.stillingskategori': kategori,
-        },
-    }));
+    if (stillingskategori.size === 0 || stillingskategori.has(Stillingskategori.Stilling)) {
+        const mustNot = [];
 
-    return [
-        {
-            bool: {
-                should,
+        if (!stillingskategori.has(Stillingskategori.Formidling)) {
+            mustNot.push(Stillingskategori.Formidling);
+        }
+
+        if (!stillingskategori.has(Stillingskategori.Jobbmesse)) {
+            mustNot.push(Stillingskategori.Jobbmesse);
+        }
+
+        const skalEkskluderes = mustNot.map((kategori) => ({
+            term: {
+                'stillingsinfo.stillingskategori': kategori,
             },
-        },
-    ];
+        }));
+
+        return [
+            {
+                bool: {
+                    must_not: skalEkskluderes,
+                },
+            },
+        ];
+    } else {
+        const skalInkluderes = Array.from(stillingskategori).map((kategori) => ({
+            term: {
+                'stillingsinfo.stillingskategori': kategori,
+            },
+        }));
+
+        return [
+            {
+                bool: {
+                    should: skalInkluderes,
+                },
+            },
+        ];
+    }
 };
