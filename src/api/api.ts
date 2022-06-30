@@ -11,7 +11,9 @@ if (process.env.REACT_APP_MOCK) {
 export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 
-    if (respons.status === 403) {
+    if (respons.status === 401) {
+        videresendTilInnlogging();
+    } else if (respons.status === 403) {
         throw Error('Er ikke logget inn');
     } else if (respons.status !== 200) {
         throw Error(`Klarte ikke å gjøre et søk. ${logErrorResponse(respons)}`);
@@ -25,7 +27,9 @@ export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
         method: 'GET',
     });
 
-    if (respons.ok) {
+    if (respons.status === 401) {
+        videresendTilInnlogging();
+    } else if (respons.ok) {
         return await respons.json();
     }
 
@@ -37,7 +41,9 @@ export const oppdaterStandardsøk = async (standardsøk: string): Promise<Standa
         søk: standardsøk,
     });
 
-    if (respons.ok) {
+    if (respons.status === 401) {
+        videresendTilInnlogging();
+    } else if (respons.ok) {
         return await respons.json();
     }
 
@@ -60,3 +66,7 @@ const jsonRequest = (url: string, body: object, method: string) =>
             'Content-Type': 'application/json',
         },
     });
+
+const videresendTilInnlogging = () => {
+    window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
+};
