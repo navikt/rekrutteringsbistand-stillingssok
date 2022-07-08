@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Pagination } from '@navikt/ds-react';
 
 import { maksAntallTreffPerSøk } from '../api/queries/queries';
 import { oppdaterUrlMedParam, hentSøkekriterier, QueryParam } from '../utils/urlUtils';
 import { Enhetstype, useEnhetstype } from '../utils/skjermUtils';
-import { Pagination } from '@navikt/ds-react';
+import useNavigering from '../useNavigering';
 import css from './Paginering.module.css';
 
 type Props = {
@@ -12,16 +12,16 @@ type Props = {
 };
 
 const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
-    const history = useHistory();
-    const { search } = history.location;
-    const [side, setSide] = useState<number>(hentSøkekriterier(search).side);
+    const { searchParams, navigate } = useNavigering();
+
+    const [side, setSide] = useState<number>(hentSøkekriterier(searchParams).side);
     const [skalScrolleTilToppen, setSkalScrolleTilToppen] = useState<boolean>(false);
     const enhetstype = useEnhetstype();
 
     useEffect(() => {
-        const sidetall = hentSøkekriterier(search).side;
+        const sidetall = hentSøkekriterier(searchParams).side;
         setSide(sidetall);
-    }, [search]);
+    }, [searchParams]);
 
     useEffect(() => {
         if (skalScrolleTilToppen) {
@@ -36,7 +36,8 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
         setSide(valgtSide);
 
         oppdaterUrlMedParam({
-            history,
+            navigate,
+            searchParams,
             parameter: QueryParam.Side,
             verdi: valgtSide === 1 ? null : valgtSide,
             state: {

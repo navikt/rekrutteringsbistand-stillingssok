@@ -1,14 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { History } from 'history';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { GlobalAggregering, Respons } from './elasticSearchTyper';
-import {
-    hentSøkekriterier,
-    QueryParam,
-    Navigeringsstate,
-    oppdaterUrlMedParam,
-} from './utils/urlUtils';
+import { hentSøkekriterier, QueryParam, oppdaterUrlMedParam } from './utils/urlUtils';
 import { lagQuery, lagQueryPåAnnonsenummer } from './api/queries/queries';
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import { sendEvent } from './amplitude';
@@ -24,6 +19,7 @@ import useStandardsøk from './StandardsøkContext';
 import { Heading, Loader } from '@navikt/ds-react';
 import { Stillingskategori } from './søk/om-annonsen/VelgStillingskategori';
 import css from './App.module.css';
+import useNavigering from './useNavigering';
 
 export type Søkekriterier = {
     side: number;
@@ -44,8 +40,9 @@ export type AppProps = {
     history: History;
 };
 
-const App: FunctionComponent<AppProps> = ({ history }) => {
-    const { search, state: navigeringsstate } = useLocation<Navigeringsstate>();
+const App: FunctionComponent<AppProps> = () => {
+    const { navigate, searchParams, state } = useNavigering();
+
     const [respons, setRespons] = useState<Respons | null>(null);
     const { standardsøk } = useStandardsøk();
 
@@ -53,19 +50,18 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
     const antallTreff = useAntallTreff(globalAggregering);
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(search);
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
         if (skalBrukeStandardsøk) return;
 
-        const søkekriterier = hentSøkekriterier(search);
-        const harByttetSide = navigeringsstate?.harByttetSide;
+        const søkekriterier = hentSøkekriterier(searchParams);
+        const harByttetSide = state?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
             let respons = await søk(lagQuery(søkekriterier));
 
             const fikkIngenTreff =
-                hentAntallTreff(search, respons.aggregations?.globalAggregering) === 0;
+                hentAntallTreff(searchParams, respons.aggregations?.globalAggregering) === 0;
             if (fikkIngenTreff) {
                 respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
@@ -75,36 +71,39 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
 
         if (resetSidetall) {
             oppdaterUrlMedParam({
-                history,
+                navigate,
+                searchParams,
                 parameter: QueryParam.Side,
                 verdi: null,
             });
         } else {
             søkMedQuery();
         }
-    }, [search, history, navigeringsstate]);
+    }, [searchParams, navigate, state]);
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(search);
         const skalBrukeStandardsøk = searchParams.has(QueryParam.Standardsøk);
 
         if (skalBrukeStandardsøk && standardsøk.harHentetStandardsøk) {
             if (standardsøk.standardsøk !== null) {
-                history.replace({
-                    search: standardsøk.standardsøk,
-                    state: {
-                        brukStandardsøk: true,
-                    },
-                });
+                navigate(
+                    { search: standardsøk.standardsøk },
+                    {
+                        replace: true,
+                        state: {
+                            brukStandardsøk: true,
+                        },
+                    }
+                );
             } else {
-                history.replace({ search: defaultValgteKriterier });
+                navigate({ search: defaultValgteKriterier }, { replace: true });
             }
 
             sendEvent('stillingssøk', 'har_lagret_standardsøk', {
                 harLagretStandardsøk: !!standardsøk,
             });
         }
-    }, [search, history, standardsøk]);
+    }, [searchParams, navigate, standardsøk]);
 
     return (
         <div className={css.stillingssøk}>
@@ -135,14 +134,17 @@ const App: FunctionComponent<AppProps> = ({ history }) => {
     );
 };
 
-const hentAntallTreff = (search: string, globalAggregering?: GlobalAggregering): number => {
-    const aktivFane = hentSøkekriterier(search).fane;
+const hentAntallTreff = (
+    searchParams: URLSearchParams,
+    globalAggregering?: GlobalAggregering
+): number => {
+    const aktivFane = hentSøkekriterier(searchParams).fane;
     return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
 };
 
 const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
-    const { search } = useLocation();
-    return hentAntallTreff(search, globalAggregering);
+    const [searchParams] = useSearchParams();
+    return hentAntallTreff(searchParams, globalAggregering);
 };
 
 const formaterAntallAnnonser = (antallAnnonser: number) => {

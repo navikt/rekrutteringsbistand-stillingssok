@@ -1,32 +1,32 @@
 import React, { FunctionComponent, ChangeEvent, Fragment, useState, useEffect } from 'react';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
-import { useHistory, useLocation } from 'react-router-dom';
 import { sendEvent } from '../../amplitude';
 import Filtergruppe from '../Filtergruppe';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import css from '../Søk.module.css';
+import useNavigering from '../../useNavigering';
 
 const Inkludering: FunctionComponent = () => {
-    const history = useHistory();
-    const { search } = useLocation();
+    const { searchParams, navigate } = useNavigering();
 
     const [valgteHovedtags, setValgteHovedtags] = useState<Set<string>>(
-        hentSøkekriterier(search).hovedinkluderingstags
+        hentSøkekriterier(searchParams).hovedinkluderingstags
     );
 
     const [valgteSubtags, setValgteSubtags] = useState<Set<string>>(
-        hentSøkekriterier(search).hovedinkluderingstags
+        hentSøkekriterier(searchParams).hovedinkluderingstags
     );
 
     useEffect(() => {
-        setValgteHovedtags(hentSøkekriterier(search).hovedinkluderingstags);
-        setValgteSubtags(hentSøkekriterier(search).subinkluderingstags);
-    }, [search]);
+        setValgteHovedtags(hentSøkekriterier(searchParams).hovedinkluderingstags);
+        setValgteSubtags(hentSøkekriterier(searchParams).subinkluderingstags);
+    }, [searchParams]);
 
     const oppdaterSøk = (parameter: QueryParam, verdi: string[]) => {
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter,
             verdi,
         });

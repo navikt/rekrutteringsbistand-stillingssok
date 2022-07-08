@@ -1,27 +1,28 @@
 import React, { FunctionComponent } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { QueryParam } from '../../utils/urlUtils';
 import useStandardsøk from '../../StandardsøkContext';
 import { Label } from '@navikt/ds-react';
-import css from './BrukStandardsøk.module.css';
 import classNames from 'classnames';
+import useNavigering from '../../useNavigering';
+import css from './BrukStandardsøk.module.css';
 
 const BrukStandardsøk: FunctionComponent = () => {
-    const { search } = useLocation();
+    const { searchParams } = useNavigering();
     const { standardsøk } = useStandardsøk();
 
     const visBrukStandardsøk =
         standardsøk.harHentetStandardsøk &&
-        standardsøk.standardsøk !== search &&
+        standardsøk.standardsøk !== searchParams.toString() &&
         standardsøk !== null;
 
     return visBrukStandardsøk ? (
         <Link
             to={{
                 search: `?${QueryParam.Standardsøk}`,
-                state: {
-                    brukStandardsøk: true,
-                },
+            }}
+            state={{
+                brukStandardsøk: true,
             }}
             className={classNames(css.brukStandardsøk, 'navds-link')}
         >

@@ -1,12 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-    hentSøkekriterier,
-    Navigeringsstate,
-    oppdaterUrlMedParam,
-    QueryParam,
-} from '../../utils/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import useNavigering from '../../useNavigering';
 
 export enum Publisert {
     Intern = 'intern',
@@ -14,15 +9,15 @@ export enum Publisert {
 }
 
 const HvorErAnnonsenPublisert: FunctionComponent = () => {
-    const history = useHistory();
-    const { search } = useLocation<Navigeringsstate>();
+    const { searchParams, navigate } = useNavigering();
+
     const [publiseringssteder, setPubliseringssteder] = useState<Set<Publisert>>(
-        hentSøkekriterier(search).publisert
+        hentSøkekriterier(searchParams).publisert
     );
 
     useEffect(() => {
-        setPubliseringssteder(hentSøkekriterier(search).publisert);
-    }, [search]);
+        setPubliseringssteder(hentSøkekriterier(searchParams).publisert);
+    }, [searchParams]);
 
     const onPubliseringsstederChange = (event: ChangeEvent<HTMLInputElement>) => {
         const publiseringssted = event.target.value as Publisert;
@@ -35,7 +30,8 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
         }
 
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter: QueryParam.Publisert,
             verdi: Array.from(nyePubliseringssteder),
         });

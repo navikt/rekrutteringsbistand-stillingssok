@@ -7,7 +7,7 @@ import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
 import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import FeilMedApp from './FeilMedApp';
-import Router from './Router';
+import { Router } from 'react-router-dom';
 import '@navikt/ds-css';
 import './index.css';
 
@@ -24,7 +24,7 @@ const skalEksporteres = process.env.REACT_APP_EXPORT || process.env.NODE_ENV ===
 
 const AppMedRouter: FunctionComponent = (props: any) => (
     <Sentry.ErrorBoundary fallback={(error) => <FeilMedApp {...error} />}>
-        <Router history={props.history}>
+        <Router navigator={props.history} location={props.history.location}>
             <App {...props} />
         </Router>
     </Sentry.ErrorBoundary>

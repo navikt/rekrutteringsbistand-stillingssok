@@ -36,9 +36,11 @@ export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
     throw Error(`Klarte ikke å hente standardsøk. ${logErrorResponse(respons)}`);
 };
 
-export const oppdaterStandardsøk = async (standardsøk: string): Promise<StandardsøkDto> => {
+export const oppdaterStandardsøk = async (
+    standardsøk: URLSearchParams
+): Promise<StandardsøkDto> => {
     const respons = await put(`${stillingApi}/standardsok`, {
-        søk: standardsøk,
+        søk: standardsøk.toString(),
     });
 
     if (respons.status === 401) {

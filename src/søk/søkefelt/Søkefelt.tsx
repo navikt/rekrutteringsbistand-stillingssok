@@ -1,24 +1,23 @@
 import React, { FormEvent, FunctionComponent, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import {
     hentSøkekriterier,
-    Navigeringsstate,
     oppdaterUrlMedParam,
     oppdaterUrlMedToParams,
     QueryParam,
 } from '../../utils/urlUtils';
 import { Search } from '@navikt/ds-react';
+import useNavigering from '../../useNavigering';
 
 const Søkefelt: FunctionComponent = () => {
-    const history = useHistory();
-    const { search, state } = useLocation<Navigeringsstate>();
-    const [input, setInput] = useState<string>(hentSøkekriterier(search).tekst);
+    const { searchParams, navigate, state } = useNavigering();
+
+    const [input, setInput] = useState<string>(hentSøkekriterier(searchParams).tekst);
 
     useEffect(() => {
         if (state?.harSlettetKriterier || state?.brukStandardsøk) {
-            setInput(hentSøkekriterier(search).tekst);
+            setInput(hentSøkekriterier(searchParams).tekst);
         }
-    }, [search, state]);
+    }, [searchParams, state]);
 
     const onInputChange = (input: string) => {
         setInput(input);
@@ -29,7 +28,8 @@ const Søkefelt: FunctionComponent = () => {
 
         if (input.length > 0) {
             oppdaterUrlMedParam({
-                history,
+                searchParams,
+                navigate,
                 parameter: QueryParam.Tekst,
                 verdi: input,
             });
@@ -40,7 +40,8 @@ const Søkefelt: FunctionComponent = () => {
 
     const oppdaterTekstOgResetFane = () => {
         oppdaterUrlMedToParams({
-            history,
+            searchParams,
+            navigate,
             parameter: QueryParam.Tekst,
             verdi: input,
             parameter2: QueryParam.Fane,

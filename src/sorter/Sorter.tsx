@@ -1,12 +1,7 @@
 import { Select } from '@navikt/ds-react';
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-    hentSøkekriterier,
-    Navigeringsstate,
-    oppdaterUrlMedParam,
-    QueryParam,
-} from '../utils/urlUtils';
+import useNavigering from '../useNavigering';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 import css from './Sorter.module.css';
 
 export enum Sortering {
@@ -16,22 +11,22 @@ export enum Sortering {
 }
 
 const Sorter: FunctionComponent = () => {
-    const history = useHistory();
-    const { search, state } = useLocation<Navigeringsstate>();
-    const [valgt, setValgt] = useState<Sortering>(hentSøkekriterier(search).sortering);
+    const { searchParams, navigate, state } = useNavigering();
+    const [valgt, setValgt] = useState<Sortering>(hentSøkekriterier(searchParams).sortering);
 
     useEffect(() => {
         if (state?.harSlettetKriterier) {
             setValgt(Sortering.MestRelevant);
         }
-    }, [search, state]);
+    }, [searchParams, state]);
 
     const onOptionValgt = (event: ChangeEvent<HTMLSelectElement>) => {
         const valgt = event.target.value as Sortering;
 
         setValgt(valgt);
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter: QueryParam.Sortering,
             verdi: valgt === Sortering.MestRelevant ? null : valgt,
         });

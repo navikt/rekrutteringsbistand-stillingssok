@@ -1,10 +1,10 @@
 import { Søkekriterier } from '../App';
 import { Status } from '../søk/om-annonsen/Annonsestatus';
-import { History } from 'history';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Fane } from '../søkefaner/Søkefaner';
 import { Stillingskategori } from '../søk/om-annonsen/VelgStillingskategori';
+import { NavigateFunction } from 'react-router-dom';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -36,8 +36,7 @@ const parseQueryParamSomSet = (searchParams: URLSearchParams) => (queryParam: Qu
     return verdiFraUrl ? new Set<string>(verdiFraUrl.split(',')) : new Set<string>();
 };
 
-export const hentSøkekriterier = (search: string): Søkekriterier => {
-    const searchParams = new URLSearchParams(search);
+export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterier => {
     const hentSøkekriterie = parseQueryParamSomSet(searchParams);
 
     return {
@@ -58,12 +57,10 @@ export const hentSøkekriterier = (search: string): Søkekriterier => {
 };
 
 const oppdaterQueryParametere = (
-    search: string,
+    searchParams: URLSearchParams,
     param: QueryParam,
     value: QueryParamValue
 ): string => {
-    const searchParams = new URLSearchParams(search);
-
     if (
         value === null ||
         (typeof value === 'string' && value.length === 0) ||
@@ -79,36 +76,40 @@ const oppdaterQueryParametere = (
 };
 
 export const oppdaterUrlMedParam = ({
-    history,
+    navigate,
+    searchParams,
     parameter,
     verdi,
     state,
 }: {
+    navigate: NavigateFunction;
+    searchParams: URLSearchParams;
     parameter: QueryParam;
     verdi: QueryParamValue;
-    history: History;
     state?: Navigeringsstate;
 }) => {
-    let search = oppdaterQueryParametere(history.location.search, parameter, verdi);
-    history.replace({ search, state });
+    let oppdaterteParams = oppdaterQueryParametere(searchParams, parameter, verdi);
+    navigate({ search: oppdaterteParams }, { replace: true, state });
 };
 
 export const oppdaterUrlMedToParams = ({
-    history,
+    navigate,
+    searchParams,
     parameter,
     verdi,
     parameter2,
     verdi2,
     state,
 }: {
+    navigate: NavigateFunction;
+    searchParams: URLSearchParams;
     parameter: QueryParam;
     verdi: QueryParamValue;
     parameter2: QueryParam;
     verdi2: QueryParamValue;
-    history: History;
     state?: Navigeringsstate;
 }) => {
-    let search = oppdaterQueryParametere(history.location.search, parameter, verdi);
-    search = oppdaterQueryParametere(search, parameter2, verdi2);
-    history.replace({ search, state });
+    let search = oppdaterQueryParametere(searchParams, parameter, verdi);
+    search = oppdaterQueryParametere(searchParams, parameter2, verdi2);
+    navigate({ search }, { replace: true, state });
 };
