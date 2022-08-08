@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Heading } from '@navikt/ds-react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import App from '../App';
-import Router from '../Router';
 import css from './Utviklingsapp.module.css';
+import CustomRouter from './CustomRouter';
 
 const history = createBrowserHistory();
 
@@ -23,7 +23,7 @@ const Utviklingsapp: FunctionComponent = () => {
     });
 
     return (
-        <Router history={history}>
+        <CustomRouter history={history}>
             <header className={css.utviklingsapp}>
                 <Heading size="medium" level="1">
                     Utviklingsapp for rekrutteringsbistand-stillingssok
@@ -31,21 +31,25 @@ const Utviklingsapp: FunctionComponent = () => {
                 <Link
                     className="navds-link"
                     to={{
+                        pathname: '/stillingssok',
                         search: '?standardsok',
                     }}
                 >
                     Stillingssøk
                 </Link>
             </header>
-            <Switch>
-                <Route path="/stillinger/stilling">Side for stilling</Route>
-                <Route>
-                    <main>
-                        <App navKontor={navKontor} history={history} />
-                    </main>
-                </Route>
-            </Switch>
-        </Router>
+            <Routes>
+                <Route path="stillinger/stilling/*" element={<>Side for stilling</>} />
+                <Route
+                    path="stillingssok"
+                    element={
+                        <main>
+                            <App navKontor={navKontor} history={history} />
+                        </main>
+                    }
+                />
+            </Routes>
+        </CustomRouter>
     );
 };
 

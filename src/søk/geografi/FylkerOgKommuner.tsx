@@ -1,29 +1,31 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
-import { useHistory, useLocation } from 'react-router-dom';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 import Filtergruppe from '../Filtergruppe';
 import css from '../Søk.module.css';
+import useNavigering from '../../useNavigering';
 
 const FylkerOgKommuner: FunctionComponent = () => {
-    const history = useHistory();
-    const { search } = useLocation();
+    const { searchParams, navigate } = useNavigering();
 
-    const [valgteFylker, setValgteFylker] = useState<Set<string>>(hentSøkekriterier(search).fylker);
+    const [valgteFylker, setValgteFylker] = useState<Set<string>>(
+        hentSøkekriterier(searchParams).fylker
+    );
     const [valgteKommuner, setValgteKommuner] = useState<Set<string>>(
-        hentSøkekriterier(search).kommuner
+        hentSøkekriterier(searchParams).kommuner
     );
 
     useEffect(() => {
-        setValgteFylker(hentSøkekriterier(search).fylker);
-        setValgteKommuner(hentSøkekriterier(search).kommuner);
-    }, [search]);
+        setValgteFylker(hentSøkekriterier(searchParams).fylker);
+        setValgteKommuner(hentSøkekriterier(searchParams).kommuner);
+    }, [searchParams]);
 
     const oppdaterSøk = (parameter: QueryParam, verdi: string[]) => {
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter,
             verdi,
         });

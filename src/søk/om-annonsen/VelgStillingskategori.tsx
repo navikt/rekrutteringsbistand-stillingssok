@@ -1,12 +1,7 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-    hentSøkekriterier,
-    Navigeringsstate,
-    oppdaterUrlMedParam,
-    QueryParam,
-} from '../../utils/urlUtils';
+import useNavigering from '../../useNavigering';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 
 export enum Stillingskategori {
     Stilling = 'STILLING',
@@ -15,16 +10,15 @@ export enum Stillingskategori {
 }
 
 const VelgStillingskategori = () => {
-    const history = useHistory();
+    const { searchParams, navigate } = useNavigering();
 
-    const { search } = useLocation<Navigeringsstate>();
     const [valgteKategorier, setValgteKategorier] = useState<Set<Stillingskategori>>(
-        hentSøkekriterier(search).stillingskategorier
+        hentSøkekriterier(searchParams).stillingskategorier
     );
 
     useEffect(() => {
-        setValgteKategorier(hentSøkekriterier(search).stillingskategorier);
-    }, [search]);
+        setValgteKategorier(hentSøkekriterier(searchParams).stillingskategorier);
+    }, [searchParams]);
 
     const onToggle = (event: ChangeEvent<HTMLInputElement>) => {
         const kategori = event.target.value as Stillingskategori;
@@ -37,7 +31,8 @@ const VelgStillingskategori = () => {
         }
 
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter: QueryParam.Stillingskategorier,
             verdi: Array.from(kategorier),
         });

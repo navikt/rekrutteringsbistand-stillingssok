@@ -1,20 +1,20 @@
 import React, { FunctionComponent } from 'react';
-import { useLocation } from 'react-router-dom';
 import { SaveFile, Success } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
 import useStandardsøk from '../../StandardsøkContext';
+import useNavigering from '../../useNavigering';
 import css from './LagreStandardsøk.module.css';
 
 const LagreStandardsøk: FunctionComponent = () => {
-    const { search } = useLocation();
+    const { searchParams } = useNavigering();
     const { standardsøk, oppdaterStandardsøk } = useStandardsøk();
 
     const onLagreSomStandardsøkClick = () => {
-        oppdaterStandardsøk(search);
+        oppdaterStandardsøk(searchParams);
     };
 
     const aktivtSøkErStandardsøk =
-        standardsøk.harHentetStandardsøk && standardsøk.standardsøk === search;
+        standardsøk.harHentetStandardsøk && standardsøk.standardsøk === searchParams.toString();
 
     return aktivtSøkErStandardsøk ? (
         <Button

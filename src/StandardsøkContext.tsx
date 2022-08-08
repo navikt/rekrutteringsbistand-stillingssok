@@ -13,7 +13,7 @@ type StandardsøkNettressurs =
 
 const StandardsøkContext = createContext<{
     standardsøk: StandardsøkNettressurs;
-    oppdaterStandardsøk: (standardsøk: string) => Promise<void>;
+    oppdaterStandardsøk: (standardsøk: URLSearchParams) => Promise<void>;
 }>({
     standardsøk: {
         harHentetStandardsøk: false,
@@ -52,7 +52,7 @@ export const StandardsøkProvider = ({ children }: Props) => {
         hent();
     }, []);
 
-    const oppdaterStandardsøk = async (nyttStandardsøk: string): Promise<void> => {
+    const oppdaterStandardsøk = async (nyttStandardsøk: URLSearchParams): Promise<void> => {
         const stateUnderOppdatering = {
             harHentetStandardsøk: false,
             standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : null,

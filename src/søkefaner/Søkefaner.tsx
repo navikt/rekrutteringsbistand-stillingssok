@@ -1,14 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import {
-    hentSøkekriterier,
-    Navigeringsstate,
-    oppdaterUrlMedParam,
-    QueryParam,
-} from '../utils/urlUtils';
-import { useHistory, useLocation } from 'react-router';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 import Søkefane from './Søkefane';
 import { Tabs } from '@navikt/ds-react';
 import css from './Søkefaner.module.css';
+import useNavigering from '../useNavigering';
 
 export enum Fane {
     Alle = 'alle',
@@ -22,20 +17,20 @@ type Props = {
 };
 
 const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
-    const history = useHistory();
-    const { search } = useLocation<Navigeringsstate>();
+    const { searchParams, navigate } = useNavigering();
 
-    const [aktivFane, setAktivFane] = useState<Fane>(hentAktivFane(search));
+    const [aktivFane, setAktivFane] = useState<Fane>(hentAktivFane(searchParams));
 
     useEffect(() => {
-        setAktivFane(hentAktivFane(search));
-    }, [search]);
+        setAktivFane(hentAktivFane(searchParams));
+    }, [searchParams]);
 
     const onChange = (fane: string) => {
         setAktivFane(fane as Fane);
 
         oppdaterUrlMedParam({
-            history,
+            searchParams,
+            navigate,
             parameter: QueryParam.Fane,
             verdi: fane === Fane.Alle ? null : fane,
         });
@@ -45,7 +40,7 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
         <Tabs className={css.søkefaner} value={aktivFane} onChange={onChange}>
             <Tabs.List>
                 <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle?.doc_count ?? 0} />
-                {hentSøkekriterier(search).tekst &&
+                {hentSøkekriterier(searchParams).tekst &&
                     Object.values(Fane)
                         .filter((fane) => fane !== Fane.Alle)
                         .map((fane) => {
@@ -63,8 +58,8 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
     );
 };
 
-const hentAktivFane = (search: string): Fane => {
-    return hentSøkekriterier(search).fane;
+const hentAktivFane = (searchParams: URLSearchParams): Fane => {
+    return hentSøkekriterier(searchParams).fane;
 };
 
 export default Søkefaner;
