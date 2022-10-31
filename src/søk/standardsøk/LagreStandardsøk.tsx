@@ -22,8 +22,8 @@ const LagreStandardsøk: FunctionComponent = () => {
             variant="secondary"
             className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
+            icon={<Success />}
         >
-            <Success />
             Lagret som standardsøk
         </Button>
     ) : (
@@ -34,8 +34,8 @@ const LagreStandardsøk: FunctionComponent = () => {
             onClick={onLagreSomStandardsøkClick}
             className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
+            icon={<SaveFile />}
         >
-            <SaveFile />
             Lagre som standardsøk
         </Button>
     );
