@@ -3,12 +3,13 @@ import { createRoot } from 'react-dom/client';
 import Navspa from '@navikt/navspa';
 import * as Sentry from '@sentry/react';
 
+import '@navikt/ds-css';
+
 import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
 import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import FeilMedApp from './FeilMedApp';
 import { Router } from 'react-router-dom';
-import '@navikt/ds-css';
 import './index.css';
 
 Sentry.init({
