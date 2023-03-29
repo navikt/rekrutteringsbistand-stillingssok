@@ -56,9 +56,8 @@ const Paginering: FunctionComponent<Props> = ({ totaltAntallTreff }) => {
         <Pagination
             className={css.paginering}
             page={side}
-            siblingCount={
-                enhetstype === Enhetstype.Mobil ? 1 : enhetstype === Enhetstype.Tablet ? 3 : 5
-            }
+            size={enhetstype === Enhetstype.Desktop ? 'medium' : 'small'}
+            siblingCount={enhetstype === Enhetstype.Desktop ? 2 : 1}
             count={antallSider}
             onPageChange={(page) => onPageChange(page)}
         />
