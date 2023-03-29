@@ -42,11 +42,7 @@ const Utviklingsapp: FunctionComponent = () => {
                 <Route path="stillinger/stilling/*" element={<>Side for stilling</>} />
                 <Route
                     path="stillingssok"
-                    element={
-                        <main>
-                            <App navKontor={navKontor} history={history} />
-                        </main>
-                    }
+                    element={<App navKontor={navKontor} history={history} />}
                 />
             </Routes>
         </CustomRouter>

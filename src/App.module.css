@@ -5,7 +5,6 @@
 
     margin: 3rem auto;
     padding: 0 1rem;
-    max-width: 51rem;
 }
 
 @media (min-width: 768px) {
@@ -17,15 +16,15 @@
 @media (min-width: 992px) {
     .stillingssøk {
         display: grid;
-        grid-template-columns: 19rem 1fr;
+        grid-template-columns: 19rem minmax(10rem, 60rem);
+        place-content: center;
         column-gap: 3rem;
-        max-width: 74.125rem;
     }
 }
 
 @media (min-width: 1200px) {
     .stillingssøk {
-        column-gap: 5rem;
+        column-gap: 4rem;
     }
 }
 
