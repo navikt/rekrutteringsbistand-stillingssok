@@ -4,7 +4,7 @@ const bucketIdDev = '6ed1f00aabc6ced4fd6fcb7fcdc01b30';
 const bucketIdProd = 'a8243d37808422b4c768d31c88a22ef4';
 
 const getApiKey = () => {
-    return window.location.href.includes('dev.intern.nav.no') ? bucketIdDev : bucketIdProd;
+    return window.location.href.includes('intern.dev.nav.no') ? bucketIdDev : bucketIdProd;
 };
 
 const client: AmplitudeClient = amplitudeJs.getInstance();

@@ -54,7 +54,7 @@ export const maskerPersonopplysninger = (tekst?: string) => {
 export const getMiljø = (): string => {
     const pathname = window.location.hostname;
 
-    if (pathname.includes('dev.intern.nav.no')) {
+    if (pathname.includes('intern.dev.nav.no')) {
         return 'dev-gcp';
     } else if (pathname.includes('intern.nav.no')) {
         return 'prod-gcp';
