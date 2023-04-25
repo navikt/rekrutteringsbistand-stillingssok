@@ -126,7 +126,7 @@ const App: FunctionComponent<AppProps> = () => {
                     </>
                 ) : (
                     <div className={css.spinner}>
-                        <Loader fr="" />
+                        <Loader size="xlarge" />
                     </div>
                 )}
             </main>
