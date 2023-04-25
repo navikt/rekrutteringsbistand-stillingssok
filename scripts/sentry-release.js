@@ -5,7 +5,7 @@ async function opprettReleaseTilSentry() {
     const authToken = process.env.SENTRY_AUTH_TOKEN;
 
     if (!release) {
-        throw new Error('"REACT_APP_SENTRY_RELEASE" er ikke satt');
+        throw new Error('"VITE_SENTRY_RELEASE" er ikke satt');
     }
 
     if (!authToken) {

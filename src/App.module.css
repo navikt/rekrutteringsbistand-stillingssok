@@ -52,7 +52,7 @@
 }
 
 .spinner {
-    margin-top: 2rem;
+    margin-top: 10rem;
 
     /* Gjør siden kjempehøy under innlasting av stillinger */
     /* slik at nettleseren klarer å scrolle til dit du var. */

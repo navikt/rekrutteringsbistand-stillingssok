@@ -1,3 +1,4 @@
+import { describe, test, expect } from '@jest/globals';
 import formaterMedStoreOgSmåBokstaver from './stringUtils';
 
 describe('formaterMedStoreOgSmåBokstaver skal formatere arbeidsgiver riktig', () => {
