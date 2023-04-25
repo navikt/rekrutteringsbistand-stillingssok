@@ -5,7 +5,7 @@
 }
 
 .søk :global(.navds-checkbox__label) {
-    padding: var(--navds-spacing-2) 0;
+    padding: var(--a-spacing-2) 0;
 }
 
 .lenkerOverSøk {
@@ -21,8 +21,4 @@
 
 .indentertCheckboxgruppe :global(.navds-checkboxes) {
     margin-left: 2rem;
-}
-
-.søk :global(.navds-fieldset):not(:last-child) {
-    margin-bottom: 1.25rem;
 }

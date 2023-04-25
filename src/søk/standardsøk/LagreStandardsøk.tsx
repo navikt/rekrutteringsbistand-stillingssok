@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { SaveFile, Success } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
+import { FloppydiskIcon } from '@navikt/aksel-icons';
+
 import useStandardsøk from '../../StandardsøkContext';
 import useNavigering from '../../useNavigering';
 import css from './LagreStandardsøk.module.css';
@@ -22,7 +23,7 @@ const LagreStandardsøk: FunctionComponent = () => {
             variant="secondary"
             className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
-            icon={<Success />}
+            icon={<FloppydiskIcon />}
         >
             Lagret som standardsøk
         </Button>
@@ -34,7 +35,7 @@ const LagreStandardsøk: FunctionComponent = () => {
             onClick={onLagreSomStandardsøkClick}
             className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
-            icon={<SaveFile />}
+            icon={<FloppydiskIcon />}
         >
             Lagre som standardsøk
         </Button>

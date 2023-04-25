@@ -25,7 +25,7 @@
     text-decoration: none;
     margin-bottom: 0.75rem;
     max-width: 35rem;
-    color: var(--navds-semantic-color-link);
+    color: var(--a-text-action);
 }
 
 .lenkeTilStilling:hover {
@@ -33,11 +33,11 @@
 }
 
 .lenkeTilStilling:focus {
-    box-shadow: var(--navds-shadow-focus);
+    box-shadow: var(--a-shadow-focus);
 }
 
 .lenkeTilStilling:visited {
-    color: var(--navds-semantic-color-link-visited);
+    color: var(--a-text-visited);
 }
 
 .kandidatlisteknapp {
@@ -61,18 +61,18 @@
 }
 
 .etikettInkludering:global(.navds-tag) {
-    background-color: var(--navds-global-color-green-100);
-    border-color: var(--navds-global-color-green-500);
+    background-color: var(--a-green-100);
+    border-color: var(--a-green-500);
 }
 
 .etikettIntern:global(.navds-tag) {
-    background-color: var(--navds-global-color-purple-100);
-    border-color: var(--navds-global-color-purple-400);
+    background-color: var(--a-purple-100);
+    border-color: var(--a-purple-400);
 }
 
 .etikettArbeidsplassen:global(.navds-tag) {
-    background-color: var(--navds-global-color-lightblue-100);
-    border-color: var(--navds-global-color-lightblue-500);
+    background-color: var(--a-lightblue-100);
+    border-color: var(--a-lightblue-500);
 }
 
 .stillingsinfo > span:not(:last-child)::after {
