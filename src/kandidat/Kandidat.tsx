@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -61,7 +62,16 @@ const Kandidat = ({ fnr }: Props) => {
         hentKandidat(fnr);
     }, [fnr]);
 
-    return null;
+    return (
+        <div>
+            <h2>
+                <BodyShort>Finn stillinger til kandidat:</BodyShort>
+                <Heading size="medium">
+                    {kandidat?.fornavn} {kandidat?.etternavn}
+                </Heading>
+            </h2>
+        </div>
+    );
 };
 
 export default Kandidat;
