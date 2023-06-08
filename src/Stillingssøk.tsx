@@ -38,34 +38,33 @@ const Stillingssøk = () => {
 
     return (
         <div className={css.wrapper}>
+            {fnr && <Kandidat fnr={fnr} />}
+            <div className={css.stillingssøk}>
+                <aside className={css.sidepanel}>
+                    <Søk />
+                </aside>
 
-        {fnr &&  <Kandidat fnr={fnr} />}
-        <div className={css.stillingssøk}>
-            <aside className={css.sidepanel}>
-                <Søk />
-            </aside>
+                <main className={css.sokeresultat}>
+                    {respons ? (
+                        <>
+                            <Heading level="2" size="medium" className={css.antallStillinger}>
+                                {formaterAntallAnnonser(antallTreff)}
+                            </Heading>
 
-            <main className={css.sokeresultat}>
-                {respons ? (
-                    <>
-                        <Heading level="2" size="medium" className={css.antallStillinger}>
-                            {formaterAntallAnnonser(antallTreff)}
-                        </Heading>
-
-                        <div className={css.antallOgSortering}>
-                            <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
-                            <Sorter />
+                            <div className={css.antallOgSortering}>
+                                <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
+                                <Sorter />
+                            </div>
+                            <Stillingsliste esRespons={respons} />
+                            <Paginering totaltAntallTreff={antallTreff} />
+                        </>
+                    ) : (
+                        <div className={css.spinner}>
+                            <Loader size="xlarge" />
                         </div>
-                        <Stillingsliste esRespons={respons} />
-                        <Paginering totaltAntallTreff={antallTreff} />
-                    </>
-                ) : (
-                    <div className={css.spinner}>
-                        <Loader size="xlarge" />
-                    </div>
-                )}
-            </main>
-        </div>
+                    )}
+                </main>
+            </div>
         </div>
     );
 };
