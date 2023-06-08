@@ -13,6 +13,7 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
+import Kandidat from './kandidat/Kandidat';
 
 export type Søkekriterier = {
     side: number;
@@ -36,6 +37,9 @@ const Stillingssøk = () => {
     const antallTreff = useAntallTreff(globalAggregering);
 
     return (
+        <div className={css.wrapper}>
+
+        {fnr &&  <Kandidat fnr={fnr} />}
         <div className={css.stillingssøk}>
             <aside className={css.sidepanel}>
                 <Søk />
@@ -47,6 +51,7 @@ const Stillingssøk = () => {
                         <Heading level="2" size="medium" className={css.antallStillinger}>
                             {formaterAntallAnnonser(antallTreff)}
                         </Heading>
+
                         <div className={css.antallOgSortering}>
                             <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                             <Sorter />
@@ -60,6 +65,7 @@ const Stillingssøk = () => {
                     </div>
                 )}
             </main>
+        </div>
         </div>
     );
 };
