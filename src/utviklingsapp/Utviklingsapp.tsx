@@ -38,9 +38,9 @@ const Utviklingsapp: FunctionComponent = () => {
                     Stillingssøk
                 </Link>
             </header>
+            <App />
             <Routes>
-                <Route path="/stillinger/stilling/*" element={<>Side for stilling</>} />
-                <Route path="/stillingssok/*" element={<App />} />
+                <Route path="/stillinger/*" element={<>Side for stilling</>} />
             </Routes>
         </CustomRouter>
     );

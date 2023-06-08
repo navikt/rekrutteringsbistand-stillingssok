@@ -6,8 +6,8 @@ import { StandardsøkProvider } from './standardsøk/StandardsøkContext';
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/:fnr" element={<Stillingssøk />} />
-            <Route path="/" element={<Stillingssøk />} />
+            <Route path="/stillingssok/:fnr" element={<Stillingssøk />} />
+            <Route path="/stillingssok/*" element={<Stillingssøk />} />
         </Routes>
     );
 };
