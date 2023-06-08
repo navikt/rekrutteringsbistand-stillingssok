@@ -1,4 +1,4 @@
-import { Query, Respons } from '../elasticSearchTyper';
+import { Query, Respons } from '../domene/elasticSearchTyper';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 
 export const stillingssøkProxy = `/stillingssok-proxy`;

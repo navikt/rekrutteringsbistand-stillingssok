@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Respons } from '../elasticSearchTyper';
+import { Respons } from '../domene/elasticSearchTyper';
 import Stillingsrad from './stillingsrad/Stillingsrad';
 import css from './Stillingsliste.module.css';
 

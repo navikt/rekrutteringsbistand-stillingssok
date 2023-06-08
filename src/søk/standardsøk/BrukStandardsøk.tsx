@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { QueryParam } from '../../utils/urlUtils';
-import useStandardsøk from '../../StandardsøkContext';
+import useStandardsøk from '../../standardsøk/StandardsøkContext';
 import { Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import useNavigering from '../../useNavigering';

@@ -1,4 +1,4 @@
-import Stilling, { Kilde, Rekrutteringsbistandstilling } from '../Stilling';
+import Stilling, { Kilde, Rekrutteringsbistandstilling } from '../domene/Stilling';
 
 export const skalViseLenkeTilKandidatliste = (
     rekrutteringsbistandStilling: Rekrutteringsbistandstilling

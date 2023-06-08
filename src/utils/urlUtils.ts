@@ -1,4 +1,4 @@
-import { Søkekriterier } from '../App';
+import { Søkekriterier } from '../Stillingssøk';
 import { Status } from '../søk/om-annonsen/Annonsestatus';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';

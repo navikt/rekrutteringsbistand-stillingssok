@@ -1,5 +1,5 @@
 import { Rekrutteringsbistandstilling } from './Stilling';
-import { Fane } from './søkefaner/Søkefaner';
+import { Fane } from '../søkefaner/Søkefaner';
 
 export type Query = {
     size?: number;

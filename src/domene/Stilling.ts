@@ -1,4 +1,4 @@
-import { Hovedtag, Subtag } from './søk/inkludering/tags';
+import { Hovedtag, Subtag } from '../søk/inkludering/tags';
 
 export type Rekrutteringsbistandstilling = {
     stilling: Stilling;

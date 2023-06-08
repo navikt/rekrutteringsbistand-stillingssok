@@ -1,4 +1,4 @@
-import { Søknadsfrist } from '../../Stilling';
+import { Søknadsfrist } from '../../domene/Stilling';
 
 export const konverterTilPresenterbarDato = (datoString?: string | null): string => {
     if (!datoString) return '';
