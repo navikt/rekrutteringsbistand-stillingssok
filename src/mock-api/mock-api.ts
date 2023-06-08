@@ -3,6 +3,8 @@ import { stillingApi, stillingssøkProxy } from '../api/api';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 import standardsøk from './mock-data/standardsøk';
 import { resultat } from './mock-data/stillingssøk';
+import { kandidatProxyUrl } from '../kandidat/Kandidat';
+import kandidatsøk from './mock-data/kandidatsok';
 
 const adsUrl = `${stillingssøkProxy}/stilling/_search`;
 const standardsøkUrl = `${stillingApi}/standardsok`;
@@ -23,11 +25,12 @@ const putStandardsøk = (url: string, options: MockRequest): StandardsøkDto => 
     };
 };
 
-fetchMock.config.fallbackToNetwork = true;
+fetchMock.config.fallbackToNetwork = false;
 fetchMock
     .post(adsUrl, logg(resultat))
     .get(standardsøkUrl, logg(standardsøk))
     .put(standardsøkUrl, (url, opts) => {
         const standardsøk = putStandardsøk(url, opts);
         return logg(standardsøk);
-    });
+    })
+    .post(kandidatProxyUrl, logg(kandidatsøk));

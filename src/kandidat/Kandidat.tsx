@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+export const kandidatProxyUrl = '/kandidatsok-proxy';
+
 type Props = {
     fnr: string;
 };
@@ -36,7 +38,7 @@ const Kandidat = ({ fnr }: Props) => {
     useEffect(() => {
         const hentKandidat = async (fnr: string) => {
             try {
-                const respons = await fetch('/kandidatsok-proxy', {
+                const respons = await fetch(kandidatProxyUrl, {
                     method: 'POST',
                     body: JSON.stringify(byggQuery(fnr)),
                     headers: { 'Content-Type': 'application/json' },
