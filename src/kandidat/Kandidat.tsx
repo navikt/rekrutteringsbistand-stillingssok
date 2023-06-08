@@ -68,7 +68,7 @@ const Kandidat = ({ fnr }: Props) => {
             <div className={css.innerBanner}>
                 <h2>
                     <BodyShort>Finn stillinger til kandidat:</BodyShort>
-                    <Heading size="medium">
+                    <Heading size="medium" as="span">
                         {kandidat?.fornavn} {kandidat?.etternavn}
                     </Heading>
                 </h2>

@@ -10,8 +10,8 @@
     margin: 1rem auto;
 }
 
-/*@media (min-width: 768px) {*/
-/*    .innerBanner {*/
-/*        padding: 0 2rem;*/
-/*    }*/
-/*}*/
+@media (min-width: 768px) {
+    .banner {
+        padding: 0 2rem;
+    }
+}
