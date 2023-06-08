@@ -17,9 +17,10 @@ import css from './Stillingsrad.module.css';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
+    fnr?: string;
 };
 
-const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {
+const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, fnr }) => {
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
@@ -70,7 +71,10 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }
                     <Detail size="small">{konverterTilPresenterbarDato(stilling.published)}</Detail>
                 </div>
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
-                <Link className={classNames(css.lenkeTilStilling)} to={lagUrlTilStilling(stilling)}>
+                <Link
+                    className={classNames(css.lenkeTilStilling)}
+                    to={lagUrlTilStilling(stilling, fnr)}
+                >
                     {stilling.title}
                 </Link>
                 <span className={css.stillingsinfo}>

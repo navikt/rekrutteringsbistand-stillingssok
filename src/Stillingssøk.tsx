@@ -55,7 +55,7 @@ const Stillingssøk = () => {
                                 <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                                 <Sorter />
                             </div>
-                            <Stillingsliste esRespons={respons} />
+                            <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>
                     ) : (
