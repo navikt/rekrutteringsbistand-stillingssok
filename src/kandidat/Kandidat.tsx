@@ -6,7 +6,7 @@ type Props = {
     fnr: string;
 };
 
-type EsRespons = {
+export type EsRespons = {
     hits: {
         hits: Array<{
             _source: Kandidatrespons;

@@ -4,14 +4,6 @@ import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 export const stillingssøkProxy = `/stillingssok-proxy`;
 export const stillingApi = `/stilling-api`;
 
-const setupMock = async () => {
-    if (import.meta.env.VITE_MOCK) {
-        await import('../mock-api/mock-api');
-    }
-};
-
-setupMock();
-
 export const søk = async (query: Query): Promise<Respons> => {
     const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
 

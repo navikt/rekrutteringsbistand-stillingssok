@@ -29,9 +29,17 @@ const AppMedRouter: FunctionComponent = (props: any) => (
     </Sentry.ErrorBoundary>
 );
 
+const setupMock = async () => {
+    if (import.meta.env.VITE_MOCK) {
+        await import('./mock-api/mock-api');
+    }
+};
+
 if (skalEksporteres) {
     Navspa.eksporter('rekrutteringsbistand-stillingssok', AppMedRouter);
 } else {
+    await setupMock();
+
     const app = document.getElementById('utviklingsapp');
     const root = createRoot(app!);
 
