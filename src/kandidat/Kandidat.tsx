@@ -39,6 +39,7 @@ const Kandidat = ({ fnr }: Props) => {
                 const respons = await fetch('/kandidatsok-proxy', {
                     method: 'POST',
                     body: JSON.stringify(byggQuery(fnr)),
+                    headers: { 'Content-Type': 'application/json' },
                 });
 
                 const esRespons = (await respons.json()) as EsRespons;
