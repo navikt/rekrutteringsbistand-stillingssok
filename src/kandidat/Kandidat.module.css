@@ -1,0 +1,17 @@
+.banner {
+    background-color: var(--a-blue-50);
+    width: 100%;
+    border-bottom: 2px solid var(--a-border-subtle);
+    padding: 0 1rem;
+}
+
+.innerBanner {
+    max-width: 81rem;
+    margin: 1rem auto;
+}
+
+/*@media (min-width: 768px) {*/
+/*    .innerBanner {*/
+/*        padding: 0 2rem;*/
+/*    }*/
+/*}*/

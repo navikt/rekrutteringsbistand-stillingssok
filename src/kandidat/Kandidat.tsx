@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
+import css from './Kandidat.module.css';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -63,13 +64,15 @@ const Kandidat = ({ fnr }: Props) => {
     }, [fnr]);
 
     return (
-        <div>
-            <h2>
-                <BodyShort>Finn stillinger til kandidat:</BodyShort>
-                <Heading size="medium">
-                    {kandidat?.fornavn} {kandidat?.etternavn}
-                </Heading>
-            </h2>
+        <div className={css.banner}>
+            <div className={css.innerBanner}>
+                <h2>
+                    <BodyShort>Finn stillinger til kandidat:</BodyShort>
+                    <Heading size="medium">
+                        {kandidat?.fornavn} {kandidat?.etternavn}
+                    </Heading>
+                </h2>
+            </div>
         </div>
     );
 };
