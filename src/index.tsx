@@ -4,10 +4,10 @@ import { Router } from 'react-router-dom';
 import Navspa from '@navikt/navspa';
 import * as Sentry from '@sentry/react';
 
-import App from './App';
 import Utviklingsapp from './utviklingsapp/Utviklingsapp';
-import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import FeilMedApp from './FeilMedApp';
+import App from './App';
+import { fjernPersonopplysninger, getMiljø } from './utils/sentryUtils';
 import './index.css';
 
 Sentry.init({

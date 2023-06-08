@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button } from '@navikt/ds-react';
 import { FloppydiskIcon } from '@navikt/aksel-icons';
 
-import useStandardsøk from '../../StandardsøkContext';
+import useStandardsøk from '../../standardsøk/StandardsøkContext';
 import useNavigering from '../../useNavigering';
 import css from './LagreStandardsøk.module.css';
 

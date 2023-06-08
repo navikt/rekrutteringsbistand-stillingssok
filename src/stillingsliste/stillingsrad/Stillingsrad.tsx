@@ -4,7 +4,7 @@ import { ListIcon } from '@navikt/aksel-icons';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../Stilling';
+import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../domene/Stilling';
 import { konverterTilPresenterbarDato } from './datoUtils';
 import {
     lagUrlTilKandidatliste,

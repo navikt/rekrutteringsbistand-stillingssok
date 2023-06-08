@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { hentStandardsøk, oppdaterStandardsøk as oppdaterStandardsøkMedApi } from './api/api';
+import { hentStandardsøk, oppdaterStandardsøk as oppdaterStandardsøkMedApi } from '../api/api';
 
 type StandardsøkNettressurs =
     | {

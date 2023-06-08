@@ -1,5 +1,5 @@
-import { Query } from '../../elasticSearchTyper';
-import { Søkekriterier } from '../../App';
+import { Query } from '../../domene/elasticSearchTyper';
+import { Søkekriterier } from '../../Stillingssøk';
 import { alleStillinger as defaultStatusFilter, status } from './status';
 import { Fane } from '../../søkefaner/Søkefaner';
 import sorterTreff from './sortering';
