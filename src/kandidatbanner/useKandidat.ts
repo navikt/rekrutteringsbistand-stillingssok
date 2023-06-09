@@ -34,7 +34,9 @@ const byggQuery = (fodselsnummer: string) => ({
 });
 
 const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
-    return ['Vestfold og Telemark'];
+    return geografijobbønsker
+        .filter((jobbønske) => jobbønske.geografiKode.length === 4)
+        .map((jobbønske) => jobbønske.geografiKodeTekst);
 };
 
 const useKandidat = (fnr: string) => {
