@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import css from './Kandidat.module.css';
+import { useEffect, useState } from 'react';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
-
-type Props = {
-    fnr: string;
-};
 
 export type EsRespons = {
     hits: {
@@ -16,7 +10,7 @@ export type EsRespons = {
     };
 };
 
-type Kandidatrespons = {
+export type Kandidatrespons = {
     fornavn: string;
     etternavn: string;
 };
@@ -31,11 +25,9 @@ const byggQuery = (fodselsnummer: string) => ({
     _source: ['fornavn', 'etternavn'],
 });
 
-const Kandidat = ({ fnr }: Props) => {
+const useKandidat = (fnr: string) => {
     const [kandidat, setKandidat] = useState<Kandidatrespons>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
-
-    console.log('Fødselsnummer', fnr);
 
     useEffect(() => {
         const hentKandidat = async (fnr: string) => {
@@ -50,7 +42,6 @@ const Kandidat = ({ fnr }: Props) => {
                 const kandidat = esRespons.hits.hits.at(0)?._source;
 
                 if (kandidat) {
-                    console.log('Kandidat:', kandidat);
                     setKandidat(kandidat);
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
@@ -63,18 +54,10 @@ const Kandidat = ({ fnr }: Props) => {
         hentKandidat(fnr);
     }, [fnr]);
 
-    return (
-        <div className={css.banner}>
-            <div className={css.innerBanner}>
-                <h2>
-                    <BodyShort>Finn stillinger til kandidat:</BodyShort>
-                    <Heading size="medium" as="span">
-                        {kandidat?.fornavn} {kandidat?.etternavn}
-                    </Heading>
-                </h2>
-            </div>
-        </div>
-    );
+    return {
+        kandidat,
+        feilmelding,
+    };
 };
 
-export default Kandidat;
+export default useKandidat;

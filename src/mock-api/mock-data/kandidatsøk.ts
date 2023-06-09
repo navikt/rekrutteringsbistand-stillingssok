@@ -1,4 +1,4 @@
-import { EsRespons } from '../../kandidat/Kandidat';
+import { EsRespons } from '../../kandidatbanner/Kandidatbanner';
 
 const kandidatsøk: EsRespons = {
     hits: {

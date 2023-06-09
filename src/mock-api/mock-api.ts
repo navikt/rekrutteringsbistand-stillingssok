@@ -1,9 +1,9 @@
 import fetchMock, { MockRequest, MockResponseFunction } from 'fetch-mock';
 import { stillingApi, stillingssøkProxy } from '../api/api';
+import { resultat } from './mock-data/stillingssøk';
+import { kandidatProxyUrl } from '../kandidatbanner/useKandidat';
 import StandardsøkDto from '../søk/standardsøk/Standardsøk';
 import standardsøk from './mock-data/standardsøk';
-import { resultat } from './mock-data/stillingssøk';
-import { kandidatProxyUrl } from '../kandidat/Kandidat';
 import kandidatsøk from './mock-data/kandidatsøk';
 
 const adsUrl = `${stillingssøkProxy}/stilling/_search`;

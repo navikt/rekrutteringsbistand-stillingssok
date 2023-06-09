@@ -13,7 +13,7 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
-import Kandidat from './kandidat/Kandidat';
+import Kandidat from './kandidatbanner/Kandidatbanner';
 
 export type Søkekriterier = {
     side: number;
