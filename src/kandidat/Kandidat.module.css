@@ -6,8 +6,13 @@
 }
 
 .innerBanner {
-    max-width: 81rem;
-    margin: 1rem auto;
+    max-width: 83rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+}
+
+.innerBanner h2 {
+    margin: 0;
 }
 
 @media (min-width: 768px) {
