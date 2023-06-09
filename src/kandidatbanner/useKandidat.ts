@@ -39,6 +39,19 @@ const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): st
         .map((jobbønske) => jobbønske.geografiKodeTekst);
 };
 
+const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
+    const ønsker = geografijobbønsker
+        .filter((jobbønske) => jobbønske.geografiKode.includes('.'))
+        .map((jobbønske) => {
+            const kommunetekst = jobbønske.geografiKodeTekst;
+            const fylke = jobbønske.geografiKode.split('.')[0].substring(2);
+            return `${fylke}.${kommunetekst}`;
+        });
+
+    console.log(ønsker, ønsker);
+    return ønsker;
+};
+
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
 
@@ -61,12 +74,22 @@ const useKandidat = (fnr: string) => {
                     setKandidat(kandidat);
 
                     const fylkerFraKandidat = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
+                    const kommunerFraKandidat = hentKommunerFraJobbønsker(
+                        kandidat.geografiJobbonsker
+                    );
 
                     oppdaterUrlMedParam({
                         navigate,
                         searchParams,
                         parameter: QueryParam.Fylker,
                         verdi: fylkerFraKandidat,
+                    });
+                    //TODO: Unngå duplikatkall mot es
+                    oppdaterUrlMedParam({
+                        navigate,
+                        searchParams,
+                        parameter: QueryParam.Kommuner,
+                        verdi: kommunerFraKandidat,
                     });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
