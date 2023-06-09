@@ -33,14 +33,16 @@ const byggQuery = (fodselsnummer: string) => ({
     size: 1,
     _source: ['geografiJobbonsker', 'fornavn', 'etternavn'],
 });
-function hentFylkestekst(fylkesnummer: string) {
-    return fylkerOgKommuner.find((fylke) => fylke.fylkesnummer === fylkesnummer)?.fylkesnavn;
+
+function hentFylkestekstFraGeografiKode(geografiKode: string) {
+    return fylkerOgKommuner.find(
+        (fylke) => fylke.fylkesnummer === geografiKode.split('.')[0].substring(2)
+    )?.fylkesnavn;
 }
 
 const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
     return geografijobbønsker
-        .map((jobbønske) => jobbønske.geografiKode.split('.')[0].substring(2))
-        .map((fylkesnummer) => hentFylkestekst(fylkesnummer))
+        .map((jobbønske) => hentFylkestekstFraGeografiKode(jobbønske.geografiKode))
         .filter<string>((fylke): fylke is string => fylke !== undefined);
 };
 
@@ -49,8 +51,7 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): 
         .filter((jobbønske) => jobbønske.geografiKode.includes('.'))
         .map((jobbønske) => {
             const kommunetekst = jobbønske.geografiKodeTekst;
-            const fylkesnummer = jobbønske.geografiKode.split('.')[0].substring(2);
-            const fylkestekst = hentFylkestekst(fylkesnummer);
+            const fylkestekst = hentFylkestekstFraGeografiKode(jobbønske.geografiKode);
 
             return `${fylkestekst}.${kommunetekst}`;
         });
