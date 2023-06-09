@@ -29,19 +29,19 @@ const AppMedRouter: FunctionComponent = (props: any) => (
     </Sentry.ErrorBoundary>
 );
 
-const setupMock = async () => {
+const renderUtviklingsapp = async () => {
     if (import.meta.env.VITE_MOCK) {
         await import('./mock-api/mock-api');
     }
-};
-
-if (skalEksporteres) {
-    Navspa.eksporter('rekrutteringsbistand-stillingssok', AppMedRouter);
-} else {
-    await setupMock();
 
     const app = document.getElementById('utviklingsapp');
     const root = createRoot(app!);
 
     root.render(<Utviklingsapp />);
+};
+
+if (skalEksporteres) {
+    Navspa.eksporter('rekrutteringsbistand-stillingssok', AppMedRouter);
+} else {
+    renderUtviklingsapp();
 }
