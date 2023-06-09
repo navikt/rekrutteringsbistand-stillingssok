@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { QueryParam, oppdaterUrlMedParam } from '../utils/urlUtils';
+import useNavigering from '../useNavigering';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -10,9 +12,15 @@ export type EsRespons = {
     };
 };
 
+type Geografijobbønske = {
+    geografiKode: string;
+    geografiKodeTekst: string;
+};
+
 export type Kandidatrespons = {
     fornavn: string;
     etternavn: string;
+    geografiJobbonsker: Geografijobbønske[];
 };
 
 const byggQuery = (fodselsnummer: string) => ({
@@ -22,10 +30,16 @@ const byggQuery = (fodselsnummer: string) => ({
         },
     },
     size: 1,
-    _source: ['fornavn', 'etternavn'],
+    _source: ['geografiJobbonsker', 'fornavn', 'etternavn'],
 });
 
+const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
+    return ['Vestfold og Telemark'];
+};
+
 const useKandidat = (fnr: string) => {
+    const { searchParams, navigate } = useNavigering();
+
     const [kandidat, setKandidat] = useState<Kandidatrespons>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
@@ -43,6 +57,15 @@ const useKandidat = (fnr: string) => {
 
                 if (kandidat) {
                     setKandidat(kandidat);
+
+                    const fylkerFraKandidat = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
+
+                    oppdaterUrlMedParam({
+                        navigate,
+                        searchParams,
+                        parameter: QueryParam.Fylker,
+                        verdi: fylkerFraKandidat,
+                    });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
                 }

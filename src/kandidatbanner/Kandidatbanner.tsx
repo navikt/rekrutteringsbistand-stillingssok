@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import useKandidat from './useKandidat';
 import css from './Kandidatbanner.module.css';
