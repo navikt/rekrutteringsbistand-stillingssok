@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { QueryParam, oppdaterUrlMedParam } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
+import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -40,16 +41,17 @@ const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): st
 };
 
 const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
-    const ønsker = geografijobbønsker
+    return geografijobbønsker
         .filter((jobbønske) => jobbønske.geografiKode.includes('.'))
         .map((jobbønske) => {
             const kommunetekst = jobbønske.geografiKodeTekst;
-            const fylke = jobbønske.geografiKode.split('.')[0].substring(2);
-            return `${fylke}.${kommunetekst}`;
-        });
+            const fylkesnummer = jobbønske.geografiKode.split('.')[0].substring(2);
+            const fylkestekst = fylkerOgKommuner.find(
+                (fylke) => fylke.fylkesnummer === fylkesnummer
+            )?.fylkesnavn;
 
-    console.log(ønsker, ønsker);
-    return ønsker;
+            return `${fylkestekst}.${kommunetekst}`;
+        });
 };
 
 const useKandidat = (fnr: string) => {

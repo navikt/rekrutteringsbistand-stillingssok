@@ -1,6 +1,7 @@
 [
     {
         "fylkesnavn": "Oslo",
+        "fylkesnummer": "03",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Oslo"
@@ -9,6 +10,7 @@
     },
     {
         "fylkesnavn": "Rogaland",
+        "fylkesnummer": "11",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Haugesund"
@@ -83,6 +85,7 @@
     },
     {
         "fylkesnavn": "Møre og Romsdal",
+        "fylkesnummer": "15",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Kristiansund"
@@ -166,6 +169,7 @@
     },
     {
         "fylkesnavn": "Nordland",
+        "fylkesnummer": "18",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Bodø"
@@ -294,6 +298,7 @@
     },
     {
         "fylkesnavn": "Viken",
+        "fylkesnummer": "30",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Moss"
@@ -452,6 +457,7 @@
     },
     {
         "fylkesnavn": "Innlandet",
+        "fylkesnummer": "34",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Kongsvinger"
@@ -595,6 +601,7 @@
     },
     {
         "fylkesnavn": "Vestfold og Telemark",
+        "fylkesnummer": "38",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Holmestrand"
@@ -669,6 +676,7 @@
     },
     {
         "fylkesnavn": "Agder",
+        "fylkesnummer": "42",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Bykle"
@@ -749,6 +757,7 @@
     },
     {
         "fylkesnavn": "Vestland",
+        "fylkesnummer": "46",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Bergen"
@@ -883,6 +892,7 @@
     },
     {
         "fylkesnavn": "Trøndelag",
+        "fylkesnummer": "50",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Røyrvik"
@@ -1002,6 +1012,7 @@
     },
     {
         "fylkesnavn": "Troms og Finnmark",
+        "fylkesnummer": "54",
         "kommuner": [
             {
                 "kommunenavnNorsk": "Tromsø"
