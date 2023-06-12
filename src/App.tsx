@@ -3,19 +3,20 @@ import { Route, Routes } from 'react-router-dom';
 import Stillingssøk from './Stillingssøk';
 import { StandardsøkProvider } from './standardsøk/StandardsøkContext';
 
-const AppRoutes = () => {
+const App = () => {
     return (
         <Routes>
             <Route path="/stillingssok/:fnr" element={<Stillingssøk />} />
-            <Route path="/stillingssok/*" element={<Stillingssøk />} />
+            <Route
+                path="/stillingssok/*"
+                element={
+                    <StandardsøkProvider>
+                        <Stillingssøk />
+                    </StandardsøkProvider>
+                }
+            />
         </Routes>
     );
 };
-
-const App = (props: any) => (
-    <StandardsøkProvider>
-        <AppRoutes {...props} />
-    </StandardsøkProvider>
-);
 
 export default App;
