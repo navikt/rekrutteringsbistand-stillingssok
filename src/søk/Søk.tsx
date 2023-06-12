@@ -8,14 +8,18 @@ import LagreStandardsøk from './standardsøk/LagreStandardsøk';
 import BrukStandardsøk from './standardsøk/BrukStandardsøk';
 import css from './Søk.module.css';
 
-const Søk: FunctionComponent = () => {
+type Props = {
+    visStandardsøk: boolean;
+};
+
+const Søk = ({ visStandardsøk }: Props) => {
     return (
         <div className={css.søk}>
             <div className={css.lenkerOverSøk}>
-                <BrukStandardsøk />
+                {visStandardsøk && <BrukStandardsøk />}
                 <SlettKriterier />
             </div>
-            <LagreStandardsøk />
+            {visStandardsøk && <LagreStandardsøk />}
             <Søkefelt />
             <OmAnnonsen />
             <FylkerOgKommuner />

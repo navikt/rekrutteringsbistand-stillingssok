@@ -41,7 +41,7 @@ const Stillingssøk = () => {
             {fnr && <Kandidat fnr={fnr} />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Søk />
+                    <Søk visStandardsøk={!fnr} />
                 </aside>
 
                 <main className={css.sokeresultat}>
