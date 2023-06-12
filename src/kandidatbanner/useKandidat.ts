@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { QueryParam, oppdaterUrlMedToParams } from '../utils/urlUtils';
+import { QueryParam } from '../utils/urlUtils';
 import { brukNyttFylkesnummer } from '../søk/geografi/regionsreformen';
 import useNavigering from '../useNavigering';
 import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
@@ -86,14 +86,10 @@ const useKandidat = (fnr: string) => {
                         kandidat.geografiJobbonsker
                     );
 
-                    oppdaterUrlMedToParams({
-                        navigate,
-                        searchParams,
-                        parameter: QueryParam.Fylker,
-                        verdi: fylkerFraKandidat,
-                        parameter2: QueryParam.Kommuner,
-                        verdi2: kommunerFraKandidat,
-                    });
+                    const søk = new URLSearchParams();
+                    søk.set(QueryParam.Fylker, String(fylkerFraKandidat));
+                    søk.set(QueryParam.Kommuner, String(kommunerFraKandidat));
+                    navigate({ search: søk.toString() }, { replace: true });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
                 }
