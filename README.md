@@ -4,6 +4,11 @@ Frontend for nytt stillingssøk i Rekrutteringsbistand.
 
 Fylkes og kommuner er hentet fra [Kartverkets åpne API](https://ws.geonorge.no/kommuneinfo/v1/). I stillingsdatabasen er kommunene [hentet fra Bring](https://github.com/navikt/pam-geography#norwegian-postal-codes-county--codes-cities). For kommuner med samiske navn, er det noe mismatch mellom disse datasettene. Samiske kommunenavn er derfor hardkodet i `FylkerOgKommuner`-komponenten.
 
+Query til Kartverket, lagres i `src/søk/geografi/fylkerOgKommuner.json`:
+```
+curl -X GET "https://ws.geonorge.no/kommuneinfo/v1/fylkerkommuner?filtrer=fylkesnavn%2Cfylkesnummer%2Ckommuner.kommunenavnNorsk%2Ckommuner.kommunenummer" -H "accept: application/json"
+```
+
 ## Installasjon
 
 ```
