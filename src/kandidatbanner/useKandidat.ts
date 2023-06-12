@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { QueryParam, oppdaterUrlMedParam } from '../utils/urlUtils';
+import { QueryParam, oppdaterUrlMedParam, oppdaterUrlMedToParams } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
 import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
 
@@ -83,19 +83,13 @@ const useKandidat = (fnr: string) => {
                         kandidat.geografiJobbonsker
                     );
 
-                    oppdaterUrlMedParam({
+                    oppdaterUrlMedToParams({
                         navigate,
                         searchParams,
                         parameter: QueryParam.Fylker,
                         verdi: fylkerFraKandidat,
-                    });
-
-                    //TODO: Unngå duplikatkall mot es
-                    oppdaterUrlMedParam({
-                        navigate,
-                        searchParams,
-                        parameter: QueryParam.Kommuner,
-                        verdi: kommunerFraKandidat,
+                        parameter2: QueryParam.Kommuner,
+                        verdi2: kommunerFraKandidat,
                     });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
