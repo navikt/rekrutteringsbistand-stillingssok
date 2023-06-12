@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { QueryParam, oppdaterUrlMedParam, oppdaterUrlMedToParams } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
 import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
+import { sikreNyttRegionformat } from '../søk/geografi/regionsreformen';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -36,13 +37,15 @@ const byggQuery = (fodselsnummer: string) => ({
 
 function hentFylkestekstFraGeografiKode(geografiKode: string) {
     return fylkerOgKommuner.find(
-        (fylke) => fylke.fylkesnummer === geografiKode.split('.')[0].substring(2)
+        (fylke) =>
+            fylke.fylkesnummer === sikreNyttRegionformat(geografiKode).split('.')[0].substring(2)
     )?.fylkesnavn;
 }
 
 const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
     return geografijobbønsker
-        .map((jobbønske) => hentFylkestekstFraGeografiKode(jobbønske.geografiKode))
+        .map((jobbønske) => jobbønske.geografiKode)
+        .map((geografiKode) => hentFylkestekstFraGeografiKode(geografiKode))
         .filter((fylke) => fylke !== undefined) as string[];
 };
 
