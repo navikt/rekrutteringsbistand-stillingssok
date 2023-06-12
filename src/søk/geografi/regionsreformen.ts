@@ -1,20 +1,24 @@
-const regionsreformen = {
-    '50': ['16', '17'],
-    '46': ['12', '14'],
-    '42': ['09', '10'],
-    '38': ['07', '08'],
-    '34': ['04', '05'],
-    '30': ['01', '02', '06'],
-    '54': ['19', '20'],
+const mapFraGammeltTilNyttFylkesnummer: Record<string, string> = {
+    '16': '50',
+    '17': '50',
+    '12': '46',
+    '14': '46',
+    '09': '42',
+    '10': '42',
+    '07': '38',
+    '08': '38',
+    '04': '34',
+    '05': '34',
+    '01': '30',
+    '02': '30',
+    '06': '30',
+    '19': '54',
+    '20': '54',
 };
 
 export const sikreNyttRegionformat = (geografiKode: string) => {
-    for (const [key, values] of Object.entries(regionsreformen)) {
-        if (values.includes(geografiKode)) {
-            return key;
-        }
-    }
-    return geografiKode;
+    console.log('geografigkode', geografiKode, mapFraGammeltTilNyttFylkesnummer[geografiKode]);
+    return mapFraGammeltTilNyttFylkesnummer[geografiKode] ?? geografiKode;
 };
 
-export default regionsreformen;
+export default mapFraGammeltTilNyttFylkesnummer;

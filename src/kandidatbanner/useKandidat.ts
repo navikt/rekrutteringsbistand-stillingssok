@@ -38,7 +38,7 @@ const byggQuery = (fodselsnummer: string) => ({
 function hentFylkestekstFraGeografiKode(geografiKode: string) {
     return fylkerOgKommuner.find(
         (fylke) =>
-            fylke.fylkesnummer === sikreNyttRegionformat(geografiKode).split('.')[0].substring(2)
+            fylke.fylkesnummer === sikreNyttRegionformat(geografiKode.split('.')[0].substring(2))
     )?.fylkesnavn;
 }
 

@@ -13,8 +13,8 @@ const kandidatsøk: EsRespons = {
                             geografiKode: 'NO42.4205',
                         },
                         {
-                            geografiKodeTekst: 'Vestfold og Telemark',
-                            geografiKode: 'NO38',
+                            geografiKodeTekst: 'Østfold',
+                            geografiKode: 'NO01',
                         },
                         {
                             geografiKodeTekst: 'Oslo',
