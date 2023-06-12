@@ -16,9 +16,8 @@ const mapFraGammeltTilNyttFylkesnummer: Record<string, string> = {
     '20': '54',
 };
 
-export const sikreNyttRegionformat = (geografiKode: string) => {
-    console.log('geografigkode', geografiKode, mapFraGammeltTilNyttFylkesnummer[geografiKode]);
-    return mapFraGammeltTilNyttFylkesnummer[geografiKode] ?? geografiKode;
+export const brukNyttFylkesnummer = (fylkesnummer: string) => {
+    return mapFraGammeltTilNyttFylkesnummer[fylkesnummer] ?? fylkesnummer;
 };
 
 export default mapFraGammeltTilNyttFylkesnummer;

@@ -13,8 +13,12 @@ const kandidatsøk: EsRespons = {
                             geografiKode: 'NO42.4205',
                         },
                         {
-                            geografiKodeTekst: 'Østfold',
-                            geografiKode: 'NO01',
+                            geografiKodeTekst: 'Råde',
+                            geografiKode: 'NO01.3017',
+                        },
+                        {
+                            geografiKodeTekst: 'Vestby',
+                            geografiKode: 'NO01.1234',
                         },
                         {
                             geografiKodeTekst: 'Oslo',
