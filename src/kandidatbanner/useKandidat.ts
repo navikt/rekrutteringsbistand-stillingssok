@@ -3,6 +3,9 @@ import { QueryParam } from '../utils/urlUtils';
 import { brukNyttFylkesnummer } from '../søk/geografi/regionsreformen';
 import useNavigering from '../useNavigering';
 import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
+import { Status } from '../søk/om-annonsen/Annonsestatus';
+import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
+import { Stillingskategori } from '../søk/om-annonsen/VelgStillingskategori';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 
@@ -89,6 +92,9 @@ const useKandidat = (fnr: string) => {
                     const søk = new URLSearchParams();
                     søk.set(QueryParam.Fylker, String(fylkerFraKandidat));
                     søk.set(QueryParam.Kommuner, String(kommunerFraKandidat));
+                    søk.set(QueryParam.Statuser, Status.Publisert);
+                    søk.set(QueryParam.Publisert, Publisert.Intern);
+                    søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
                     navigate({ search: søk.toString() }, { replace: true });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
