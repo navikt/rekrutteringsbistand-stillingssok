@@ -43,7 +43,7 @@ function hentFylkestekstFraGeografiKode(geografiKode: string) {
 const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
     return geografijobbønsker
         .map((jobbønske) => hentFylkestekstFraGeografiKode(jobbønske.geografiKode))
-        .filter<string>((fylke): fylke is string => fylke !== undefined);
+        .filter((fylke) => fylke !== undefined) as string[];
 };
 
 const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
@@ -89,6 +89,7 @@ const useKandidat = (fnr: string) => {
                         parameter: QueryParam.Fylker,
                         verdi: fylkerFraKandidat,
                     });
+
                     //TODO: Unngå duplikatkall mot es
                     oppdaterUrlMedParam({
                         navigate,
