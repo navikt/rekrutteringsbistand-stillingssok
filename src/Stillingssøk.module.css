@@ -54,7 +54,7 @@
 
 .filtreOgStandardsøk {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     padding: 1rem 0;
     width: 100%;
     border-top: 2px solid var(--a-gray-200);

@@ -8,12 +8,6 @@
     padding: var(--a-spacing-2) 0;
 }
 
-.lenkerOverSøk {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.75rem;
-}
-
 .filtergruppe {
     margin-top: 1rem;
     background-color: white;

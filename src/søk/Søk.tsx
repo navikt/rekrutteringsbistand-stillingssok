@@ -15,9 +15,6 @@ type Props = {
 const Søk = ({ visStandardsøk }: Props) => {
     return (
         <div className={css.søk}>
-            <div className={css.lenkerOverSøk}>
-                <SlettKriterier />
-            </div>
             <Søkefelt />
             {visStandardsøk && <BrukStandardsøk />}
             <OmAnnonsen />

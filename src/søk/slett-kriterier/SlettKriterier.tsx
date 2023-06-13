@@ -1,26 +1,30 @@
-import { Label } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { FunctionComponent } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import css from './SlettKriterier.module.css';
+import { Chips } from '@navikt/ds-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SlettKriterier: FunctionComponent = () => {
-    const { pathname } = useLocation();
+    const { pathname, search } = useLocation();
+    const navigate = useNavigate();
 
-    return (
-        <Link
-            to={{
+    const handleClick = () => {
+        navigate(
+            {
                 pathname,
                 search: '',
-            }}
-            state={{
-                harSlettetKriterier: true,
-            }}
-            className={classNames(css.slettKriterier, 'navds-link')}
-        >
-            <Label as="span">Slett alle kriterier</Label>
-        </Link>
-    );
+            },
+            {
+                state: {
+                    harSlettetKriterier: true,
+                },
+            }
+        );
+    };
+
+    if (search === '') {
+        return null;
+    }
+
+    return <Chips.Removable onClick={handleClick}>Tøm alle filtre</Chips.Removable>;
 };
 
 export default SlettKriterier;

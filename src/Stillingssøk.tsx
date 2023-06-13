@@ -35,9 +35,6 @@ const Stillingssøk = () => {
     const { fnr } = useParams();
     const respons = useSøkMedQuery();
 
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
-
     const globalAggregering = respons?.aggregations?.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
 
@@ -62,24 +59,7 @@ const Stillingssøk = () => {
                             </div>
                             <div className={css.filtreOgStandardsøk}>
                                 <Chips>
-                                    <Chips.Removable
-                                        variant="neutral"
-                                        onClick={() => {
-                                            navigate(
-                                                {
-                                                    pathname,
-                                                    search: '',
-                                                },
-                                                {
-                                                    state: {
-                                                        harSlettetKriterier: true,
-                                                    },
-                                                }
-                                            );
-                                        }}
-                                    >
-                                        Slett alle kriterier
-                                    </Chips.Removable>
+                                    <SlettKriterier />
                                 </Chips>
                                 {!fnr && <LagreStandardsøk />}
                             </div>
