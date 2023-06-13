@@ -3,7 +3,7 @@ import Søkefelt from './søkefelt/Søkefelt';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import Inkludering from './inkludering/Inkludering';
-import SlettKriterier from './slett-kriterier/SlettKriterier';
+import SlettKriterier from '../valgte-filtre/ValgteFiltre';
 import LagreStandardsøk from './standardsøk/LagreStandardsøk';
 import BrukStandardsøk from './standardsøk/BrukStandardsøk';
 import css from './Søk.module.css';

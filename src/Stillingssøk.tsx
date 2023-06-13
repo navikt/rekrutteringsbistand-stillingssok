@@ -15,7 +15,8 @@ import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
 import Kandidat from './kandidatbanner/Kandidatbanner';
 import LagreStandardsøk from './søk/standardsøk/LagreStandardsøk';
-import SlettKriterier from './søk/slett-kriterier/SlettKriterier';
+import SlettKriterier from './valgte-filtre/ValgteFiltre';
+import ValgteFiltre from './valgte-filtre/ValgteFiltre';
 
 export type Søkekriterier = {
     side: number;
@@ -58,9 +59,7 @@ const Stillingssøk = () => {
                                 <Sorter />
                             </div>
                             <div className={css.filtreOgStandardsøk}>
-                                <Chips>
-                                    <SlettKriterier />
-                                </Chips>
+                                <ValgteFiltre />
                                 {!fnr && <LagreStandardsøk />}
                             </div>
                             <Stillingsliste esRespons={respons} fnr={fnr} />
