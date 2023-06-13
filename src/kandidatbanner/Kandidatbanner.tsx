@@ -27,7 +27,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     const kandidatLenke = (
         <Link
             className={css.lenkeTilStilling}
-            to={`/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv`}
+            to={`/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv?fraKandidatsok=true`}
         >
             {kandidat?.fornavn} {kandidat?.etternavn}
         </Link>
