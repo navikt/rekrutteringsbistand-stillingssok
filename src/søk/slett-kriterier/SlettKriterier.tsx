@@ -31,7 +31,10 @@ const SlettKriterier: FunctionComponent = () => {
     };
 
     const keys = Array.from(parametere.keys());
-    if (keys.length === 0 || (keys.length === 1 && parametere.has(QueryParam.Sortering))) {
+    const harIngenFiltre = keys.length === 0;
+    const harKunSortering = keys.length === 1 && parametere.has(QueryParam.Sortering);
+
+    if (harIngenFiltre || harKunSortering) {
         return null;
     }
 
