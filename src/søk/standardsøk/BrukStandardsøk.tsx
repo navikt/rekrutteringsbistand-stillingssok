@@ -1,35 +1,42 @@
 import React, { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@navikt/ds-react';
 import { QueryParam } from '../../utils/urlUtils';
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
-import { Label } from '@navikt/ds-react';
-import classNames from 'classnames';
 import useNavigering from '../../useNavigering';
-import css from './BrukStandardsøk.module.css';
 
 const BrukStandardsøk: FunctionComponent = () => {
+    const navigate = useNavigate();
     const { searchParams } = useNavigering();
     const { standardsøk } = useStandardsøk();
 
-    const visBrukStandardsøk =
+    const kanAktivereStandardsøk =
         standardsøk.harHentetStandardsøk &&
         standardsøk.standardsøk !== searchParams.toString() &&
         standardsøk !== null;
 
-    return visBrukStandardsøk ? (
-        <Link
-            to={{
+    console.log({
+        standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : '',
+        søk: searchParams.toString(),
+    });
+
+    const handleClick = () => {
+        navigate(
+            {
                 search: `?${QueryParam.Standardsøk}`,
-            }}
-            state={{
-                brukStandardsøk: true,
-            }}
-            className={classNames(css.brukStandardsøk, 'navds-link')}
-        >
-            <Label>Bruk standardsøk</Label>
-        </Link>
-    ) : (
-        <div />
+            },
+            {
+                state: {
+                    brukStandardsøk: true,
+                },
+            }
+        );
+    };
+
+    return (
+        <Button variant="secondary" disabled={!kanAktivereStandardsøk} onClick={handleClick}>
+            Bruk standardsøk
+        </Button>
     );
 };
 

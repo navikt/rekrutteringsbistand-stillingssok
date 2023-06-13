@@ -16,11 +16,11 @@ const Søk = ({ visStandardsøk }: Props) => {
     return (
         <div className={css.søk}>
             <div className={css.lenkerOverSøk}>
-                {visStandardsøk && <BrukStandardsøk />}
                 <SlettKriterier />
             </div>
             {visStandardsøk && <LagreStandardsøk />}
             <Søkefelt />
+            {visStandardsøk && <BrukStandardsøk />}
             <OmAnnonsen />
             <FylkerOgKommuner />
             <Inkludering />

@@ -7,6 +7,7 @@ import {
 } from '../../utils/urlUtils';
 import { Search } from '@navikt/ds-react';
 import useNavigering from '../../useNavigering';
+import css from './Søkefelt.module.css';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
@@ -50,7 +51,7 @@ const Søkefelt: FunctionComponent = () => {
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className={css.form} onSubmit={onSubmit}>
             <Search
                 label="Søk etter stillinger"
                 description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
