@@ -52,6 +52,15 @@
     flex-wrap: wrap;
 }
 
+.filtreOgStandardsøk {
+    display: flex;
+    justify-content: end;
+    padding: 1rem 0;
+    width: 100%;
+    border-top: 2px solid var(--a-gray-200);
+    margin-top: -2px;
+}
+
 .antallStillinger {
     align-self: flex-start;
 }

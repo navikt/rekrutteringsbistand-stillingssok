@@ -7,7 +7,7 @@
     flex-direction: column;
 }
 
-.stillingsrad:nth-child(even) {
+.stillingsrad:nth-child(odd) {
     background: white;
 }
 

@@ -14,6 +14,7 @@ import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
 import Kandidat from './kandidatbanner/Kandidatbanner';
+import LagreStandardsøk from './søk/standardsøk/LagreStandardsøk';
 
 export type Søkekriterier = {
     side: number;
@@ -54,6 +55,9 @@ const Stillingssøk = () => {
                             <div className={css.antallOgSortering}>
                                 <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                                 <Sorter />
+                            </div>
+                            <div className={css.filtreOgStandardsøk}>
+                                {!fnr && <LagreStandardsøk />}
                             </div>
                             <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />

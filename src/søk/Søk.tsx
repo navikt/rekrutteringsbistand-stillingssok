@@ -18,7 +18,6 @@ const Søk = ({ visStandardsøk }: Props) => {
             <div className={css.lenkerOverSøk}>
                 <SlettKriterier />
             </div>
-            {visStandardsøk && <LagreStandardsøk />}
             <Søkefelt />
             {visStandardsøk && <BrukStandardsøk />}
             <OmAnnonsen />

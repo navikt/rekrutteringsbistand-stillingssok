@@ -4,7 +4,6 @@ import { FloppydiskIcon } from '@navikt/aksel-icons';
 
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
 import useNavigering from '../../useNavigering';
-import css from './LagreStandardsøk.module.css';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { searchParams } = useNavigering();
@@ -21,9 +20,9 @@ const LagreStandardsøk: FunctionComponent = () => {
         <Button
             disabled
             variant="secondary"
-            className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
             icon={<FloppydiskIcon />}
+            size="small"
         >
             Lagret som standardsøk
         </Button>
@@ -33,9 +32,9 @@ const LagreStandardsøk: FunctionComponent = () => {
             loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
-            className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
             icon={<FloppydiskIcon />}
+            size="small"
         >
             Lagre som standardsøk
         </Button>

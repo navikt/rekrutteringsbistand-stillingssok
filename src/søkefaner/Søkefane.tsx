@@ -1,6 +1,7 @@
 import { Tabs } from '@navikt/ds-react';
 import React, { FunctionComponent } from 'react';
 import { Fane } from './Søkefaner';
+import css from './Søkefaner.module.css';
 
 type Props = {
     fane: Fane;
@@ -11,6 +12,7 @@ const Søkefane: FunctionComponent<Props> = ({ fane, antallTreff }) => {
     return (
         <Tabs.Tab
             value={fane}
+            className={css.fane}
             label={`${visningsnavn(fane)} (${antallTreff?.toLocaleString('nb-NO') ?? 0})`}
         />
     );
