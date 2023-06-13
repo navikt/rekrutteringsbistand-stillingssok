@@ -13,7 +13,7 @@ type Props = {
 
 const Filter = ({ fnr }: Props) => {
     return (
-        <div className={css.søk}>
+        <div className={css.filter}>
             <Søkefelt />
             {fnr === undefined && <BrukStandardsøk />}
             <OmAnnonsen />

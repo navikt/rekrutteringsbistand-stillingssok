@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Stillingssøk from './Stillingssøk';
+
 import { StandardsøkProvider } from './standardsøk/StandardsøkContext';
+import Stillingssøk from './Stillingssøk';
 
 const App = () => {
     return (
