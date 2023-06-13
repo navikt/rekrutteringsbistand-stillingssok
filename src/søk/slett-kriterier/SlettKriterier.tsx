@@ -6,9 +6,11 @@ import { QueryParam } from '../../utils/urlUtils';
 const SlettKriterier: FunctionComponent = () => {
     const { pathname, search } = useLocation();
     const navigate = useNavigate();
+    const parametere = new URLSearchParams(search);
 
     const handleClick = () => {
         const parametere = new URLSearchParams(search);
+
         for (const key of parametere.keys()) {
             if (key !== QueryParam.Sortering) {
                 parametere.delete(key);
@@ -28,7 +30,8 @@ const SlettKriterier: FunctionComponent = () => {
         );
     };
 
-    if (search === '') {
+    const keys = Array.from(parametere.keys());
+    if (keys.length === 0 || (keys.length === 1 && parametere.has(QueryParam.Sortering))) {
         return null;
     }
 
