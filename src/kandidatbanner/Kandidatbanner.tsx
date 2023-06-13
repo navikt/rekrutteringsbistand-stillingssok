@@ -68,7 +68,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                         </div>
                         <div>
                             <PersonIcon />
-                            {kandidat?.veileder}(Veileder)
+                            {kandidat?.veileder} (Veileder)
                         </div>
                     </div>
                 </div>
