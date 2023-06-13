@@ -3,13 +3,14 @@ import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../utils/urlUtils';
 import { Status, statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
+import { Publisert, publisertTilVisningsnavn } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
 
 const ValgteFiltre: FunctionComponent = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser } = hentSøkekriterier(searchParams);
+    const { statuser, publisert } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -45,6 +46,18 @@ const ValgteFiltre: FunctionComponent = () => {
         });
     };
 
+    const handlePublisertClick = (valgtPubliseringssted: Publisert) => {
+        const oppdatertePubliseringssteder = new Set<Publisert>(publisert);
+        oppdatertePubliseringssteder.delete(valgtPubliseringssted);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.Publisert,
+            verdi: Array.from(oppdatertePubliseringssteder),
+        });
+    };
+
     const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
     const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
@@ -66,6 +79,18 @@ const ValgteFiltre: FunctionComponent = () => {
                     }}
                 >
                     {statusTilVisningsnavn(status)}
+                </Chips.Removable>
+            ))}
+
+            {Array.from(publisert).map((derAnnonsenErpublisert) => (
+                <Chips.Removable
+                    key={derAnnonsenErpublisert}
+                    variant="neutral"
+                    onClick={() => {
+                        handlePublisertClick(derAnnonsenErpublisert);
+                    }}
+                >
+                    {publisertTilVisningsnavn(derAnnonsenErpublisert)}
                 </Chips.Removable>
             ))}
         </Chips>
