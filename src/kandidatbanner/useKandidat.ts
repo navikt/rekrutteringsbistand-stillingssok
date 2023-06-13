@@ -43,7 +43,19 @@ const byggQuery = (fodselsnummer: string) => ({
         },
     },
     size: 1,
-    _source: ['geografiJobbonsker', 'fornavn', 'etternavn'],
+    _source: [
+        'geografiJobbonsker',
+        'fornavn',
+        'etternavn',
+        'fodselsdato',
+        'adresselinje1',
+        'postnummer',
+        'poststed',
+        'epostadresse',
+        'telefon',
+        'veileder',
+        'arenaKandidatnr',
+    ],
 });
 
 function hentFylkestekstFraGeografiKode(geografiKode: string) {
