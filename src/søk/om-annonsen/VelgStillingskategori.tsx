@@ -41,7 +41,7 @@ const VelgStillingskategori = () => {
     return (
         <CheckboxGroup legend="Stillingskategori" value={Array.from(valgteKategorier)}>
             {Object.values(Stillingskategori).map((kategori) => (
-                <Checkbox value={kategori} onChange={onToggle}>
+                <Checkbox key={kategori} value={kategori} onChange={onToggle}>
                     {stillingskategoriTilVisningsnavn(kategori)}
                 </Checkbox>
             ))}

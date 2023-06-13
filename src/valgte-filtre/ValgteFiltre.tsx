@@ -19,7 +19,7 @@ const ValgteFiltre: FunctionComponent = () => {
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
 
-        for (const key of parametre.keys()) {
+        for (const key of Array.from(parametre.keys())) {
             if (key !== QueryParam.Sortering) {
                 parametre.delete(key);
             }
