@@ -69,8 +69,7 @@ const oppdaterQueryParametere = (
     ) {
         searchParams.delete(param);
     } else {
-        const newValue = value instanceof Array ? value.sort() : value;
-        searchParams.set(param, String(newValue));
+        searchParams.set(param, String(value));
     }
 
     return searchParams.toString();

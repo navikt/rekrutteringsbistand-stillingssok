@@ -1,19 +1,18 @@
 import React, { FunctionComponent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@navikt/ds-react';
-import { QueryParam } from '../../utils/urlUtils';
+import { QueryParam, hentSøkekriterier } from '../../utils/urlUtils';
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
-import useNavigering from '../../useNavigering';
 
 const BrukStandardsøk: FunctionComponent = () => {
     const navigate = useNavigate();
-    const { searchParams } = useNavigering();
+    const [searchParams] = useSearchParams();
     const { standardsøk } = useStandardsøk();
 
-    const kanAktivereStandardsøk =
+    const kanBrukeStandardsøk =
         standardsøk.harHentetStandardsøk &&
-        standardsøk.standardsøk !== searchParams.toString() &&
-        standardsøk !== null;
+        standardsøk.standardsøk &&
+        inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
 
     const handleClick = () => {
         navigate(
@@ -29,10 +28,37 @@ const BrukStandardsøk: FunctionComponent = () => {
     };
 
     return (
-        <Button variant="secondary" disabled={!kanAktivereStandardsøk} onClick={handleClick}>
+        <Button variant="secondary" disabled={!kanBrukeStandardsøk} onClick={handleClick}>
             Bruk standardsøk
         </Button>
     );
+};
+
+export const inneholderSammeKriterier = (
+    params: URLSearchParams,
+    otherParams: URLSearchParams
+): boolean => {
+    const kriterier = hentSøkekriterier(params);
+    const otherKriterier = hentSøkekriterier(otherParams);
+
+    for (const [kriterie, verdier] of Object.entries(kriterier)) {
+        const sammenligning = (otherKriterier as any)[kriterie];
+
+        if (verdier instanceof Set) {
+            const arr1 = Array.from(verdier);
+            const arr2 = Array.from(sammenligning);
+
+            if (arr1.length !== arr2.length || arr1.some((v) => !arr2.includes(v))) {
+                return false;
+            }
+        } else {
+            if (verdier !== sammenligning) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 };
 
 export default BrukStandardsøk;

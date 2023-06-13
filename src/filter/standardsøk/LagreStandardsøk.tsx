@@ -4,6 +4,7 @@ import { FloppydiskIcon } from '@navikt/aksel-icons';
 
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
 import useNavigering from '../../useNavigering';
+import { inneholderSammeKriterier } from './BrukStandardsøk';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { searchParams } = useNavigering();
@@ -14,7 +15,9 @@ const LagreStandardsøk: FunctionComponent = () => {
     };
 
     const aktivtSøkErStandardsøk =
-        standardsøk.harHentetStandardsøk && standardsøk.standardsøk === searchParams.toString();
+        standardsøk.harHentetStandardsøk &&
+        standardsøk.standardsøk !== null &&
+        inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
 
     return aktivtSøkErStandardsøk ? (
         <Button
