@@ -1,15 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../utils/urlUtils';
-import { Status, statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
-import { Publisert, publisertTilVisningsnavn } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
+
+import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
+import { Status, statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
+import { Publisert, publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
 import {
     Stillingskategori,
     stillingskategoriTilVisningsnavn,
-} from '../søk/om-annonsen/VelgStillingskategori';
+} from '../om-annonsen/VelgStillingskategori';
 
-const ValgteFiltre: FunctionComponent = () => {
+const ValgteKrierier: FunctionComponent = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
@@ -25,17 +26,18 @@ const ValgteFiltre: FunctionComponent = () => {
             }
         }
 
-        navigate(
-            {
-                pathname,
-                search: parametre.toString(),
+        const to = {
+            pathname,
+            search: parametre.toString(),
+        };
+
+        const options = {
+            state: {
+                harSlettetKriterier: true,
             },
-            {
-                state: {
-                    harSlettetKriterier: true,
-                },
-            }
-        );
+        };
+
+        navigate(to, options);
     };
 
     const handleStatusClick = (status: Status) => {
@@ -84,13 +86,13 @@ const ValgteFiltre: FunctionComponent = () => {
 
     return (
         <Chips>
-            <Chips.Removable onClick={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
+            <Chips.Removable onDelete={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
 
             {Array.from(statuser).map((status) => (
                 <Chips.Removable
                     key={status}
                     variant="neutral"
-                    onClick={() => {
+                    onDelete={() => {
                         handleStatusClick(status);
                     }}
                 >
@@ -102,7 +104,7 @@ const ValgteFiltre: FunctionComponent = () => {
                 <Chips.Removable
                     key={derAnnonsenErpublisert}
                     variant="neutral"
-                    onClick={() => {
+                    onDelete={() => {
                         handlePublisertClick(derAnnonsenErpublisert);
                     }}
                 >
@@ -114,7 +116,7 @@ const ValgteFiltre: FunctionComponent = () => {
                 <Chips.Removable
                     key={kategori}
                     variant="neutral"
-                    onClick={() => {
+                    onDelete={() => {
                         handleStillingskategoriClick(kategori);
                     }}
                 >
@@ -125,4 +127,4 @@ const ValgteFiltre: FunctionComponent = () => {
     );
 };
 
-export default ValgteFiltre;
+export default ValgteKrierier;

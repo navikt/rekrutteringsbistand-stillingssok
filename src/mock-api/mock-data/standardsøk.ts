@@ -1,4 +1,4 @@
-import StandardsøkDto from '../../søk/standardsøk/Standardsøk';
+import StandardsøkDto from '../../filter/standardsøk/Standardsøk';
 
 const standardsøk: StandardsøkDto = {
     søk: 'statuser=publisert%2Cutl%C3%B8pt',

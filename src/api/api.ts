@@ -1,5 +1,5 @@
 import { Query, Respons } from '../domene/elasticSearchTyper';
-import StandardsøkDto from '../søk/standardsøk/Standardsøk';
+import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 
 export const stillingssøkProxy = `/stillingssok-proxy`;
 export const stillingApi = `/stilling-api`;

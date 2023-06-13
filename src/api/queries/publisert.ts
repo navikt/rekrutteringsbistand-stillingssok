@@ -1,4 +1,4 @@
-import { Publisert } from '../../søk/om-annonsen/HvorErAnnonsenPublisert';
+import { Publisert } from '../../filter/om-annonsen/HvorErAnnonsenPublisert';
 
 const publisert = (publiseringssteder: Set<Publisert>) => {
     const ettValgtPubliseringssted = publiseringssteder.size === 1;

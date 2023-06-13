@@ -1,11 +1,12 @@
 import React, { FunctionComponent, ChangeEvent, Fragment, useState, useEffect } from 'react';
-import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
+import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 import { sendEvent } from '../../amplitude';
 import Filtergruppe from '../Filtergruppe';
-import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import css from '../Søk.module.css';
 import useNavigering from '../../useNavigering';
+import css from '../Filter.module.css';
 
 const Inkludering: FunctionComponent = () => {
     const { searchParams, navigate } = useNavigering();

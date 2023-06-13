@@ -1,22 +1,21 @@
 import React from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Chips, Heading, Loader } from '@navikt/ds-react';
+import { useParams } from 'react-router-dom';
+import { Heading, Loader } from '@navikt/ds-react';
 
-import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { Status } from './søk/om-annonsen/Annonsestatus';
-import { Stillingskategori } from './søk/om-annonsen/VelgStillingskategori';
+import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
+import { Status } from './filter/om-annonsen/Annonsestatus';
+import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
+import Filter from './filter/Filter';
+import Kandidat from './kandidatbanner/Kandidatbanner';
+import LagreStandardsøk from './filter/standardsøk/LagreStandardsøk';
 import Paginering from './paginering/Paginering';
-import Søk from './søk/Søk';
 import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
+import ValgteKrierier from './filter/valgte-kriterier/ValgteKriterier';
 import css from './Stillingssøk.module.css';
-import Kandidat from './kandidatbanner/Kandidatbanner';
-import LagreStandardsøk from './søk/standardsøk/LagreStandardsøk';
-import SlettKriterier from './valgte-filtre/ValgteFiltre';
-import ValgteFiltre from './valgte-filtre/ValgteFiltre';
 
 export type Søkekriterier = {
     side: number;
@@ -44,7 +43,7 @@ const Stillingssøk = () => {
             {fnr && <Kandidat fnr={fnr} />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Søk visStandardsøk={!fnr} />
+                    <Filter fnr={fnr} />
                 </aside>
 
                 <main className={css.sokeresultat}>
@@ -59,7 +58,7 @@ const Stillingssøk = () => {
                                 <Sorter />
                             </div>
                             <div className={css.filtreOgStandardsøk}>
-                                <ValgteFiltre />
+                                <ValgteKrierier />
                                 {!fnr && <LagreStandardsøk />}
                             </div>
                             <Stillingsliste esRespons={respons} fnr={fnr} />

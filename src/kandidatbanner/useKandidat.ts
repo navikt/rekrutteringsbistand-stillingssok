@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { QueryParam } from '../utils/urlUtils';
-import { brukNyttFylkesnummer } from '../søk/geografi/regionsreformen';
+import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import useNavigering from '../useNavigering';
-import fylkerOgKommuner from '../søk/geografi/fylkerOgKommuner.json';
-import { Status } from '../søk/om-annonsen/Annonsestatus';
-import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
-import { Stillingskategori } from '../søk/om-annonsen/VelgStillingskategori';
+import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
+import { Status } from '../filter/om-annonsen/Annonsestatus';
+import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
+import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 
 export const kandidatProxyUrl = '/kandidatsok-proxy';
 

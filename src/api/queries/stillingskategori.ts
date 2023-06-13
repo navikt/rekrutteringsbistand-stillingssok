@@ -1,4 +1,4 @@
-import { Stillingskategori } from '../../søk/om-annonsen/VelgStillingskategori';
+import { Stillingskategori } from '../../filter/om-annonsen/VelgStillingskategori';
 
 export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => {
     const visAlleStillinger = stillingskategori.size === Object.keys(Stillingskategori).length;

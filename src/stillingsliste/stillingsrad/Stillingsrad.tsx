@@ -12,7 +12,7 @@ import {
     skalViseLenkeTilKandidatliste,
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
-import { hentHovedtags } from '../../søk/inkludering/tags';
+import { hentHovedtags } from '../../filter/inkludering/tags';
 import css from './Stillingsrad.module.css';
 
 type Props = {

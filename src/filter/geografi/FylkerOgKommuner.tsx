@@ -1,11 +1,12 @@
 import React, { ChangeEvent, Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
-import fylkerOgKommuner from './fylkerOgKommuner.json';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
 import Filtergruppe from '../Filtergruppe';
-import css from '../Søk.module.css';
+import fylkerOgKommuner from './fylkerOgKommuner.json';
 import useNavigering from '../../useNavigering';
+import css from '../Filter.module.css';
 
 const FylkerOgKommuner: FunctionComponent = () => {
     const { searchParams, navigate } = useNavigering();
