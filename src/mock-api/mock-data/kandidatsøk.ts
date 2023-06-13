@@ -7,6 +7,14 @@ const kandidatsøk: EsRespons = {
                 _source: {
                     etternavn: 'Klippfisk',
                     fornavn: 'Uklar',
+                    fodselsdato: '1977-10-06T23:00:00.000+00:00',
+                    adresselinje1: 'Langerudsvingen 18D',
+                    postnummer: '1187',
+                    poststed: 'Oslo',
+                    epostadresse: 'mock111@mock111.com',
+                    telefon: '+47 40491880',
+                    veileder: 'A100000',
+                    arenaKandidatnr: 'AA100100',
                     geografiJobbonsker: [
                         {
                             geografiKodeTekst: 'Lindesnes',

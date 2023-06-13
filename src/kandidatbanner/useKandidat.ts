@@ -26,6 +26,14 @@ export type Kandidatrespons = {
     fornavn: string;
     etternavn: string;
     geografiJobbonsker: Geografijobbønske[];
+    fodselsdato: string;
+    adresselinje1: string;
+    postnummer: string;
+    poststed: string;
+    epostadresse: string;
+    telefon: string;
+    veileder: string;
+    arenaKandidatnr: string;
 };
 
 const byggQuery = (fodselsnummer: string) => ({
