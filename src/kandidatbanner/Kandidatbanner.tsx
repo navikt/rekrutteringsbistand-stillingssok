@@ -19,7 +19,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     const { kandidat } = useKandidat(fnr);
 
     const kandidaterLenke = (
-        <Link className={css.lenkeTilStilling} to={`kandidatsok`}>
+        <Link className={css.lenkeTilStilling} to={`/kandidatsok`}>
             Kandidater
         </Link>
     );
@@ -27,7 +27,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     const kandidatLenke = (
         <Link
             className={css.lenkeTilStilling}
-            to={`kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv`}
+            to={`/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv`}
         >
             {kandidat?.fornavn} {kandidat?.etternavn}
         </Link>
@@ -43,7 +43,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
         <div className={css.banner}>
             <div className={css.innerBanner}>
                 <PersonIcon fontSize="3rem" />
-                <div>
+                <div className={css.personinformasjon}>
                     <div>
                         {kandidaterLenke} / {kandidatLenke} / {stillingslenke}
                     </div>

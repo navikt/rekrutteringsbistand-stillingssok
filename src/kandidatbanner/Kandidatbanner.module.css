@@ -40,3 +40,9 @@
     max-width: 35rem;
     color: var(--a-text-action);
 }
+
+.personinformasjon {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
