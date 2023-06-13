@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Heading, Loader } from '@navikt/ds-react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Chips, Heading, Loader } from '@navikt/ds-react';
 
 import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from './søk/om-annonsen/Annonsestatus';
@@ -15,6 +15,7 @@ import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
 import Kandidat from './kandidatbanner/Kandidatbanner';
 import LagreStandardsøk from './søk/standardsøk/LagreStandardsøk';
+import SlettKriterier from './søk/slett-kriterier/SlettKriterier';
 
 export type Søkekriterier = {
     side: number;
@@ -33,6 +34,9 @@ export type Søkekriterier = {
 const Stillingssøk = () => {
     const { fnr } = useParams();
     const respons = useSøkMedQuery();
+
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const globalAggregering = respons?.aggregations?.globalAggregering;
     const antallTreff = useAntallTreff(globalAggregering);
@@ -57,6 +61,26 @@ const Stillingssøk = () => {
                                 <Sorter />
                             </div>
                             <div className={css.filtreOgStandardsøk}>
+                                <Chips>
+                                    <Chips.Removable
+                                        variant="neutral"
+                                        onClick={() => {
+                                            navigate(
+                                                {
+                                                    pathname,
+                                                    search: '',
+                                                },
+                                                {
+                                                    state: {
+                                                        harSlettetKriterier: true,
+                                                    },
+                                                }
+                                            );
+                                        }}
+                                    >
+                                        Slett alle kriterier
+                                    </Chips.Removable>
+                                </Chips>
                                 {!fnr && <LagreStandardsøk />}
                             </div>
                             <Stillingsliste esRespons={respons} fnr={fnr} />
