@@ -1,26 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { QueryParam } from '../utils/urlUtils';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { QueryParam, hentSøkekriterier } from '../utils/urlUtils';
+import { statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
 
 const ValgteFiltre: FunctionComponent = () => {
-    const { pathname, search } = useLocation();
+    const { pathname } = useLocation();
+    const [searchParams] = useSearchParams();
+    const søkekriterier = hentSøkekriterier(searchParams);
+
+    console.log('Søkekriterier:', søkekriterier);
+
     const navigate = useNavigate();
-    const parametere = new URLSearchParams(search);
 
-    const handleClick = () => {
-        const parametere = new URLSearchParams(search);
+    const handleTømFiltreClick = () => {
+        const parametre = new URLSearchParams(searchParams);
 
-        for (const key of parametere.keys()) {
+        for (const key of parametre.keys()) {
             if (key !== QueryParam.Sortering) {
-                parametere.delete(key);
+                parametre.delete(key);
             }
         }
 
         navigate(
             {
                 pathname,
-                search: parametere.toString(),
+                search: parametre.toString(),
             },
             {
                 state: {
@@ -30,9 +35,13 @@ const ValgteFiltre: FunctionComponent = () => {
         );
     };
 
-    const keys = Array.from(parametere.keys());
+    const handleKriterieClick = (event) => {
+        console.log('Hey ho:', event.target.value);
+    };
+
+    const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
-    const harKunSortering = keys.length === 1 && parametere.has(QueryParam.Sortering);
+    const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
 
     if (harIngenFiltre || harKunSortering) {
         return <div />;
@@ -40,7 +49,13 @@ const ValgteFiltre: FunctionComponent = () => {
 
     return (
         <Chips>
-            <Chips.Removable onClick={handleClick}>Tøm alle filtre</Chips.Removable>
+            <Chips.Removable onClick={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
+
+            {Array.from(søkekriterier.statuser).map((status) => (
+                <Chips.Removable variant="neutral" key={status} onClick={handleKriterieClick}>
+                    {statusTilVisningsnavn(status)}
+                </Chips.Removable>
+            ))}
         </Chips>
     );
 };
