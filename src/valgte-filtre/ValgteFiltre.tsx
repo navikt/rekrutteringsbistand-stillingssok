@@ -1,17 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { QueryParam, hentSøkekriterier } from '../utils/urlUtils';
-import { statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
+import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../utils/urlUtils';
+import { Status, statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
 
 const ValgteFiltre: FunctionComponent = () => {
-    const { pathname } = useLocation();
-    const [searchParams] = useSearchParams();
-    const søkekriterier = hentSøkekriterier(searchParams);
-
-    console.log('Søkekriterier:', søkekriterier);
-
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const { pathname } = useLocation();
+    const { statuser } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -35,8 +33,16 @@ const ValgteFiltre: FunctionComponent = () => {
         );
     };
 
-    const handleKriterieClick = (event) => {
-        console.log('Hey ho:', event.target.value);
+    const handleStatusClick = (status: Status) => {
+        const oppdaterteStatuser = new Set<Status>(statuser);
+        oppdaterteStatuser.delete(status);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.Statuser,
+            verdi: Array.from(oppdaterteStatuser),
+        });
     };
 
     const keys = Array.from(searchParams.keys());
@@ -51,8 +57,14 @@ const ValgteFiltre: FunctionComponent = () => {
         <Chips>
             <Chips.Removable onClick={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
 
-            {Array.from(søkekriterier.statuser).map((status) => (
-                <Chips.Removable variant="neutral" key={status} onClick={handleKriterieClick}>
+            {Array.from(statuser).map((status) => (
+                <Chips.Removable
+                    key={status}
+                    variant="neutral"
+                    onClick={() => {
+                        handleStatusClick(status);
+                    }}
+                >
                     {statusTilVisningsnavn(status)}
                 </Chips.Removable>
             ))}
