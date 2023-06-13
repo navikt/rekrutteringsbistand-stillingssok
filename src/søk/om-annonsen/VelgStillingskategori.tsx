@@ -40,17 +40,24 @@ const VelgStillingskategori = () => {
 
     return (
         <CheckboxGroup legend="Stillingskategori" value={Array.from(valgteKategorier)}>
-            <Checkbox value={Stillingskategori.Stilling} onChange={onToggle}>
-                Stilling
-            </Checkbox>
-            <Checkbox value={Stillingskategori.Jobbmesse} onChange={onToggle}>
-                Jobbmesse/jobbtreff
-            </Checkbox>
-            <Checkbox value={Stillingskategori.Formidling} onChange={onToggle}>
-                Formidling
-            </Checkbox>
+            {Object.values(Stillingskategori).map((kategori) => (
+                <Checkbox value={kategori} onChange={onToggle}>
+                    {stillingskategoriTilVisningsnavn(kategori)}
+                </Checkbox>
+            ))}
         </CheckboxGroup>
     );
+};
+
+export const stillingskategoriTilVisningsnavn = (kategori: Stillingskategori) => {
+    switch (kategori) {
+        case Stillingskategori.Stilling:
+            return 'Stilling';
+        case Stillingskategori.Jobbmesse:
+            return 'Jobbmesse/jobbtreff';
+        case Stillingskategori.Formidling:
+            return 'Formidling';
+    }
 };
 
 export default VelgStillingskategori;

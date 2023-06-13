@@ -4,13 +4,17 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../utils/urlUtils';
 import { Status, statusTilVisningsnavn } from '../søk/om-annonsen/Annonsestatus';
 import { Publisert, publisertTilVisningsnavn } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
+import {
+    Stillingskategori,
+    stillingskategoriTilVisningsnavn,
+} from '../søk/om-annonsen/VelgStillingskategori';
 
 const ValgteFiltre: FunctionComponent = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser, publisert } = hentSøkekriterier(searchParams);
+    const { statuser, publisert, stillingskategorier } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -58,6 +62,18 @@ const ValgteFiltre: FunctionComponent = () => {
         });
     };
 
+    const handleStillingskategoriClick = (kategori: Stillingskategori) => {
+        const oppdaterteStillingskategorier = new Set<Stillingskategori>(stillingskategorier);
+        oppdaterteStillingskategorier.delete(kategori);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.Stillingskategorier,
+            verdi: Array.from(oppdaterteStillingskategorier),
+        });
+    };
+
     const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
     const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
@@ -91,6 +107,18 @@ const ValgteFiltre: FunctionComponent = () => {
                     }}
                 >
                     {publisertTilVisningsnavn(derAnnonsenErpublisert)}
+                </Chips.Removable>
+            ))}
+
+            {Array.from(stillingskategorier).map((kategori) => (
+                <Chips.Removable
+                    key={kategori}
+                    variant="neutral"
+                    onClick={() => {
+                        handleStillingskategoriClick(kategori);
+                    }}
+                >
+                    {stillingskategoriTilVisningsnavn(kategori)}
                 </Chips.Removable>
             ))}
         </Chips>

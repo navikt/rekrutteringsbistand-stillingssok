@@ -55,10 +55,15 @@
 .filtreOgStandardsøk {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     padding: 1rem 0;
     width: 100%;
     border-top: 2px solid var(--a-gray-200);
     margin-top: -2px;
+}
+
+.filtreOgStandardsøk > button {
+    flex-shrink: 0;
 }
 
 .antallStillinger {
