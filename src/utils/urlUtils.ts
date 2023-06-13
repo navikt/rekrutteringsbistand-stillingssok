@@ -69,7 +69,8 @@ const oppdaterQueryParametere = (
     ) {
         searchParams.delete(param);
     } else {
-        searchParams.set(param, String(value));
+        const klargjortValue = value instanceof Array ? value.sort() : value;
+        searchParams.set(param, String(klargjortValue));
     }
 
     return searchParams.toString();

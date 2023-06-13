@@ -15,11 +15,6 @@ const BrukStandardsøk: FunctionComponent = () => {
         standardsøk.standardsøk !== searchParams.toString() &&
         standardsøk !== null;
 
-    console.log({
-        standardsøk: standardsøk.harHentetStandardsøk ? standardsøk.standardsøk : '',
-        søk: searchParams.toString(),
-    });
-
     const handleClick = () => {
         navigate(
             {
