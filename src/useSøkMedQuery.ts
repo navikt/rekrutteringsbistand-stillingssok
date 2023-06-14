@@ -57,9 +57,6 @@ const useSøkMedQuery = () => {
                     { search: standardsøk.standardsøk },
                     {
                         replace: true,
-                        state: {
-                            brukStandardsøk: true,
-                        },
                     }
                 );
             } else {

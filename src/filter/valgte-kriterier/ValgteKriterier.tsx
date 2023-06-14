@@ -26,18 +26,18 @@ const ValgteKrierier: FunctionComponent = () => {
             }
         }
 
-        const to = {
-            pathname,
-            search: parametre.toString(),
-        };
-
-        const options = {
-            state: {
-                harSlettetKriterier: true,
+        navigate(
+            {
+                pathname,
+                search: parametre.toString(),
             },
-        };
-
-        navigate(to, options);
+            {
+                replace: true,
+                state: {
+                    harSlettetKriterier: true,
+                },
+            }
+        );
     };
 
     const handleStatusClick = (status: Status) => {

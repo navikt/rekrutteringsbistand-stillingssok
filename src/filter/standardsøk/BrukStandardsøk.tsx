@@ -12,19 +12,19 @@ const BrukStandardsøk: FunctionComponent = () => {
     const kanBrukeStandardsøk =
         standardsøk.harHentetStandardsøk &&
         standardsøk.standardsøk &&
-        inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
+        !inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
 
     const handleClick = () => {
-        navigate(
-            {
-                search: `?${QueryParam.Standardsøk}`,
-            },
-            {
-                state: {
-                    brukStandardsøk: true,
+        if (standardsøk.harHentetStandardsøk && standardsøk.standardsøk) {
+            navigate(
+                {
+                    search: standardsøk.standardsøk,
                 },
-            }
-        );
+                {
+                    replace: true,
+                }
+            );
+        }
     };
 
     return (
