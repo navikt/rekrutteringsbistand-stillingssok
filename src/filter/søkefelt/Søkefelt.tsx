@@ -15,7 +15,10 @@ const Søkefelt: FunctionComponent = () => {
     const [input, setInput] = useState<string>(hentSøkekriterier(searchParams).tekst);
 
     useEffect(() => {
-        if (state?.harSlettetKriterier || state?.brukStandardsøk) {
+        const skalTømmeInputfelt = state?.harSlettetKriterier;
+        const skalSetteInputfeltTilStandardsøk = state?.brukStandardsøk;
+
+        if (skalTømmeInputfelt || skalSetteInputfeltTilStandardsøk) {
             setInput(hentSøkekriterier(searchParams).tekst);
         }
     }, [searchParams, state]);
