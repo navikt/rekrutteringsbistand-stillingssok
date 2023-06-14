@@ -16,8 +16,15 @@ const ValgteKrierier: FunctionComponent = () => {
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser, publisert, stillingskategorier, fylker, kommuner, hovedinkluderingstags } =
-        hentSøkekriterier(searchParams);
+    const {
+        statuser,
+        publisert,
+        stillingskategorier,
+        fylker,
+        kommuner,
+        hovedinkluderingstags,
+        subinkluderingstags,
+    } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -118,7 +125,15 @@ const ValgteKrierier: FunctionComponent = () => {
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
         (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
     );
-    const valgteHovedinkluderingstags = Array.from(hovedinkluderingstags);
+    const valgteSubinkluderingstags = Array.from(subinkluderingstags);
+    const hovedInkluderingstagsUtenValgteSubinkluderingtags = Array.from(
+        hovedinkluderingstags
+    ).filter(
+        (hovedinkluderingstag) =>
+            !valgteSubinkluderingstags.some((subinkluderingstag) =>
+                subinkluderingstag.startsWith(`${hovedinkluderingstag}__`)
+            )
+    );
 
     return (
         <Chips>
@@ -184,7 +199,7 @@ const ValgteKrierier: FunctionComponent = () => {
                 </Chips.Removable>
             ))}
 
-            {valgteHovedinkluderingstags.map((hovedinkluderingtag) => (
+            {hovedInkluderingstagsUtenValgteSubinkluderingtags.map((hovedinkluderingtag) => (
                 <Chips.Removable
                     key={hovedinkluderingtag}
                     variant={'neutral'}
