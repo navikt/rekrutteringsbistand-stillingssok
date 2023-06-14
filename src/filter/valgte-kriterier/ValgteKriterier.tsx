@@ -9,7 +9,7 @@ import {
     Stillingskategori,
     stillingskategoriTilVisningsnavn,
 } from '../om-annonsen/VelgStillingskategori';
-import { Hovedtag, visningsnavnForFilter } from '../inkludering/tags';
+import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
 
 const ValgteKrierier: FunctionComponent = () => {
     const navigate = useNavigate();
@@ -121,6 +121,18 @@ const ValgteKrierier: FunctionComponent = () => {
         });
     };
 
+    const handleSubinkluderingstagsClick = (subinkluderingstag: string) => {
+        const oppdaterteSubinkluderingstags = new Set<string>(subinkluderingstags);
+        oppdaterteSubinkluderingstags.delete(subinkluderingstag);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.SubInkluderingTags,
+            verdi: Array.from(oppdaterteSubinkluderingstags),
+        });
+    };
+
     const valgteKommuner = Array.from(kommuner);
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
         (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
@@ -208,6 +220,18 @@ const ValgteKrierier: FunctionComponent = () => {
                     }}
                 >
                     {visningsnavnForFilter[hovedinkluderingtag as Hovedtag]}
+                </Chips.Removable>
+            ))}
+
+            {valgteSubinkluderingstags.map((subinkluderingtag) => (
+                <Chips.Removable
+                    key={subinkluderingtag}
+                    variant={'neutral'}
+                    onDelete={() => {
+                        handleSubinkluderingstagsClick(subinkluderingtag);
+                    }}
+                >
+                    {visningsnavnForFilter[subinkluderingtag as Subtag]}
                 </Chips.Removable>
             ))}
         </Chips>
