@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@navikt/ds-react';
-import { QueryParam, hentSøkekriterier } from '../../utils/urlUtils';
+
+import { hentSøkekriterier } from '../../utils/urlUtils';
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
 
 const BrukStandardsøk: FunctionComponent = () => {

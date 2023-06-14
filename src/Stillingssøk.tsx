@@ -6,15 +6,14 @@ import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
 import { Status } from './filter/om-annonsen/Annonsestatus';
 import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
 import Filter from './filter/Filter';
+import Filtermeny from './filter/filtermeny/Filtermeny';
 import Kandidat from './kandidatbanner/Kandidatbanner';
-import LagreStandardsøk from './filter/standardsøk/LagreStandardsøk';
 import Paginering from './paginering/Paginering';
 import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import ValgteKrierier from './filter/valgte-kriterier/ValgteKriterier';
 import css from './Stillingssøk.module.css';
 
 export type Søkekriterier = {
@@ -57,10 +56,7 @@ const Stillingssøk = () => {
                                 <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                                 <Sorter />
                             </div>
-                            <div className={css.filtreOgStandardsøk}>
-                                <ValgteKrierier />
-                                {!fnr && <LagreStandardsøk />}
-                            </div>
+                            <Filtermeny fnr={fnr} />
                             <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>

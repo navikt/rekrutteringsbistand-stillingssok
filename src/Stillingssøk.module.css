@@ -52,21 +52,6 @@
     flex-wrap: wrap;
 }
 
-.filtreOgStandardsøk {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.5rem 0;
-    width: 100%;
-    border-top: 2px solid var(--a-gray-200);
-    margin-top: -2px;
-}
-
-.filtreOgStandardsøk > button {
-    flex-shrink: 0;
-}
-
 .antallStillinger {
     align-self: flex-start;
 }

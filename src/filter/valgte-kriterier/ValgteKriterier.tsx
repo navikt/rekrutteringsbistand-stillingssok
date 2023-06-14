@@ -5,7 +5,6 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { Status, statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
 import { Publisert, publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
-import fylkerOgKommuner from '../geografi/fylkerOgKommuner.json';
 import {
     Stillingskategori,
     stillingskategoriTilVisningsnavn,
@@ -101,14 +100,6 @@ const ValgteKrierier: FunctionComponent = () => {
             verdi: Array.from(oppdaterteKommuner),
         });
     };
-
-    const keys = Array.from(searchParams.keys());
-    const harIngenFiltre = keys.length === 0;
-    const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
-
-    if (harIngenFiltre || harKunSortering) {
-        return <div />;
-    }
 
     const valgteKommuner = Array.from(kommuner);
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
