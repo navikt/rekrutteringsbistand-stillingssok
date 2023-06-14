@@ -9,13 +9,14 @@ import {
     Stillingskategori,
     stillingskategoriTilVisningsnavn,
 } from '../om-annonsen/VelgStillingskategori';
+import { Hovedtag, visningsnavnForFilter } from '../inkludering/tags';
 
 const ValgteKrierier: FunctionComponent = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser, publisert, stillingskategorier, fylker, kommuner } =
+    const { statuser, publisert, stillingskategorier, fylker, kommuner, hovedinkluderingstags } =
         hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
@@ -101,10 +102,23 @@ const ValgteKrierier: FunctionComponent = () => {
         });
     };
 
+    const handleHovedinkluderingstagsClick = (hovedinkluderingstag: string) => {
+        const oppdaterteHovedinkluderingstags = new Set<string>(hovedinkluderingstags);
+        oppdaterteHovedinkluderingstags.delete(hovedinkluderingstag);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.HovedInkluderingTags,
+            verdi: Array.from(oppdaterteHovedinkluderingstags),
+        });
+    };
+
     const valgteKommuner = Array.from(kommuner);
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
         (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
     );
+    const valgteHovedinkluderingstags = Array.from(hovedinkluderingstags);
 
     return (
         <Chips>
@@ -167,6 +181,18 @@ const ValgteKrierier: FunctionComponent = () => {
                     }}
                 >
                     {kommune.split('.')[1]}
+                </Chips.Removable>
+            ))}
+
+            {valgteHovedinkluderingstags.map((hovedinkluderingtag) => (
+                <Chips.Removable
+                    key={hovedinkluderingtag}
+                    variant={'neutral'}
+                    onDelete={() => {
+                        handleHovedinkluderingstagsClick(hovedinkluderingtag);
+                    }}
+                >
+                    {visningsnavnForFilter[hovedinkluderingtag as Hovedtag]}
                 </Chips.Removable>
             ))}
         </Chips>
