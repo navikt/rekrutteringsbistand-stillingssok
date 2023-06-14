@@ -22,6 +22,9 @@ const BrukStandardsøk: FunctionComponent = () => {
                 },
                 {
                     replace: true,
+                    state: {
+                        brukStandardsøk: true,
+                    },
                 }
             );
         }
