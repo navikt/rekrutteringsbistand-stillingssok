@@ -1,4 +1,4 @@
-import { Status } from '../../søk/om-annonsen/Annonsestatus';
+import { Status } from '../../filter/om-annonsen/Annonsestatus';
 
 export const status = (statuser: Set<Status>) => {
     const ingenFiltreValgt = statuser.size === 0;

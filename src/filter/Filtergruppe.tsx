@@ -1,7 +1,7 @@
 import { Accordion } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { Enhetstype, hentEnhetstype } from '../utils/skjermUtils';
-import søkCss from './Søk.module.css';
+import filterCss from './Filter.module.css';
 
 type Props = {
     tittel: string;
@@ -10,7 +10,7 @@ type Props = {
 
 const Filtergruppe = ({ tittel, children }: Props) => {
     return (
-        <Accordion className={søkCss.filtergruppe}>
+        <Accordion className={filterCss.filtergruppe}>
             <Accordion.Item defaultOpen={enhetstype === Enhetstype.Desktop}>
                 <Accordion.Header>{tittel}</Accordion.Header>
                 <Accordion.Content>{children}</Accordion.Content>

@@ -1,9 +1,9 @@
 import { Søkekriterier } from '../Stillingssøk';
-import { Status } from '../søk/om-annonsen/Annonsestatus';
+import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Sortering } from '../sorter/Sorter';
-import { Publisert } from '../søk/om-annonsen/HvorErAnnonsenPublisert';
+import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import { Fane } from '../søkefaner/Søkefaner';
-import { Stillingskategori } from '../søk/om-annonsen/VelgStillingskategori';
+import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 import { NavigateFunction } from 'react-router-dom';
 
 export enum QueryParam {

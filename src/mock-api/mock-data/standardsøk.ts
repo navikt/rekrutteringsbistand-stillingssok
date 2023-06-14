@@ -1,7 +1,7 @@
-import StandardsøkDto from '../../søk/standardsøk/Standardsøk';
+import StandardsøkDto from '../../filter/standardsøk/Standardsøk';
 
 const standardsøk: StandardsøkDto = {
-    søk: '?publisert=intern&statuser=publisert%2Cstoppet%2Cutløpt&fylker=Oslo',
+    søk: 'statuser=publisert%2Cutl%C3%B8pt&q=Rektor',
     navIdent: 'Z992782',
     tidspunkt: '2021-03-26T10:19:50.601956',
 };

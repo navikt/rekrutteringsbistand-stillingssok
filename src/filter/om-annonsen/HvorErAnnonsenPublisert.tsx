@@ -45,16 +45,20 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
                     value={publisertValue}
                     onChange={onPubliseringsstederChange}
                 >
-                    {labels[publisertValue]}
+                    {publisertTilVisningsnavn(publisertValue)}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 };
 
-const labels: Record<Publisert, string> = {
-    [Publisert.Intern]: 'Internt i NAV (direktemeldt)',
-    [Publisert.Arbeidsplassen]: 'På Arbeidsplassen',
+export const publisertTilVisningsnavn = (publisert: Publisert) => {
+    switch (publisert) {
+        case Publisert.Intern:
+            return 'Internt i NAV (direktemeldt)';
+        case Publisert.Arbeidsplassen:
+            return 'På Arbeidsplassen';
+    }
 };
 
 export default HvorErAnnonsenPublisert;

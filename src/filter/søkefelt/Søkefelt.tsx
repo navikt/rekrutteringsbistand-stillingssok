@@ -7,6 +7,7 @@ import {
 } from '../../utils/urlUtils';
 import { Search } from '@navikt/ds-react';
 import useNavigering from '../../useNavigering';
+import css from './Søkefelt.module.css';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
@@ -14,7 +15,10 @@ const Søkefelt: FunctionComponent = () => {
     const [input, setInput] = useState<string>(hentSøkekriterier(searchParams).tekst);
 
     useEffect(() => {
-        if (state?.harSlettetKriterier || state?.brukStandardsøk) {
+        const skalTømmeInputfelt = state?.harSlettetKriterier;
+        const skalSetteInputfeltTilStandardsøk = state?.brukStandardsøk;
+
+        if (skalTømmeInputfelt || skalSetteInputfeltTilStandardsøk) {
             setInput(hentSøkekriterier(searchParams).tekst);
         }
     }, [searchParams, state]);
@@ -50,7 +54,7 @@ const Søkefelt: FunctionComponent = () => {
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className={css.form} onSubmit={onSubmit}>
             <Search
                 label="Søk etter stillinger"
                 description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"

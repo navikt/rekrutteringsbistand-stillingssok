@@ -1,0 +1,18 @@
+.wrapper {
+    border-top: 2px solid var(--a-gray-200);
+    margin-top: -2px;
+    min-height: 4.75rem;
+    width: 100%;
+}
+
+.filtermeny {
+    display: flex;
+    padding: 1.25rem 0;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.filtermeny > button {
+    flex-shrink: 0;
+}

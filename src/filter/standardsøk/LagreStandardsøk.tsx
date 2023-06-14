@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Button } from '@navikt/ds-react';
 import { FloppydiskIcon } from '@navikt/aksel-icons';
 
+import { inneholderSammeKriterier } from './BrukStandardsøk';
 import useStandardsøk from '../../standardsøk/StandardsøkContext';
 import useNavigering from '../../useNavigering';
-import css from './LagreStandardsøk.module.css';
 
 const LagreStandardsøk: FunctionComponent = () => {
     const { searchParams } = useNavigering();
@@ -15,29 +15,25 @@ const LagreStandardsøk: FunctionComponent = () => {
     };
 
     const aktivtSøkErStandardsøk =
-        standardsøk.harHentetStandardsøk && standardsøk.standardsøk === searchParams.toString();
+        standardsøk.harHentetStandardsøk &&
+        standardsøk.standardsøk !== null &&
+        inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
 
-    return aktivtSøkErStandardsøk ? (
+    if (aktivtSøkErStandardsøk) {
+        return null;
+    }
+
+    return (
         <Button
-            disabled
-            variant="secondary"
-            className={css.knapp}
-            aria-describedby="lagre-standardsok-beskrivelse"
-            icon={<FloppydiskIcon />}
-        >
-            Lagret som standardsøk
-        </Button>
-    ) : (
-        <Button
-            variant="secondary"
+            variant="tertiary"
             loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
-            className={css.knapp}
             aria-describedby="lagre-standardsok-beskrivelse"
             icon={<FloppydiskIcon />}
+            size="small"
         >
-            Lagre som standardsøk
+            Lagre nytt standardsøk
         </Button>
     );
 };

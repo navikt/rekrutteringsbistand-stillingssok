@@ -15,7 +15,7 @@ const Sorter: FunctionComponent = () => {
     const [valgt, setValgt] = useState<Sortering>(hentSøkekriterier(searchParams).sortering);
 
     useEffect(() => {
-        if (state?.harSlettetKriterier) {
+        if (state?.brukStandardsøk) {
             setValgt(Sortering.MestRelevant);
         }
     }, [searchParams, state]);
@@ -33,7 +33,7 @@ const Sorter: FunctionComponent = () => {
     };
 
     return (
-        <Select className={css.sorter} label="Sorter" defaultValue={valgt} onChange={onOptionValgt}>
+        <Select className={css.sorter} label="Sorter" value={valgt} onChange={onOptionValgt}>
             {Object.values(Sortering).map((sortering) => (
                 <option key={sortering} value={sortering}>
                     {labels[sortering]}

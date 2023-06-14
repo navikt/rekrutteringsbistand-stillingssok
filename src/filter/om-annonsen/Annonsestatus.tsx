@@ -42,11 +42,22 @@ const Annonsestatus: FunctionComponent = () => {
         <CheckboxGroup legend="Status" value={Array.from(valgteStatuser)}>
             {Object.values(Status).map((statusValue) => (
                 <Checkbox key={statusValue} value={statusValue} onChange={onAnnonsestatusChange}>
-                    {statusValue[0].toUpperCase() + statusValue.substring(1)}
+                    {statusTilVisningsnavn(statusValue)}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
+};
+
+export const statusTilVisningsnavn = (status: Status) => {
+    switch (status) {
+        case Status.Publisert:
+            return 'Publisert';
+        case Status.Stoppet:
+            return 'Stoppet';
+        case Status.Utløpt:
+            return 'Utløpt';
+    }
 };
 
 export default Annonsestatus;

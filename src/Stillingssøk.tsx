@@ -2,18 +2,19 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Heading, Loader } from '@navikt/ds-react';
 
-import { Publisert } from './søk/om-annonsen/HvorErAnnonsenPublisert';
-import { Status } from './søk/om-annonsen/Annonsestatus';
-import { Stillingskategori } from './søk/om-annonsen/VelgStillingskategori';
+import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
+import { Status } from './filter/om-annonsen/Annonsestatus';
+import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
+import Filter from './filter/Filter';
+import Filtermeny from './filter/filtermeny/Filtermeny';
+import Kandidat from './kandidatbanner/Kandidatbanner';
 import Paginering from './paginering/Paginering';
-import Søk from './søk/Søk';
 import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
-import Kandidat from './kandidatbanner/Kandidatbanner';
 
 export type Søkekriterier = {
     side: number;
@@ -41,7 +42,7 @@ const Stillingssøk = () => {
             {fnr && <Kandidat fnr={fnr} />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Søk visStandardsøk={!fnr} />
+                    <Filter fnr={fnr} />
                 </aside>
 
                 <main className={css.sokeresultat}>
@@ -55,6 +56,7 @@ const Stillingssøk = () => {
                                 <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                                 <Sorter />
                             </div>
+                            <Filtermeny fnr={fnr} />
                             <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>
