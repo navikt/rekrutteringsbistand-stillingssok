@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { Status, statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
 import { Publisert, publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
 import {
@@ -15,7 +15,8 @@ const ValgteKrierier: FunctionComponent = () => {
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser, publisert, stillingskategorier, fylker } = hentSøkekriterier(searchParams);
+    const { statuser, publisert, stillingskategorier, fylker, kommuner } =
+        hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -88,6 +89,18 @@ const ValgteKrierier: FunctionComponent = () => {
         });
     };
 
+    const handleKommuneClick = (kommune: string) => {
+        const oppdaterteKommuner = new Set<string>(kommuner);
+        oppdaterteKommuner.delete(kommune);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.Kommuner,
+            verdi: Array.from(oppdaterteKommuner),
+        });
+    };
+
     const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
     const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
@@ -145,6 +158,18 @@ const ValgteKrierier: FunctionComponent = () => {
                     }}
                 >
                     {fylke}
+                </Chips.Removable>
+            ))}
+
+            {Array.from(kommuner).map((kommune) => (
+                <Chips.Removable
+                    key={kommune}
+                    variant={'neutral'}
+                    onDelete={() => {
+                        handleKommuneClick(kommune);
+                    }}
+                >
+                    {kommune.split('.')[1]}
                 </Chips.Removable>
             ))}
         </Chips>
