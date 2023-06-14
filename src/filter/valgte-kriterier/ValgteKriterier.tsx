@@ -49,89 +49,17 @@ const ValgteKrierier: FunctionComponent = () => {
         );
     };
 
-    const handleStatusClick = (status: Status) => {
-        const oppdaterteStatuser = new Set<Status>(statuser);
-        oppdaterteStatuser.delete(status);
+    function handleClick<T>(skalFjernes: T, elementer: Set<T>, parameter: QueryParam) {
+        const oppdaterteElementer = new Set<any>(elementer);
+        oppdaterteElementer.delete(skalFjernes);
 
         oppdaterUrlMedParam({
             searchParams,
             navigate,
-            parameter: QueryParam.Statuser,
-            verdi: Array.from(oppdaterteStatuser),
+            parameter: parameter,
+            verdi: Array.from(oppdaterteElementer),
         });
-    };
-
-    const handlePublisertClick = (valgtPubliseringssted: Publisert) => {
-        const oppdatertePubliseringssteder = new Set<Publisert>(publisert);
-        oppdatertePubliseringssteder.delete(valgtPubliseringssted);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Publisert,
-            verdi: Array.from(oppdatertePubliseringssteder),
-        });
-    };
-
-    const handleStillingskategoriClick = (kategori: Stillingskategori) => {
-        const oppdaterteStillingskategorier = new Set<Stillingskategori>(stillingskategorier);
-        oppdaterteStillingskategorier.delete(kategori);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Stillingskategorier,
-            verdi: Array.from(oppdaterteStillingskategorier),
-        });
-    };
-
-    const handleFylkeClick = (fylke: string) => {
-        const oppdaterteFylker = new Set<string>(fylker);
-        oppdaterteFylker.delete(fylke);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Fylker,
-            verdi: Array.from(oppdaterteFylker),
-        });
-    };
-
-    const handleKommuneClick = (kommune: string) => {
-        const oppdaterteKommuner = new Set<string>(kommuner);
-        oppdaterteKommuner.delete(kommune);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Kommuner,
-            verdi: Array.from(oppdaterteKommuner),
-        });
-    };
-
-    const handleHovedinkluderingstagsClick = (hovedinkluderingstag: string) => {
-        const oppdaterteHovedinkluderingstags = new Set<string>(hovedinkluderingstags);
-        oppdaterteHovedinkluderingstags.delete(hovedinkluderingstag);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.HovedInkluderingTags,
-            verdi: Array.from(oppdaterteHovedinkluderingstags),
-        });
-    };
-
-    const handleSubinkluderingstagsClick = (subinkluderingstag: string) => {
-        const oppdaterteSubinkluderingstags = new Set<string>(subinkluderingstags);
-        oppdaterteSubinkluderingstags.delete(subinkluderingstag);
-
-        oppdaterUrlMedParam({
-            searchParams,
-            navigate,
-            parameter: QueryParam.SubInkluderingTags,
-            verdi: Array.from(oppdaterteSubinkluderingstags),
-        });
-    };
+    }
 
     const valgteKommuner = Array.from(kommuner);
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
@@ -156,7 +84,7 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={status}
                     variant="neutral"
                     onDelete={() => {
-                        handleStatusClick(status);
+                        handleClick(status, statuser, QueryParam.Statuser);
                     }}
                 >
                     {statusTilVisningsnavn(status)}
@@ -168,7 +96,7 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={derAnnonsenErpublisert}
                     variant="neutral"
                     onDelete={() => {
-                        handlePublisertClick(derAnnonsenErpublisert);
+                        handleClick(derAnnonsenErpublisert, publisert, QueryParam.Publisert);
                     }}
                 >
                     {publisertTilVisningsnavn(derAnnonsenErpublisert)}
@@ -180,7 +108,7 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={kategori}
                     variant="neutral"
                     onDelete={() => {
-                        handleStillingskategoriClick(kategori);
+                        handleClick(kategori, stillingskategorier, QueryParam.Stillingskategorier);
                     }}
                 >
                     {stillingskategoriTilVisningsnavn(kategori)}
@@ -192,7 +120,7 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={fylke}
                     variant="neutral"
                     onDelete={() => {
-                        handleFylkeClick(fylke);
+                        handleClick(fylke, fylker, QueryParam.Fylker);
                     }}
                 >
                     {fylke}
@@ -204,7 +132,7 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={kommune}
                     variant={'neutral'}
                     onDelete={() => {
-                        handleKommuneClick(kommune);
+                        handleClick(kommune, kommuner, QueryParam.Kommuner);
                     }}
                 >
                     {kommune.split('.')[1]}
@@ -216,7 +144,11 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={hovedinkluderingtag}
                     variant={'neutral'}
                     onDelete={() => {
-                        handleHovedinkluderingstagsClick(hovedinkluderingtag);
+                        handleClick(
+                            hovedinkluderingtag,
+                            hovedinkluderingstags,
+                            QueryParam.HovedInkluderingTags
+                        );
                     }}
                 >
                     {visningsnavnForFilter[hovedinkluderingtag as Hovedtag]}
@@ -228,7 +160,11 @@ const ValgteKrierier: FunctionComponent = () => {
                     key={subinkluderingtag}
                     variant={'neutral'}
                     onDelete={() => {
-                        handleSubinkluderingstagsClick(subinkluderingtag);
+                        handleClick(
+                            subinkluderingtag,
+                            subinkluderingstags,
+                            QueryParam.SubInkluderingTags
+                        );
                     }}
                 >
                     {visningsnavnForFilter[subinkluderingtag as Subtag]}
