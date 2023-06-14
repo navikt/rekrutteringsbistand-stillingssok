@@ -19,19 +19,13 @@ const LagreStandardsøk: FunctionComponent = () => {
         standardsøk.standardsøk !== null &&
         inneholderSammeKriterier(new URLSearchParams(standardsøk.standardsøk), searchParams);
 
-    return aktivtSøkErStandardsøk ? (
+    if (aktivtSøkErStandardsøk) {
+        return null;
+    }
+
+    return (
         <Button
-            disabled
-            variant="secondary"
-            aria-describedby="lagre-standardsok-beskrivelse"
-            icon={<FloppydiskIcon />}
-            size="small"
-        >
-            Lagret som standardsøk
-        </Button>
-    ) : (
-        <Button
-            variant="secondary"
+            variant="tertiary"
             loading={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             disabled={standardsøk.harHentetStandardsøk && standardsøk.lagrerSomStandardsøk}
             onClick={onLagreSomStandardsøkClick}
@@ -39,7 +33,7 @@ const LagreStandardsøk: FunctionComponent = () => {
             icon={<FloppydiskIcon />}
             size="small"
         >
-            Lagre som standardsøk
+            Lagre nytt standardsøk
         </Button>
     );
 };
