@@ -15,7 +15,7 @@ const ValgteKrierier: FunctionComponent = () => {
     const [searchParams] = useSearchParams();
 
     const { pathname } = useLocation();
-    const { statuser, publisert, stillingskategorier } = hentSøkekriterier(searchParams);
+    const { statuser, publisert, stillingskategorier, fylker } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
@@ -76,6 +76,18 @@ const ValgteKrierier: FunctionComponent = () => {
         });
     };
 
+    const handleFylkeClick = (fylke: string) => {
+        const oppdaterteFylker = new Set<string>(fylker);
+        oppdaterteFylker.delete(fylke);
+
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.Fylker,
+            verdi: Array.from(oppdaterteFylker),
+        });
+    };
+
     const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
     const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
@@ -121,6 +133,18 @@ const ValgteKrierier: FunctionComponent = () => {
                     }}
                 >
                     {stillingskategoriTilVisningsnavn(kategori)}
+                </Chips.Removable>
+            ))}
+
+            {Array.from(fylker).map((fylke) => (
+                <Chips.Removable
+                    key={fylke}
+                    variant="neutral"
+                    onDelete={() => {
+                        handleFylkeClick(fylke);
+                    }}
+                >
+                    {fylke}
                 </Chips.Removable>
             ))}
         </Chips>
