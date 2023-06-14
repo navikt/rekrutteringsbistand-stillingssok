@@ -57,7 +57,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     width: 100%;
     border-top: 2px solid var(--a-gray-200);
     margin-top: -2px;
