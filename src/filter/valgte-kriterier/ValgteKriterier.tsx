@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { Status, statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
 import { Publisert, publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
+import fylkerOgKommuner from '../geografi/fylkerOgKommuner.json';
 import {
     Stillingskategori,
     stillingskategoriTilVisningsnavn,
@@ -109,6 +110,11 @@ const ValgteKrierier: FunctionComponent = () => {
         return <div />;
     }
 
+    const valgteKommuner = Array.from(kommuner);
+    const fylkerUtenValgteKommuner = Array.from(fylker).filter(
+        (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
+    );
+
     return (
         <Chips>
             <Chips.Removable onDelete={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
@@ -149,7 +155,7 @@ const ValgteKrierier: FunctionComponent = () => {
                 </Chips.Removable>
             ))}
 
-            {Array.from(fylker).map((fylke) => (
+            {fylkerUtenValgteKommuner.map((fylke) => (
                 <Chips.Removable
                     key={fylke}
                     variant="neutral"
@@ -161,7 +167,7 @@ const ValgteKrierier: FunctionComponent = () => {
                 </Chips.Removable>
             ))}
 
-            {Array.from(kommuner).map((kommune) => (
+            {valgteKommuner.map((kommune) => (
                 <Chips.Removable
                     key={kommune}
                     variant={'neutral'}
