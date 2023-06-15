@@ -4,8 +4,10 @@ import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 export const stillingssøkProxy = `/stillingssok-proxy`;
 export const stillingApi = `/stilling-api`;
 
-export const søk = async (query: Query): Promise<Respons> => {
-    const respons = await post(`${stillingssøkProxy}/stilling/_search`, query);
+export const søk = async (query: Query, forklarScore: boolean = false): Promise<Respons> => {
+    const url = `${stillingssøkProxy}/stilling/_search`;
+    const urlMedParams = forklarScore ? `${url}?explain=true` : url;
+    const respons = await post(urlMedParams, query);
 
     if (respons.status === 401) {
         videresendTilInnlogging();
@@ -52,10 +54,10 @@ const logErrorResponse = (respons: Response) => {
     return `Statuskode: ${respons.status}, Statustekst: ${respons.statusText}, URL: ${respons.url}`;
 };
 
-const post = (url: string, body: object) => jsonRequest(url, body, 'POST');
+export const post = (url: string, body: object) => jsonRequest(url, body, 'POST');
 const put = (url: string, body: object) => jsonRequest(url, body, 'PUT');
 
-const jsonRequest = (url: string, body: object, method: string) =>
+const jsonRequest = (url: string, body?: object, method: string = 'GET') =>
     fetch(url, {
         body: JSON.stringify(body),
         method,

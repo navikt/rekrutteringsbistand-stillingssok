@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Detail, Tag } from '@navikt/ds-react';
 import { ListIcon } from '@navikt/aksel-icons';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../domene/Stilling';
@@ -17,10 +17,13 @@ import css from './Stillingsrad.module.css';
 
 type Props = {
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
+    score: number | null;
     fnr?: string;
 };
 
-const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, fnr }) => {
+const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, fnr, score }) => {
+    const [searchParams] = useSearchParams();
+
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
@@ -34,6 +37,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
     const registrertMedInkluderingsmulighet = stilling.properties.tags?.some((tag) =>
         hentHovedtags().includes(tag)
     );
+
+    let urlTilStilling = lagUrlTilStilling(stilling, fnr);
+    if (import.meta.env.DEV) {
+        urlTilStilling += `?${searchParams}`;
+    }
 
     return (
         <li className={css.stillingsrad}>
@@ -71,10 +79,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                     <Detail size="small">{konverterTilPresenterbarDato(stilling.published)}</Detail>
                 </div>
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
-                <Link
-                    className={classNames(css.lenkeTilStilling)}
-                    to={lagUrlTilStilling(stilling, fnr)}
-                >
+                <Link className={classNames(css.lenkeTilStilling)} to={urlTilStilling}>
                     {stilling.title}
                 </Link>
                 <span className={css.stillingsinfo}>
@@ -103,6 +108,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                     </Link>
                 )}
                 <div />
+                {import.meta.env.DEV && score !== null && (
+                    <code title="Score" className={css.score}>
+                        {score.toFixed(2)}
+                    </code>
+                )}
             </div>
         </li>
     );

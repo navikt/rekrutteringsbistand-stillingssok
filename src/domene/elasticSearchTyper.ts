@@ -16,7 +16,7 @@ export type Query = {
         };
         filter?: any;
     };
-    aggs: {
+    aggs?: {
         globalAggregering: {
             global: object;
             aggs: {
@@ -59,10 +59,11 @@ export type GlobalAggregering = {
 };
 
 export type Hit = {
+    sort?: number[];
     _index: string;
     _type: string;
     _id: string;
     _score: number | null;
     _source: Rekrutteringsbistandstilling;
-    sort?: number[];
+    _explanation?: any;
 };

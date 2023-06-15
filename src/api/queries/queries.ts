@@ -16,7 +16,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         track_total_hits: false,
-        query: query(søkekriterier),
+        query: lagIndreQuery(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
     };
@@ -41,7 +41,7 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
     };
 };
 
-const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
+export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
     return {
         bool: {
             should: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
@@ -62,15 +62,15 @@ const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
     let queriesForFaneaggregering: Partial<Record<Fane, object>> = {
-        alle: query(søkekriterier, Fane.Alle),
+        alle: lagIndreQuery(søkekriterier, Fane.Alle),
     };
 
     if (søkekriterier.tekst.size > 0) {
         queriesForFaneaggregering = {
             ...queriesForFaneaggregering,
-            arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
-            annonsetittel: query(søkekriterier, Fane.Annonsetittel),
-            annonsetekst: query(søkekriterier, Fane.Annonsetekst),
+            arbeidsgiver: lagIndreQuery(søkekriterier, Fane.Arbeidsgiver),
+            annonsetittel: lagIndreQuery(søkekriterier, Fane.Annonsetittel),
+            annonsetekst: lagIndreQuery(søkekriterier, Fane.Annonsetekst),
         };
     }
 
