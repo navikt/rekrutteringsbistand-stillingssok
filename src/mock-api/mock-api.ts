@@ -6,7 +6,7 @@ import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 import standardsøk from './mock-data/standardsøk';
 import kandidatsøk from './mock-data/kandidatsøk';
 
-const adsUrl = `${stillingssøkProxy}/stilling/_search`;
+const stillingssøkUrl = `${stillingssøkProxy}/stilling/_search`;
 const standardsøkUrl = `${stillingApi}/standardsok`;
 
 const logg =
@@ -25,9 +25,13 @@ const putStandardsøk = (url: string, options: MockRequest): StandardsøkDto => 
     };
 };
 
-fetchMock.config.fallbackToNetwork = false;
+fetchMock.config.fallbackToNetwork = true;
+
+if (import.meta.env.VITE_MOCK_ES) {
+    fetchMock.post(stillingssøkUrl, logg(resultat));
+}
+
 fetchMock
-    .post(adsUrl, logg(resultat))
     .get(standardsøkUrl, logg(standardsøk))
     .put(standardsøkUrl, (url, opts) => {
         const standardsøk = putStandardsøk(url, opts);

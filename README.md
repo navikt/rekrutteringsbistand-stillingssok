@@ -17,21 +17,34 @@ npm install
 
 ## Utvikling
 
-### Mot søk i prod
+### Med ekte stillingssøk
 
 ```
-npm start
+npm run start
 ```
 
-For å søke mot produksjonsmiljøet må du manuelt legge til en cookie `isso-idtoken` med gyldig token. Denne kan f.eks hentes med innlogget bruker i Rekrutteringsbistand.
+Dette mocker alle kall, utenom selve stillingssøket til OpenSearch. For at dette skal fungere, må du opprette en fil `env.development.local` som inneholder følgende miljøvariabler:
 
-For at proxy mot Elastic Search skal fungere må du kjøre med [Naisdevice](https://github.com/nais/device).
+```
+OPEN_SEARCH_USERNAME=<brukernavn>
+OPEN_SEARCH_PASSWORD=<passord>
+OPEN_SEARCH_URI=<uri>
+```
 
-### Med mock
+Variablene kan hentes fra en kjørende pod slik:
+
+```sh
+kubectl exec <pod> -- env | grep OPEN_SEARCH
+```
+
+### Med mocket stillingssøk
+
+Hvis du ønsker å mocke stillingssøket, kan du kjøre opp appen med:
 
 ```
 npm run start:mock
 ```
+
 
 # Henvendelser
 

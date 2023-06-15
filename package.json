@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "homepage": "/rekrutteringsbistand-stillingssok",
     "scripts": {
-        "start": "vite",
-        "start:mock": "cross-env VITE_MOCK=true vite",
+        "start": "cross-env VITE_MOCK=true vite",
+        "start:mock": "cross-env VITE_MOCK=true VITE_MOCK_ES=true vite",
         "start:export": "cross-env VITE_MOCK=true VITE_EXPORT=true vite",
         "build": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite build --base=/rekrutteringsbistand-stillingssok",
         "sentry-release": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); node scripts/sentry-release)",
