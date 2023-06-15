@@ -19,6 +19,8 @@ const søkefelt = (tekst: string, fane: Fane) => {
             'stilling.employer.name',
             'stilling.employer.orgnr',
             'stilling.properties.jobtitle',
+            'stilling.properties.arbeidsplassenoccupation',
+            'stilling.properties.keywords',
         ];
     }
 
@@ -28,7 +30,7 @@ const søkefelt = (tekst: string, fane: Fane) => {
                 type: 'cross_fields',
                 query: tekst,
                 fields: feltManSkalSøkeI,
-                operator: 'and',
+                operator: 'or',
             },
         },
     ];
