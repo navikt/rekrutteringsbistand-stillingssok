@@ -8,10 +8,12 @@ import {
 import { Search } from '@navikt/ds-react';
 import useNavigering from '../../useNavigering';
 import css from './Søkefelt.module.css';
+import { søk } from '../../api/api';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
     const [input, setInput] = useState<string>('');
+    const tekst = hentSøkekriterier(searchParams).tekst;
 
     useEffect(() => {
         const skalTømmeInputfelt = state?.harSlettetKriterier;
@@ -30,12 +32,15 @@ const Søkefelt: FunctionComponent = () => {
         event.preventDefault();
 
         if (input.length > 0) {
+            const søketermer = new Set(tekst);
+            søketermer.add(input);
             oppdaterUrlMedParam({
                 searchParams,
                 navigate,
                 parameter: QueryParam.Tekst,
-                verdi: [input],
+                verdi: Array.from(søketermer),
             });
+            setInput('');
         } else {
             oppdaterTekstOgResetFane();
         }
