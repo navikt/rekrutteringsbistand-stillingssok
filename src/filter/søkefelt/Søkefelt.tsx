@@ -11,15 +11,14 @@ import css from './Søkefelt.module.css';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
-
-    const [input, setInput] = useState<string>(hentSøkekriterier(searchParams).tekst);
+    const [input, setInput] = useState<string>('');
 
     useEffect(() => {
         const skalTømmeInputfelt = state?.harSlettetKriterier;
         const skalSetteInputfeltTilStandardsøk = state?.brukStandardsøk;
 
         if (skalTømmeInputfelt || skalSetteInputfeltTilStandardsøk) {
-            setInput(hentSøkekriterier(searchParams).tekst);
+            setInput('');
         }
     }, [searchParams, state]);
 
@@ -35,7 +34,7 @@ const Søkefelt: FunctionComponent = () => {
                 searchParams,
                 navigate,
                 parameter: QueryParam.Tekst,
-                verdi: input,
+                verdi: [input],
             });
         } else {
             oppdaterTekstOgResetFane();

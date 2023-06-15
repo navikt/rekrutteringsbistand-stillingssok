@@ -29,6 +29,7 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
                 filter: [
                     {
                         term: {
+                            // TODO: Hvordan fungerer søk på annonsenummer når vi har chips?
                             'stilling.annonsenr': søkekriterier.tekst,
                         },
                     },
@@ -43,7 +44,8 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
 const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
     return {
         bool: {
-            must: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
+            should: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
+            minimum_should_match: søkekriterier.tekst.size > 0 ? 1 : 0,
             filter: [
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
@@ -63,7 +65,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
         alle: query(søkekriterier, Fane.Alle),
     };
 
-    if (søkekriterier.tekst) {
+    if (søkekriterier.tekst.size > 0) {
         queriesForFaneaggregering = {
             ...queriesForFaneaggregering,
             arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),

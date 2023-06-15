@@ -30,7 +30,8 @@ const useSøkMedQuery = () => {
             const fikkIngenTreff =
                 hentAntallTreff(searchParams, respons.aggregations?.globalAggregering) === 0;
             if (fikkIngenTreff) {
-                respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
+                console.error('Fikk ingen treff!');
+                // respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
             }
 
             setRespons(respons);

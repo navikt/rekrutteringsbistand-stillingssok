@@ -40,7 +40,7 @@ const Søkefaner: FunctionComponent<Props> = ({ aggregeringer }) => {
         <Tabs className={css.søkefaner} value={aktivFane} onChange={onChange}>
             <Tabs.List>
                 <Søkefane fane={Fane.Alle} antallTreff={aggregeringer?.alle?.doc_count ?? 0} />
-                {hentSøkekriterier(searchParams).tekst &&
+                {hentSøkekriterier(searchParams).tekst.size > 0 &&
                     Object.values(Fane)
                         .filter((fane) => fane !== Fane.Alle)
                         .map((fane) => {

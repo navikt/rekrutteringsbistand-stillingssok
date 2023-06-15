@@ -41,7 +41,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
 
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
-        tekst: searchParams.get(QueryParam.Tekst) ?? '',
+        tekst: hentSøkekriterie(QueryParam.Tekst),
         publisert: hentSøkekriterie(QueryParam.Publisert) as Set<Publisert>,
         fylker: hentSøkekriterie(QueryParam.Fylker),
         kommuner: hentSøkekriterie(QueryParam.Kommuner),

@@ -18,7 +18,7 @@ import css from './Stillingssøk.module.css';
 
 export type Søkekriterier = {
     side: number;
-    tekst: string;
+    tekst: Set<string>;
     publisert: Set<Publisert>;
     fylker: Set<string>;
     kommuner: Set<string>;

@@ -1,9 +1,9 @@
 import { Fane } from '../../søkefaner/Søkefaner';
 
-const søkefelt = (tekst: string, fane: Fane) => {
-    if (!tekst) return [];
+const søkefelt = (søketermer: Set<string>, fane: Fane) => {
+    if (søketermer.size === 0) return [];
 
-    let feltManSkalSøkeI;
+    let feltManSkalSøkeI: string[];
 
     if (fane === Fane.Arbeidsgiver) {
         feltManSkalSøkeI = ['stilling.employer.name', 'stilling.employer.orgnr'];
@@ -24,16 +24,14 @@ const søkefelt = (tekst: string, fane: Fane) => {
         ];
     }
 
-    return [
-        {
-            multi_match: {
-                type: 'cross_fields',
-                query: tekst,
-                fields: feltManSkalSøkeI,
-                operator: 'or',
-            },
+    return Array.from(søketermer).map((term) => ({
+        multi_match: {
+            type: 'cross_fields',
+            query: term,
+            fields: feltManSkalSøkeI,
+            operator: 'and',
         },
-    ];
+    }));
 };
 
 export default søkefelt;
