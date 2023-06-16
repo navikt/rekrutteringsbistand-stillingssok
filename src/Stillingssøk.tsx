@@ -48,15 +48,14 @@ const Stillingssøk = () => {
                 <main className={css.sokeresultat}>
                     {respons ? (
                         <>
-                            <Heading level="2" size="medium" className={css.antallStillinger}>
-                                {formaterAntallAnnonser(antallTreff)}
-                            </Heading>
-
-                            <div className={css.antallOgSortering}>
+                            <Filtermeny fnr={fnr} />
+                            <div className={css.beskrivelseAvSøk}>
+                                <Heading level="2" size="medium" className={css.antallStillinger}>
+                                    {formaterAntallAnnonser(antallTreff)}
+                                </Heading>
                                 <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
                                 <Sorter />
                             </div>
-                            <Filtermeny fnr={fnr} />
                             <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>
