@@ -39,42 +39,27 @@ const Kandidatbanner = ({ fnr }: Props) => {
         </Link>
     );
 
-    const datoparsing = (inputdato: string) => {
+    const lagFødselsdagtekst = (inputdato: string) => {
         if (inputdato == null) return null;
-
         var fødselsdag = new Date(inputdato);
+
         var iDag = new Date();
 
-        var månedNavn = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'Mai',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Okt',
-            'Nov',
-            'Des',
-        ];
-
-        const fødselsdagDag = fødselsdag.getUTCDate();
-        const fødselsdagMåned = fødselsdag.getUTCMonth();
-        const fødselsdagÅr = fødselsdag.getUTCFullYear();
-
-        const iDagDag = iDag.getUTCDate();
-        const iDagMåned = iDag.getUTCMonth();
-        const iDagÅr = iDag.getUTCFullYear();
-
         const harIkkeFylltÅrIÅr =
-            iDagMåned < fødselsdagMåned ||
-            (iDagMåned === fødselsdagMåned && iDagDag < fødselsdagDag);
+            iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||
+            (iDag.getUTCMonth() === fødselsdag.getUTCMonth() &&
+                iDag.getUTCDate() < fødselsdag.getUTCDate());
 
-        const alder = iDagÅr - fødselsdagÅr - (harIkkeFylltÅrIÅr ? -1 : 0);
+        const fødselsdagString = fødselsdag.toLocaleDateString('nb-NO', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+        });
 
-        return `Født: ${fødselsdagDag}. ${månedNavn[fødselsdagMåned]} ${fødselsdagÅr} (${alder} år)`;
+        const alder =
+            iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFylltÅrIÅr ? 1 : 0);
+
+        return `Født: ${fødselsdagString} (${alder} år)`;
     };
 
     return (
@@ -91,7 +76,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                     <div className={css.detaljer}>
                         {kandidat?.fodselsdato && (
                             <div>
-                                <CandleIcon /> {datoparsing(kandidat?.fodselsdato)}
+                                <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
                             </div>
                         )}
                         {(kandidat?.poststed ||
