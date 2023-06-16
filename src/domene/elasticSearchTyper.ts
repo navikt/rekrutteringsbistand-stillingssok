@@ -1,5 +1,5 @@
+import { Delsøk } from '../søkefaner/SøkeChips';
 import { Rekrutteringsbistandstilling } from './Stilling';
-import { Fane } from '../søkefaner/Søkefaner';
 
 export type Query = {
     size?: number;
@@ -20,9 +20,9 @@ export type Query = {
         globalAggregering: {
             global: object;
             aggs: {
-                faner: {
+                delsok: {
                     filters: {
-                        filters: Partial<Record<Fane, object>>;
+                        filters: Partial<Record<Delsøk, object>>;
                     };
                 };
             };
@@ -46,6 +46,9 @@ export type Respons = {
     hits: {
         max_score: number | null;
         hits: Array<Hit>;
+        total: {
+            value: number;
+        };
     };
     aggregations: {
         globalAggregering: GlobalAggregering;
@@ -53,8 +56,8 @@ export type Respons = {
 };
 
 export type GlobalAggregering = {
-    faner: {
-        buckets: Partial<Record<Fane, { doc_count: number }>>;
+    delsok: {
+        buckets: Partial<Record<Delsøk, { doc_count: number }>>;
     };
 };
 

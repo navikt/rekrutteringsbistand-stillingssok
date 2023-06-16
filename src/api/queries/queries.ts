@@ -15,7 +15,7 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
-        track_total_hits: false,
+        track_total_hits: true,
         query: lagIndreQuery(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
@@ -42,6 +42,8 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
 };
 
 export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk?: Delsøk) => {
+    console.log('Søkekriterier:', søkekriterier);
+
     return {
         bool: {
             should: [
@@ -75,6 +77,8 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
             annonsetittel: lagIndreQuery(søkekriterier, Delsøk.Annonsetittel),
             annonsetekst: lagIndreQuery(søkekriterier, Delsøk.Annonsetekst),
         };
+    } else {
+        return {};
     }
 
     return {
@@ -82,7 +86,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
             globalAggregering: {
                 global: {},
                 aggs: {
-                    faner: {
+                    delsok: {
                         filters: {
                             filters: queriesForFaneaggregering,
                         },

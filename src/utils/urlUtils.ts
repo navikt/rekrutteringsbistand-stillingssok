@@ -2,7 +2,6 @@ import { Søkekriterier } from '../Stillingssøk';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Fane } from '../søkefaner/Søkefaner';
 import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 import { NavigateFunction } from 'react-router-dom';
 import { Delsøk } from '../søkefaner/SøkeChips';
@@ -53,7 +52,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
             QueryParam.Stillingskategorier
         ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
-        delsøk: hentSøkekriterie(QueryParam.Statuser) as Set<Delsøk>,
+        delsøk: hentSøkekriterie(QueryParam.Delsøk) as Set<Delsøk>,
     };
 };
 

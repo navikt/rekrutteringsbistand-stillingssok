@@ -35,7 +35,7 @@ const Stillingssøk = () => {
     const respons = useSøkMedQuery();
 
     const globalAggregering = respons?.aggregations?.globalAggregering;
-    const antallTreff = useAntallTreff(globalAggregering);
+    const antallTreff = useAntallTreff(respons);
 
     return (
         <div className={css.wrapper}>
@@ -54,7 +54,7 @@ const Stillingssøk = () => {
                                     {formaterAntallAnnonser(antallTreff)}
                                 </Heading>
                                 <SøkeChips
-                                    aggregeringer={globalAggregering?.faner.buckets}
+                                    aggregeringer={globalAggregering?.delsok.buckets}
                                 ></SøkeChips>
                                 <Sorter />
                             </div>

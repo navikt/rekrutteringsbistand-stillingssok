@@ -1,18 +1,35 @@
 import { useSearchParams } from 'react-router-dom';
-import { GlobalAggregering } from './domene/elasticSearchTyper';
+import { GlobalAggregering, Respons } from './domene/elasticSearchTyper';
 import { hentSøkekriterier } from './utils/urlUtils';
 
-const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
+const useAntallTreff = (respons: Respons | null): number => {
     const [searchParams] = useSearchParams();
-    return hentAntallTreff(searchParams, globalAggregering);
+
+    if (respons === null) {
+        return 0;
+    }
+
+    return hentAntallTreff(
+        searchParams,
+        respons.hits.total.value,
+        respons.aggregations?.globalAggregering
+    );
 };
 
 export const hentAntallTreff = (
     searchParams: URLSearchParams,
+    totaltAntallTreff: number,
     globalAggregering?: GlobalAggregering
 ): number => {
-    const aktivFane = hentSøkekriterier(searchParams).fane;
-    return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
+    const alleDelsøk = hentSøkekriterier(searchParams).delsøk;
+
+    if (alleDelsøk.size === 0) {
+        return totaltAntallTreff;
+    }
+
+    return Array.from(alleDelsøk).reduce((antall, delsøk) => {
+        return antall + (globalAggregering?.delsok.buckets[delsøk]?.doc_count ?? 0);
+    }, 0);
 };
 
 export default useAntallTreff;

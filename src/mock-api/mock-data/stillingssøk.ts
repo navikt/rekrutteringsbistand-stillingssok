@@ -6,6 +6,9 @@ export const resultat: Respons = {
     timed_out: false,
     _shards: { total: 3, successful: 3, skipped: 0, failed: 0 },
     hits: {
+        total: {
+            value: 500,
+        },
         max_score: 1.0,
         hits: [
             {
@@ -858,11 +861,8 @@ export const resultat: Respons = {
     },
     aggregations: {
         globalAggregering: {
-            faner: {
+            delsok: {
                 buckets: {
-                    alle: {
-                        doc_count: 282,
-                    },
                     annonsetekst: {
                         doc_count: 277,
                     },
