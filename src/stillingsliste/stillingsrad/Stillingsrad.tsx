@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Detail, Tag } from '@navikt/ds-react';
-import { ListIcon } from '@navikt/aksel-icons';
+import { BulletListIcon } from '@navikt/aksel-icons';
 import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -104,7 +104,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
             <div className={css.kandidatlisteknapp}>
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <ListIcon className="navds-link" />
+                        <BulletListIcon className="navds-link" />
                     </Link>
                 )}
                 <div />

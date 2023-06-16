@@ -1,18 +1,21 @@
-import { Fane } from '../../søkefaner/Søkefaner';
+import { Delsøk } from '../../søkefaner/SøkeChips';
 
-const søkefelt = (søketermer: Set<string>, fane: Fane) => {
+const søkefelt = (søketermer: Set<string>, delsøk: Set<Delsøk>) => {
     if (søketermer.size === 0) return [];
 
-    let feltManSkalSøkeI: string[];
+    let feltManSkalSøkeI: string[] = [];
 
-    if (fane === Fane.Arbeidsgiver) {
-        feltManSkalSøkeI = ['stilling.employer.name', 'stilling.employer.orgnr'];
-    } else if (fane === Fane.Annonsetittel) {
-        feltManSkalSøkeI = ['stilling.title'];
-    } else if (fane === Fane.Annonsetekst) {
-        feltManSkalSøkeI = ['stilling.adtext_no'];
-    } else {
-        feltManSkalSøkeI = [
+    if (delsøk.has(Delsøk.Arbeidsgiver)) {
+        feltManSkalSøkeI.push('stilling.employer.name', 'stilling.employer.orgnr');
+    }
+    if (delsøk.has(Delsøk.Annonsetittel)) {
+        feltManSkalSøkeI.push('stilling.title');
+    }
+    if (delsøk.has(Delsøk.Annonsetekst)) {
+        feltManSkalSøkeI.push('stilling.adtext_no');
+    }
+    if (feltManSkalSøkeI.length == 0) {
+        feltManSkalSøkeI.push(
             'stilling.adtext_no^0.5',
             'stilling.title',
             'stilling.annonsenr',
@@ -20,8 +23,8 @@ const søkefelt = (søketermer: Set<string>, fane: Fane) => {
             'stilling.employer.orgnr',
             'stilling.properties.jobtitle',
             'stilling.properties.arbeidsplassenoccupation',
-            'stilling.properties.keywords',
-        ];
+            'stilling.properties.keywords'
+        );
     }
 
     return Array.from(søketermer).map((term) => ({

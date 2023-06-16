@@ -5,6 +5,7 @@ import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import { Fane } from '../søkefaner/Søkefaner';
 import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 import { NavigateFunction } from 'react-router-dom';
+import { Delsøk } from '../søkefaner/SøkeChips';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -18,7 +19,7 @@ export enum QueryParam {
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
     Standardsøk = 'standardsok',
-    Fane = 'fane',
+    Delsøk = 'delsok',
 }
 
 export type Navigeringsstate =
@@ -52,7 +53,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
             QueryParam.Stillingskategorier
         ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
-        fane: (searchParams.get(QueryParam.Fane) as Fane) ?? Fane.Alle,
+        delsøk: hentSøkekriterie(QueryParam.Statuser) as Set<Delsøk>,
     };
 };
 

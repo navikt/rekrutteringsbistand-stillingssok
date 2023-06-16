@@ -14,9 +14,9 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "@navikt/aksel-icons": "^2.8.16",
-        "@navikt/ds-css": "^2.8.16",
-        "@navikt/ds-react": "^2.8.16",
+        "@navikt/aksel-icons": "^4.1.0",
+        "@navikt/ds-css": "^4.1.0",
+        "@navikt/ds-react": "^4.1.0",
         "@navikt/fnrvalidator": "^1.3.0",
         "@navikt/navspa": "^6.0.1",
         "@sentry/react": "^7.17.2",

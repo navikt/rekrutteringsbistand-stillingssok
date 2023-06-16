@@ -1,13 +1,13 @@
 import { Query } from '../../domene/elasticSearchTyper';
 import { Søkekriterier } from '../../Stillingssøk';
 import { alleStillinger as defaultStatusFilter, status } from './status';
-import { Fane } from '../../søkefaner/Søkefaner';
 import sorterTreff from './sortering';
 import publisert from './publisert';
 import geografi from './geografi';
 import inkludering from './inkludering';
 import søkefelt from './søkefelt';
 import { stillingskategori } from './stillingskategori';
+import { Delsøk } from '../../søkefaner/SøkeChips';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -41,10 +41,15 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
     };
 };
 
-export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
+export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk?: Delsøk) => {
     return {
         bool: {
-            should: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
+            should: [
+                ...søkefelt(
+                    søkekriterier.tekst,
+                    alternativeDelsøk ? new Set<Delsøk>([alternativeDelsøk]) : søkekriterier.delsøk
+                ),
+            ],
             minimum_should_match: '1<50%',
             filter: [
                 ...publisert(søkekriterier.publisert),
@@ -61,16 +66,14 @@ export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativFane?: F
 };
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
-    let queriesForFaneaggregering: Partial<Record<Fane, object>> = {
-        alle: lagIndreQuery(søkekriterier, Fane.Alle),
-    };
+    let queriesForFaneaggregering: Partial<Record<Delsøk, object>> = {};
 
     if (søkekriterier.tekst.size > 0) {
         queriesForFaneaggregering = {
             ...queriesForFaneaggregering,
-            arbeidsgiver: lagIndreQuery(søkekriterier, Fane.Arbeidsgiver),
-            annonsetittel: lagIndreQuery(søkekriterier, Fane.Annonsetittel),
-            annonsetekst: lagIndreQuery(søkekriterier, Fane.Annonsetekst),
+            arbeidsgiver: lagIndreQuery(søkekriterier, Delsøk.Arbeidsgiver),
+            annonsetittel: lagIndreQuery(søkekriterier, Delsøk.Annonsetittel),
+            annonsetekst: lagIndreQuery(søkekriterier, Delsøk.Annonsetekst),
         };
     }
 
