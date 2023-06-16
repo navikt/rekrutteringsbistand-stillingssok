@@ -51,25 +51,37 @@ const Kandidatbanner = ({ fnr }: Props) => {
                         {kandidat?.fornavn} {kandidat?.etternavn}
                     </Heading>
                     <div className={css.detaljer}>
-                        <div>
-                            <CandleIcon /> {kandidat?.fodselsdato}
-                        </div>
-                        <div>
-                            <PinIcon /> {kandidat?.adresselinje1} {kandidat?.postnummer}{' '}
-                            {kandidat?.poststed}
-                        </div>
-                        <div>
-                            <EnvelopeClosedIcon />
-                            {kandidat?.epostadresse}
-                        </div>
-                        <div>
-                            <PhoneIcon />
-                            {kandidat?.telefon}
-                        </div>
-                        <div>
-                            <PersonIcon />
-                            {kandidat?.veileder} (Veileder)
-                        </div>
+                        {kandidat?.fodselsdato && (
+                            <div>
+                                <CandleIcon /> {kandidat?.fodselsdato}
+                            </div>
+                        )}
+                        {(kandidat?.poststed ||
+                            kandidat?.postnummer ||
+                            kandidat?.adresselinje1) && (
+                            <div>
+                                <PinIcon /> {kandidat?.adresselinje1} {kandidat?.postnummer}{' '}
+                                {kandidat?.poststed}
+                            </div>
+                        )}
+                        {kandidat?.epostadresse && (
+                            <div>
+                                <EnvelopeClosedIcon />
+                                {kandidat?.epostadresse}
+                            </div>
+                        )}
+                        {kandidat?.telefon && (
+                            <div>
+                                <PhoneIcon />
+                                {kandidat?.telefon}
+                            </div>
+                        )}
+                        {kandidat?.veileder && (
+                            <div>
+                                <PersonIcon />
+                                {kandidat?.veileder} (Veileder)
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
