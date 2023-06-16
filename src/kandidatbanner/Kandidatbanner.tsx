@@ -39,6 +39,44 @@ const Kandidatbanner = ({ fnr }: Props) => {
         </Link>
     );
 
+    const datoparsing = (inputdato: string) => {
+        if (inputdato == null) return null;
+
+        var fødselsdag = new Date(inputdato);
+        var iDag = new Date();
+
+        var månedNavn = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'Mai',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Okt',
+            'Nov',
+            'Des',
+        ];
+
+        const fødselsdagDag = fødselsdag.getUTCDate();
+        const fødselsdagMåned = fødselsdag.getUTCMonth();
+        const fødselsdagÅr = fødselsdag.getUTCFullYear();
+
+        const iDagDag = iDag.getUTCDate();
+        const iDagMåned = iDag.getUTCMonth();
+        const iDagÅr = iDag.getUTCFullYear();
+
+        const harIkkeFylltÅrIÅr =
+            iDagMåned < fødselsdagMåned ||
+            (iDagMåned === fødselsdagMåned && iDagDag < fødselsdagDag);
+
+        const alder = iDagÅr - fødselsdagÅr - (harIkkeFylltÅrIÅr ? -1 : 0);
+
+        return `Født: ${fødselsdagDag}. ${månedNavn[fødselsdagMåned]} ${fødselsdagÅr} (${alder} år)`;
+    };
+
     return (
         <div className={css.banner}>
             <div className={css.innerBanner}>
@@ -53,7 +91,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                     <div className={css.detaljer}>
                         {kandidat?.fodselsdato && (
                             <div>
-                                <CandleIcon /> {kandidat?.fodselsdato}
+                                <CandleIcon /> {datoparsing(kandidat?.fodselsdato)}
                             </div>
                         )}
                         {(kandidat?.poststed ||
