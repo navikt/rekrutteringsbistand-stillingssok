@@ -13,7 +13,7 @@ const søkefelt = (søketermer: Set<string>, fane: Fane) => {
         feltManSkalSøkeI = ['stilling.adtext_no'];
     } else {
         feltManSkalSøkeI = [
-            'stilling.adtext_no',
+            'stilling.adtext_no^0.5',
             'stilling.title',
             'stilling.annonsenr',
             'stilling.employer.name',

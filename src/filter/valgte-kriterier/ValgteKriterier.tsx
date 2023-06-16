@@ -63,6 +63,7 @@ const ValgteKrierier: FunctionComponent = () => {
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
         (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
     );
+
     const valgteSubinkluderingstags = Array.from(subinkluderingstags);
     const hovedInkluderingstagsUtenValgteSubinkluderingtags = Array.from(
         hovedinkluderingstags
@@ -72,7 +73,6 @@ const ValgteKrierier: FunctionComponent = () => {
                 subinkluderingstag.startsWith(`${hovedinkluderingstag}__`)
             )
     );
-    const søketermer = Array.from(tekst);
 
     return (
         <Chips>
@@ -170,7 +170,7 @@ const ValgteKrierier: FunctionComponent = () => {
                 </Chips.Removable>
             ))}
 
-            {søketermer.map((term) => (
+            {Array.from(tekst).map((term) => (
                 <Chips.Removable
                     key={term}
                     variant="neutral"

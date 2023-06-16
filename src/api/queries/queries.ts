@@ -45,7 +45,7 @@ export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativFane?: F
     return {
         bool: {
             should: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
-            minimum_should_match: søkekriterier.tekst.size > 0 ? 1 : 0,
+            minimum_should_match: '1<50%',
             filter: [
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
