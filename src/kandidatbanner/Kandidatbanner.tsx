@@ -62,6 +62,10 @@ const Kandidatbanner = ({ fnr }: Props) => {
         return `Født: ${fødselsdagString} (${alder} år)`;
     };
 
+    const formaterAdresse = (input: string | null): string | null => {
+        return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+    };
+
     return (
         <div className={css.banner}>
             <div className={css.innerBanner}>
@@ -83,8 +87,8 @@ const Kandidatbanner = ({ fnr }: Props) => {
                             kandidat?.postnummer ||
                             kandidat?.adresselinje1) && (
                             <div>
-                                <PinIcon /> {kandidat?.adresselinje1} {kandidat?.postnummer}{' '}
-                                {kandidat?.poststed}
+                                <PinIcon /> {formaterAdresse(kandidat?.adresselinje1)}{' '}
+                                {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
                             </div>
                         )}
                         {kandidat?.epostadresse && (
