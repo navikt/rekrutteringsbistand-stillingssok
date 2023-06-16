@@ -3,7 +3,7 @@ import { Heading } from '@navikt/ds-react';
 import useKandidat from './useKandidat';
 import css from './Kandidatbanner.module.css';
 import {
-    ChangingRoomIcon,
+    CandleIcon,
     EnvelopeClosedIcon,
     PersonIcon,
     PhoneIcon,
@@ -52,7 +52,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                     </Heading>
                     <div className={css.detaljer}>
                         <div>
-                            <ChangingRoomIcon /> {kandidat?.fodselsdato}
+                            <CandleIcon /> {kandidat?.fodselsdato}
                         </div>
                         <div>
                             <PinIcon /> {kandidat?.adresselinje1} {kandidat?.postnummer}{' '}
