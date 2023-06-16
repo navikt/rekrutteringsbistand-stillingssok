@@ -8,7 +8,6 @@ import {
 import { Search } from '@navikt/ds-react';
 import useNavigering from '../../useNavigering';
 import css from './Søkefelt.module.css';
-import { søk } from '../../api/api';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
@@ -41,20 +40,7 @@ const Søkefelt: FunctionComponent = () => {
                 verdi: Array.from(søketermer),
             });
             setInput('');
-        } else {
-            oppdaterTekstOgResetFane();
         }
-    };
-
-    const oppdaterTekstOgResetFane = () => {
-        oppdaterUrlMedToParams({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Tekst,
-            verdi: input,
-            parameter2: QueryParam.Fane,
-            verdi2: null,
-        });
     };
 
     return (
