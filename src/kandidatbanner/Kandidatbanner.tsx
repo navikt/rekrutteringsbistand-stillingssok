@@ -33,14 +33,8 @@ const Kandidatbanner = ({ fnr }: Props) => {
         </Link>
     );
 
-    const stillingslenke = (
-        <Link className={css.lenkeTilStilling} to={`stillingssok`}>
-            Finn stilling
-        </Link>
-    );
-
-    const lagFødselsdagtekst = (inputdato: string) => {
-        if (inputdato == null) return '-';
+    const lagFødselsdagtekst = (inputdato: string | null | undefined) => {
+        if (!inputdato) return '-';
         var fødselsdag = new Date(inputdato);
 
         var iDag = new Date();
@@ -72,7 +66,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                 <PersonIcon fontSize="3rem" />
                 <div className={css.personinformasjon}>
                     <div>
-                        {kandidaterLenke} / {kandidatLenke} / {stillingslenke}
+                        {kandidaterLenke} / {kandidatLenke} / Finn stilling
                     </div>
                     <Heading size="medium" as="span">
                         {kandidat?.fornavn} {kandidat?.etternavn}
