@@ -9,7 +9,7 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { ReactComponent as Minekandidater } from './Minekandidater.svg';
+import { ReactComponent as Minekandidater } from './minekandidater.svg';
 import { Link } from 'react-router-dom';
 
 type Props = {
