@@ -1,4 +1,4 @@
-import { Delsøk } from '../søkefaner/SøkeChips';
+import { Søkefelt } from '../søkefelter/Søkefelter';
 import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
@@ -20,9 +20,9 @@ export type Query = {
         globalAggregering: {
             global: object;
             aggs: {
-                delsok: {
+                felter: {
                     filters: {
-                        filters: Partial<Record<Delsøk, object>>;
+                        filters: Partial<Record<Søkefelt, object>>;
                     };
                 };
             };
@@ -56,8 +56,8 @@ export type Respons = {
 };
 
 export type GlobalAggregering = {
-    delsok: {
-        buckets: Partial<Record<Delsøk, { doc_count: number }>>;
+    felter: {
+        buckets: Partial<Record<Søkefelt, { doc_count: number }>>;
     };
 };
 

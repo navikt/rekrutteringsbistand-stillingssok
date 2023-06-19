@@ -4,7 +4,7 @@ import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 import { NavigateFunction } from 'react-router-dom';
-import { Delsøk } from '../søkefaner/SøkeChips';
+import { Søkefelt } from '../søkefelter/Søkefelter';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -18,7 +18,7 @@ export enum QueryParam {
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
     Standardsøk = 'standardsok',
-    Delsøk = 'delsok',
+    Felter = 'felter',
 }
 
 export type Navigeringsstate =
@@ -52,7 +52,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
             QueryParam.Stillingskategorier
         ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
-        delsøk: hentSøkekriterie(QueryParam.Delsøk) as Set<Delsøk>,
+        felter: hentSøkekriterie(QueryParam.Felter) as Set<Søkefelt>,
     };
 };
 

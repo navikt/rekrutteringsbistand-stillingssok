@@ -13,8 +13,8 @@ import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
+import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import css from './Stillingssøk.module.css';
-import SøkeChips, { Delsøk } from './søkefaner/SøkeChips';
 
 export type Søkekriterier = {
     side: number;
@@ -27,7 +27,7 @@ export type Søkekriterier = {
     hovedinkluderingstags: Set<string>;
     subinkluderingstags: Set<string>;
     sortering: Sortering;
-    delsøk: Set<Delsøk>;
+    felter: Set<Søkefelt>;
 };
 
 const Stillingssøk = () => {
@@ -53,9 +53,7 @@ const Stillingssøk = () => {
                                 <Heading level="2" size="medium" className={css.antallStillinger}>
                                     {formaterAntallAnnonser(antallTreff)}
                                 </Heading>
-                                <SøkeChips
-                                    aggregeringer={globalAggregering?.delsok.buckets}
-                                ></SøkeChips>
+                                <Søkefelter aggregeringer={globalAggregering?.felter.buckets} />
                                 <Sorter />
                             </div>
                             <Stillingsliste esRespons={respons} fnr={fnr} />

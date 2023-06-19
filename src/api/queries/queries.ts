@@ -1,4 +1,4 @@
-import { Delsøk } from '../../søkefaner/SøkeChips';
+import { Søkefelt } from '../../søkefelter/Søkefelter';
 import { Query } from '../../domene/elasticSearchTyper';
 import { Søkekriterier } from '../../Stillingssøk';
 import { status } from './status';
@@ -22,13 +22,13 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     };
 };
 
-export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk?: Delsøk) => {
+export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativtFelt?: Søkefelt) => {
     return {
         bool: {
             should: [
                 ...søkefelt(
                     søkekriterier.tekst,
-                    alternativeDelsøk ? new Set<Delsøk>([alternativeDelsøk]) : søkekriterier.delsøk
+                    alternativtFelt ? new Set<Søkefelt>([alternativtFelt]) : søkekriterier.felter
                 ),
             ],
             minimum_should_match: '1<50%',
@@ -47,15 +47,15 @@ export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk
 };
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
-    let queriesForFaneaggregering: Partial<Record<Delsøk, object>> = {};
+    let queriesForFeltaggregering: Partial<Record<Søkefelt, object>> = {};
 
     if (søkekriterier.tekst.size > 0) {
-        queriesForFaneaggregering = {
-            ...queriesForFaneaggregering,
-            arbeidsgiver: lagIndreQuery(søkekriterier, Delsøk.Arbeidsgiver),
-            annonsetittel: lagIndreQuery(søkekriterier, Delsøk.Annonsetittel),
-            annonsetekst: lagIndreQuery(søkekriterier, Delsøk.Annonsetekst),
-            annonsenummer: lagIndreQuery(søkekriterier, Delsøk.Annonsenummer),
+        queriesForFeltaggregering = {
+            ...queriesForFeltaggregering,
+            arbeidsgiver: lagIndreQuery(søkekriterier, Søkefelt.Arbeidsgiver),
+            annonsetittel: lagIndreQuery(søkekriterier, Søkefelt.Annonsetittel),
+            annonsetekst: lagIndreQuery(søkekriterier, Søkefelt.Annonsetekst),
+            annonsenummer: lagIndreQuery(søkekriterier, Søkefelt.Annonsenummer),
         };
     } else {
         return {};
@@ -66,9 +66,9 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
             globalAggregering: {
                 global: {},
                 aggs: {
-                    delsok: {
+                    felter: {
                         filters: {
-                            filters: queriesForFaneaggregering,
+                            filters: queriesForFeltaggregering,
                         },
                     },
                 },

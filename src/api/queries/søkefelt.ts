@@ -1,23 +1,23 @@
-import { Delsøk } from '../../søkefaner/SøkeChips';
+import { Søkefelt } from '../../søkefelter/Søkefelter';
 
-const søkefelt = (søketermer: Set<string>, delsøk: Set<Delsøk>) => {
+const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     if (søketermer.size === 0) return [];
 
     let feltManSkalSøkeI: string[] = [];
 
-    if (delsøk.has(Delsøk.Arbeidsgiver)) {
+    if (felter.has(Søkefelt.Arbeidsgiver)) {
         feltManSkalSøkeI.push('stilling.employer.name', 'stilling.employer.orgnr');
     }
 
-    if (delsøk.has(Delsøk.Annonsetittel)) {
+    if (felter.has(Søkefelt.Annonsetittel)) {
         feltManSkalSøkeI.push('stilling.title');
     }
 
-    if (delsøk.has(Delsøk.Annonsetekst)) {
+    if (felter.has(Søkefelt.Annonsetekst)) {
         feltManSkalSøkeI.push('stilling.adtext_no');
     }
 
-    if (delsøk.has(Delsøk.Annonsenummer)) {
+    if (felter.has(Søkefelt.Annonsenummer)) {
         feltManSkalSøkeI.push('stilling.annonsenr');
     }
 

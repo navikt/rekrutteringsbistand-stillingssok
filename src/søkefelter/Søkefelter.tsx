@@ -3,7 +3,7 @@ import { Chips } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
 
-export enum Delsøk {
+export enum Søkefelt {
     Arbeidsgiver = 'arbeidsgiver',
     Annonsetittel = 'annonsetittel',
     Annonsetekst = 'annonsetekst',
@@ -11,27 +11,27 @@ export enum Delsøk {
 }
 
 type Props = {
-    aggregeringer?: Partial<Record<Delsøk, { doc_count: number }>>;
+    aggregeringer?: Partial<Record<Søkefelt, { doc_count: number }>>;
 };
 
-const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
+const Søkefelter: FunctionComponent<Props> = ({ aggregeringer }) => {
     const { searchParams, navigate } = useNavigering();
-    const aktiveDelsøk = hentSøkekriterier(searchParams).delsøk;
+    const aktiveFelter = hentSøkekriterier(searchParams).felter;
 
-    const changeAktivtDelsøk = (delsøk: Delsøk) => {
-        const nyeDelsøk = new Set(aktiveDelsøk);
+    const handleSøkefeltClick = (felt: Søkefelt) => {
+        const oppdaterteFelter = new Set(aktiveFelter);
 
-        if (nyeDelsøk.has(delsøk)) {
-            nyeDelsøk.delete(delsøk);
+        if (oppdaterteFelter.has(felt)) {
+            oppdaterteFelter.delete(felt);
         } else {
-            nyeDelsøk.add(delsøk);
+            oppdaterteFelter.add(felt);
         }
 
         oppdaterUrlMedParam({
             searchParams,
             navigate,
-            parameter: QueryParam.Delsøk,
-            verdi: Array.from(nyeDelsøk),
+            parameter: QueryParam.Felter,
+            verdi: Array.from(oppdaterteFelter),
         });
     };
 
@@ -39,7 +39,7 @@ const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
         return null;
     }
 
-    const felterMedTreff = Object.values(Delsøk).filter((felt) => {
+    const felterMedTreff = Object.values(Søkefelt).filter((felt) => {
         const antallTreff = aggregeringer[felt]?.doc_count ?? 0;
 
         return antallTreff > 0;
@@ -53,10 +53,10 @@ const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
                 return (
                     <Chips.Toggle
                         key={felt}
-                        selected={aktiveDelsøk.has(felt)}
+                        selected={aktiveFelter.has(felt)}
                         checkmark={false}
                         onClick={() => {
-                            changeAktivtDelsøk(felt);
+                            handleSøkefeltClick(felt);
                         }}
                     >
                         {`${felt} (${aggregering?.doc_count})`}
@@ -67,4 +67,4 @@ const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
     );
 };
 
-export default SøkeChips;
+export default Søkefelter;

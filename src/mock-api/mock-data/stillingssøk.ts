@@ -861,7 +861,7 @@ export const resultat: Respons = {
     },
     aggregations: {
         globalAggregering: {
-            delsok: {
+            felter: {
                 buckets: {
                     annonsetekst: {
                         doc_count: 277,
@@ -871,6 +871,9 @@ export const resultat: Respons = {
                     },
                     arbeidsgiver: {
                         doc_count: 52,
+                    },
+                    annonsenummer: {
+                        doc_count: 1,
                     },
                 },
             },
