@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
+import { Chips } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
-import { Chips } from '@navikt/ds-react';
 
 export enum Delsøk {
     Arbeidsgiver = 'arbeidsgiver',
@@ -18,8 +18,6 @@ const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
     const aktiveDelsøk = hentSøkekriterier(searchParams).delsøk;
 
     const changeAktivtDelsøk = (delsøk: Delsøk) => {
-        console.log('Aktive delsøk:', aktiveDelsøk);
-
         const nyeDelsøk = new Set(aktiveDelsøk);
 
         if (nyeDelsøk.has(delsøk)) {
@@ -36,24 +34,34 @@ const SøkeChips: FunctionComponent<Props> = ({ aggregeringer }) => {
         });
     };
 
+    if (hentSøkekriterier(searchParams).tekst.size === 0 || aggregeringer === undefined) {
+        return null;
+    }
+
+    const felterMedTreff = Object.values(Delsøk).filter((felt) => {
+        const antallTreff = aggregeringer[felt]?.doc_count ?? 0;
+
+        return antallTreff > 0;
+    });
+
     return (
         <Chips>
-            {hentSøkekriterier(searchParams).tekst.size > 0 &&
-                Object.values(Delsøk).map((delsøk) => {
-                    const aggregering = aggregeringer && aggregeringer[delsøk];
-                    return (
-                        <Chips.Toggle
-                            selected={aktiveDelsøk.has(delsøk)}
-                            checkmark={false}
-                            key={delsøk}
-                            onClick={() => {
-                                changeAktivtDelsøk(delsøk);
-                            }}
-                        >
-                            {`${delsøk} (${aggregering?.doc_count})`}
-                        </Chips.Toggle>
-                    );
-                })}
+            {felterMedTreff.map((felt) => {
+                const aggregering = aggregeringer[felt];
+
+                return (
+                    <Chips.Toggle
+                        key={felt}
+                        selected={aktiveDelsøk.has(felt)}
+                        checkmark={false}
+                        onClick={() => {
+                            changeAktivtDelsøk(felt);
+                        }}
+                    >
+                        {`${felt} (${aggregering?.doc_count})`}
+                    </Chips.Toggle>
+                );
+            })}
         </Chips>
     );
 };

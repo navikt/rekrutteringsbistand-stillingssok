@@ -42,8 +42,6 @@ export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query 
 };
 
 export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk?: Delsøk) => {
-    console.log('Søkekriterier:', søkekriterier);
-
     return {
         bool: {
             should: [
