@@ -9,16 +9,16 @@ import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
 import Kandidat from './kandidatbanner/Kandidatbanner';
 import Paginering from './paginering/Paginering';
-import Søkefaner, { Fane } from './søkefaner/Søkefaner';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import css from './Stillingssøk.module.css';
+import SøkeChips, { Delsøk } from './søkefaner/SøkeChips';
 
 export type Søkekriterier = {
     side: number;
-    tekst: string;
+    tekst: Set<string>;
     publisert: Set<Publisert>;
     fylker: Set<string>;
     kommuner: Set<string>;
@@ -27,7 +27,7 @@ export type Søkekriterier = {
     hovedinkluderingstags: Set<string>;
     subinkluderingstags: Set<string>;
     sortering: Sortering;
-    fane: Fane;
+    delsøk: Set<Delsøk>;
 };
 
 const Stillingssøk = () => {
@@ -35,7 +35,7 @@ const Stillingssøk = () => {
     const respons = useSøkMedQuery();
 
     const globalAggregering = respons?.aggregations?.globalAggregering;
-    const antallTreff = useAntallTreff(globalAggregering);
+    const antallTreff = useAntallTreff(respons);
 
     return (
         <div className={css.wrapper}>
@@ -48,15 +48,16 @@ const Stillingssøk = () => {
                 <main className={css.sokeresultat}>
                     {respons ? (
                         <>
-                            <Heading level="2" size="medium" className={css.antallStillinger}>
-                                {formaterAntallAnnonser(antallTreff)}
-                            </Heading>
-
-                            <div className={css.antallOgSortering}>
-                                <Søkefaner aggregeringer={globalAggregering?.faner.buckets} />
+                            <Filtermeny fnr={fnr} />
+                            <div className={css.beskrivelseAvSøk}>
+                                <Heading level="2" size="medium" className={css.antallStillinger}>
+                                    {formaterAntallAnnonser(antallTreff)}
+                                </Heading>
+                                <SøkeChips
+                                    aggregeringer={globalAggregering?.delsok.buckets}
+                                ></SøkeChips>
                                 <Sorter />
                             </div>
-                            <Filtermeny fnr={fnr} />
                             <Stillingsliste esRespons={respons} fnr={fnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>

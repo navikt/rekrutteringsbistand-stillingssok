@@ -33,7 +33,13 @@ const Sorter: FunctionComponent = () => {
     };
 
     return (
-        <Select className={css.sorter} label="Sorter" value={valgt} onChange={onOptionValgt}>
+        <Select
+            size="small"
+            className={css.sorter}
+            label="Sorter"
+            value={valgt}
+            onChange={onOptionValgt}
+        >
             {Object.values(Sortering).map((sortering) => (
                 <option key={sortering} value={sortering}>
                     {labels[sortering]}

@@ -11,15 +11,15 @@ import css from './Søkefelt.module.css';
 
 const Søkefelt: FunctionComponent = () => {
     const { searchParams, navigate, state } = useNavigering();
-
-    const [input, setInput] = useState<string>(hentSøkekriterier(searchParams).tekst);
+    const [input, setInput] = useState<string>('');
+    const tekst = hentSøkekriterier(searchParams).tekst;
 
     useEffect(() => {
         const skalTømmeInputfelt = state?.harSlettetKriterier;
         const skalSetteInputfeltTilStandardsøk = state?.brukStandardsøk;
 
         if (skalTømmeInputfelt || skalSetteInputfeltTilStandardsøk) {
-            setInput(hentSøkekriterier(searchParams).tekst);
+            setInput('');
         }
     }, [searchParams, state]);
 
@@ -31,26 +31,16 @@ const Søkefelt: FunctionComponent = () => {
         event.preventDefault();
 
         if (input.length > 0) {
+            const søketermer = new Set(tekst);
+            søketermer.add(input);
             oppdaterUrlMedParam({
                 searchParams,
                 navigate,
                 parameter: QueryParam.Tekst,
-                verdi: input,
+                verdi: Array.from(søketermer),
             });
-        } else {
-            oppdaterTekstOgResetFane();
+            setInput('');
         }
-    };
-
-    const oppdaterTekstOgResetFane = () => {
-        oppdaterUrlMedToParams({
-            searchParams,
-            navigate,
-            parameter: QueryParam.Tekst,
-            verdi: input,
-            parameter2: QueryParam.Fane,
-            verdi2: null,
-        });
     };
 
     return (

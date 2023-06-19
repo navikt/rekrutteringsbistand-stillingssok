@@ -1,18 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
-import { GlobalAggregering } from './domene/elasticSearchTyper';
-import { hentSøkekriterier } from './utils/urlUtils';
+import { Respons } from './domene/elasticSearchTyper';
 
-const useAntallTreff = (globalAggregering?: GlobalAggregering): number => {
-    const [searchParams] = useSearchParams();
-    return hentAntallTreff(searchParams, globalAggregering);
-};
+const useAntallTreff = (respons: Respons | null): number => {
+    if (respons === null) {
+        return 0;
+    }
 
-export const hentAntallTreff = (
-    searchParams: URLSearchParams,
-    globalAggregering?: GlobalAggregering
-): number => {
-    const aktivFane = hentSøkekriterier(searchParams).fane;
-    return globalAggregering?.faner.buckets[aktivFane]?.doc_count ?? 0;
+    return respons.hits.total.value;
 };
 
 export default useAntallTreff;

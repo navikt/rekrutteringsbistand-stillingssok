@@ -6,11 +6,12 @@ import { createBrowserHistory } from 'history';
 import App from '../App';
 import css from './Utviklingsapp.module.css';
 import CustomRouter from './CustomRouter';
+import ForklarMatch from './ForklarMatch';
 
 const history = createBrowserHistory();
 
 const Utviklingsapp: FunctionComponent = () => {
-    const [navKontor, setNavKontor] = useState<string | null>(null);
+    const [, setNavKontor] = useState<string | null>(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -39,7 +40,7 @@ const Utviklingsapp: FunctionComponent = () => {
                 </Link>
             </header>
             <Routes>
-                <Route path="/stillinger/*" element={<>Side for stilling</>} />
+                <Route path="/stillinger/stilling/:stillingsId" element={<ForklarMatch />} />
                 <Route path="/*" element={<App />} />
             </Routes>
         </CustomRouter>

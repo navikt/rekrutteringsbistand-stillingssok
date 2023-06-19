@@ -3,12 +3,9 @@ import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
-import { Status, statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
-import { Publisert, publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
-import {
-    Stillingskategori,
-    stillingskategoriTilVisningsnavn,
-} from '../om-annonsen/VelgStillingskategori';
+import { statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
+import { publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
+import { stillingskategoriTilVisningsnavn } from '../om-annonsen/VelgStillingskategori';
 import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
 
 const ValgteKrierier: FunctionComponent = () => {
@@ -24,6 +21,7 @@ const ValgteKrierier: FunctionComponent = () => {
         kommuner,
         hovedinkluderingstags,
         subinkluderingstags,
+        tekst,
     } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
@@ -65,6 +63,7 @@ const ValgteKrierier: FunctionComponent = () => {
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
         (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
     );
+
     const valgteSubinkluderingstags = Array.from(subinkluderingstags);
     const hovedInkluderingstagsUtenValgteSubinkluderingtags = Array.from(
         hovedinkluderingstags
@@ -130,7 +129,7 @@ const ValgteKrierier: FunctionComponent = () => {
             {valgteKommuner.map((kommune) => (
                 <Chips.Removable
                     key={kommune}
-                    variant={'neutral'}
+                    variant="neutral"
                     onDelete={() => {
                         handleClick(kommune, kommuner, QueryParam.Kommuner);
                     }}
@@ -142,7 +141,7 @@ const ValgteKrierier: FunctionComponent = () => {
             {hovedInkluderingstagsUtenValgteSubinkluderingtags.map((hovedinkluderingtag) => (
                 <Chips.Removable
                     key={hovedinkluderingtag}
-                    variant={'neutral'}
+                    variant="neutral"
                     onDelete={() => {
                         handleClick(
                             hovedinkluderingtag,
@@ -158,7 +157,7 @@ const ValgteKrierier: FunctionComponent = () => {
             {valgteSubinkluderingstags.map((subinkluderingtag) => (
                 <Chips.Removable
                     key={subinkluderingtag}
-                    variant={'neutral'}
+                    variant="neutral"
                     onDelete={() => {
                         handleClick(
                             subinkluderingtag,
@@ -168,6 +167,18 @@ const ValgteKrierier: FunctionComponent = () => {
                     }}
                 >
                     {visningsnavnForFilter[subinkluderingtag as Subtag]}
+                </Chips.Removable>
+            ))}
+
+            {Array.from(tekst).map((term) => (
+                <Chips.Removable
+                    key={term}
+                    variant="neutral"
+                    onDelete={() => {
+                        handleClick(term, tekst, QueryParam.Tekst);
+                    }}
+                >
+                    {term}
                 </Chips.Removable>
             ))}
         </Chips>

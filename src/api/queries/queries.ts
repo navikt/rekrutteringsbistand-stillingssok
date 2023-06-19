@@ -1,13 +1,13 @@
+import { Delsøk } from '../../søkefaner/SøkeChips';
 import { Query } from '../../domene/elasticSearchTyper';
 import { Søkekriterier } from '../../Stillingssøk';
-import { alleStillinger as defaultStatusFilter, status } from './status';
-import { Fane } from '../../søkefaner/Søkefaner';
+import { status } from './status';
+import { stillingskategori } from './stillingskategori';
 import sorterTreff from './sortering';
 import publisert from './publisert';
 import geografi from './geografi';
 import inkludering from './inkludering';
 import søkefelt from './søkefelt';
-import { stillingskategori } from './stillingskategori';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -15,35 +15,23 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
-        track_total_hits: false,
-        query: query(søkekriterier),
+        track_total_hits: true,
+        query: lagIndreQuery(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
     };
 };
 
-export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query => {
-    return {
-        query: {
-            bool: {
-                filter: [
-                    {
-                        term: {
-                            'stilling.annonsenr': søkekriterier.tekst,
-                        },
-                    },
-                    ...defaultStatusFilter,
-                ],
-            },
-        },
-        ...aggregeringer(søkekriterier),
-    };
-};
-
-const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
+export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativeDelsøk?: Delsøk) => {
     return {
         bool: {
-            must: [...søkefelt(søkekriterier.tekst, alternativFane || søkekriterier.fane)],
+            should: [
+                ...søkefelt(
+                    søkekriterier.tekst,
+                    alternativeDelsøk ? new Set<Delsøk>([alternativeDelsøk]) : søkekriterier.delsøk
+                ),
+            ],
+            minimum_should_match: '1<50%',
             filter: [
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
@@ -59,17 +47,18 @@ const query = (søkekriterier: Søkekriterier, alternativFane?: Fane) => {
 };
 
 const aggregeringer = (søkekriterier: Søkekriterier) => {
-    let queriesForFaneaggregering: Partial<Record<Fane, object>> = {
-        alle: query(søkekriterier, Fane.Alle),
-    };
+    let queriesForFaneaggregering: Partial<Record<Delsøk, object>> = {};
 
-    if (søkekriterier.tekst) {
+    if (søkekriterier.tekst.size > 0) {
         queriesForFaneaggregering = {
             ...queriesForFaneaggregering,
-            arbeidsgiver: query(søkekriterier, Fane.Arbeidsgiver),
-            annonsetittel: query(søkekriterier, Fane.Annonsetittel),
-            annonsetekst: query(søkekriterier, Fane.Annonsetekst),
+            arbeidsgiver: lagIndreQuery(søkekriterier, Delsøk.Arbeidsgiver),
+            annonsetittel: lagIndreQuery(søkekriterier, Delsøk.Annonsetittel),
+            annonsetekst: lagIndreQuery(søkekriterier, Delsøk.Annonsetekst),
+            annonsenummer: lagIndreQuery(søkekriterier, Delsøk.Annonsenummer),
         };
+    } else {
+        return {};
     }
 
     return {
@@ -77,7 +66,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
             globalAggregering: {
                 global: {},
                 aggs: {
-                    faner: {
+                    delsok: {
                         filters: {
                             filters: queriesForFaneaggregering,
                         },

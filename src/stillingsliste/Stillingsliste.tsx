@@ -13,7 +13,12 @@ const Stillingsliste: FunctionComponent<Props> = ({ esRespons, fnr }) => {
     return (
         <ul className={css.stillingliste}>
             {hits.map((hit) => (
-                <Stillingsrad key={hit._id} rekrutteringsbistandstilling={hit._source} fnr={fnr} />
+                <Stillingsrad
+                    key={hit._id}
+                    rekrutteringsbistandstilling={hit._source}
+                    fnr={fnr}
+                    score={hit._score}
+                />
             ))}
         </ul>
     );

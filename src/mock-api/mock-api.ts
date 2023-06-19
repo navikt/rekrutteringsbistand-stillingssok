@@ -26,6 +26,7 @@ const putStandardsøk = (url: string, options: MockRequest): StandardsøkDto => 
 };
 
 fetchMock.config.fallbackToNetwork = true;
+fetchMock.config.warnOnFallback = false;
 
 if (import.meta.env.VITE_MOCK_ES) {
     fetchMock.post(stillingssøkUrl, logg(resultat));

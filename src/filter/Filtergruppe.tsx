@@ -13,7 +13,7 @@ const Filtergruppe = ({ tittel, children }: Props) => {
         <Accordion className={filterCss.filtergruppe}>
             <Accordion.Item defaultOpen={enhetstype === Enhetstype.Desktop}>
                 <Accordion.Header>{tittel}</Accordion.Header>
-                <Accordion.Content>{children}</Accordion.Content>
+                <Accordion.Content className={filterCss.innhold}>{children}</Accordion.Content>
             </Accordion.Item>
         </Accordion>
     );

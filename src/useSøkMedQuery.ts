@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { sendEvent } from './amplitude';
 import { søk } from './api/api';
-import { lagQuery, lagQueryPåAnnonsenummer } from './api/queries/queries';
+import { lagQuery } from './api/queries/queries';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/urlUtils';
 import { Respons } from './domene/elasticSearchTyper';
-import { hentAntallTreff } from './useAntallTreff';
 import useNavigering from './useNavigering';
 import useStandardsøk from './standardsøk/StandardsøkContext';
 
@@ -26,12 +25,6 @@ const useSøkMedQuery = () => {
 
         const søkMedQuery = async () => {
             let respons = await søk(lagQuery(søkekriterier));
-
-            const fikkIngenTreff =
-                hentAntallTreff(searchParams, respons.aggregations?.globalAggregering) === 0;
-            if (fikkIngenTreff) {
-                respons = await søk(lagQueryPåAnnonsenummer(søkekriterier));
-            }
 
             setRespons(respons);
         };

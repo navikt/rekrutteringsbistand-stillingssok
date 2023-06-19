@@ -17,6 +17,10 @@
     background-color: white;
 }
 
+.innhold {
+    padding: 1rem;
+}
+
 .indentertCheckboxgruppe :global(.navds-checkboxes) {
     margin-left: 2rem;
 }

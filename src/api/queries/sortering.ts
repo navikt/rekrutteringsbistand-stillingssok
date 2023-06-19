@@ -12,8 +12,9 @@ const sorteringPåPubliseringsdato = {
     },
 };
 
-const sorterTreff = (sortering: Sortering, fritekst: string) => {
-    const girMeningÅSorterePåMestRelevant = fritekst;
+const sorterTreff = (sortering: Sortering, fritekst: Set<string>) => {
+    const girMeningÅSorterePåMestRelevant = fritekst.size > 0;
+
     if (!girMeningÅSorterePåMestRelevant && sortering === Sortering.MestRelevant) {
         return sorteringPåPubliseringsdato;
     }

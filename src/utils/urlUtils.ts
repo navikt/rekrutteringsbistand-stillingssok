@@ -2,9 +2,9 @@ import { Søkekriterier } from '../Stillingssøk';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Fane } from '../søkefaner/Søkefaner';
 import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
 import { NavigateFunction } from 'react-router-dom';
+import { Delsøk } from '../søkefaner/SøkeChips';
 
 export enum QueryParam {
     Tekst = 'q',
@@ -18,7 +18,7 @@ export enum QueryParam {
     SubInkluderingTags = 'subinkluderingstags',
     Sortering = 'sortering',
     Standardsøk = 'standardsok',
-    Fane = 'fane',
+    Delsøk = 'delsok',
 }
 
 export type Navigeringsstate =
@@ -41,7 +41,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
 
     return {
         side: parseInt(searchParams.get(QueryParam.Side) ?? '1'),
-        tekst: searchParams.get(QueryParam.Tekst) ?? '',
+        tekst: hentSøkekriterie(QueryParam.Tekst),
         publisert: hentSøkekriterie(QueryParam.Publisert) as Set<Publisert>,
         fylker: hentSøkekriterie(QueryParam.Fylker),
         kommuner: hentSøkekriterie(QueryParam.Kommuner),
@@ -52,7 +52,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
             QueryParam.Stillingskategorier
         ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
-        fane: (searchParams.get(QueryParam.Fane) as Fane) ?? Fane.Alle,
+        delsøk: hentSøkekriterie(QueryParam.Delsøk) as Set<Delsøk>,
     };
 };
 

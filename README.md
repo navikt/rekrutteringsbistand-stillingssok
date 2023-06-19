@@ -23,7 +23,7 @@ npm install
 npm run start
 ```
 
-Dette mocker alle kall, utenom selve stillingssøket til OpenSearch. For at dette skal fungere, må du opprette en fil `env.development.local` som inneholder følgende miljøvariabler:
+Dette mocker alle kall, utenom selve stillingssøket til OpenSearch. For at dette skal fungere, må du opprette en fil `.env.development.local` som inneholder følgende miljøvariabler:
 
 ```
 OPEN_SEARCH_USERNAME=<brukernavn>
