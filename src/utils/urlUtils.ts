@@ -61,6 +61,7 @@ const oppdaterQueryParametere = (
     param: QueryParam,
     value: QueryParamValue
 ): string => {
+    console.log('param', param);
     if (
         value === null ||
         (typeof value === 'string' && value.length === 0) ||

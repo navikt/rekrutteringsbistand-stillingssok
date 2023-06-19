@@ -40,7 +40,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     );
 
     const lagFødselsdagtekst = (inputdato: string) => {
-        if (inputdato == null) return null;
+        if (inputdato == null) return '-';
         var fødselsdag = new Date(inputdato);
 
         var iDag = new Date();
@@ -78,11 +78,11 @@ const Kandidatbanner = ({ fnr }: Props) => {
                         {kandidat?.fornavn} {kandidat?.etternavn}
                     </Heading>
                     <div className={css.detaljer}>
-                        {kandidat?.fodselsdato && (
+                        {
                             <div>
                                 <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
                             </div>
-                        )}
+                        }
                         {(kandidat?.poststed ||
                             kandidat?.postnummer ||
                             kandidat?.adresselinje1) && (
@@ -91,24 +91,28 @@ const Kandidatbanner = ({ fnr }: Props) => {
                                 {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
                             </div>
                         )}
-                        {kandidat?.epostadresse && (
+                        {
                             <div>
                                 <EnvelopeClosedIcon />
-                                {kandidat?.epostadresse}
+                                {kandidat?.epostadresse
+                                    ? kandidat?.epostadresse.toLowerCase()
+                                    : '-'}
                             </div>
-                        )}
-                        {kandidat?.telefon && (
+                        }
+                        {
                             <div>
                                 <PhoneIcon />
-                                {kandidat?.telefon}
+                                {kandidat?.telefon ? kandidat?.telefon : '-'}
                             </div>
-                        )}
-                        {kandidat?.veileder && (
+                        }
+                        {
                             <div>
                                 <PersonIcon />
-                                {kandidat?.veileder} (Veileder)
+                                {kandidat?.veileder
+                                    ? kandidat?.veileder?.toUpperCase() + '(Veileder)'
+                                    : '-'}
                             </div>
-                        )}
+                        }
                     </div>
                 </div>
             </div>
