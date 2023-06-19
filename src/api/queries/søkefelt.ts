@@ -8,12 +8,19 @@ const søkefelt = (søketermer: Set<string>, delsøk: Set<Delsøk>) => {
     if (delsøk.has(Delsøk.Arbeidsgiver)) {
         feltManSkalSøkeI.push('stilling.employer.name', 'stilling.employer.orgnr');
     }
+
     if (delsøk.has(Delsøk.Annonsetittel)) {
         feltManSkalSøkeI.push('stilling.title');
     }
+
     if (delsøk.has(Delsøk.Annonsetekst)) {
         feltManSkalSøkeI.push('stilling.adtext_no');
     }
+
+    if (delsøk.has(Delsøk.Annonsenummer)) {
+        feltManSkalSøkeI.push('stilling.annonsenr');
+    }
+
     if (feltManSkalSøkeI.length == 0) {
         feltManSkalSøkeI.push(
             'stilling.adtext_no^0.5',

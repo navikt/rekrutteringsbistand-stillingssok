@@ -7,6 +7,7 @@ export enum Delsøk {
     Arbeidsgiver = 'arbeidsgiver',
     Annonsetittel = 'annonsetittel',
     Annonsetekst = 'annonsetekst',
+    Annonsenummer = 'annonsenummer',
 }
 
 type Props = {

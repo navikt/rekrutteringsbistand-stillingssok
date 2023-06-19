@@ -1,13 +1,13 @@
+import { Delsøk } from '../../søkefaner/SøkeChips';
 import { Query } from '../../domene/elasticSearchTyper';
 import { Søkekriterier } from '../../Stillingssøk';
-import { alleStillinger as defaultStatusFilter, status } from './status';
+import { status } from './status';
+import { stillingskategori } from './stillingskategori';
 import sorterTreff from './sortering';
 import publisert from './publisert';
 import geografi from './geografi';
 import inkludering from './inkludering';
 import søkefelt from './søkefelt';
-import { stillingskategori } from './stillingskategori';
-import { Delsøk } from '../../søkefaner/SøkeChips';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -18,25 +18,6 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
         track_total_hits: true,
         query: lagIndreQuery(søkekriterier),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
-        ...aggregeringer(søkekriterier),
-    };
-};
-
-export const lagQueryPåAnnonsenummer = (søkekriterier: Søkekriterier): Query => {
-    return {
-        query: {
-            bool: {
-                filter: [
-                    {
-                        term: {
-                            // TODO: Hvordan fungerer søk på annonsenummer når vi har chips?
-                            'stilling.annonsenr': søkekriterier.tekst,
-                        },
-                    },
-                    ...defaultStatusFilter,
-                ],
-            },
-        },
         ...aggregeringer(søkekriterier),
     };
 };
@@ -74,6 +55,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
             arbeidsgiver: lagIndreQuery(søkekriterier, Delsøk.Arbeidsgiver),
             annonsetittel: lagIndreQuery(søkekriterier, Delsøk.Annonsetittel),
             annonsetekst: lagIndreQuery(søkekriterier, Delsøk.Annonsetekst),
+            annonsenummer: lagIndreQuery(søkekriterier, Delsøk.Annonsenummer),
         };
     } else {
         return {};
