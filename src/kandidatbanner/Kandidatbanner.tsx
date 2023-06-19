@@ -74,40 +74,36 @@ const Kandidatbanner = ({ fnr }: Props) => {
                         {kandidat?.fornavn} {kandidat?.etternavn}
                     </Heading>
                     <div className={css.detaljer}>
-                        {
-                            <BodyShort>
-                                <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
-                            </BodyShort>
-                        }
-                        {(kandidat?.poststed ||
-                            kandidat?.postnummer ||
-                            kandidat?.adresselinje1) && (
+                        <BodyShort>
+                            <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
+                        </BodyShort>
+
+                        {kandidat?.poststed || kandidat?.postnummer || kandidat?.adresselinje1 ? (
                             <BodyShort>
                                 <PinIcon />{' '}
                                 <span>{formaterAdresse(kandidat?.adresselinje1)}, </span>
                                 {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
                             </BodyShort>
+                        ) : (
+                            '-'
                         )}
-                        {
-                            <BodyShort>
-                                <EnvelopeClosedIcon />
-                                {kandidat?.epostadresse?.toLowerCase() ?? '-'}
-                            </BodyShort>
-                        }
-                        {
-                            <BodyShort>
-                                <PhoneIcon />
-                                {kandidat?.telefon ?? '-'}
-                            </BodyShort>
-                        }
-                        {
-                            <BodyShort>
-                                <PersonIcon />
-                                {kandidat?.veileder
-                                    ? kandidat?.veileder?.toUpperCase() + '(Veileder)'
-                                    : '-'}
-                            </BodyShort>
-                        }
+
+                        <BodyShort>
+                            <EnvelopeClosedIcon />
+                            {kandidat?.epostadresse?.toLowerCase() ?? '-'}
+                        </BodyShort>
+
+                        <BodyShort>
+                            <PhoneIcon />
+                            {kandidat?.telefon ?? '-'}
+                        </BodyShort>
+
+                        <BodyShort>
+                            <PersonIcon />
+                            {kandidat?.veileder
+                                ? kandidat?.veileder?.toUpperCase() + ' (Veileder)'
+                                : '-'}
+                        </BodyShort>
                     </div>
                 </div>
             </div>
