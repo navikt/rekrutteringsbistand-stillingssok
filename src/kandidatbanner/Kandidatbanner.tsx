@@ -65,7 +65,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.innerBanner}>
-                <Minekandidater />
+                <Minekandidater className={css.minekandidatericon} />
                 <div className={css.personinformasjon}>
                     <div>
                         {kandidaterLenke} / {kandidatLenke} / Finn stilling
