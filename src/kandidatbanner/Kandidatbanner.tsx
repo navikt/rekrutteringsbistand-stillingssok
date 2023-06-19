@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import useKandidat from './useKandidat';
 import css from './Kandidatbanner.module.css';
 import {
@@ -9,6 +9,7 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
+import { ReactComponent as Minekandidater } from './Minekandidater.svg';
 import { Link } from 'react-router-dom';
 
 type Props = {
@@ -33,13 +34,14 @@ const Kandidatbanner = ({ fnr }: Props) => {
         </Link>
     );
 
-    const lagFødselsdagtekst = (inputdato: string | null | undefined) => {
+    const lagFødselsdagtekst = (inputdato?: string | null) => {
         if (!inputdato) return '-';
-        var fødselsdag = new Date(inputdato);
 
-        var iDag = new Date();
+        const iDag = new Date();
 
-        const harIkkeFylltÅrIÅr =
+        const fødselsdag = new Date(inputdato);
+
+        const harIkkeFyltÅrIÅr =
             iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||
             (iDag.getUTCMonth() === fødselsdag.getUTCMonth() &&
                 iDag.getUTCDate() < fødselsdag.getUTCDate());
@@ -51,7 +53,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
         });
 
         const alder =
-            iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFylltÅrIÅr ? 1 : 0);
+            iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFyltÅrIÅr ? 1 : 0);
 
         return `Født: ${fødselsdagString} (${alder} år)`;
     };
@@ -63,7 +65,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.innerBanner}>
-                <PersonIcon fontSize="3rem" />
+                <Minekandidater />
                 <div className={css.personinformasjon}>
                     <div>
                         {kandidaterLenke} / {kandidatLenke} / Finn stilling
@@ -73,39 +75,38 @@ const Kandidatbanner = ({ fnr }: Props) => {
                     </Heading>
                     <div className={css.detaljer}>
                         {
-                            <div>
+                            <BodyShort>
                                 <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
-                            </div>
+                            </BodyShort>
                         }
                         {(kandidat?.poststed ||
                             kandidat?.postnummer ||
                             kandidat?.adresselinje1) && (
-                            <div>
-                                <PinIcon /> {formaterAdresse(kandidat?.adresselinje1)}{' '}
+                            <BodyShort>
+                                <PinIcon />{' '}
+                                <span>{formaterAdresse(kandidat?.adresselinje1)}, </span>
                                 {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
-                            </div>
+                            </BodyShort>
                         )}
                         {
-                            <div>
+                            <BodyShort>
                                 <EnvelopeClosedIcon />
-                                {kandidat?.epostadresse
-                                    ? kandidat?.epostadresse.toLowerCase()
-                                    : '-'}
-                            </div>
+                                {kandidat?.epostadresse?.toLowerCase() ?? '-'}
+                            </BodyShort>
                         }
                         {
-                            <div>
+                            <BodyShort>
                                 <PhoneIcon />
-                                {kandidat?.telefon ? kandidat?.telefon : '-'}
-                            </div>
+                                {kandidat?.telefon ?? '-'}
+                            </BodyShort>
                         }
                         {
-                            <div>
+                            <BodyShort>
                                 <PersonIcon />
                                 {kandidat?.veileder
                                     ? kandidat?.veileder?.toUpperCase() + '(Veileder)'
                                     : '-'}
-                            </div>
+                            </BodyShort>
                         }
                     </div>
                 </div>

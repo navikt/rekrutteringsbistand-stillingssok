@@ -11,9 +11,9 @@ const kandidatsøk: EsRespons = {
                     adresselinje1: 'Langerudsvingen 18D',
                     postnummer: '1187',
                     poststed: 'Oslo',
-                    epostadresse: 'mock111@mock111.com',
+                    epostadresse: 'mock111@Mock111.com',
                     telefon: '+47 40491880',
-                    veileder: 'A100000',
+                    veileder: 'a100000',
                     arenaKandidatnr: 'AA100100',
                     geografiJobbonsker: [
                         {
