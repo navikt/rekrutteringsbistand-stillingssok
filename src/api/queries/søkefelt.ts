@@ -9,7 +9,7 @@ const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
         feltManSkalSøkeI.push('stilling.employer.name', 'stilling.employer.orgnr');
     }
 
-    if (felter.has(Søkefelt.Annonsetittel)) {
+    if (felter.has(Søkefelt.Tittel)) {
         feltManSkalSøkeI.push('stilling.title');
     }
 

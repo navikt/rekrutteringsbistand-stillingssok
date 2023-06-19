@@ -53,7 +53,7 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
         queriesForFeltaggregering = {
             ...queriesForFeltaggregering,
             arbeidsgiver: lagIndreQuery(søkekriterier, Søkefelt.Arbeidsgiver),
-            annonsetittel: lagIndreQuery(søkekriterier, Søkefelt.Annonsetittel),
+            tittel: lagIndreQuery(søkekriterier, Søkefelt.Tittel),
             annonsetekst: lagIndreQuery(søkekriterier, Søkefelt.Annonsetekst),
             annonsenummer: lagIndreQuery(søkekriterier, Søkefelt.Annonsenummer),
         };

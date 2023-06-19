@@ -5,7 +5,7 @@ import useNavigering from '../useNavigering';
 
 export enum Søkefelt {
     Arbeidsgiver = 'arbeidsgiver',
-    Annonsetittel = 'annonsetittel',
+    Tittel = 'tittel',
     Annonsetekst = 'annonsetekst',
     Annonsenummer = 'annonsenummer',
 }
@@ -59,12 +59,25 @@ const Søkefelter: FunctionComponent<Props> = ({ aggregeringer }) => {
                             handleSøkefeltClick(felt);
                         }}
                     >
-                        {`${felt} (${aggregering?.doc_count})`}
+                        {`${tilVisningsnavn(felt)} (${aggregering?.doc_count})`}
                     </Chips.Toggle>
                 );
             })}
         </Chips>
     );
+};
+
+const tilVisningsnavn = (felt: Søkefelt) => {
+    switch (felt) {
+        case Søkefelt.Annonsetekst:
+            return 'Innhold';
+        case Søkefelt.Tittel:
+            return 'Tittel';
+        case Søkefelt.Arbeidsgiver:
+            return 'Arbeidsgiver';
+        case Søkefelt.Annonsenummer:
+            return 'Annonsenummer';
+    }
 };
 
 export default Søkefelter;

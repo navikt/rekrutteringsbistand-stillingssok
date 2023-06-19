@@ -866,7 +866,7 @@ export const resultat: Respons = {
                     annonsetekst: {
                         doc_count: 277,
                     },
-                    annonsetittel: {
+                    tittel: {
                         doc_count: 87,
                     },
                     arbeidsgiver: {
