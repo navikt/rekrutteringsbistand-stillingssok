@@ -22,10 +22,13 @@ type Geografijobbønske = {
     geografiKodeTekst: string;
 };
 
+type Yrkejobbønske = {
+    sokeTitler: string[];
+};
+
 export type Kandidatrespons = {
     fornavn: string;
     etternavn: string;
-    geografiJobbonsker: Geografijobbønske[];
     fodselsdato: string | null;
     adresselinje1: string | null;
     postnummer: string | null;
@@ -34,6 +37,8 @@ export type Kandidatrespons = {
     telefon: string | null;
     veileder: string | null;
     arenaKandidatnr: string | null;
+    geografiJobbonsker: Geografijobbønske[];
+    yrkeJobbonskerObj: Yrkejobbønske[];
 };
 
 const byggQuery = (fodselsnummer: string) => ({
@@ -44,7 +49,6 @@ const byggQuery = (fodselsnummer: string) => ({
     },
     size: 1,
     _source: [
-        'geografiJobbonsker',
         'fornavn',
         'etternavn',
         'fodselsdato',
@@ -55,6 +59,8 @@ const byggQuery = (fodselsnummer: string) => ({
         'telefon',
         'veileder',
         'arenaKandidatnr',
+        'geografiJobbonsker',
+        'yrkeJobbonskerObj',
     ],
 });
 
@@ -83,6 +89,10 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): 
         });
 };
 
+const hentYrkerFraJobbønsker = (yrkesønsker: Yrkejobbønske[]): string[] => {
+    return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
+};
+
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
 
@@ -108,13 +118,19 @@ const useKandidat = (fnr: string) => {
                     const kommunerFraKandidat = hentKommunerFraJobbønsker(
                         kandidat.geografiJobbonsker
                     );
+                    const yrkesønskerFraKandidat = hentYrkerFraJobbønsker(
+                        kandidat.yrkeJobbonskerObj
+                    );
 
                     const søk = new URLSearchParams();
+
                     søk.set(QueryParam.Fylker, String(fylkerFraKandidat));
                     søk.set(QueryParam.Kommuner, String(kommunerFraKandidat));
                     søk.set(QueryParam.Statuser, Status.Publisert);
                     søk.set(QueryParam.Publisert, Publisert.Intern);
                     søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
+                    søk.set(QueryParam.Tekst, String(yrkesønskerFraKandidat));
+
                     navigate({ search: søk.toString() }, { replace: true });
                 } else {
                     setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);

@@ -8,6 +8,7 @@ import publisert from './publisert';
 import geografi from './geografi';
 import inkludering from './inkludering';
 import søkefelt from './søkefelt';
+import { erIkkeProd } from '../../utils/featureToggleUtils';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -23,6 +24,8 @@ export const lagQuery = (søkekriterier: Søkekriterier): Query => {
 };
 
 export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativtFelt?: Søkefelt) => {
+    const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
+
     return {
         bool: {
             should: [
@@ -31,7 +34,7 @@ export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativtFelt?: 
                     alternativtFelt ? new Set<Søkefelt>([alternativtFelt]) : søkekriterier.felter
                 ),
             ],
-            minimum_should_match: '1<50%',
+            minimum_should_match,
             filter: [
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),

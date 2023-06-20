@@ -37,6 +37,14 @@ const kandidatsøk: EsRespons = {
                             geografiKode: 'NO18.1804',
                         },
                     ],
+                    yrkeJobbonskerObj: [
+                        {
+                            sokeTitler: ['Rektor'],
+                        },
+                        {
+                            sokeTitler: ['Lærer', 'Adjunkt', 'Lektor'],
+                        },
+                    ],
                 },
             },
         ],
