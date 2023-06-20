@@ -10,8 +10,8 @@
     margin: 0 auto;
     padding: 1.5rem 0;
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -22,7 +22,12 @@
 
 .detaljer {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+}
+
+.detaljer svg {
+    flex-shrink: 0;
 }
 
 .detaljer * {
@@ -48,6 +53,6 @@
 }
 
 .minekandidatericon {
-    margin-right: 0.5rem;
+    margin-top: 0.75rem;
     flex-shrink: 0;
 }

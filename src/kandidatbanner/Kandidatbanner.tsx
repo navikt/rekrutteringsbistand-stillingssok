@@ -70,7 +70,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
                     <div>
                         {kandidaterLenke} / {kandidatLenke} / Finn stilling
                     </div>
-                    <Heading size="medium" as="span">
+                    <Heading size="large" as="span">
                         {kandidat?.fornavn} {kandidat?.etternavn}
                     </Heading>
                     <div className={css.detaljer}>
