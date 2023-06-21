@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
-import useKandidat from './useKandidat';
-import css from './Kandidatbanner.module.css';
+import { Link } from 'react-router-dom';
+import { Kandidatrespons } from './useKandidat';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -10,7 +10,7 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { ReactComponent as Minekandidater } from './minekandidater.svg';
-import { Link } from 'react-router-dom';
+import css from './Kandidatbanner.module.css';
 
 type Brødsmule = {
     tekst: string;
@@ -18,62 +18,33 @@ type Brødsmule = {
 };
 
 type Props = {
-    fnr: string;
+    kandidat?: Kandidatrespons;
     brødsmulesti: Array<Brødsmule>;
 };
 
-const Kandidatbanner = ({ fnr }: Props) => {
-    const { kandidat } = useKandidat(fnr);
-
-    /*const kandidaterLenke = (
-        <Link className={css.lenkeTilStilling} to={`/kandidatsok`}>
-            Kandidater
-        </Link>
-    );
-
-    const kandidatLenke = (
-        <Link
-            className={css.lenkeTilStilling}
-            to={`/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv?fraKandidatsok=true`}
-        >
-            {kandidat?.fornavn} {kandidat?.etternavn}
-        </Link>
-    );*/
-    const lagFødselsdagtekst = (inputdato?: string | null) => {
-        if (!inputdato) return '-';
-
-        const iDag = new Date();
-
-        const fødselsdag = new Date(inputdato);
-
-        const harIkkeFyltÅrIÅr =
-            iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||
-            (iDag.getUTCMonth() === fødselsdag.getUTCMonth() &&
-                iDag.getUTCDate() < fødselsdag.getUTCDate());
-
-        const fødselsdagString = fødselsdag.toLocaleDateString('nb-NO', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-        });
-
-        const alder =
-            iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFyltÅrIÅr ? 1 : 0);
-
-        return `Født: ${fødselsdagString} (${alder} år)`;
-    };
-
-    const formaterAdresse = (input: string | null): string | null => {
-        return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-    };
-
+const Kandidatbanner = ({ kandidat, brødsmulesti }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.innerBanner}>
                 <Minekandidater className={css.minekandidatericon} />
                 <div className={css.personinformasjon}>
                     <div>
-                        {kandidaterLenke} / {kandidatLenke} / Finn stilling
+                        {brødsmulesti.map(({ tekst, href }, index) => {
+                            const brødsmule = href ? (
+                                <Link className={css.lenkeTilStilling} to={href}>
+                                    {tekst}
+                                </Link>
+                            ) : (
+                                <BodyShort as="span">{tekst}</BodyShort>
+                            );
+
+                            return (
+                                <Fragment key={tekst}>
+                                    {index !== 0 && <span> / </span>}
+                                    {brødsmule}
+                                </Fragment>
+                            );
+                        })}
                     </div>
                     <Heading size="large" as="span">
                         {kandidat?.fornavn} {kandidat?.etternavn}
@@ -114,6 +85,32 @@ const Kandidatbanner = ({ fnr }: Props) => {
             </div>
         </div>
     );
+};
+
+const lagFødselsdagtekst = (inputdato?: string | null) => {
+    if (!inputdato) return '-';
+
+    const iDag = new Date();
+    const fødselsdag = new Date(inputdato);
+
+    const harIkkeFyltÅrIÅr =
+        iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||
+        (iDag.getUTCMonth() === fødselsdag.getUTCMonth() &&
+            iDag.getUTCDate() < fødselsdag.getUTCDate());
+
+    const fødselsdagString = fødselsdag.toLocaleDateString('nb-NO', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+
+    const alder = iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFyltÅrIÅr ? 1 : 0);
+
+    return `Født: ${fødselsdagString} (${alder} år)`;
+};
+
+const formaterAdresse = (input: string | null): string | null => {
+    return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
 export default Kandidatbanner;
