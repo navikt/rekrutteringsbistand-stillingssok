@@ -7,7 +7,6 @@ import { Status } from './filter/om-annonsen/Annonsestatus';
 import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
-import Kandidatbanner from './kandidatbanner/Kandidatbanner';
 import Paginering from './paginering/Paginering';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
@@ -15,7 +14,7 @@ import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import css from './Stillingssøk.module.css';
-import KontekstAvKandidat from './KontekstAvKandidat';
+import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export type Søkekriterier = {
     side: number;

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
-import { Kandidatrespons } from './useKandidat';
+import { Kandidatrespons } from '../kontekst-av-kandidat/useKandidat';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
