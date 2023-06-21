@@ -12,14 +12,20 @@ import {
 import { ReactComponent as Minekandidater } from './minekandidater.svg';
 import { Link } from 'react-router-dom';
 
+type Brødsmule = {
+    tekst: string;
+    href?: string;
+};
+
 type Props = {
     fnr: string;
+    brødsmulesti: Array<Brødsmule>;
 };
 
 const Kandidatbanner = ({ fnr }: Props) => {
     const { kandidat } = useKandidat(fnr);
 
-    const kandidaterLenke = (
+    /*const kandidaterLenke = (
         <Link className={css.lenkeTilStilling} to={`/kandidatsok`}>
             Kandidater
         </Link>
@@ -32,8 +38,7 @@ const Kandidatbanner = ({ fnr }: Props) => {
         >
             {kandidat?.fornavn} {kandidat?.etternavn}
         </Link>
-    );
-
+    );*/
     const lagFødselsdagtekst = (inputdato?: string | null) => {
         if (!inputdato) return '-';
 
