@@ -79,7 +79,13 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                     <Detail size="small">{konverterTilPresenterbarDato(stilling.published)}</Detail>
                 </div>
                 {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
-                <Link className={classNames(css.lenkeTilStilling)} to={urlTilStilling}>
+                <Link
+                    className={classNames(css.lenkeTilStilling)}
+                    to={urlTilStilling}
+                    state={{
+                        stillingssøk: searchParams.toString(),
+                    }}
+                >
                     {stilling.title}
                 </Link>
                 <span className={css.stillingsinfo}>
