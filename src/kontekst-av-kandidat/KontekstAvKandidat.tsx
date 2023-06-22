@@ -12,19 +12,24 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
     return (
         <Kandidatbanner
             kandidat={kandidat}
-            brødsmulesti={[
-                {
-                    href: '/kandidatsok',
-                    tekst: 'Kandidater',
-                },
-                {
-                    href: `/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                    tekst: `${kandidat?.fornavn} ${kandidat?.etternavn}`,
-                },
-                {
-                    tekst: 'Finn stilling',
-                },
-            ]}
+            brødsmulesti={
+                kandidat
+                    ? [
+                          {
+                              href: '/kandidatsok',
+                              tekst: 'Kandidater',
+                          },
+                          {
+                              href: `/kandidater/kandidat/${kandidat.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                              tekst: `${kandidat.fornavn} ${kandidat.etternavn}`,
+                          },
+
+                          {
+                              tekst: 'Finn stilling',
+                          },
+                      ]
+                    : undefined
+            }
         />
     );
 };

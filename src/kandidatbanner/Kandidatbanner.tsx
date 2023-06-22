@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode } from 'react';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
 import {
     CandleIcon,
@@ -31,7 +31,7 @@ type Kandidat = {
 
 type Props = {
     kandidat?: Kandidat;
-    brødsmulesti: Array<Brødsmule>;
+    brødsmulesti?: Brødsmule[];
     children?: ReactNode;
 };
 
@@ -43,56 +43,75 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
                 <div className={css.innhold}>
                     <div className={css.hovedinnhold}>
                         <div>
-                            {brødsmulesti.map(({ tekst, href }, index) => {
-                                const brødsmule = href ? (
-                                    <Link to={href}>{tekst}</Link>
-                                ) : (
-                                    <BodyShort as="span">{tekst}</BodyShort>
-                                );
+                            {brødsmulesti ? (
+                                brødsmulesti.map(({ tekst, href }, index) => {
+                                    const brødsmule = href ? (
+                                        <Link to={href}>{tekst}</Link>
+                                    ) : (
+                                        <BodyShort as="span">{tekst}</BodyShort>
+                                    );
 
-                                return (
-                                    <Fragment key={tekst}>
-                                        {index !== 0 && <span> / </span>}
-                                        {brødsmule}
-                                    </Fragment>
-                                );
-                            })}
+                                    return (
+                                        <Fragment key={tekst}>
+                                            {index !== 0 && <span> / </span>}
+                                            {brødsmule}
+                                        </Fragment>
+                                    );
+                                })
+                            ) : (
+                                <Skeleton width={220} />
+                            )}
                         </div>
-                        <Heading size="large" as="span">
-                            {kandidat?.fornavn} {kandidat?.etternavn}
-                        </Heading>
+                        {kandidat ? (
+                            <Heading size="large" level="3">
+                                {kandidat?.fornavn} {kandidat?.etternavn}
+                            </Heading>
+                        ) : (
+                            <Skeleton>
+                                <Heading size="large">Placeholder</Heading>
+                            </Skeleton>
+                        )}
+
                         <div className={css.personalia}>
                             <BodyShort>
-                                <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
+                                <CandleIcon />{' '}
+                                {kandidat ? (
+                                    lagFødselsdagtekst(kandidat?.fodselsdato)
+                                ) : (
+                                    <Skeleton width={180} />
+                                )}
                             </BodyShort>
 
-                            {kandidat?.poststed ||
-                            kandidat?.postnummer ||
-                            kandidat?.adresselinje1 ? (
-                                <BodyShort>
-                                    <PinIcon />{' '}
-                                    <span>{formaterAdresse(kandidat?.adresselinje1)}, </span>
-                                    {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
-                                </BodyShort>
-                            ) : (
-                                '-'
-                            )}
+                            <BodyShort>
+                                <PinIcon />{' '}
+                                {kandidat ? hentAdresse(kandidat) ?? '-' : <Skeleton width={240} />}
+                            </BodyShort>
 
                             <BodyShort>
                                 <EnvelopeClosedIcon />
-                                {kandidat?.epostadresse?.toLowerCase() ?? '-'}
+                                {kandidat ? (
+                                    kandidat.epostadresse?.toLowerCase() ?? '-'
+                                ) : (
+                                    <Skeleton width={100} />
+                                )}
                             </BodyShort>
 
                             <BodyShort>
                                 <PhoneIcon />
-                                {kandidat?.telefon ?? '-'}
+                                {kandidat ? kandidat.telefon ?? '-' : <Skeleton width={100} />}
                             </BodyShort>
 
                             <BodyShort>
                                 <PersonIcon />
-                                {kandidat?.veileder
-                                    ? kandidat?.veileder?.toUpperCase() + ' (Veileder)'
-                                    : '-'}
+                                {kandidat ? (
+                                    kandidat.veileder ? (
+                                        `${kandidat.veileder.toUpperCase()} (Veileder)`
+                                    ) : (
+                                        '-'
+                                    )
+                                ) : (
+                                    <Skeleton width={100} />
+                                )}
                             </BodyShort>
                         </div>
                     </div>
@@ -123,6 +142,18 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     const alder = iDag.getUTCFullYear() - fødselsdag.getUTCFullYear() - (harIkkeFyltÅrIÅr ? 1 : 0);
 
     return `Født: ${fødselsdagString} (${alder} år)`;
+};
+
+const hentAdresse = (kandidat?: Kandidat) => {
+    if (!kandidat) return undefined;
+
+    const { poststed, postnummer, adresselinje1 } = kandidat;
+
+    if (!poststed && !postnummer && !adresselinje1) {
+        return undefined;
+    }
+
+    return `${formaterAdresse(adresselinje1)}, ${postnummer} ${formaterAdresse(poststed)}`;
 };
 
 const formaterAdresse = (input: string | null): string | null => {
