@@ -38,6 +38,15 @@ const Utviklingsapp: FunctionComponent = () => {
                 >
                     Stillingssøk
                 </Link>
+                <Link
+                    className="navds-link"
+                    to={{
+                        pathname: '/stillingssok/123',
+                        search: '?kandidatkriterier',
+                    }}
+                >
+                    Finn stilling til kandidat
+                </Link>
             </header>
             <Routes>
                 <Route path="/stillinger/stilling/:stillingsId" element={<ForklarMatch />} />

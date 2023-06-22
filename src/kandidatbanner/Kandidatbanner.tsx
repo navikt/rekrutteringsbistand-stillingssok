@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
-import { Kandidatrespons } from '../kontekst-av-kandidat/useKandidat';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -9,7 +8,7 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { ReactComponent as Minekandidater } from './minekandidater.svg';
+import { ReactComponent as Piktogram } from './minekandidater.svg';
 import css from './Kandidatbanner.module.css';
 
 type Brødsmule = {
@@ -17,70 +16,87 @@ type Brødsmule = {
     href?: string;
 };
 
-type Props = {
-    kandidat?: Kandidatrespons;
-    brødsmulesti: Array<Brødsmule>;
+type Kandidat = {
+    fornavn: string;
+    etternavn: string;
+    arenaKandidatnr: string;
+    fodselsdato: string | null;
+    adresselinje1: string | null;
+    postnummer: string | null;
+    poststed: string | null;
+    epostadresse: string | null;
+    telefon: string | null;
+    veileder: string | null;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti }: Props) => {
+type Props = {
+    kandidat?: Kandidat;
+    brødsmulesti: Array<Brødsmule>;
+    children?: ReactNode;
+};
+
+const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
     return (
         <div className={css.banner}>
-            <div className={css.innerBanner}>
-                <Minekandidater className={css.minekandidatericon} />
-                <div className={css.personinformasjon}>
-                    <div>
-                        {brødsmulesti.map(({ tekst, href }, index) => {
-                            const brødsmule = href ? (
-                                <Link className={css.lenkeTilStilling} to={href}>
-                                    {tekst}
-                                </Link>
-                            ) : (
-                                <BodyShort as="span">{tekst}</BodyShort>
-                            );
+            <div className={css.piktogramOgInnhold}>
+                <Piktogram className={css.piktogram} />
+                <div className={css.innhold}>
+                    <div className={css.hovedinnhold}>
+                        <div>
+                            {brødsmulesti.map(({ tekst, href }, index) => {
+                                const brødsmule = href ? (
+                                    <Link to={href}>{tekst}</Link>
+                                ) : (
+                                    <BodyShort as="span">{tekst}</BodyShort>
+                                );
 
-                            return (
-                                <Fragment key={tekst}>
-                                    {index !== 0 && <span> / </span>}
-                                    {brødsmule}
-                                </Fragment>
-                            );
-                        })}
-                    </div>
-                    <Heading size="large" as="span">
-                        {kandidat?.fornavn} {kandidat?.etternavn}
-                    </Heading>
-                    <div className={css.detaljer}>
-                        <BodyShort>
-                            <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
-                        </BodyShort>
-
-                        {kandidat?.poststed || kandidat?.postnummer || kandidat?.adresselinje1 ? (
+                                return (
+                                    <Fragment key={tekst}>
+                                        {index !== 0 && <span> / </span>}
+                                        {brødsmule}
+                                    </Fragment>
+                                );
+                            })}
+                        </div>
+                        <Heading size="large" as="span">
+                            {kandidat?.fornavn} {kandidat?.etternavn}
+                        </Heading>
+                        <div className={css.personalia}>
                             <BodyShort>
-                                <PinIcon />{' '}
-                                <span>{formaterAdresse(kandidat?.adresselinje1)}, </span>
-                                {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
+                                <CandleIcon /> {lagFødselsdagtekst(kandidat?.fodselsdato)}
                             </BodyShort>
-                        ) : (
-                            '-'
-                        )}
 
-                        <BodyShort>
-                            <EnvelopeClosedIcon />
-                            {kandidat?.epostadresse?.toLowerCase() ?? '-'}
-                        </BodyShort>
+                            {kandidat?.poststed ||
+                            kandidat?.postnummer ||
+                            kandidat?.adresselinje1 ? (
+                                <BodyShort>
+                                    <PinIcon />{' '}
+                                    <span>{formaterAdresse(kandidat?.adresselinje1)}, </span>
+                                    {kandidat?.postnummer} {formaterAdresse(kandidat?.poststed)}
+                                </BodyShort>
+                            ) : (
+                                '-'
+                            )}
 
-                        <BodyShort>
-                            <PhoneIcon />
-                            {kandidat?.telefon ?? '-'}
-                        </BodyShort>
+                            <BodyShort>
+                                <EnvelopeClosedIcon />
+                                {kandidat?.epostadresse?.toLowerCase() ?? '-'}
+                            </BodyShort>
 
-                        <BodyShort>
-                            <PersonIcon />
-                            {kandidat?.veileder
-                                ? kandidat?.veileder?.toUpperCase() + ' (Veileder)'
-                                : '-'}
-                        </BodyShort>
+                            <BodyShort>
+                                <PhoneIcon />
+                                {kandidat?.telefon ?? '-'}
+                            </BodyShort>
+
+                            <BodyShort>
+                                <PersonIcon />
+                                {kandidat?.veileder
+                                    ? kandidat?.veileder?.toUpperCase() + ' (Veileder)'
+                                    : '-'}
+                            </BodyShort>
+                        </div>
                     </div>
+                    <div className={css.ekstrainnhold}>{children}</div>
                 </div>
             </div>
         </div>

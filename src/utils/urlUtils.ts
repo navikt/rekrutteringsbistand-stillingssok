@@ -16,9 +16,10 @@ export enum QueryParam {
     Stillingskategorier = 'stillingskategori',
     HovedInkluderingTags = 'hovedinkluderingstags',
     SubInkluderingTags = 'subinkluderingstags',
+    Felter = 'felter',
     Sortering = 'sortering',
     Standardsøk = 'standardsok',
-    Felter = 'felter',
+    Kandidatkriterier = 'kandidatkriterier',
 }
 
 export type Navigeringsstate =
@@ -61,7 +62,6 @@ const oppdaterQueryParametere = (
     param: QueryParam,
     value: QueryParamValue
 ): string => {
-    console.log('param', param);
     if (
         value === null ||
         (typeof value === 'string' && value.length === 0) ||

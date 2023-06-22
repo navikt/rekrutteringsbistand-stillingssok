@@ -1,4 +1,4 @@
-import { EsRespons } from '../../kontekst-av-kandidat/useKandidat';
+import { EsRespons } from '../../kontekst-av-kandidat/kandidatQuery';
 
 const kandidatsøk: EsRespons = {
     hits: {
