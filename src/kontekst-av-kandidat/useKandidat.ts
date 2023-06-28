@@ -14,6 +14,7 @@ import {
     byggKandidatQuery,
     kandidatProxyUrl,
 } from './kandidatQuery';
+import { sendEvent } from '../amplitude';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
@@ -36,6 +37,12 @@ const useKandidat = (fnr: string) => {
             søk.set(QueryParam.Publisert, Publisert.Intern);
             søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
             søk.set(QueryParam.Tekst, String(yrkesønsker));
+
+            sendEvent('stillingssøk', 'kontekst_av_kandidat', {
+                antallFylker: fylker.length,
+                antallKommuner: kommuner.length,
+                antallYrkesønsker: yrkesønsker.length,
+            });
 
             navigate({ search: søk.toString() }, { replace: true });
         };
