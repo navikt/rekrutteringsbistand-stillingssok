@@ -64,7 +64,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
                         </div>
                         {kandidat ? (
                             <Heading size="large" level="3">
-                                {kandidat?.fornavn} {kandidat?.etternavn}
+                                {formaterNavn(kandidat)}
                             </Heading>
                         ) : (
                             <Skeleton>
@@ -158,6 +158,33 @@ const hentAdresse = (kandidat?: Kandidat) => {
 
 const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+};
+
+const formaterNavn = (kandidat: Kandidat) => {
+    const fornavn = anvendStorForbokstav(kandidat.fornavn);
+    const etternavn = anvendStorForbokstav(kandidat.etternavn);
+
+    return `${fornavn} ${etternavn}`;
+};
+
+const anvendStorForbokstav = (input: string) => {
+    const separators = [' ', '-'];
+
+    if (input) {
+        let capitalized = input.toLowerCase();
+
+        for (let i = 0; i < separators.length; i += 1) {
+            const fragments = capitalized.split(separators[i]);
+
+            for (let j = 0; j < fragments.length; j += 1) {
+                fragments[j] = fragments[j].charAt(0).toUpperCase() + fragments[j].substr(1);
+            }
+            capitalized = fragments.join(separators[i]);
+        }
+        return capitalized;
+    }
+
+    return input;
 };
 
 export default Kandidatbanner;
